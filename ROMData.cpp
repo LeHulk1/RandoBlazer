@@ -34,160 +34,162 @@
 
 namespace ROMData {
 
-    void GetOriginalChestData(vector<Chest> &ChestList) {
+    void GetOriginalItemData(vector<ItemHolder> &ItemList) {
 
-        ChestList[0].Contents = SWORD_OF_LIFE;
+        ItemList[0].Contents  = SWORD_OF_LIFE;
 
-        ChestList[1].Contents = IRON_ARMOR;
+        ItemList[1].Contents  = IRON_ARMOR;
 
-        ChestList[2].Contents = GEMS;
-        ChestList[2].Gems     = 50;
+        ItemList[2].Contents  = GEMS;
+        ItemList[2].Gems      = 50;
 
-        ChestList[3].Contents = GEMS;
-        ChestList[3].Gems     = 12;
+        ItemList[3].Contents  = GEMS;
+        ItemList[3].Gems      = 12;
 
-        ChestList[4].Contents = MEDICAL_HERB;
+        ItemList[4].Contents  = MEDICAL_HERB;
 
-        ChestList[5].Contents = DREAM_ROD;
+        ItemList[5].Contents  = DREAM_ROD;
 
-        ChestList[6].Contents = LEOS_BRUSH;
+        ItemList[6].Contents  = LEOS_BRUSH;
 
-        ChestList[7].Contents = MEDICAL_HERB;
+        ItemList[7].Contents  = MEDICAL_HERB;
 
-        ChestList[8].Contents = TORNADO;
+        ItemList[8].Contents  = TORNADO;
 
-        ChestList[9].Contents = ICE_ARMOR;
+        ItemList[9].Contents  = ICE_ARMOR;
 
-        ChestList[10].Contents = MOLES_RIBBON;
+        ItemList[10].Contents = MOLES_RIBBON;
 
-        ChestList[11].Contents = GEMS;
-        ChestList[11].Gems     = 50;
+        ItemList[11].Contents = GEMS;
+        ItemList[11].Gems     = 50;
 
-        ChestList[12].Contents = GEMS;
-        ChestList[12].Gems     = 150;
+        ItemList[12].Contents = GEMS;
+        ItemList[12].Gems     = 150;
 
-        ChestList[13].Contents = MEDICAL_HERB;
+        ItemList[13].Contents = MEDICAL_HERB;
 
-        ChestList[14].Contents = DELICIOUS_SEEDS;
+        ItemList[14].Contents = DELICIOUS_SEEDS;
 
-        ChestList[15].Contents = GEMS;
-        ChestList[15].Gems     = 50;
+        ItemList[15].Contents = GEMS;
+        ItemList[15].Gems     = 50;
 
-        ChestList[16].Contents = MEDICAL_HERB;
+        ItemList[16].Contents = MEDICAL_HERB;
 
-        ChestList[17].Contents = NOTHING;
+        ItemList[17].Contents = NOTHING;
 
-        ChestList[18].Contents = STRANGE_BOTTLE;
+        ItemList[18].Contents = STRANGE_BOTTLE;
 
-        ChestList[19].Contents = GEMS;
-        ChestList[19].Gems     = 100;
+        ItemList[19].Contents = GEMS;
+        ItemList[19].Gems     = 100;
 
-        ChestList[20].Contents = GEMS;
-        ChestList[20].Gems     = 60;
+        ItemList[20].Contents = GEMS;
+        ItemList[20].Gems     = 60;
 
-        ChestList[21].Contents = FLAME_PILLAR;
+        ItemList[21].Contents = FLAME_PILLAR;
 
-        ChestList[22].Contents = MERMAIDS_TEARS;
+        ItemList[22].Contents = MERMAIDS_TEARS;
 
-        ChestList[23].Contents = BIG_PEARL;
+        ItemList[23].Contents = BIG_PEARL;
 
-        ChestList[24].Contents = EMBLEM_D;
+        ItemList[24].Contents = EMBLEM_D;
 
-        ChestList[25].Contents = GEMS;
-        ChestList[25].Gems     = 80;
+        ItemList[25].Contents = GEMS;
+        ItemList[25].Gems     = 80;
 
-        ChestList[26].Contents = MEDICAL_HERB;
+        ItemList[26].Contents = MEDICAL_HERB;
 
-        ChestList[27].Contents = NOTHING;
+        ItemList[27].Contents = NOTHING;
 
-        ChestList[28].Contents = MEDICAL_HERB;
+        ItemList[28].Contents = MEDICAL_HERB;
 
-        ChestList[29].Contents = MEDICAL_HERB;
+        ItemList[29].Contents = MEDICAL_HERB;
 
-        ChestList[30].Contents = GEMS;
-        ChestList[30].Gems     = 60;
+        ItemList[30].Contents = GEMS;
+        ItemList[30].Gems     = 60;
 
-        ChestList[31].Contents = CRITICAL_SWORD;
+        ItemList[31].Contents = CRITICAL_SWORD;
 
-        ChestList[32].Contents = STRANGE_BOTTLE;
+        ItemList[32].Contents = STRANGE_BOTTLE;
 
-        ChestList[33].Contents = GEMS;
-        ChestList[33].Gems     = 1;
+        ItemList[33].Contents = GEMS;
+        ItemList[33].Gems     = 1;
 
-        ChestList[34].Contents = POWER_BRACELET;
+        ItemList[34].Contents = POWER_BRACELET;
 
-        ChestList[35].Contents = GEMS;
-        ChestList[35].Gems     = 40;
+        ItemList[35].Contents = GEMS;
+        ItemList[35].Gems     = 40;
 
-        ChestList[36].Contents = MAGIC_ARMOR;
+        ItemList[36].Contents = MAGIC_ARMOR;
 
-        ChestList[37].Contents = NOTHING;
+        ItemList[37].Contents = NOTHING;
 
-        ChestList[38].Contents = MEDICAL_HERB;
+        ItemList[38].Contents = MEDICAL_HERB;
 
-        ChestList[39].Contents = GEMS;
-        ChestList[39].Gems     = 50;
+        ItemList[39].Contents = GEMS;
+        ItemList[39].Gems     = 50;
 
-        ChestList[40].Contents = LUCKY_BLADE;
+        ItemList[40].Contents = LUCKY_BLADE;
 
-        ChestList[41].Contents = STRANGE_BOTTLE;
+        ItemList[41].Contents = STRANGE_BOTTLE;
 
-        ChestList[42].Contents = ROTATOR;
+        ItemList[42].Contents = ROTATOR;
 
-        ChestList[43].Contents = ZANTETSU_SWORD;
+        ItemList[43].Contents = ZANTETSU_SWORD;
 
-        ChestList[44].Contents = LIGHT_ARMOR;
+        ItemList[44].Contents = LIGHT_ARMOR;
 
-        ChestList[45].Contents = GEMS;
-        ChestList[45].Gems     = 50;
+        ItemList[45].Contents = GEMS;
+        ItemList[45].Gems     = 50;
 
-        ChestList[46].Contents = MEDICAL_HERB;
+        ItemList[46].Contents = MEDICAL_HERB;
 
-        ChestList[47].Contents = GEMS;
-        ChestList[47].Gems     = 80;
+        ItemList[47].Contents = GEMS;
+        ItemList[47].Gems     = 80;
 
-        ChestList[48].Contents = STRANGE_BOTTLE;
+        ItemList[48].Contents = STRANGE_BOTTLE;
 
-        ChestList[49].Contents = MEDICAL_HERB;
+        ItemList[49].Contents = MEDICAL_HERB;
 
-        ChestList[50].Contents = GEMS;
-        ChestList[50].Gems     = 80;
+        ItemList[50].Contents = GEMS;
+        ItemList[50].Gems     = 80;
 
-        ChestList[51].Contents = SPIRIT_SWORD;
+        ItemList[51].Contents = SPIRIT_SWORD;
 
-        ChestList[52].Contents = STRANGE_BOTTLE;
+        ItemList[52].Contents = STRANGE_BOTTLE;
 
-        ChestList[53].Contents = MEDICAL_HERB;
+        ItemList[53].Contents = MEDICAL_HERB;
 
-        ChestList[54].Contents = GEMS;
-        ChestList[54].Gems     = 100;
+        ItemList[54].Contents = GEMS;
+        ItemList[54].Gems     = 100;
 
-        ChestList[55].Contents = EMBLEM_B;
+        ItemList[55].Contents = EMBLEM_B;
 
-        ChestList[56].Contents = GEMS;
-        ChestList[56].Gems     = 80;
+        ItemList[56].Contents = GEMS;
+        ItemList[56].Gems     = 80;
 
-        ChestList[57].Contents = GEMS;
-        ChestList[57].Gems     = 80;
+        ItemList[57].Contents = GEMS;
+        ItemList[57].Gems     = 80;
 
-        ChestList[58].Contents = GEMS;
-        ChestList[58].Gems     = 100;
+        ItemList[58].Contents = GEMS;
+        ItemList[58].Gems     = 100;
 
-        ChestList[59].Contents = MEDICAL_HERB;
+        ItemList[59].Contents = MEDICAL_HERB;
 
-        ChestList[60].Contents = MEDICAL_HERB;
+        ItemList[60].Contents = MEDICAL_HERB;
 
-        ChestList[61].Contents = GEMS;
-        ChestList[61].Gems     = 200;
+        ItemList[61].Contents = GEMS;
+        ItemList[61].Gems     = 200;
 
-        ChestList[62].Contents = RED_HOT_BALL;
+        ItemList[62].Contents = RED_HOT_BALL;
 
-        ChestList[63].Contents = SOUL_ARMOR;
+        ItemList[63].Contents = SOUL_ARMOR;
 
-        ChestList[64].Contents = SOUL_BLADE;
+        ItemList[64].Contents = SOUL_BLADE;
 
-        ChestList[65].Contents = GEMS;
-        ChestList[65].Gems     = 100;
+        ItemList[65].Contents = GEMS;
+        ItemList[65].Gems     = 100;
+
+
     }
 
 

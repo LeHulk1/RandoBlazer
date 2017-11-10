@@ -2,7 +2,7 @@
 #define __RANDOMIZER_H__
 
 
-#include "Chest.h"
+#include "ItemHolder.h"
 #include "Lair.h"
 #include "Map.h"
 
@@ -29,7 +29,7 @@ namespace Randomizer {
                        int              RegionIndex);
 
     bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
-                              vector<Chest> &RandomizedChestList,
+                              vector<ItemHolder> &RandomizedChestList,
                               fstream       &ROMFile);
 }
 

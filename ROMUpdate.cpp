@@ -18,7 +18,7 @@ namespace ROMUpdate {
         return (Tens*16) + (Dec - (Tens*10));
     }
 
-    void ROMUpdateChests(vector<Chest> RandomizedChestList, fstream &ROMFile) {
+    void ROMUpdateChests(vector<ItemHolder> RandomizedChestList, fstream &ROMFile) {
 
         ROMFile.seekp (CHEST_DATA_ADDRESS, ios::beg);
 

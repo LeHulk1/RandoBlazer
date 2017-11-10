@@ -317,7 +317,7 @@ namespace Randomizer {
             for (ElementIterator = RegionList[RegionIndex].Contents.begin();
                  ElementIterator != RegionList[RegionIndex].Contents.end();
                  ++ElementIterator) {
-                if ((*ElementIterator).Type == NPC) {
+                if ((*ElementIterator).Type == LAIR) {
                     AvailableRevivingLairs.push_back((*ElementIterator).Index);
                 }
                 else {
@@ -342,7 +342,7 @@ namespace Randomizer {
                      ElementIterator != GoalList[AvailableGoals[GoalIndex]].Requirements.end();
                      ++ElementIterator) {
 
-                    if ( ((*ElementIterator).Type == NPC   && RevivedNPCs[(*ElementIterator).Index]       == false) ||
+                    if ( ((*ElementIterator).Type == LAIR  && RevivedNPCs[(*ElementIterator).Index]       == false) ||
                          ((*ElementIterator).Type == CHEST && CollectedKeyItems[(*ElementIterator).Index] == false) ) {
                         /* This goal is not met yet, check the next one */
                         GoalFulfilled = false;
@@ -364,14 +364,14 @@ namespace Randomizer {
 
 
     bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
-                              vector<Chest> &RandomizedChestList,
+                              vector<ItemHolder> &RandomizedChestList,
                               fstream       &ROMFile) {
 
         /* Get the original Lair and Chest data */
         vector<Lair>  OriginalLairList (NUMBER_OF_LAIRS);
-        vector<Chest> OriginalChestList(NUMBER_OF_CHESTS);
+        vector<ItemHolder> OriginalChestList(NUMBER_OF_CHESTS);
         ROMData::GetOriginalLairData (OriginalLairList, ROMFile);
-        ROMData::GetOriginalChestData(OriginalChestList);
+        ROMData::GetOriginalItemData(OriginalChestList);
 
         vector<Region> RegionList(NUMBER_OF_REGIONS);
         vector<Goal>   GoalList(NUMBER_OF_GOALS);
@@ -498,7 +498,7 @@ namespace Randomizer {
                  ElementIterator != GoalList[AvailableGoals[GoalIndex]].Requirements.end();
                  ++ElementIterator) {
 
-                if ((*ElementIterator).Type == NPC) {
+                if ((*ElementIterator).Type == LAIR) {
 
                     /* If this NPC is already revived, skip this requirement */
                     if (RevivedNPCs[(*ElementIterator).Index] == false) {

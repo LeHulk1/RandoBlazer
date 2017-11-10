@@ -1,7 +1,7 @@
 #ifndef __ROMDATA_H__
 #define __ROMDATA_H__
 
-#include "Chest.h"
+#include "ItemHolder.h"
 #include "Lair.h"
 
 #include <fstream>
@@ -18,7 +18,7 @@
 using namespace std;
 
 namespace ROMData {
-    void GetOriginalChestData(vector<Chest> &ChestList);
+    void GetOriginalItemData(vector<ItemHolder> &ItemList);
     void GetOriginalLairData (vector<Lair>  &LairList, fstream &ROMFile);
 }
 

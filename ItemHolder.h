@@ -1,6 +1,9 @@
 #ifndef __CHEST_H__
 #define __CHEST_H__
 
+#define TYPE_CHEST  0
+#define TYPE_NPC    1
+
 typedef enum {
     NOTHING         = 0x00,
     SWORD_OF_LIFE   = 0x01,
@@ -68,16 +71,18 @@ typedef enum {
     BLACK_STONE     = 0x3F,
     MAGIC_BELL      = 0x40,
     GEMS            = 0xFF
-} ChestContents;
+} ItemIndex;
 
-class Chest {
+class ItemHolder {
 public:
-    Chest();
-    ~Chest();
+    ItemHolder();
+    ~ItemHolder();
 
-    Chest& operator= (const Chest& OtherChest);
-    ChestContents Contents;
+    ItemHolder& operator= (const ItemHolder& OtherChest);
+    int Type;
+    ItemIndex Contents;
     int Gems;
+    int EXP;
 };
 
 #endif // __CHEST_H__

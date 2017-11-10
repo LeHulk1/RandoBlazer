@@ -455,7 +455,7 @@ namespace Log {
 
 
     void CreateSpoilerLog(vector<Lair>  &RandomizedLairList,
-                          vector<Chest> &RandomizedChestList) {
+                          vector<ItemHolder> &RandomizedChestList) {
 
         ofstream LogFile(SPOILER_LOG_FILE_NAME);
         int      NPCIndex, ItemIndex, ChestIndex;

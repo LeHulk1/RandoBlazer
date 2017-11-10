@@ -1,4 +1,4 @@
-#include "Chest.h"
+#include "ItemHolder.h"
 #include "Lair.h"
 #include "Log.h"
 #include "Random.h"
@@ -48,7 +48,7 @@ int main ( int argc, char** argv ) {
 
     /* Initialize the final lists of randomized lairs and chests */
     vector<Lair>  RandomizedLairList;
-    vector<Chest> RandomizedChestList;
+    vector<ItemHolder> RandomizedChestList;
 
     /* Call the main algorithm to randomize the progression through the game:
        ==> randomize chests contents and revived NPCs */
