@@ -43,17 +43,17 @@ namespace Map {
         RegionList[0].InsertElement(LAIR, NPC_BRIDGE_GUARD);
         RegionList[0].InsertElement(LAIR, NPC_IVY_CHEST_ROOM);
         RegionList[0].InsertElement(LAIR, NPC_WATER_MILL);
-        RegionList[0].InsertElement(CHEST, 3);
-        RegionList[0].InsertElement(CHEST, 4);
-        RegionList[0].InsertElement(CHEST, CHEST_DREAM_ROD);
+        RegionList[0].InsertElement(ITEM, 3);
+        RegionList[0].InsertElement(ITEM, 4);
+        RegionList[0].InsertElement(ITEM, CHEST_DREAM_ROD);
         RegionList[0].InsertGoal(0); /* Underground chest room */
         RegionList[0].InsertGoal(1); /* Water Mill */
         RegionList[0].InsertGoal(2); /* Leo's Paintings */
         RegionList[0].InsertGoal(3); /* Village Chief ==> Act 2 */
 
         /* Region 1 - Underground chest room */
-        RegionList[1].InsertElement(CHEST, 1);
-        RegionList[1].InsertElement(CHEST, 2);
+        RegionList[1].InsertElement(ITEM, 1);
+        RegionList[1].InsertElement(ITEM, 2);
 
         /* Region 2 - Underground Castle after elevator */
         RegionList[2].InsertElement(LAIR, NPC_OLD_MAN2);
@@ -77,7 +77,7 @@ namespace Map {
         RegionList[3].InsertElement(LAIR, NPC_TULIP_PASS);
         RegionList[3].InsertElement(LAIR, NPC_BOY_CAVE);
         RegionList[3].InsertElement(LAIR, NPC_VILLAGE_CHIEF);
-        RegionList[3].InsertElement(CHEST, 7);
+        RegionList[3].InsertElement(ITEM, 7);
         RegionList[3].InsertGoal(5); /* Leo's Paintings Metal Enemies */
 
         /* Region 4 - Act 2 start, Lost Marshes + Water Shrine */
@@ -101,15 +101,15 @@ namespace Map {
         RegionList[4].InsertElement(LAIR, NPC_MOLE3);
         RegionList[4].InsertElement(LAIR, NPC_DEER_MAGIC_BELL);
         RegionList[4].InsertElement(LAIR, NPC_SQUIRREL2);
-        RegionList[4].InsertElement(CHEST, 11);
-        RegionList[4].InsertElement(CHEST, 12);
-        RegionList[4].InsertElement(CHEST, 13);
-        RegionList[4].InsertElement(CHEST, 14);
-        RegionList[4].InsertElement(CHEST, 15);
-        RegionList[4].InsertElement(CHEST, 16);
+        RegionList[4].InsertElement(ITEM, 11);
+        RegionList[4].InsertElement(ITEM, 12);
+        RegionList[4].InsertElement(ITEM, 13);
+        RegionList[4].InsertElement(ITEM, 14);
+        RegionList[4].InsertElement(ITEM, 15);
+        RegionList[4].InsertElement(ITEM, 16);
         /*RegionList[4].InsertElement(CHEST, 17);  WARNING: this (normally empty) chest can disappear!!! */
-        RegionList[4].InsertElement(CHEST, 19);
-        RegionList[4].InsertElement(CHEST, 20);
+        RegionList[4].InsertElement(ITEM, 19);
+        RegionList[4].InsertElement(ITEM, 20);
         RegionList[4].InsertGoal(6);  /* Get Greenwood Leaf */
         RegionList[4].InsertGoal(7);  /* Fire Shrine Scorpions */
         RegionList[4].InsertGoal(8);  /* Monmo's Treasure */
@@ -118,12 +118,12 @@ namespace Map {
 
         /* Region 5 - Last part of Underground Castle */
         RegionList[5].InsertElement(LAIR, NPC_OLD_MAN);
-        RegionList[5].InsertElement(CHEST, CHEST_LEOS_BRUSH);
+        RegionList[5].InsertElement(ITEM, CHEST_LEOS_BRUSH);
 
         /* Region 6 - Leo's Paintings Metal Enemies */
         RegionList[6].InsertElement(LAIR, NPC_IVY_EMBLEM_A);
         RegionList[6].InsertElement(LAIR, NPC_IVY_RECOVERY_SWORD);
-        RegionList[6].InsertElement(CHEST, 8);
+        RegionList[6].InsertElement(ITEM, 8);
 
         /* Region 7 - Last part of Marshes + Light Shrine */
         RegionList[7].InsertElement(LAIR, NPC_MOLE_SHIELD_BRACELET);
@@ -136,13 +136,13 @@ namespace Map {
 
         /* Region 8 - Fire Shrine Scorpions */
         RegionList[8].InsertElement(LAIR, NPC_BIRD3);
-        RegionList[8].InsertElement(CHEST, 18);
+        RegionList[8].InsertElement(ITEM, 18);
 
         /* Region 9 - Monmo's Treasure */
         /*RegionList[9].InsertElement(CHEST, 10);  WARNING: this chest can sometimes be already opened, let's take it out for now */
 
         /* Region 10 - Ice Armor chest */
-        RegionList[10].InsertElement(CHEST, 9);
+        RegionList[10].InsertElement(ITEM, 9);
 
         /* Region 11 - Act 3 start, Southerta */
         RegionList[11].InsertElement(LAIR, NPC_DOLPHIN2);
@@ -150,13 +150,13 @@ namespace Map {
         RegionList[11].InsertElement(LAIR, NPC_MERMAID5);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID6);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID_BUBBLE_ARMOR);
-        RegionList[11].InsertElement(CHEST, 28);
+        RegionList[11].InsertElement(ITEM, 28);
         RegionList[11].InsertGoal(12); /* Last soul of Southerta */
         RegionList[11].InsertGoal(13); /* Mermaid Queen ==> Act 4 */
 
         /* Region 12 - Light Shrine Fire Spirits */
         RegionList[12].InsertElement(LAIR, NPC_BIRD_RED_HOT_MIRROR);
-        RegionList[12].InsertElement(CHEST, 21);
+        RegionList[12].InsertElement(ITEM, 21);
 
         /* Region 13 - Last soul of Southerta */
         RegionList[13].InsertElement(LAIR, NPC_MERMAID_STATUE_ROCKBIRD);
@@ -174,17 +174,17 @@ namespace Map {
         RegionList[14].InsertElement(LAIR, NPC_SNAIL_JOCKEY);
         RegionList[14].InsertElement(LAIR, NPC_BOY_MUSHROOM_SHOES);
         RegionList[14].InsertElement(LAIR, NPC_GIRL2);
-        RegionList[14].InsertElement(CHEST, 35);
-        RegionList[14].InsertElement(CHEST, 36);
-        RegionList[14].InsertElement(CHEST, 37);
-        RegionList[14].InsertElement(CHEST, 38);
-        RegionList[14].InsertElement(CHEST, 39);
+        RegionList[14].InsertElement(ITEM, 35);
+        RegionList[14].InsertElement(ITEM, 36);
+        RegionList[14].InsertElement(ITEM, 37);
+        RegionList[14].InsertElement(ITEM, 38);
+        RegionList[14].InsertElement(ITEM, 39);
         RegionList[14].InsertGoal(23); /* Get Mushroom Shoes */
         RegionList[14].InsertGoal(24); /* Tunnel to Lune */
         RegionList[14].InsertGoal(25); /* Nome + Mountain King ==> Act 5 */
 
         /* Region 15 - Big Pearl chest */
-        RegionList[15].InsertElement(CHEST, CHEST_BIG_PEARL);
+        RegionList[15].InsertElement(ITEM, CHEST_BIG_PEARL);
 
         /* Region 16 - Rockbird */
         RegionList[16].InsertElement(LAIR, NPC_MERMAID9);
@@ -192,8 +192,8 @@ namespace Map {
         RegionList[16].InsertElement(LAIR, NPC_MERMAID_MAGIC_FLARE);
         RegionList[16].InsertElement(LAIR, NPC_ANGELFISH_SOUL_OF_SHIELD);
         RegionList[16].InsertElement(LAIR, NPC_MERMAID_STATUE_DUREAN);
-        RegionList[16].InsertElement(CHEST, 29);
-        RegionList[16].InsertElement(CHEST, 30);
+        RegionList[16].InsertElement(ITEM, 29);
+        RegionList[16].InsertElement(ITEM, 30);
         RegionList[16].InsertGoal(17); /* Durean */
         RegionList[16].InsertGoal(18); /* Ghost Ship */
 
@@ -216,16 +216,16 @@ namespace Map {
         RegionList[18].InsertElement(LAIR, NPC_DOLPHIN_SAVES_LUE);
         RegionList[18].InsertElement(LAIR, NPC_MERMAID3);
         RegionList[18].InsertElement(LAIR, NPC_MERMAID_STATUE_BLESTER);
-        RegionList[18].InsertElement(CHEST, 31);
-        RegionList[18].InsertElement(CHEST, 32);
+        RegionList[18].InsertElement(ITEM, 31);
+        RegionList[18].InsertElement(ITEM, 32);
         RegionList[18].InsertGoal(20); /* Durean Metal Gorillas */
 
         /* Region 19 - Ghost Ship */
         RegionList[19].InsertElement(LAIR, NPC_ANGELFISH3);
         RegionList[19].InsertElement(LAIR, NPC_DOLPHIN);
         RegionList[19].InsertElement(LAIR, NPC_MERMAID_QUEEN);
-        RegionList[19].InsertElement(CHEST, 33);
-        RegionList[19].InsertElement(CHEST, 34);
+        RegionList[19].InsertElement(ITEM, 33);
+        RegionList[19].InsertElement(ITEM, 34);
         RegionList[19].InsertGoal(21); /* Seabed Secret Cave */
 
         /* Region 20 - Blester Metal Gorillas */
@@ -235,10 +235,10 @@ namespace Map {
         RegionList[21].InsertElement(LAIR, NPC_MERMAID_RED_HOT_STICK);
 
         /* Region 22 - Seabed Secret Cave */
-        RegionList[22].InsertElement(CHEST, 24);
-        RegionList[22].InsertElement(CHEST, 25);
-        RegionList[22].InsertElement(CHEST, 26);
-        RegionList[22].InsertElement(CHEST, 27);
+        RegionList[22].InsertElement(ITEM, 24);
+        RegionList[22].InsertElement(ITEM, 25);
+        RegionList[22].InsertElement(ITEM, 26);
+        RegionList[22].InsertElement(ITEM, 27);
 
         /* Region 23 - Mermaid's Tears chest */
         /*RegionList[23].InsertElement(CHEST, 22);  WARNING: this chest can sometimes be already opened, let's take it out for now */
@@ -256,7 +256,7 @@ namespace Map {
         RegionList[24].InsertElement(LAIR, NPC_GRANDPA_LUNE);
         RegionList[24].InsertElement(LAIR, NPC_SNAIL2);
         RegionList[24].InsertElement(LAIR, NPC_GRANDPA5);
-        RegionList[24].InsertElement(CHEST, CHEST_LUCKY_BLADE);
+        RegionList[24].InsertElement(ITEM, CHEST_LUCKY_BLADE);
 
         /* Region 25 - Last part of Laynole + Lune */
         RegionList[25].InsertElement(LAIR, NPC_BOY2);
@@ -265,8 +265,8 @@ namespace Map {
         RegionList[25].InsertElement(LAIR, NPC_DANCING_GRANDMA);
         RegionList[25].InsertElement(LAIR, NPC_DANCING_GRANDMA2);
         RegionList[25].InsertElement(LAIR, NPC_MOUNTAIN_KING);
-        RegionList[25].InsertElement(CHEST, 41);
-        RegionList[25].InsertElement(CHEST, 42);
+        RegionList[25].InsertElement(ITEM, 41);
+        RegionList[25].InsertElement(ITEM, 42);
         RegionList[25].InsertGoal(39); /* Last lair of Lune */
 
         /* Region 26 - Act 5 start, first lairs of Leo's Lab Basement */
@@ -281,7 +281,7 @@ namespace Map {
         RegionList[26].InsertGoal(32); /* Marie ==> Act 6 */
 
         /* Region 27 - Zantetsu Sword chest */
-        RegionList[27].InsertElement(CHEST, CHEST_ZANTETSU_SWORD);
+        RegionList[27].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
 
         /* Region 28 - Leo's Lab Basement */
         RegionList[28].InsertElement(LAIR, NPC_PLANT_HERB);
@@ -305,9 +305,9 @@ namespace Map {
         RegionList[29].InsertElement(LAIR, NPC_GREAT_DOOR_SOUL_OF_DETECTION);
         RegionList[29].InsertElement(LAIR, NPC_MODEL_TOWN2);
         RegionList[29].InsertElement(LAIR, NPC_STEPS_MARIE);
-        RegionList[29].InsertElement(CHEST, 45);
-        RegionList[29].InsertElement(CHEST, 46);
-        RegionList[29].InsertElement(CHEST, 47);
+        RegionList[29].InsertElement(ITEM, 45);
+        RegionList[29].InsertElement(ITEM, 46);
+        RegionList[29].InsertElement(ITEM, 47);
 
         /* Region 30 - Model Town 2 */
         RegionList[30].InsertElement(LAIR, NPC_CHEST_OF_DRAWERS2);
@@ -315,11 +315,11 @@ namespace Map {
         RegionList[30].InsertElement(LAIR, NPC_MOUSE5);
         RegionList[30].InsertElement(LAIR, NPC_CAT4);
         RegionList[30].InsertElement(LAIR, NPC_STAIRS_POWER_PLANT);
-        RegionList[30].InsertElement(CHEST, 48);
-        RegionList[30].InsertElement(CHEST, 49);
+        RegionList[30].InsertElement(ITEM, 48);
+        RegionList[30].InsertElement(ITEM, 49);
 
         /* Region 31 - Light Armor chest */
-        RegionList[31].InsertElement(CHEST, 44);
+        RegionList[31].InsertElement(ITEM, 44);
         RegionList[31].InsertGoal(31); /* Power Plant Metal enemies */
 
         /* Region 32 - Power Plant */
@@ -328,8 +328,8 @@ namespace Map {
 
         /* Region 33 - Act 6 start, first lairs of Magridd Castle Basement */
         RegionList[33].InsertElement(LAIR, NPC_SOLDIER);
-        RegionList[33].InsertElement(CHEST, 50);
-        RegionList[33].InsertElement(CHEST, 51);
+        RegionList[33].InsertElement(ITEM, 50);
+        RegionList[33].InsertElement(ITEM, 51);
         RegionList[33].InsertGoal(33); /* Spirit Sword */
         RegionList[33].InsertGoal(34); /* Left Tower */
         RegionList[33].InsertGoal(35); /* Right Tower */
@@ -347,10 +347,10 @@ namespace Map {
         RegionList[34].InsertElement(LAIR, NPC_SOLDIER_DOK);
         RegionList[34].InsertElement(LAIR, NPC_SOLDIER_PLATINUM_CARD);
         RegionList[34].InsertElement(LAIR, NPC_SINGER);
-        RegionList[34].InsertElement(CHEST, 52);
-        RegionList[34].InsertElement(CHEST, 53);
-        RegionList[34].InsertElement(CHEST, 54);
-        RegionList[34].InsertElement(CHEST, 55);
+        RegionList[34].InsertElement(ITEM, 52);
+        RegionList[34].InsertElement(ITEM, 53);
+        RegionList[34].InsertElement(ITEM, 54);
+        RegionList[34].InsertElement(ITEM, 55);
 
         /* Region 35 - Magridd Castle Left Tower */
         RegionList[35].InsertElement(LAIR, NPC_SOLDIER_SOUL_OF_REALITY);
@@ -368,17 +368,17 @@ namespace Map {
         RegionList[36].InsertElement(LAIR, NPC_SOLDIER9);
         RegionList[36].InsertElement(LAIR, NPC_SOLDIER10);
         RegionList[36].InsertElement(LAIR, NPC_SOLDIER11);
-        RegionList[36].InsertElement(CHEST, 56);
-        RegionList[36].InsertElement(CHEST, 57);
-        RegionList[36].InsertElement(CHEST, 58);
-        RegionList[36].InsertElement(CHEST, 59);
+        RegionList[36].InsertElement(ITEM, 56);
+        RegionList[36].InsertElement(ITEM, 57);
+        RegionList[36].InsertElement(ITEM, 58);
+        RegionList[36].InsertElement(ITEM, 59);
         RegionList[36].InsertGoal(37); /* Demon Bird */
 
         /* Region 37 - Act 7 start, World of Evil */
-        RegionList[37].InsertElement(CHEST, 60);
-        RegionList[37].InsertElement(CHEST, 61);
-        RegionList[37].InsertElement(CHEST, CHEST_RED_HOT_BALL);
-        RegionList[37].InsertElement(CHEST, CHEST_SOUL_ARMOR);
+        RegionList[37].InsertElement(ITEM, 60);
+        RegionList[37].InsertElement(ITEM, 61);
+        RegionList[37].InsertElement(ITEM, CHEST_RED_HOT_BALL);
+        RegionList[37].InsertElement(ITEM, CHEST_SOUL_ARMOR);
         RegionList[37].InsertGoal(38); /* Soul Armor */
 
         /* Region 38 - Demon Bird's lair */
@@ -386,8 +386,8 @@ namespace Map {
         RegionList[38].InsertGoal(36); /* King Magridd ==> Act 7 */
 
         /* Region 39 - Dazzling Space */
-        RegionList[39].InsertElement(CHEST, CHEST_SOUL_BLADE);
-        RegionList[39].InsertElement(CHEST, 65);
+        RegionList[39].InsertElement(ITEM, CHEST_SOUL_BLADE);
+        RegionList[39].InsertElement(ITEM, 65);
         RegionList[39].InsertGoal(40); /* End-game NPCs and items */
 
         /* Region 40 - Last Lair in Lune */
@@ -413,7 +413,7 @@ namespace Map {
         GoalList[2].InsertElement(LAIR, NPC_BRIDGE_GUARD);
         GoalList[2].InsertElement(LAIR, NPC_ARCHITECT);
         GoalList[2].InsertElement(LAIR, NPC_LEOS_HOUSE);
-        GoalList[2].InsertElement(CHEST, CHEST_LEOS_BRUSH);
+        GoalList[2].InsertElement(ITEM, CHEST_LEOS_BRUSH);
         GoalList[2].Target = 3;
 
         /* Goal 3 - Village Chief ==> Act 2 */
@@ -423,11 +423,11 @@ namespace Map {
 
         /* Goal 4 - Lisa, Last part of Underground Castle */
         GoalList[4].InsertElement(LAIR, NPC_LISA);
-        GoalList[4].InsertElement(CHEST, CHEST_DREAM_ROD);
+        GoalList[4].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[4].Target = 5;
 
         /* Goal 5 - Leo's Paintings Metal Enemies */
-        GoalList[5].InsertElement(CHEST, CHEST_ZANTETSU_SWORD);
+        GoalList[5].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
         GoalList[5].Target = 6;
 
         /* Goal 6 - Greenwood Leaf */
@@ -435,11 +435,11 @@ namespace Map {
         GoalList[6].InsertElement(LAIR, NPC_CROCODILE2);
         GoalList[6].InsertElement(LAIR, NPC_BIRD_GREENWOOD_LEAF);
         GoalList[6].InsertElement(LAIR, NPC_MOLE_SOUL_OF_LIGHT);
-        GoalList[6].InsertElement(CHEST, CHEST_DREAM_ROD);
+        GoalList[6].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[6].Target = 7;
 
         /* Goal 7 - Fire Shrine Scorpions */
-        GoalList[7].InsertElement(CHEST, CHEST_ZANTETSU_SWORD);
+        GoalList[7].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
         GoalList[7].Target = 8;
 
         /* Goal 8 - Monmo's Treasure */
@@ -450,7 +450,7 @@ namespace Map {
         /* Goal 9 - Ice Armor chest */
         GoalList[9].InsertElement(LAIR, NPC_MOLE);
         GoalList[9].InsertElement(LAIR, NPC_SQUIRREL_ICE_ARMOR);
-        GoalList[9].InsertElement(CHEST, CHEST_DREAM_ROD);
+        GoalList[9].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[9].Target = 10;
 
         /* Goal 10 - Greenwood's Guardian ==> Act 3 */
@@ -458,7 +458,7 @@ namespace Map {
         GoalList[10].Target = 11;
 
         /* Goal 11 - Light Shrine Fire Spirits */
-        GoalList[11].InsertElement(CHEST, CHEST_SPIRIT_SWORD);
+        GoalList[11].InsertElement(ITEM, CHEST_SPIRIT_SWORD);
         GoalList[11].Target = 12;
 
         /* Goal 12 - Last soul of Southerta */
@@ -497,15 +497,15 @@ namespace Map {
         GoalList[19].Target = 20;
 
         /* Goal 20 - Durean Metal Gorillas */
-        GoalList[20].InsertElement(CHEST, CHEST_ZANTETSU_SWORD);
+        GoalList[20].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
         GoalList[20].Target = 21;
 
         /* Goal 21 - Seabed Secret Cave */
         GoalList[21].InsertElement(LAIR, NPC_MERMAID_PEARL);
         GoalList[21].InsertElement(LAIR, NPC_DOLPHIN_PEARL);
         GoalList[21].InsertElement(LAIR, NPC_DOLPHIN_SECRET_CAVE);
-        GoalList[21].InsertElement(CHEST, CHEST_DREAM_ROD);
-        GoalList[21].InsertElement(CHEST, CHEST_BIG_PEARL);
+        GoalList[21].InsertElement(ITEM, CHEST_DREAM_ROD);
+        GoalList[21].InsertElement(ITEM, CHEST_BIG_PEARL);
         GoalList[21].Target = 22;
 
         /* Goal 22 - Mermaid's Tears chest */
@@ -520,7 +520,7 @@ namespace Map {
         GoalList[24].InsertElement(LAIR, NPC_GIRL3);
         GoalList[24].InsertElement(LAIR, NPC_GRANDPA4);
         GoalList[24].InsertElement(LAIR, NPC_GRANDPA_LUNE);
-        GoalList[24].InsertElement(CHEST, CHEST_LUCKY_BLADE);
+        GoalList[24].InsertElement(ITEM, CHEST_LUCKY_BLADE);
         GoalList[24].Target = 25;
 
         /* Goal 25 - Nome + Mountain King ==> Act 5 */
@@ -537,7 +537,7 @@ namespace Map {
         GoalList[26].Target = 27;
 
         /* Goal 27 - Rest of Leo's Lab Basement */
-        GoalList[27].InsertElement(CHEST, CHEST_ZANTETSU_SWORD);
+        GoalList[27].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
         GoalList[27].Target = 28;
 
         /* Goal 28 - Model Town 1 */
@@ -557,7 +557,7 @@ namespace Map {
         GoalList[30].Target = 31;
 
         /* Goal 31 - Power Plant */
-        GoalList[31].InsertElement(CHEST, CHEST_ZANTETSU_SWORD);
+        GoalList[31].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
         GoalList[31].Target = 32;
 
         /* Goal 32 - Marie ==> Act 6 */
@@ -568,7 +568,7 @@ namespace Map {
         GoalList[32].Target = 33;
 
         /* Goal 33 - Spirit Sword */
-        GoalList[33].InsertElement(CHEST, CHEST_SPIRIT_SWORD);
+        GoalList[33].InsertElement(ITEM, CHEST_SPIRIT_SWORD);
         GoalList[33].Target = 34;
 
         /* Goal 34 - Magridd Castle Left Tower */
@@ -594,14 +594,14 @@ namespace Map {
         GoalList[37].Target = 38;
 
         /* Goal 38 - Soul Armor */
-        GoalList[38].InsertElement(CHEST, CHEST_SOUL_ARMOR);
+        GoalList[38].InsertElement(ITEM, CHEST_SOUL_ARMOR);
         GoalList[38].Target = 39;
 
         /* Goal 39 - Last Lair in Lune */
         GoalList[39].InsertElement(LAIR, NPC_MUSHROOM2);
         GoalList[39].InsertElement(LAIR, NPC_GRANDPA5);
         GoalList[39].InsertElement(LAIR, NPC_MUSHROOM_EMBLEM_F);
-        GoalList[39].InsertElement(CHEST, CHEST_DREAM_ROD);
+        GoalList[39].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[39].Target = 40;
 
         /* Goal 40 - End of game required items: Soul Blade / Red-Hot Items / Phoenix
@@ -612,8 +612,8 @@ namespace Map {
         GoalList[40].InsertElement(LAIR, NPC_GRANDPA3);
         GoalList[40].InsertElement(LAIR, NPC_DANCING_GRANDMA);
         GoalList[40].InsertElement(LAIR, NPC_DANCING_GRANDMA2);
-        GoalList[40].InsertElement(CHEST, CHEST_SOUL_BLADE);
-        GoalList[40].InsertElement(CHEST, CHEST_RED_HOT_BALL);
+        GoalList[40].InsertElement(ITEM, CHEST_SOUL_BLADE);
+        GoalList[40].InsertElement(ITEM, CHEST_RED_HOT_BALL);
         GoalList[40].Target = 41;
     }
 

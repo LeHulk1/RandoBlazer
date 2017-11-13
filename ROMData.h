@@ -9,6 +9,7 @@
 
 
 #define NUMBER_OF_CHESTS 66
+#define NUMBER_OF_ITEMS  124
 #define NUMBER_OF_LAIRS  400
 
 #define CHEST_DATA_ADDRESS        0xAADE
@@ -19,7 +20,7 @@ using namespace std;
 
 namespace ROMData {
     void GetOriginalItemData(vector<ItemHolder> &ItemList);
-    void GetOriginalLairData (vector<Lair>  &LairList, fstream &ROMFile);
+    void GetOriginalLairData(vector<Lair>  &LairList, fstream &ROMFile);
 }
 
 

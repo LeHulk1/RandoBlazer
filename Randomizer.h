@@ -22,14 +22,14 @@ namespace Randomizer {
     void ExploreRegion(vector<Region>  &RegionList,
                        vector<Goal>    &GoalList,
                        vector<int>     &AvailableRevivingLairs,
-                       vector<int>     &AvailableChests,
+                       vector<int>     &AvailableItems,
                        vector<int>     &AvailableGoals,
                        bool             RevivedNPCs[],
                        bool             CollectedKeyItems[],
                        int              RegionIndex);
 
     bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
-                              vector<ItemHolder> &RandomizedChestList,
+                              vector<ItemHolder> &RandomizedItemList,
                               fstream       &ROMFile);
 }
 

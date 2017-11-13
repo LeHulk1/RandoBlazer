@@ -48,12 +48,12 @@ int main ( int argc, char** argv ) {
 
     /* Initialize the final lists of randomized lairs and chests */
     vector<Lair>  RandomizedLairList;
-    vector<ItemHolder> RandomizedChestList;
+    vector<ItemHolder> RandomizedItemList;
 
     /* Call the main algorithm to randomize the progression through the game:
        ==> randomize chests contents and revived NPCs */
     bool RandomizationStatus = Randomizer::RandomizeProgression(RandomizedLairList,
-                                                                RandomizedChestList,
+                                                                RandomizedItemList,
                                                                 ROMFile);
     if (!RandomizationStatus) {
         cout << "Randomization failed!\n";
@@ -64,11 +64,11 @@ int main ( int argc, char** argv ) {
     Randomizer::RandomizeLairContents(RandomizedLairList);
 
     /* Modify the ROM with the randomized lists */
-    ROMUpdate::ROMUpdateLairs(RandomizedLairList,   ROMFile);
-    ROMUpdate::ROMUpdateChests(RandomizedChestList, ROMFile);
+    ROMUpdate::ROMUpdateLairs(RandomizedLairList, ROMFile);
+    ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
 
     /* Generate the Spoiler Log */
-    Log::CreateSpoilerLog(RandomizedLairList, RandomizedChestList);
+    Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
     /* Close the ROM file */
     ROMFile.close();

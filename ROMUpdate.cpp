@@ -18,7 +18,7 @@ namespace ROMUpdate {
         return (Tens*16) + (Dec - (Tens*10));
     }
 
-    void ROMUpdateChests(vector<ItemHolder> RandomizedChestList, fstream &ROMFile) {
+    void ROMUpdateItems(vector<ItemHolder> RandomizedItemList, fstream &ROMFile) {
 
         ROMFile.seekp (CHEST_DATA_ADDRESS, ios::beg);
 
@@ -33,11 +33,11 @@ namespace ROMUpdate {
             ROMFile.seekp (3, ios::cur);
 
             /* Update the contents */
-            ChestItem = RandomizedChestList[i].Contents;
+            ChestItem = RandomizedItemList[i].Contents;
             ROMFile.write((char*)(&ChestItem), 1);
-            GemTensAndUnits = RandomizedChestList[i].Gems % 100;
+            GemTensAndUnits = RandomizedItemList[i].Gems % 100;
             ChestGems[0] = ConvertToHex(GemTensAndUnits);
-            ChestGems[1] = ConvertToHex((RandomizedChestList[i].Gems - GemTensAndUnits) / 100);
+            ChestGems[1] = ConvertToHex((RandomizedItemList[i].Gems - GemTensAndUnits) / 100);
             ROMFile.write((char*)(&ChestGems[0]), 2);
 
             /* Chest at index 22 is doubled, so we have to double its replacing one */

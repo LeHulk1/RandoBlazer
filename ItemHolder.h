@@ -70,7 +70,8 @@ typedef enum {
     PURPLE_STONE    = 0x3E,
     BLACK_STONE     = 0x3F,
     MAGIC_BELL      = 0x40,
-    GEMS            = 0xFF
+    EXP             = 0xFE,
+    GEMS            = 0xFF,
 } ItemIndex;
 
 class ItemHolder {
@@ -82,7 +83,7 @@ public:
     int Type;
     ItemIndex Contents;
     int Gems;
-    int EXP;
+    int Exp;
 };
 
 #endif // __CHEST_H__
