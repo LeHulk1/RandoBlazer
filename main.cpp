@@ -10,8 +10,9 @@
 #include <stdlib.h>
 
 
-#define ROM_FILE_NAME  "Soul Blazer (U) [!].smc"
-#define SEED_FILE_NAME "seed"
+#define ROM_FILE_NAME      "Soul Blazer (U) [!].smc"
+#define MOD_ROM_FILE_NAME  "Soul Blazer Randomized.smc"
+#define SEED_FILE_NAME     "seed"
 
 #define SEED_SIZE  10
 
@@ -26,6 +27,8 @@ int main ( int argc, char** argv ) {
         cout << "ROM file \"" << ROM_FILE_NAME << "\" is not found!\n";
         return 1;
     }
+    ROMFile.close();
+    ROMFile.clear();
 
     /* Initialize randomness with provided seed, if any */
     ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
@@ -46,9 +49,23 @@ int main ( int argc, char** argv ) {
     }
     SeedFile.close();
 
+    /* Rename the ROM to be modified */
+    int RenameResult = rename(ROM_FILE_NAME, MOD_ROM_FILE_NAME);
+    if (RenameResult != 0) {
+        cout << "Failure renaming ROM file!\n";
+    }
+
+    /* Back up the original ROM */
+    ifstream ROMFileOriginal(MOD_ROM_FILE_NAME, ios::binary);
+    ofstream ROMFileCopy    (ROM_FILE_NAME,     ios::binary);
+    ROMFileCopy << ROMFileOriginal.rdbuf();
+
     /* Initialize the final lists of randomized lairs and chests */
     vector<Lair>  RandomizedLairList;
     vector<ItemHolder> RandomizedItemList;
+
+    /* Re-open ROM to be modified */
+    ROMFile.open(MOD_ROM_FILE_NAME, ios::in | ios::out | ios::binary | ios::ate);
 
     /* Call the main algorithm to randomize the progression through the game:
        ==> randomize chests contents and revived NPCs */
