@@ -552,7 +552,8 @@ namespace Randomizer {
                                      (*ElementIterator).Index == NPC_MERMAID_STATUE_GHOST_SHIP ||
                                      (*ElementIterator).Index == NPC_MERMAID_QUEEN ) {
                                     /* First Mermaid Statue problem fix: make sure these NPCs can only be found in Lairs from Act 3 or later */
-                                    while (AvailableRevivingLairs[RevivingLairIndex] < NPC_DOLPHIN) {
+                                    while ( (AvailableRevivingLairs[RevivingLairIndex] < NPC_DOLPHIN) ||
+                                            (AvailableRevivingLairs[RevivingLairIndex] == NPC_MERMAID_STATUE_ROCKBIRD) ) {
                                         RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
                                     }
 #ifdef DEBUG
