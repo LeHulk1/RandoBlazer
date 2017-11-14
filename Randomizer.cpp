@@ -377,14 +377,15 @@ namespace Randomizer {
         vector<Goal>   GoalList(NUMBER_OF_GOALS);
 
         /* Get the map */
-        Map::InitMap(RegionList, GoalList);
+        //Map::InitMap(RegionList, GoalList);
+        Map::InitMap_v2(RegionList, GoalList);
 
         vector<int> AvailableRevivingLairs;
         vector<int> AvailableItems;
         vector<int> AvailableGoals;
         vector<int> VillageChiefPossibleLairs;
-        bool RevivedNPCs      [NUMBER_OF_LAIRS]  = {false};
-        bool CollectedKeyItems[NUMBER_OF_CHESTS] = {false};
+        bool RevivedNPCs      [NUMBER_OF_LAIRS] = {false};
+        bool CollectedKeyItems[NUMBER_OF_ITEMS] = {false};
         list<Element>::const_iterator ElementIterator;
         list<int>::const_iterator GoalIterator;
 
