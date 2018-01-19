@@ -625,6 +625,7 @@ namespace Map {
         /******** REGIONS ********/
 
         /* Region 0 - Act 1 start, Underground Castle before elevator */
+        RegionList[0].InsertElement(ITEM, ITEM_MAGICIAN);
         RegionList[0].InsertElement(LAIR, NPC_OLD_WOMAN);
         RegionList[0].InsertElement(LAIR, NPC_TOOL_SHOP_OWNER);
         RegionList[0].InsertElement(LAIR, NPC_TULIP);
@@ -640,10 +641,15 @@ namespace Map {
         RegionList[0].InsertGoal(2);  /* Leo's Paintings */
         RegionList[0].InsertGoal(3);  /* Village Chief ==> Act 2 */
         RegionList[0].InsertGoal(41); /* Tool Shop Owner */
+        RegionList[0].InsertGoal(43); /* Emblem A tile */
+        RegionList[0].InsertGoal(44); /* Secret Cave pass */
+        RegionList[0].InsertGoal(45); /* Goat pen corner tile */
+        RegionList[0].InsertGoal(46); /* Secret Cave access */
 
         /* Region 1 - Underground chest room */
         RegionList[1].InsertElement(ITEM, 1);
         RegionList[1].InsertElement(ITEM, 2);
+        RegionList[1].InsertElement(ITEM, ITEM_CRYSTAL_GRASS_VALLEY);
 
         /* Region 2 - Underground Castle after elevator */
         RegionList[2].InsertElement(LAIR, NPC_OLD_MAN2);
@@ -671,6 +677,7 @@ namespace Map {
         RegionList[3].InsertGoal(5); /* Leo's Paintings Metal Enemies */
 
         /* Region 4 - Act 2 start, Lost Marshes + Water Shrine */
+        RegionList[4].InsertElement(ITEM, ITEM_VILLAGE_CHIEF);
         RegionList[4].InsertElement(LAIR, NPC_BIRD);
         RegionList[4].InsertElement(LAIR, NPC_DOG);
         RegionList[4].InsertElement(LAIR, NPC_SQUIRREL_PSYCHO_SWORD);
@@ -992,6 +999,22 @@ namespace Map {
         /* Region 43 - Tool Shop Owner's son Teddy */
         RegionList[43].InsertElement(ITEM, ITEM_TEDDY);
 
+        /* Region 44 - Emblem A tile */
+        RegionList[44].InsertElement(ITEM, ITEM_EMBLEM_A);
+
+        /* Region 45 - Secret Cave pass */
+        RegionList[45].InsertElement(ITEM, ITEM_PASS);
+
+        /* Region 46 - Goat pen corner tile */
+        RegionList[46].InsertElement(ITEM, ITEM_GOAT_PEN);
+
+        /* Region 47 - Secret Cave */
+        RegionList[47].InsertElement(ITEM, ITEM_SECRET_CAVE_TILE);
+        RegionList[47].InsertGoal(47); /* Recovery Sword crystal */
+
+        /* Region 48 - Recovery Sword crystal */
+        RegionList[48].InsertElement(ITEM, ITEM_CRYSTAL_RECOVERY_SWORD);
+
 
 
         /******** GOALS ********/
@@ -1220,6 +1243,33 @@ namespace Map {
         /* Goal 42 - Tool Shop Owner's son Teddy */
         GoalList[42].InsertElement(LAIR, NPC_TEDDY);
         GoalList[42].Target = 43;
+
+        /* Goal 43 - Emblem A tile */
+        GoalList[43].InsertElement(LAIR, NPC_BRIDGE_GUARD);
+        GoalList[43].InsertElement(LAIR, NPC_IVY);
+        GoalList[43].InsertElement(LAIR, NPC_IVY_EMBLEM_A);
+        GoalList[43].Target = 44;
+
+        /* Goal 44 - Secret Cave pass */
+        GoalList[44].InsertElement(LAIR, NPC_BRIDGE_GUARD);
+        GoalList[44].InsertElement(LAIR, NPC_IVY);
+        GoalList[44].InsertElement(LAIR, NPC_TULIP_PASS);
+        GoalList[44].Target = 45;
+
+        /* Goal 45 - Goat pen tile */
+        GoalList[45].InsertElement(LAIR, NPC_BRIDGE_GUARD);
+        GoalList[45].InsertElement(LAIR, NPC_GOAT_HERB);
+        GoalList[45].Target = 46;
+
+        /* Goal 46 - Secret Cave access */
+        GoalList[46].InsertElement(LAIR, NPC_BRIDGE_GUARD);
+        GoalList[46].InsertElement(LAIR, NPC_BOY_CAVE);
+        GoalList[46].InsertElement(ITEM, ITEM_PASS);
+        GoalList[46].Target = 47;
+
+        /* Goal 47 - Recovery Sword crystal */
+        GoalList[47].InsertElement(LAIR, NPC_IVY_RECOVERY_SWORD);
+        GoalList[46].Target = 48;
     }
 
 
