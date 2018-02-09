@@ -676,7 +676,7 @@ namespace Map {
         RegionList[3].InsertElement(ITEM, 7);
         RegionList[3].InsertGoal(5); /* Leo's Paintings Metal Enemies */
 
-        /* Region 4 - Act 2 start, Lost Marshes + Water Shrine */
+        /* Region 4 - Act 2 start, Lost Marshes + Water/Fire Shrines */
         RegionList[4].InsertElement(ITEM, ITEM_VILLAGE_CHIEF);
         RegionList[4].InsertElement(LAIR, NPC_BIRD);
         RegionList[4].InsertElement(LAIR, NPC_DOG);
@@ -707,11 +707,19 @@ namespace Map {
         /*RegionList[4].InsertElement(CHEST, 17);  WARNING: this (normally empty) chest can disappear!!! */
         RegionList[4].InsertElement(ITEM, 19);
         RegionList[4].InsertElement(ITEM, 20);
+        RegionList[4].InsertElement(ITEM, ITEM_CRYSTAL_WATER_SHRINE);
+        RegionList[4].InsertElement(ITEM, ITEM_WATER_SHRINE_TILE);
+        RegionList[4].InsertElement(ITEM, ITEM_CRYSTAL_LIGHT_ARROW);
         RegionList[4].InsertGoal(6);  /* Get Greenwood Leaf */
         RegionList[4].InsertGoal(7);  /* Fire Shrine Scorpions */
         RegionList[4].InsertGoal(8);  /* Monmo's Treasure */
         RegionList[4].InsertGoal(9);  /* Ice Armor chest */
         RegionList[4].InsertGoal(10); /* Greenwood's Guardian ==> Act 3 */
+        RegionList[4].InsertGoal(48); /* Red-Hot Mirror bird */
+        RegionList[4].InsertGoal(49); /* Magic Bell crystal */
+        RegionList[4].InsertGoal(50); /* Woodstin Trio */
+        RegionList[4].InsertGoal(51); /* Shield Bracelet mole */
+        RegionList[4].InsertGoal(52); /* Psycho Sword squirrel */
 
         /* Region 5 - Last part of Underground Castle */
         RegionList[5].InsertElement(LAIR, NPC_OLD_MAN);
@@ -729,6 +737,7 @@ namespace Map {
         RegionList[7].InsertElement(LAIR, NPC_CROCODILE3);
         RegionList[7].InsertElement(LAIR, NPC_MONMO);
         RegionList[7].InsertElement(LAIR, NPC_GREENWOODS_GUARDIAN);
+        RegionList[7].InsertElement(ITEM, ITEM_CRYSTAL_LOST_MARSH);
         RegionList[7].InsertGoal(11); /* Light Shrine Fire Spirits */
 
         /* Region 8 - Fire Shrine Scorpions */
@@ -1015,6 +1024,25 @@ namespace Map {
         /* Region 48 - Recovery Sword crystal */
         RegionList[48].InsertElement(ITEM, ITEM_CRYSTAL_RECOVERY_SWORD);
 
+        /* Region 49 - Red-Hot Mirror bird */
+        RegionList[49].InsertElement(ITEM, ITEM_BIRD_RED_HOT_MIRROR);
+
+        /* Region 50 - MAgic Bell crystal */
+        RegionList[50].InsertElement(ITEM, ITEM_CRYSTAL_MAGIC_BELL);
+
+        /* Region 51 - Woodstin Trio */
+        RegionList[51].InsertElement(ITEM, ITEM_WOODSTIN_TRIO);
+
+        /* Region 52 - Shield Bracelet mole */
+        RegionList[52].InsertElement(ITEM, ITEM_MOLE_SHIELD_BRACELET);
+
+        /* Region 53 - Psycho Sword squirrel */
+        RegionList[53].InsertElement(ITEM, ITEM_SQUIRREL_PSYCHO_SWORD);
+        RegionList[53].InsertGoal(53); /* Emblem C squirrel */
+
+        /* Region 54 - Emblem C squirrel */
+        RegionList[54].InsertElement(ITEM, ITEM_SQUIRREL_EMBLEM_C);
+
 
 
         /******** GOALS ********/
@@ -1083,6 +1111,7 @@ namespace Map {
 
         /* Goal 12 - Last soul of Southerta */
         GoalList[12].InsertElement(LAIR, NPC_MERMAID_BUBBLE_ARMOR);
+        GoalList[12].InsertElement(ITEM, ITEM_MERMAID_BUBBLE_ARMOR);
         GoalList[12].Target = 13;
 
         /* Goal 13 - Mermaid Queen ==> Act 4 */
@@ -1269,7 +1298,45 @@ namespace Map {
 
         /* Goal 47 - Recovery Sword crystal */
         GoalList[47].InsertElement(LAIR, NPC_IVY_RECOVERY_SWORD);
-        GoalList[46].Target = 48;
+        GoalList[47].Target = 48;
+
+        /* Goal 48 - Red-Hot Mirror bird */
+        GoalList[48].InsertElement(LAIR, NPC_BIRD_RED_HOT_MIRROR);
+        GoalList[48].Target = 49;
+
+        /* Goal 49 - Magic Bell crystal */
+        GoalList[49].InsertElement(LAIR, NPC_DEER_MAGIC_BELL);
+        GoalList[49].InsertElement(LAIR, NPC_CROCODILE3);
+        GoalList[49].InsertElement(ITEM, ITEM_EMBLEM_A);
+        GoalList[49].InsertElement(ITEM, CHEST_EMBLEM_B);
+        GoalList[49].InsertElement(ITEM, ITEM_SQUIRREL_EMBLEM_C);
+        GoalList[49].InsertElement(ITEM, CHEST_EMBLEM_D);
+        GoalList[49].InsertElement(ITEM, ITEM_SNAIL_EMBLEM_E);
+        GoalList[49].InsertElement(ITEM, ITEM_EMBLEM_F);
+        GoalList[49].InsertElement(ITEM, ITEM_EMBLEM_G);
+        GoalList[49].InsertElement(ITEM, ITEM_EMBLEM_H);
+        GoalList[49].Target = 50;
+
+        /* Goal 50 - Woodstin Trio */
+        GoalList[50].InsertElement(LAIR, NPC_DEER);
+        GoalList[50].InsertElement(LAIR, NPC_SQUIRREL3);
+        GoalList[50].InsertElement(LAIR, NPC_DOG3);
+        GoalList[50].Target = 51;
+
+        /* Goal 51 - Shield Bracelet mole */
+        GoalList[51].InsertElement(LAIR, NPC_MOLE);
+        GoalList[51].InsertElement(LAIR, NPC_MOLE_SHIELD_BRACELET);
+        GoalList[51].InsertElement(ITEM, CHEST_MOLES_RIBBON);
+        GoalList[51].Target = 52;
+
+        /* Goal 52 - Psycho Sword squirrel */
+        GoalList[52].InsertElement(LAIR, NPC_SQUIRREL_PSYCHO_SWORD);
+        GoalList[52].InsertElement(ITEM, CHEST_DELICIOUS_SEEDS);
+        GoalList[52].Target = 53;
+
+        /* Goal 53 - Red-Hot Mirror bird */
+        GoalList[53].InsertElement(LAIR, NPC_SQUIRREL_EMBLEM_C);
+        GoalList[53].Target = 54;
     }
 
 
