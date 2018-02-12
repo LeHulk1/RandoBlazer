@@ -751,14 +751,16 @@ namespace Map {
         RegionList[10].InsertElement(ITEM, 9);
 
         /* Region 11 - Act 3 start, Southerta */
+        RegionList[11].InsertElement(ITEM, ITEM_GREENWOODS_GUARDIAN);
         RegionList[11].InsertElement(LAIR, NPC_DOLPHIN2);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID4);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID5);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID6);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID_BUBBLE_ARMOR);
         RegionList[11].InsertElement(ITEM, 28);
-        RegionList[11].InsertGoal(12); /* Last soul of Southerta */
         RegionList[11].InsertGoal(13); /* Mermaid Queen ==> Act 4 */
+        RegionList[11].InsertGoal(54); /* Medical Herb mermaid */
+        RegionList[11].InsertGoal(55); /* Common Mermaid house */
 
         /* Region 12 - Light Shrine Fire Spirits */
         RegionList[12].InsertElement(LAIR, NPC_BIRD_RED_HOT_MIRROR);
@@ -766,12 +768,11 @@ namespace Map {
 
         /* Region 13 - Last soul of Southerta */
         RegionList[13].InsertElement(LAIR, NPC_MERMAID_STATUE_ROCKBIRD);
-        RegionList[13].InsertGoal(14); /* Big Pearl chest */
         RegionList[13].InsertGoal(15); /* Rockbird */
         RegionList[13].InsertGoal(16); /* Blester */
-        RegionList[13].InsertGoal(22); /* Mermaid's Tears chest */
 
         /* Region 14 - Act 4 start, Mountain of Souls */
+        RegionList[14].InsertElement(ITEM, ITEM_MERMAID_QUEEN);
         RegionList[14].InsertElement(LAIR, NPC_GIRL);
         RegionList[14].InsertElement(LAIR, NPC_GRANDPA);
         RegionList[14].InsertElement(LAIR, NPC_MUSHROOM);
@@ -791,6 +792,7 @@ namespace Map {
 
         /* Region 15 - Big Pearl chest */
         RegionList[15].InsertElement(ITEM, CHEST_BIG_PEARL);
+        RegionList[15].InsertGoal(56); /* Magic Flare mermaid */
 
         /* Region 16 - Rockbird */
         RegionList[16].InsertElement(LAIR, NPC_MERMAID9);
@@ -800,6 +802,7 @@ namespace Map {
         RegionList[16].InsertElement(LAIR, NPC_MERMAID_STATUE_DUREAN);
         RegionList[16].InsertElement(ITEM, 29);
         RegionList[16].InsertElement(ITEM, 30);
+        RegionList[16].InsertElement(ITEM, ITEM_CRYSTAL_ROCKBIRD);
         RegionList[16].InsertGoal(17); /* Durean */
         RegionList[16].InsertGoal(18); /* Ghost Ship */
 
@@ -811,6 +814,7 @@ namespace Map {
         RegionList[17].InsertElement(LAIR, NPC_ANGELFISH4);
         RegionList[17].InsertElement(LAIR, NPC_MERMAID8);
         RegionList[17].InsertElement(LAIR, NPC_DOLPHIN_SECRET_CAVE);
+        RegionList[17].InsertElement(ITEM, ITEM_CRYSTAL_SEABED_NEAR_BLESTER);
         RegionList[17].InsertGoal(19); /* Blester Metal Gorillas */
 
         /* Region 18 - Durean */
@@ -824,6 +828,7 @@ namespace Map {
         RegionList[18].InsertElement(LAIR, NPC_MERMAID_STATUE_BLESTER);
         RegionList[18].InsertElement(ITEM, 31);
         RegionList[18].InsertElement(ITEM, 32);
+        RegionList[18].InsertElement(ITEM, ITEM_CRYSTAL_SEABED_NEAR_DUREAN);
         RegionList[18].InsertGoal(20); /* Durean Metal Gorillas */
 
         /* Region 19 - Ghost Ship */
@@ -876,6 +881,7 @@ namespace Map {
         RegionList[25].InsertGoal(39); /* Last lair of Lune */
 
         /* Region 26 - Act 5 start, first lairs of Leo's Lab Basement */
+        RegionList[26].InsertElement(ITEM, ITEM_NOME);
         RegionList[26].InsertElement(LAIR, NPC_PLANT);
         RegionList[26].InsertElement(LAIR, NPC_CAT);
         RegionList[26].InsertElement(LAIR, NPC_GREAT_DOOR_ZANTETSU_SWORD);
@@ -933,6 +939,7 @@ namespace Map {
         RegionList[32].InsertElement(LAIR, NPC_MARIE);
 
         /* Region 33 - Act 6 start, first lairs of Magridd Castle Basement */
+        RegionList[33].InsertElement(ITEM, ITEM_MARIE);
         RegionList[33].InsertElement(LAIR, NPC_SOLDIER);
         RegionList[33].InsertElement(ITEM, 50);
         RegionList[33].InsertElement(ITEM, 51);
@@ -981,6 +988,7 @@ namespace Map {
         RegionList[36].InsertGoal(37); /* Demon Bird */
 
         /* Region 37 - Act 7 start, World of Evil */
+        RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD);
         RegionList[37].InsertElement(ITEM, 60);
         RegionList[37].InsertElement(ITEM, 61);
         RegionList[37].InsertElement(ITEM, CHEST_RED_HOT_BALL);
@@ -1043,6 +1051,24 @@ namespace Map {
         /* Region 54 - Emblem C squirrel */
         RegionList[54].InsertElement(ITEM, ITEM_SQUIRREL_EMBLEM_C);
 
+        /* Region 55 - Medical Herb mermaid (north-eastern house of St Elles) */
+        RegionList[55].InsertElement(ITEM, ITEM_MERMAID_HERB);
+
+        /* Region 56 - Common Mermaid house */
+        RegionList[56].InsertGoal(12); /* Last soul of Southerta */
+        RegionList[56].InsertGoal(14); /* Big Pearl chest */
+        RegionList[56].InsertGoal(22); /* Mermaid's Tears chest */
+        RegionList[56].InsertGoal(57); /* Red-Hot Stick mermaid */
+        RegionList[56].InsertGoal(58); /* Lue */
+
+        /* Region 57 - Magic Flare mermaid */
+        RegionList[57].InsertElement(ITEM, ITEM_MERMAID_MAGIC_FLARE);
+
+        /* Region 58 - Red-Hot Stick mermaid */
+        RegionList[58].InsertElement(ITEM, ITEM_MERMAID_RED_HOT_STICK);
+
+        /* Region 59 - Lue */
+        RegionList[59].InsertElement(ITEM, ITEM_LUE);
 
 
         /******** GOALS ********/
@@ -1110,7 +1136,6 @@ namespace Map {
         GoalList[11].Target = 12;
 
         /* Goal 12 - Last soul of Southerta */
-        GoalList[12].InsertElement(LAIR, NPC_MERMAID_BUBBLE_ARMOR);
         GoalList[12].InsertElement(ITEM, ITEM_MERMAID_BUBBLE_ARMOR);
         GoalList[12].Target = 13;
 
@@ -1140,9 +1165,7 @@ namespace Map {
         GoalList[18].Target = 19;
 
         /* Goal 19 - Blester Metal Gorillas */
-        GoalList[19].InsertElement(LAIR, NPC_MERMAID_PEARL);
-        GoalList[19].InsertElement(LAIR, NPC_LUE);
-        GoalList[19].InsertElement(LAIR, NPC_DOLPHIN_SAVES_LUE);
+        GoalList[19].InsertElement(ITEM, ITEM_LUE);
         GoalList[19].Target = 20;
 
         /* Goal 20 - Durean Metal Gorillas */
@@ -1151,7 +1174,6 @@ namespace Map {
 
         /* Goal 21 - Seabed Secret Cave */
         GoalList[21].InsertElement(LAIR, NPC_MERMAID_PEARL);
-        GoalList[21].InsertElement(LAIR, NPC_DOLPHIN_PEARL);
         GoalList[21].InsertElement(LAIR, NPC_DOLPHIN_SECRET_CAVE);
         GoalList[21].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[21].InsertElement(ITEM, CHEST_BIG_PEARL);
@@ -1337,6 +1359,29 @@ namespace Map {
         /* Goal 53 - Red-Hot Mirror bird */
         GoalList[53].InsertElement(LAIR, NPC_SQUIRREL_EMBLEM_C);
         GoalList[53].Target = 54;
+
+        /* Goal 54 - Medical Herb mermaid (north-eastern house of St Elles) */
+        GoalList[54].InsertElement(LAIR, NPC_DOLPHIN2);
+        GoalList[54].InsertElement(LAIR, NPC_MERMAID);
+        GoalList[54].Target = 55;
+
+        /* Goal 55 - Common Mermaid house */
+        GoalList[55].InsertElement(LAIR, NPC_MERMAID_BUBBLE_ARMOR);
+        GoalList[55].Target = 56;
+
+        /* Goal 56 - Magic Flare mermaid */
+        GoalList[56].InsertElement(LAIR, NPC_MERMAID_MAGIC_FLARE);
+        GoalList[56].Target = 57;
+
+        /* Goal 57 - Red-Hot Stick mermaid */
+        GoalList[57].InsertElement(LAIR, NPC_MERMAID_RED_HOT_STICK);
+        GoalList[57].Target = 58;
+
+        /* Goal 58 - Lue */
+        GoalList[58].InsertElement(LAIR, NPC_MERMAID_PEARL);
+        GoalList[58].InsertElement(LAIR, NPC_LUE);
+        GoalList[58].InsertElement(LAIR, NPC_DOLPHIN_SAVES_LUE);
+        GoalList[58].Target = 59;
     }
 
 
