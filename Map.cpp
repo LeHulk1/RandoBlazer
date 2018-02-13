@@ -704,7 +704,7 @@ namespace Map {
         RegionList[4].InsertElement(ITEM, 14);
         RegionList[4].InsertElement(ITEM, 15);
         RegionList[4].InsertElement(ITEM, 16);
-        /*RegionList[4].InsertElement(CHEST, 17);  WARNING: this (normally empty) chest can disappear!!! */
+        //RegionList[4].InsertElement(CHEST, 17);  WARNING: this (normally empty) chest can disappear!!!
         RegionList[4].InsertElement(ITEM, 19);
         RegionList[4].InsertElement(ITEM, 20);
         RegionList[4].InsertElement(ITEM, ITEM_CRYSTAL_WATER_SHRINE);
@@ -745,7 +745,7 @@ namespace Map {
         RegionList[8].InsertElement(ITEM, 18);
 
         /* Region 9 - Monmo's Treasure */
-        /*RegionList[9].InsertElement(CHEST, 10);  WARNING: this chest can sometimes be already opened, let's take it out for now */
+        //RegionList[9].InsertElement(CHEST, 10);  WARNING: this chest can sometimes be already opened, let's take it out for now
 
         /* Region 10 - Ice Armor chest */
         RegionList[10].InsertElement(ITEM, 9);
@@ -786,9 +786,13 @@ namespace Map {
         RegionList[14].InsertElement(ITEM, 37);
         RegionList[14].InsertElement(ITEM, 38);
         RegionList[14].InsertElement(ITEM, 39);
+        RegionList[14].InsertElement(ITEM, ITEM_CRYSTAL_MOUNTAIN_OF_SOULS);
         RegionList[14].InsertGoal(23); /* Get Mushroom Shoes */
         RegionList[14].InsertGoal(24); /* Tunnel to Lune */
         RegionList[14].InsertGoal(25); /* Nome + Mountain King ==> Act 5 */
+        RegionList[14].InsertGoal(59); /* Emblem E snail */
+        RegionList[14].InsertGoal(60); /* Mushroom Shoes boy */
+        RegionList[14].InsertGoal(61); /* Mountain King's item */
 
         /* Region 15 - Big Pearl chest */
         RegionList[15].InsertElement(ITEM, CHEST_BIG_PEARL);
@@ -852,9 +856,9 @@ namespace Map {
         RegionList[22].InsertElement(ITEM, 27);
 
         /* Region 23 - Mermaid's Tears chest */
-        /*RegionList[23].InsertElement(CHEST, 22);  WARNING: this chest can sometimes be already opened, let's take it out for now */
+        //RegionList[23].InsertElement(CHEST, 22);  WARNING: this chest can sometimes be already opened, let's take it out for now
 
-        /* Region 24 - Laynole */
+        /* Region 24 - Mountain of Souls last lair + Laynole */
         RegionList[24].InsertElement(LAIR, NPC_GRANDMA);
         RegionList[24].InsertElement(LAIR, NPC_MUSHROOM2);
         RegionList[24].InsertElement(LAIR, NPC_SNAIL_RACER);
@@ -878,6 +882,7 @@ namespace Map {
         RegionList[25].InsertElement(LAIR, NPC_MOUNTAIN_KING);
         RegionList[25].InsertElement(ITEM, 41);
         RegionList[25].InsertElement(ITEM, 42);
+        RegionList[25].InsertElement(ITEM, ITEM_CRYSTAL_LUNE);
         RegionList[25].InsertGoal(39); /* Last lair of Lune */
 
         /* Region 26 - Act 5 start, first lairs of Leo's Lab Basement */
@@ -885,15 +890,16 @@ namespace Map {
         RegionList[26].InsertElement(LAIR, NPC_PLANT);
         RegionList[26].InsertElement(LAIR, NPC_CAT);
         RegionList[26].InsertElement(LAIR, NPC_GREAT_DOOR_ZANTETSU_SWORD);
-        RegionList[26].InsertGoal(26); /* Zantetsu Sword chest */
+        RegionList[26].InsertGoal(26); /* Leo's Lab main room */
         RegionList[26].InsertGoal(27); /* Rest of Leo's Lab Basement */
-        RegionList[26].InsertGoal(28); /* Model Town 1 */
-        RegionList[26].InsertGoal(29); /* Model Town 2 */
         RegionList[26].InsertGoal(30); /* Light Armor chest */
-        RegionList[26].InsertGoal(32); /* Marie ==> Act 6 */
+        RegionList[26].InsertGoal(65); /* Model Town room access */
 
-        /* Region 27 - Zantetsu Sword chest */
+        /* Region 27 - Leo's Lab main room */
         RegionList[27].InsertElement(ITEM, CHEST_ZANTETSU_SWORD);
+        RegionList[27].InsertGoal(62); /* Locked dining room */
+        RegionList[27].InsertGoal(63); /* Spark Magic mouse */
+        RegionList[27].InsertGoal(64); /* Medical Herb plant */
 
         /* Region 28 - Leo's Lab Basement */
         RegionList[28].InsertElement(LAIR, NPC_PLANT_HERB);
@@ -906,6 +912,7 @@ namespace Map {
         RegionList[28].InsertElement(LAIR, NPC_MOUSE);
         RegionList[28].InsertElement(LAIR, NPC_GREAT_DOOR_MODEL_TOWNS);
         RegionList[28].InsertElement(LAIR, NPC_MODEL_TOWN1);
+        RegionList[28].InsertElement(ITEM, ITEM_CRYSTAL_LEOS_LAB_BASEMENT);
 
         /* Region 29 - Model Town 1 */
         RegionList[29].InsertElement(LAIR, NPC_CHEST_OF_DRAWERS);
@@ -920,6 +927,7 @@ namespace Map {
         RegionList[29].InsertElement(ITEM, 45);
         RegionList[29].InsertElement(ITEM, 46);
         RegionList[29].InsertElement(ITEM, 47);
+        RegionList[29].InsertElement(ITEM, ITEM_CRYSTAL_MODEL_TOWN);
 
         /* Region 30 - Model Town 2 */
         RegionList[30].InsertElement(LAIR, NPC_CHEST_OF_DRAWERS2);
@@ -937,15 +945,22 @@ namespace Map {
         /* Region 32 - Power Plant */
         RegionList[32].InsertElement(LAIR, NPC_DOLL);
         RegionList[32].InsertElement(LAIR, NPC_MARIE);
+        RegionList[32].InsertElement(ITEM, ITEM_CRYSTAL_POWER_PLANT);
 
         /* Region 33 - Act 6 start, first lairs of Magridd Castle Basement */
         RegionList[33].InsertElement(ITEM, ITEM_MARIE);
         RegionList[33].InsertElement(LAIR, NPC_SOLDIER);
         RegionList[33].InsertElement(ITEM, 50);
         RegionList[33].InsertElement(ITEM, 51);
+        RegionList[33].InsertElement(ITEM, ITEM_HARP_STRING);
         RegionList[33].InsertGoal(33); /* Spirit Sword */
         RegionList[33].InsertGoal(34); /* Left Tower */
         RegionList[33].InsertGoal(35); /* Right Tower */
+        RegionList[33].InsertGoal(68); /* Elemental Mail soldier */
+        RegionList[33].InsertGoal(69); /* Queen Magridd */
+        RegionList[33].InsertGoal(70); /* Platinum Card soldier */
+        RegionList[33].InsertGoal(71); /* Medical Herb maid */
+        RegionList[33].InsertGoal(72); /* Emblem H tile */
 
         /* Region 34 - Magridd Castle Basement */
         RegionList[34].InsertElement(LAIR, NPC_SOLDIER2);
@@ -994,18 +1009,21 @@ namespace Map {
         RegionList[37].InsertElement(ITEM, CHEST_RED_HOT_BALL);
         RegionList[37].InsertElement(ITEM, CHEST_SOUL_ARMOR);
         RegionList[37].InsertGoal(38); /* Soul Armor */
+        RegionList[37].InsertGoal(73); /* Super Bracelet tile */
 
         /* Region 38 - Demon Bird's lair */
         //RegionList[38].InsertElement(NPC, NPC_KING_MAGRIDD); ==> Don't randomize King Magridd's location
+        RegionList[38].InsertElement(ITEM, ITEM_DR_LEO);
         RegionList[38].InsertGoal(36); /* King Magridd ==> Act 7 */
 
         /* Region 39 - Dazzling Space */
         RegionList[39].InsertElement(ITEM, CHEST_SOUL_BLADE);
         RegionList[39].InsertElement(ITEM, 65);
-        RegionList[39].InsertGoal(40); /* End-game NPCs and items */
+        RegionList[39].InsertGoal(40); /* End-game required items */
 
         /* Region 40 - Last Lair in Lune */
         RegionList[40].InsertElement(LAIR, NPC_SNAIL_EMBLEM_E);
+        RegionList[40].InsertElement(ITEM, ITEM_EMBLEM_F);
 
         /* Region 41 - End of the game (NOTHING here) */
 
@@ -1035,7 +1053,7 @@ namespace Map {
         /* Region 49 - Red-Hot Mirror bird */
         RegionList[49].InsertElement(ITEM, ITEM_BIRD_RED_HOT_MIRROR);
 
-        /* Region 50 - MAgic Bell crystal */
+        /* Region 50 - Magic Bell crystal */
         RegionList[50].InsertElement(ITEM, ITEM_CRYSTAL_MAGIC_BELL);
 
         /* Region 51 - Woodstin Trio */
@@ -1055,6 +1073,7 @@ namespace Map {
         RegionList[55].InsertElement(ITEM, ITEM_MERMAID_HERB);
 
         /* Region 56 - Common Mermaid house */
+        RegionList[56].InsertElement(ITEM, ITEM_MERMAID_BUBBLE_ARMOR);
         RegionList[56].InsertGoal(12); /* Last soul of Southerta */
         RegionList[56].InsertGoal(14); /* Big Pearl chest */
         RegionList[56].InsertGoal(22); /* Mermaid's Tears chest */
@@ -1069,6 +1088,56 @@ namespace Map {
 
         /* Region 59 - Lue */
         RegionList[59].InsertElement(ITEM, ITEM_LUE);
+
+        /* Region 60 - Emblem E snail */
+        RegionList[60].InsertElement(ITEM, ITEM_SNAIL_EMBLEM_E);
+
+        /* Region 61 - Mushroom Shoes boy */
+        RegionList[61].InsertElement(ITEM, ITEM_BOY_MUSHROOM_SHOES);
+
+        /* Region 62 - Mountain King's item + Deathtoll appears! */
+        RegionList[62].InsertElement(ITEM, ITEM_MOUNTAIN_KING);
+
+        /* Region 63 - Locked dining room */
+        RegionList[63].InsertElement(ITEM, ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR);
+        RegionList[63].InsertElement(ITEM, ITEM_EMBLEM_G);
+
+        /* Region 64 - Spark Magic mouse */
+        RegionList[64].InsertElement(ITEM, ITEM_MOUSE_SPARK_BOMB);
+
+        /* Region 65 - Medical Herb plant */
+        RegionList[65].InsertElement(ITEM, ITEM_PLANT_HERB);
+
+        /* Region 66 - Model Town room */
+        RegionList[66].InsertGoal(28); /* Model Town 1 */
+        RegionList[66].InsertGoal(29); /* Model Town 2 */
+        RegionList[66].InsertGoal(32); /* Marie ==> Act 6 */
+        RegionList[66].InsertGoal(66); /* Leo's Cat */
+        RegionList[66].InsertGoal(67); /* Actinidia Plant */
+
+        /* Region 67 - Leo's Cat */
+        RegionList[67].InsertElement(ITEM, ITEM_CAT_DOOR_KEY);
+
+        /* Region 68 - Actinidia Plant */
+        RegionList[68].InsertElement(ITEM, ITEM_PLANT_ACTINIDIA_LEAVES);
+
+        /* Region 69 - Elemental Mail soldier */
+        RegionList[69].InsertElement(ITEM, ITEM_SOLDIER_ELEMENTAL_MAIL);
+
+        /* Region 70 - Queen Magridd */
+        //RegionList[70].InsertElement(ITEM, ITEM_QUEEN_MAGRIDD); WARNING: this item can be lost if the Queen is already dead
+
+        /* Region 71 - Platinum Card soldier */
+        RegionList[71].InsertElement(ITEM, ITEM_SOLDIER_PLATINUM_CARD);
+
+        /* Region 72 - Medical Herb maid */
+        RegionList[72].InsertElement(ITEM, ITEM_MAID_HERB);
+
+        /* Region 73 - Emblem H tile */
+        RegionList[73].InsertElement(ITEM, ITEM_EMBLEM_H);
+
+        /* Region 74 - Super Bracelet tile */
+        RegionList[74].InsertElement(ITEM, ITEM_SUPER_BRACELET);
 
 
         /******** GOALS ********/
@@ -1184,7 +1253,7 @@ namespace Map {
         GoalList[22].Target = 23;
 
         /* Goal 23 - Get Mushroom Shoes */
-        GoalList[23].InsertElement(LAIR, NPC_BOY_MUSHROOM_SHOES);
+        GoalList[23].InsertElement(ITEM, ITEM_BOY_MUSHROOM_SHOES);
         GoalList[23].Target = 24;
 
         /* Goal 24 - Tunnel to Lune */
@@ -1212,14 +1281,10 @@ namespace Map {
         GoalList[27].Target = 28;
 
         /* Goal 28 - Model Town 1 */
-        GoalList[28].InsertElement(LAIR, NPC_STEPS_UPSTAIRS);
-        GoalList[28].InsertElement(LAIR, NPC_GREAT_DOOR_MODEL_TOWNS);
         GoalList[28].InsertElement(LAIR, NPC_MODEL_TOWN1);
         GoalList[28].Target = 29;
 
         /* Goal 29 - Model Town 2 */
-        GoalList[29].InsertElement(LAIR, NPC_STEPS_UPSTAIRS);
-        GoalList[29].InsertElement(LAIR, NPC_GREAT_DOOR_MODEL_TOWNS);
         GoalList[29].InsertElement(LAIR, NPC_MODEL_TOWN2);
         GoalList[29].Target = 30;
 
@@ -1232,8 +1297,6 @@ namespace Map {
         GoalList[31].Target = 32;
 
         /* Goal 32 - Marie ==> Act 6 */
-        GoalList[32].InsertElement(LAIR, NPC_STEPS_UPSTAIRS);
-        GoalList[32].InsertElement(LAIR, NPC_GREAT_DOOR_MODEL_TOWNS);
         GoalList[32].InsertElement(LAIR, NPC_STEPS_MARIE);
         GoalList[32].InsertElement(LAIR, NPC_MARIE);
         GoalList[32].Target = 33;
@@ -1243,14 +1306,13 @@ namespace Map {
         GoalList[33].Target = 34;
 
         /* Goal 34 - Magridd Castle Left Tower */
-        GoalList[34].InsertElement(LAIR, NPC_SINGER_CONCERT_HALL);
-        GoalList[34].InsertElement(LAIR, NPC_SOLDIER_PLATINUM_CARD);
         GoalList[34].InsertElement(LAIR, NPC_SOLDIER_LEFT_TOWER);
+        GoalList[34].InsertElement(ITEM, ITEM_SOLDIER_PLATINUM_CARD);
         GoalList[34].Target = 35;
 
         /* Goal 35 - Magridd Castle Right Tower */
-        GoalList[35].InsertElement(LAIR, NPC_QUEEN_MAGRIDD);
         GoalList[35].InsertElement(LAIR, NPC_SOLDIER_RIGHT_TOWER);
+        GoalList[35].InsertElement(ITEM, ITEM_QUEEN_MAGRIDD);
         GoalList[35].Target = 36;
 
         /* Goal 36 - King Magridd ==> Act 7 */
@@ -1275,16 +1337,10 @@ namespace Map {
         GoalList[39].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[39].Target = 40;
 
-        /* Goal 40 - End of game required items: Soul Blade / Red-Hot Items / Phoenix
+        /* Goal 40 - End of game required items: Soul Blade / Phoenix
           (mostly to ensure that they don't get into potentially inaccessible areas) */
-        GoalList[40].InsertElement(LAIR, NPC_BIRD_RED_HOT_MIRROR);
-        GoalList[40].InsertElement(LAIR, NPC_MERMAID_RED_HOT_STICK);
-        GoalList[40].InsertElement(LAIR, NPC_BOY);
-        GoalList[40].InsertElement(LAIR, NPC_GRANDPA3);
-        GoalList[40].InsertElement(LAIR, NPC_DANCING_GRANDMA);
-        GoalList[40].InsertElement(LAIR, NPC_DANCING_GRANDMA2);
         GoalList[40].InsertElement(ITEM, CHEST_SOUL_BLADE);
-        GoalList[40].InsertElement(ITEM, CHEST_RED_HOT_BALL);
+        GoalList[40].InsertElement(ITEM, ITEM_MOUNTAIN_KING);
         GoalList[40].Target = 41;
 
         /* Goal 41 - Tool Shop Owner */
@@ -1382,6 +1438,87 @@ namespace Map {
         GoalList[58].InsertElement(LAIR, NPC_LUE);
         GoalList[58].InsertElement(LAIR, NPC_DOLPHIN_SAVES_LUE);
         GoalList[58].Target = 59;
+
+        /* Goal 59 - Emblem E snail */
+        GoalList[59].InsertElement(LAIR, NPC_SNAIL_EMBLEM_E);
+        GoalList[59].Target = 60;
+
+        /* Goal 60 - Mushroom Shoes boy */
+        GoalList[60].InsertElement(LAIR, NPC_BOY_MUSHROOM_SHOES);
+        GoalList[60].Target = 61;
+
+        /* Goal 61 - Mountain King's item + get Deathtoll to appear */
+        GoalList[61].InsertElement(LAIR, NPC_BOY_MUSHROOM_SHOES);
+        GoalList[61].InsertElement(LAIR, NPC_BOY);
+        GoalList[61].InsertElement(LAIR, NPC_GRANDPA3);
+        GoalList[61].InsertElement(LAIR, NPC_DANCING_GRANDMA);
+        GoalList[61].InsertElement(LAIR, NPC_DANCING_GRANDMA2);
+        GoalList[61].InsertElement(LAIR, NPC_MOUNTAIN_KING);
+        GoalList[61].InsertElement(ITEM, CHEST_RED_HOT_BALL);
+        GoalList[61].InsertElement(ITEM, ITEM_BIRD_RED_HOT_MIRROR);
+        GoalList[61].InsertElement(ITEM, ITEM_MERMAID_RED_HOT_STICK);
+        GoalList[61].Target = 62;
+
+        /* Goal 62 - Locked dining room */
+        GoalList[62].InsertElement(LAIR, NPC_GREAT_DOOR);
+        GoalList[62].InsertElement(LAIR, NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR);
+        GoalList[62].InsertElement(ITEM, ITEM_CAT_DOOR_KEY);
+        GoalList[62].Target = 63;
+
+        /* Goal 63 - Spark Magic mouse */
+        GoalList[63].InsertElement(LAIR, NPC_CAT);
+        GoalList[63].InsertElement(LAIR, NPC_CAT2);
+        GoalList[63].InsertElement(LAIR, NPC_MOUSE);
+        GoalList[63].InsertElement(LAIR, NPC_MOUSE_SPARK_BOMB);
+        GoalList[63].InsertElement(ITEM, ITEM_PLANT_ACTINIDIA_LEAVES);
+        GoalList[63].Target = 64;
+
+        /* Goal 64 - Medical Herb plant */
+        GoalList[64].InsertElement(LAIR, NPC_CAT);
+        GoalList[64].InsertElement(LAIR, NPC_CAT2);
+        GoalList[64].InsertElement(LAIR, NPC_MOUSE);
+        GoalList[64].InsertElement(LAIR, NPC_PLANT_HERB);
+        GoalList[64].InsertElement(ITEM, ITEM_PLANT_ACTINIDIA_LEAVES);
+        GoalList[64].Target = 65;
+
+        /* Goal 65 - Model Town room access */
+        GoalList[65].InsertElement(LAIR, NPC_STEPS_UPSTAIRS);
+        GoalList[65].InsertElement(LAIR, NPC_GREAT_DOOR_MODEL_TOWNS);
+        GoalList[65].Target = 66;
+
+        /* Goal 66 - Leo's Cat */
+        GoalList[66].InsertElement(LAIR, NPC_CAT_DOOR_KEY);
+        GoalList[66].Target = 67;
+
+        /* Goal 67 - Actinidia Plant */
+        GoalList[67].InsertElement(LAIR, NPC_PLANT_ACTINIDIA_LEAVES);
+        GoalList[67].Target = 68;
+
+        /* Goal 68 - Elemental Mail soldier */
+        GoalList[68].InsertElement(LAIR, NPC_SOLDIER_ELEMENTAL_MAIL);
+        GoalList[68].Target = 69;
+
+        /* Goal 69 - Queen Magridd */
+        GoalList[69].InsertElement(LAIR, NPC_QUEEN_MAGRIDD);
+        GoalList[69].Target = 70;
+
+        /* Goal 70 - Platinum Card soldier */
+        GoalList[70].InsertElement(LAIR, NPC_SINGER_CONCERT_HALL);
+        GoalList[70].InsertElement(LAIR, NPC_SOLDIER_PLATINUM_CARD);
+        GoalList[70].InsertElement(ITEM, ITEM_HARP_STRING);
+        GoalList[70].Target = 71;
+
+        /* Goal 71 - Medical Herb maid */
+        GoalList[71].InsertElement(LAIR, NPC_MAID_HERB);
+        GoalList[71].Target = 72;
+
+        /* Goal 72 - Emblem H tile */
+        GoalList[72].InsertElement(LAIR, NPC_SOLDIER_CASTLE);
+        GoalList[72].Target = 73;
+
+        /* Goal 73 - Super Bracelet tile */
+        GoalList[73].InsertElement(LAIR, NPC_QUEEN_MAGRIDD);
+        GoalList[73].Target = 74;
     }
 
 
