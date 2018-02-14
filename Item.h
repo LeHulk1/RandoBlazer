@@ -74,12 +74,12 @@ typedef enum {
     GEMS            = 0xFF,
 } ItemIndex;
 
-class ItemHolder {
+class Item {
 public:
-    ItemHolder();
-    ~ItemHolder();
+    Item();
+    ~Item();
 
-    ItemHolder& operator= (const ItemHolder& OtherChest);
+    Item& operator= (const Item& OtherChest);
     int Type;
     ItemIndex Contents;
     int Gems;

@@ -313,7 +313,7 @@ namespace Randomizer {
 
             KeepExploring = false;
 
-            /* Explore the targeted region: store all the new available reviving lairs and chests... */
+            /* Explore the targeted region: store all the new available reviving lairs and items... */
             for (ElementIterator = RegionList[RegionIndex].Contents.begin();
                  ElementIterator != RegionList[RegionIndex].Contents.end();
                  ++ElementIterator) {
@@ -342,7 +342,7 @@ namespace Randomizer {
                      ElementIterator != GoalList[AvailableGoals[GoalIndex]].Requirements.end();
                      ++ElementIterator) {
 
-                    if ( ((*ElementIterator).Type == LAIR  && RevivedNPCs[(*ElementIterator).Index]       == false) ||
+                    if ( ((*ElementIterator).Type == LAIR && RevivedNPCs[(*ElementIterator).Index]       == false) ||
                          ((*ElementIterator).Type == ITEM && CollectedKeyItems[(*ElementIterator).Index] == false) ) {
                         /* This goal is not met yet, check the next one */
                         GoalFulfilled = false;
@@ -364,12 +364,12 @@ namespace Randomizer {
 
 
     bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
-                              vector<ItemHolder> &RandomizedItemList,
+                              vector<Item>  &RandomizedItemList,
                               fstream       &ROMFile) {
 
         /* Get the original Lair and Item data */
-        vector<Lair>  OriginalLairList (NUMBER_OF_LAIRS);
-        vector<ItemHolder> OriginalItemList(NUMBER_OF_ITEMS);
+        vector<Lair> OriginalLairList (NUMBER_OF_LAIRS);
+        vector<Item> OriginalItemList(NUMBER_OF_ITEMS);
         ROMData::GetOriginalLairData(OriginalLairList, ROMFile);
         ROMData::GetOriginalItemData(OriginalItemList);
 
@@ -389,7 +389,7 @@ namespace Randomizer {
         list<Element>::const_iterator ElementIterator;
         list<int>::const_iterator GoalIterator;
 
-        int Index, GoalIndex, RevivingLairIndex, ChestIndex, NewRegionIndex;
+        int Index, GoalIndex, RevivingLairIndex, ItemIndex, NewRegionIndex;
         bool SpecialCaseChecked        = false;
         bool ExcludeLisa               = false;
         bool VillageChiefSpecialCase   = false;
@@ -625,18 +625,18 @@ namespace Randomizer {
                                 /**** Normal case ****/
 
                                 /* Choose one of the available Chests and assign this item to it */
-                                ChestIndex = RandomInteger(AvailableItems.size());
-                                RandomizedItemList[AvailableItems[ChestIndex]] = OriginalItemList[(*ElementIterator).Index];
+                                ItemIndex = RandomInteger(AvailableItems.size());
+                                RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[(*ElementIterator).Index];
 
 #ifdef DEBUG
-                                cout << "Chest: " << AvailableItems[ChestIndex] << " <-- " << (*ElementIterator).Index << endl;
+                                cout << "Chest: " << AvailableItems[ItemIndex] << " <-- " << (*ElementIterator).Index << endl;
 #endif
 
                                 /* This Key Item has been collected */
                                 CollectedKeyItems[(*ElementIterator).Index] = true;
 
                                 /* This Chest is no longer available */
-                                AvailableItems.erase(AvailableItems.begin() + ChestIndex);
+                                AvailableItems.erase(AvailableItems.begin() + ItemIndex);
                             }
                         }
                         else {
@@ -673,14 +673,17 @@ namespace Randomizer {
         /* At this stage, all key chest items and NPC have been placed.
            We now need to place all the other elements (non-key items and NPCs). */
         vector<int> NonKeyNPCList;
-        vector<int> NonKeyChestList;
-        Map::GetNonKeyNPCList  (NonKeyNPCList);
-        Map::GetNonKeyChestList(NonKeyChestList);
+        vector<int> NonKeyItemList;
+        //Map::GetNonKeyNPCList (NonKeyNPCList);
+        Map::GetNonKeyNPCList_v2 (NonKeyNPCList);
+        //Map::GetNonKeyItemList(NonKeyItemList);
+        Map::GetNonKeyItemList_v2(NonKeyItemList);
 
-        /* Add the possibly disappearing chest, Monmo's Ribbon chest and Mermaid's Tears chest */
+        /* Add the possibly disappearing chest, Monmo's Ribbon chest, Mermaid's Tears chest and Queen Magridd's item */
         AvailableItems.push_back(17);
         AvailableItems.push_back(10);
         AvailableItems.push_back(22);
+        AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
 
         /* Lisa exclusion case: lock Lisa in an inaccessible lair if necessary,
            and add a non-key item in the Leo's Brush chest. */
@@ -691,21 +694,21 @@ namespace Randomizer {
 
 #ifdef DEBUG
         cout << AvailableRevivingLairs.size() << " available Reviving Lairs, " << NonKeyNPCList.size() << " in NPC list.\n";
-        cout << AvailableItems.size() << " available Chests, " << NonKeyChestList.size() << " in Chest list.\n";
+        cout << AvailableItems.size() << " available Items, " << NonKeyItemList.size() << " in Item list.\n";
 #endif
 
         /* Shuffle these lists */
-        random_shuffle(NonKeyNPCList.begin(),   NonKeyNPCList.end(),   RandomInteger);
-        random_shuffle(NonKeyChestList.begin(), NonKeyChestList.end(), RandomInteger);
+        random_shuffle(NonKeyNPCList.begin(),  NonKeyNPCList.end(),  RandomInteger);
+        random_shuffle(NonKeyItemList.begin(), NonKeyItemList.end(), RandomInteger);
 
 
         for (RevivingLairIndex = 0; RevivingLairIndex < (int)AvailableRevivingLairs.size(); RevivingLairIndex++) {
             /* Fill this lair and remove it from the list */
             RandomizedLairList[NonKeyNPCList[RevivingLairIndex]] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
         }
-        for (ChestIndex = 0; ChestIndex < (int)AvailableItems.size(); ChestIndex++) {
-            /* Fill this chest and remove it from the list */
-            RandomizedItemList[AvailableItems[ChestIndex]] = OriginalItemList[NonKeyChestList[ChestIndex]];
+        for (ItemIndex = 0; ItemIndex < (int)AvailableItems.size(); ItemIndex++) {
+            /* Fill this item and remove it from the list */
+            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[NonKeyItemList[ItemIndex]];
         }
 
         /* Randomization successful! */

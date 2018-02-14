@@ -1,7 +1,7 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
-#include "ItemHolder.h"
+#include "Item.h"
 #include "Lair.h"
 
 #include <string>
@@ -15,8 +15,8 @@ namespace Log {
     string GetKeyNPCName(int NPC_ID);
     string GetAreaName(Lair &Lair);
 
-    void CreateSpoilerLog(vector<Lair>  &RandomizedLairList,
-                          vector<ItemHolder> &RandomizedChestList);
+    void CreateSpoilerLog(vector<Lair> &RandomizedLairList,
+                          vector<Item> &RandomizedChestList);
 }
 
 #endif // __LOG_H__

@@ -720,6 +720,7 @@ namespace Map {
         RegionList[4].InsertGoal(50); /* Woodstin Trio */
         RegionList[4].InsertGoal(51); /* Shield Bracelet mole */
         RegionList[4].InsertGoal(52); /* Psycho Sword squirrel */
+        RegionList[4].InsertGoal(74); /* Greenwood Leaf tile */
 
         /* Region 5 - Last part of Underground Castle */
         RegionList[5].InsertElement(LAIR, NPC_OLD_MAN);
@@ -1000,7 +1001,7 @@ namespace Map {
         RegionList[36].InsertElement(ITEM, 57);
         RegionList[36].InsertElement(ITEM, 58);
         RegionList[36].InsertElement(ITEM, 59);
-        RegionList[36].InsertGoal(37); /* Demon Bird */
+        RegionList[36].InsertGoal(37); /* Dr Leo + Queen Magridd cutscene */
 
         /* Region 37 - Act 7 start, World of Evil */
         RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD);
@@ -1011,10 +1012,9 @@ namespace Map {
         RegionList[37].InsertGoal(38); /* Soul Armor */
         RegionList[37].InsertGoal(73); /* Super Bracelet tile */
 
-        /* Region 38 - Demon Bird's lair */
-        //RegionList[38].InsertElement(NPC, NPC_KING_MAGRIDD); ==> Don't randomize King Magridd's location
+        /* Region 38 - Dr Leo + Queen Magridd cutscene */
         RegionList[38].InsertElement(ITEM, ITEM_DR_LEO);
-        RegionList[38].InsertGoal(36); /* King Magridd ==> Act 7 */
+        RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 39 - Dazzling Space */
         RegionList[39].InsertElement(ITEM, CHEST_SOUL_BLADE);
@@ -1139,6 +1139,13 @@ namespace Map {
         /* Region 74 - Super Bracelet tile */
         RegionList[74].InsertElement(ITEM, ITEM_SUPER_BRACELET);
 
+        /* Region 75 - Greenwood Leaf tile */
+        RegionList[75].InsertElement(ITEM, ITEM_GREENWOOD_LEAVES);
+
+        /* Region 76 - Demon Bird's lair */
+        //RegionList[76].InsertElement(NPC, NPC_KING_MAGRIDD); ==> Don't randomize King Magridd's location
+        RegionList[76].InsertGoal(36); /* King Magridd ==> Act 7 */
+
 
         /******** GOALS ********/
 
@@ -1174,11 +1181,7 @@ namespace Map {
         GoalList[5].Target = 6;
 
         /* Goal 6 - Greenwood Leaf */
-        GoalList[6].InsertElement(LAIR, NPC_CROCODILE);
-        GoalList[6].InsertElement(LAIR, NPC_CROCODILE2);
-        GoalList[6].InsertElement(LAIR, NPC_BIRD_GREENWOOD_LEAF);
-        GoalList[6].InsertElement(LAIR, NPC_MOLE_SOUL_OF_LIGHT);
-        GoalList[6].InsertElement(ITEM, CHEST_DREAM_ROD);
+        GoalList[6].InsertElement(ITEM, ITEM_GREENWOOD_LEAVES);
         GoalList[6].Target = 7;
 
         /* Goal 7 - Fire Shrine Scorpions */
@@ -1320,7 +1323,7 @@ namespace Map {
         //GoalList[36].InsertElement(NPC, NPC_KING_MAGRIDD); ==> Will be automatically found when beating Demon Bird
         GoalList[36].Target = 37;
 
-        /* Goal 37 - Demon Bird */
+        /* Goal 37 - Dr Leo + Queen Magridd cutscene */
         GoalList[37].InsertElement(LAIR, NPC_SOLDIER_WITH_LEO);
         GoalList[37].InsertElement(LAIR, NPC_SOLDIER_DOK);
         GoalList[37].InsertElement(LAIR, NPC_DR_LEO);
@@ -1519,6 +1522,18 @@ namespace Map {
         /* Goal 73 - Super Bracelet tile */
         GoalList[73].InsertElement(LAIR, NPC_QUEEN_MAGRIDD);
         GoalList[73].Target = 74;
+
+        /* Goal 74 - Greenwood Leaf tile */
+        GoalList[74].InsertElement(LAIR, NPC_CROCODILE);
+        GoalList[74].InsertElement(LAIR, NPC_CROCODILE2);
+        GoalList[74].InsertElement(LAIR, NPC_BIRD_GREENWOOD_LEAF);
+        GoalList[74].InsertElement(LAIR, NPC_MOLE_SOUL_OF_LIGHT);
+        GoalList[74].InsertElement(ITEM, CHEST_DREAM_ROD);
+        GoalList[74].Target = 75;
+
+        /* Goal 75 - Demon Bird */
+        GoalList[75].InsertElement(ITEM, ITEM_DR_LEO);
+        GoalList[75].Target = 76;
     }
 
 
@@ -1635,7 +1650,87 @@ namespace Map {
     }
 
 
-    void GetNonKeyChestList(vector<int> &NonKeyChestList) {
+    void GetNonKeyNPCList_v2(vector<int> &NonKeyNPCList) {
+        NonKeyNPCList.push_back(NPC_TULIP);
+        NonKeyNPCList.push_back(NPC_TULIP2);
+        NonKeyNPCList.push_back(NPC_GOAT);
+        NonKeyNPCList.push_back(NPC_TULIP3);
+        NonKeyNPCList.push_back(NPC_LONELY_GOAT);
+        NonKeyNPCList.push_back(NPC_BOY_CABIN);
+        NonKeyNPCList.push_back(NPC_OLD_MAN);
+        NonKeyNPCList.push_back(NPC_OLD_MAN2);
+        NonKeyNPCList.push_back(NPC_IVY2);
+        NonKeyNPCList.push_back(NPC_TULIP4);
+        NonKeyNPCList.push_back(NPC_GOAT2);
+        NonKeyNPCList.push_back(NPC_BIRD);
+        NonKeyNPCList.push_back(NPC_DOG);
+        NonKeyNPCList.push_back(NPC_DOG2);
+        NonKeyNPCList.push_back(NPC_BIRD2);
+        NonKeyNPCList.push_back(NPC_SQUIRREL);
+        NonKeyNPCList.push_back(NPC_DOG4);
+        NonKeyNPCList.push_back(NPC_SQUIRREL2);
+        NonKeyNPCList.push_back(NPC_DOG5);
+        NonKeyNPCList.push_back(NPC_MOLE2);
+        NonKeyNPCList.push_back(NPC_BIRD3);
+        NonKeyNPCList.push_back(NPC_DOLPHIN);
+        NonKeyNPCList.push_back(NPC_ANGELFISH);
+        NonKeyNPCList.push_back(NPC_ANGELFISH2);
+        NonKeyNPCList.push_back(NPC_MERMAID2);
+        NonKeyNPCList.push_back(NPC_MERMAID3);
+        NonKeyNPCList.push_back(NPC_MERMAID_NANA);
+        NonKeyNPCList.push_back(NPC_MERMAID4);
+        NonKeyNPCList.push_back(NPC_MERMAID5);
+        NonKeyNPCList.push_back(NPC_MERMAID6);
+        NonKeyNPCList.push_back(NPC_ANGELFISH3);
+        NonKeyNPCList.push_back(NPC_ANGELFISH_SOUL_OF_SHIELD);
+        NonKeyNPCList.push_back(NPC_MERMAID7);
+        NonKeyNPCList.push_back(NPC_ANGELFISH4);
+        NonKeyNPCList.push_back(NPC_MERMAID8);
+        NonKeyNPCList.push_back(NPC_MERMAID9);
+        NonKeyNPCList.push_back(NPC_GRANDPA);
+        NonKeyNPCList.push_back(NPC_GIRL);
+        NonKeyNPCList.push_back(NPC_MUSHROOM);
+        NonKeyNPCList.push_back(NPC_GRANDPA2);
+        NonKeyNPCList.push_back(NPC_SNAIL_JOCKEY);
+        NonKeyNPCList.push_back(NPC_BOY2);
+        NonKeyNPCList.push_back(NPC_GRANDMA);
+        NonKeyNPCList.push_back(NPC_GIRL2);
+        NonKeyNPCList.push_back(NPC_SNAIL_RACER);
+        NonKeyNPCList.push_back(NPC_SNAIL_RACER2);
+        NonKeyNPCList.push_back(NPC_MUSHROOM3);
+        NonKeyNPCList.push_back(NPC_SNAIL);
+        NonKeyNPCList.push_back(NPC_SNAIL2);
+        NonKeyNPCList.push_back(NPC_PLANT);
+        NonKeyNPCList.push_back(NPC_CAT3);
+        NonKeyNPCList.push_back(NPC_DOLL);
+        NonKeyNPCList.push_back(NPC_CHEST_OF_DRAWERS);
+        NonKeyNPCList.push_back(NPC_PLANT2);
+        NonKeyNPCList.push_back(NPC_MOUSE2);
+        NonKeyNPCList.push_back(NPC_MOUSE3);
+        NonKeyNPCList.push_back(NPC_GREAT_DOOR_SOUL_OF_DETECTION);
+        NonKeyNPCList.push_back(NPC_MOUSE4);
+        NonKeyNPCList.push_back(NPC_CHEST_OF_DRAWERS2);
+        NonKeyNPCList.push_back(NPC_MOUSE5);
+        NonKeyNPCList.push_back(NPC_CAT4);
+        NonKeyNPCList.push_back(NPC_SOLDIER);
+        NonKeyNPCList.push_back(NPC_SOLDIER2);
+        NonKeyNPCList.push_back(NPC_SOLDIER3);
+        NonKeyNPCList.push_back(NPC_SOLDIER4);
+        NonKeyNPCList.push_back(NPC_SOLDIER5);
+        NonKeyNPCList.push_back(NPC_SOLDIER6);
+        NonKeyNPCList.push_back(NPC_MAID);
+        NonKeyNPCList.push_back(NPC_SINGER);
+        NonKeyNPCList.push_back(NPC_SOLDIER_SOUL_OF_REALITY);
+        NonKeyNPCList.push_back(NPC_MAID2);
+        NonKeyNPCList.push_back(NPC_SOLDIER7);
+        NonKeyNPCList.push_back(NPC_SOLDIER8);
+        NonKeyNPCList.push_back(NPC_SOLDIER9);
+        NonKeyNPCList.push_back(NPC_SOLDIER10);
+        NonKeyNPCList.push_back(NPC_SOLDIER11);
+    }
+
+
+    void GetNonKeyItemList(vector<int> &NonKeyChestList) {
         NonKeyChestList.push_back(1);
         NonKeyChestList.push_back(2);
         NonKeyChestList.push_back(3);
@@ -1692,5 +1787,99 @@ namespace Map {
         NonKeyChestList.push_back(60);
         NonKeyChestList.push_back(61);
         NonKeyChestList.push_back(65);
+    }
+
+
+    void GetNonKeyItemList_v2(vector<int> &NonKeyChestList) {
+        NonKeyChestList.push_back(1);
+        NonKeyChestList.push_back(2);
+        NonKeyChestList.push_back(3);
+        NonKeyChestList.push_back(4);
+        NonKeyChestList.push_back(7);
+        NonKeyChestList.push_back(8);
+        NonKeyChestList.push_back(9);
+        NonKeyChestList.push_back(11);
+        NonKeyChestList.push_back(12);
+        NonKeyChestList.push_back(13);
+        NonKeyChestList.push_back(15);
+        NonKeyChestList.push_back(16);
+        NonKeyChestList.push_back(17);
+        NonKeyChestList.push_back(18);
+        NonKeyChestList.push_back(19);
+        NonKeyChestList.push_back(20);
+        NonKeyChestList.push_back(21);
+        NonKeyChestList.push_back(22);
+        NonKeyChestList.push_back(25);
+        NonKeyChestList.push_back(26);
+        NonKeyChestList.push_back(27);
+        NonKeyChestList.push_back(28);
+        NonKeyChestList.push_back(29);
+        NonKeyChestList.push_back(30);
+        NonKeyChestList.push_back(31);
+        NonKeyChestList.push_back(32);
+        NonKeyChestList.push_back(33);
+        NonKeyChestList.push_back(34);
+        NonKeyChestList.push_back(35);
+        NonKeyChestList.push_back(36);
+        NonKeyChestList.push_back(37);
+        NonKeyChestList.push_back(38);
+        NonKeyChestList.push_back(39);
+        NonKeyChestList.push_back(41);
+        NonKeyChestList.push_back(42);
+        NonKeyChestList.push_back(44);
+        NonKeyChestList.push_back(45);
+        NonKeyChestList.push_back(46);
+        NonKeyChestList.push_back(47);
+        NonKeyChestList.push_back(48);
+        NonKeyChestList.push_back(49);
+        NonKeyChestList.push_back(50);
+        NonKeyChestList.push_back(52);
+        NonKeyChestList.push_back(53);
+        NonKeyChestList.push_back(54);
+        NonKeyChestList.push_back(56);
+        NonKeyChestList.push_back(57);
+        NonKeyChestList.push_back(58);
+        NonKeyChestList.push_back(59);
+        NonKeyChestList.push_back(60);
+        NonKeyChestList.push_back(61);
+        NonKeyChestList.push_back(65);
+        NonKeyChestList.push_back(ITEM_TOOL_SHOP_OWNER);
+        NonKeyChestList.push_back(ITEM_GOAT_PEN);
+        NonKeyChestList.push_back(ITEM_TEDDY);
+        NonKeyChestList.push_back(ITEM_SECRET_CAVE_TILE);
+        NonKeyChestList.push_back(ITEM_VILLAGE_CHIEF);
+        NonKeyChestList.push_back(ITEM_MAGICIAN);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_RECOVERY_SWORD);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_MAGIC_BELL);
+        NonKeyChestList.push_back(ITEM_WOODSTIN_TRIO);
+        NonKeyChestList.push_back(ITEM_GREENWOODS_GUARDIAN);
+        NonKeyChestList.push_back(ITEM_MOLE_SHIELD_BRACELET);
+        NonKeyChestList.push_back(ITEM_SQUIRREL_PSYCHO_SWORD);
+        NonKeyChestList.push_back(ITEM_WATER_SHRINE_TILE);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_LIGHT_ARROW);
+        NonKeyChestList.push_back(ITEM_NOME);
+        NonKeyChestList.push_back(ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR);
+        NonKeyChestList.push_back(ITEM_PLANT_HERB);
+        NonKeyChestList.push_back(ITEM_MARIE);
+        NonKeyChestList.push_back(ITEM_MOUSE_SPARK_BOMB);
+        NonKeyChestList.push_back(ITEM_SOLDIER_ELEMENTAL_MAIL);
+        NonKeyChestList.push_back(ITEM_SUPER_BRACELET);
+        NonKeyChestList.push_back(ITEM_MAID_HERB);
+        NonKeyChestList.push_back(ITEM_KING_MAGRIDD);
+        NonKeyChestList.push_back(ITEM_MERMAID_HERB);
+        NonKeyChestList.push_back(ITEM_MERMAID_MAGIC_FLARE);
+        NonKeyChestList.push_back(ITEM_MERMAID_QUEEN);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_GRASS_VALLEY);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_UNDERGROUND_CASTLE);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_LOST_MARSH);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_WATER_SHRINE);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_MOUNTAIN_OF_SOULS);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_LUNE);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_LEOS_LAB_BASEMENT);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_MODEL_TOWN);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_POWER_PLANT);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_ROCKBIRD);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_SEABED_NEAR_BLESTER);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_SEABED_NEAR_DUREAN);
     }
 }

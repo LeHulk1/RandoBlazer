@@ -1,4 +1,4 @@
-#include "ItemHolder.h"
+#include "Item.h"
 #include "Lair.h"
 #include "Log.h"
 #include "Random.h"
@@ -61,8 +61,8 @@ int main ( int argc, char** argv ) {
     ROMFileCopy << ROMFileOriginal.rdbuf();
 
     /* Initialize the final lists of randomized lairs and chests */
-    vector<Lair>  RandomizedLairList;
-    vector<ItemHolder> RandomizedItemList;
+    vector<Lair> RandomizedLairList;
+    vector<Item> RandomizedItemList;
 
     /* Re-open ROM to be modified */
     ROMFile.open(MOD_ROM_FILE_NAME, ios::in | ios::out | ios::binary | ios::ate);

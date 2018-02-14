@@ -297,7 +297,9 @@ namespace Map {
     void InitMap(vector<Region> &RegionList, vector<Goal> &GoalList);
     void InitMap_v2(vector<Region> &RegionList, vector<Goal> &GoalList);
     void GetNonKeyNPCList(vector<int> &NonKeyNPCList);
-    void GetNonKeyChestList(vector<int> &NonKeyChestList);
+    void GetNonKeyNPCList_v2(vector<int> &NonKeyNPCList);
+    void GetNonKeyItemList(vector<int> &NonKeyChestList);
+    void GetNonKeyItemList_v2(vector<int> &NonKeyChestList);
 }
 
 #endif // __MAP_H__
