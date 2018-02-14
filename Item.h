@@ -70,8 +70,7 @@ typedef enum {
     PURPLE_STONE    = 0x3E,
     BLACK_STONE     = 0x3F,
     MAGIC_BELL      = 0x40,
-    EXP             = 0xFE,
-    GEMS            = 0xFF,
+    GEMS_EXP        = 0xFF,
 } ItemIndex;
 
 class Item {
@@ -79,11 +78,10 @@ public:
     Item();
     ~Item();
 
-    Item& operator= (const Item& OtherChest);
+    Item& operator= (const Item& OtherItem);
     int Type;
     ItemIndex Contents;
-    int Gems;
-    int Exp;
+    int GemsExp;
 };
 
 #endif // __CHEST_H__

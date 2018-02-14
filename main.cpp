@@ -31,23 +31,23 @@ int main ( int argc, char** argv ) {
     ROMFile.clear();
 
     /* Initialize randomness with provided seed, if any */
-    ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
-    if (!SeedFile.is_open()) {
+//    ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
+//    if (!SeedFile.is_open()) {
         long Seed = Random::RandomInit(0);
-        ofstream NewSeedFile(SEED_FILE_NAME);
-        NewSeedFile << Seed;
-        NewSeedFile.close();
-    }
-    else {
-        char SeedChar[SEED_SIZE+1];
-        long SeedInt;
-        SeedFile.seekg (0, ios::beg);
-        SeedFile.readsome(SeedChar, SEED_SIZE);
-        SeedChar[SEED_SIZE] = '\0';
-        SeedInt = atoi(SeedChar);
-        Random::RandomInit(SeedInt);
-    }
-    SeedFile.close();
+//        ofstream NewSeedFile(SEED_FILE_NAME);
+//        NewSeedFile << Seed;
+//        NewSeedFile.close();
+//    }
+//    else {
+//        char SeedChar[SEED_SIZE+1];
+//        long SeedInt;
+//        SeedFile.seekg (0, ios::beg);
+//        SeedFile.readsome(SeedChar, SEED_SIZE);
+//        SeedChar[SEED_SIZE] = '\0';
+//        SeedInt = atoi(SeedChar);
+//        Random::RandomInit(SeedInt);
+//    }
+//    SeedFile.close();
 
     /* Rename the ROM to be modified */
     int RenameResult = rename(ROM_FILE_NAME, MOD_ROM_FILE_NAME);
@@ -68,7 +68,7 @@ int main ( int argc, char** argv ) {
     ROMFile.open(MOD_ROM_FILE_NAME, ios::in | ios::out | ios::binary | ios::ate);
 
     /* Call the main algorithm to randomize the progression through the game:
-       ==> randomize chests contents and revived NPCs */
+       ==> randomize item locations and revived NPCs */
     bool RandomizationStatus = Randomizer::RandomizeProgression(RandomizedLairList,
                                                                 RandomizedItemList,
                                                                 ROMFile);
@@ -85,7 +85,7 @@ int main ( int argc, char** argv ) {
     ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
 
     /* Generate the Spoiler Log */
-    Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+    //Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
     /* Close the ROM file */
     ROMFile.close();

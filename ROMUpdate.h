@@ -11,6 +11,7 @@
 using namespace std;
 
 namespace ROMUpdate {
+    bool NPCOriginallyGivesEXP(int NPCIndex);
     int ConvertToHex(int Dec);
     void ROMUpdateItems(vector<Item> RandomizedItemList, fstream &ROMFile);
     void ROMUpdateLairs(vector<Lair> RandomizedLairList,  fstream &ROMFile);

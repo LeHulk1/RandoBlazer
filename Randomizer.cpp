@@ -21,8 +21,8 @@
 #define SPAWN_RATE_MIN 0x03
 #define SPAWN_RATE_MAX 0x20
 
-//#define DEBUG
-//#define DEBUG_NO_ENEMIES
+#define DEBUG
+#define DEBUG_NO_ENEMIES
 
 
 using namespace std;
@@ -368,7 +368,7 @@ namespace Randomizer {
                               fstream       &ROMFile) {
 
         /* Get the original Lair and Item data */
-        vector<Lair> OriginalLairList (NUMBER_OF_LAIRS);
+        vector<Lair> OriginalLairList(NUMBER_OF_LAIRS);
         vector<Item> OriginalItemList(NUMBER_OF_ITEMS);
         ROMData::GetOriginalLairData(OriginalLairList, ROMFile);
         ROMData::GetOriginalItemData(OriginalItemList);
@@ -425,6 +425,21 @@ namespace Randomizer {
             cout << endl;
 #endif
 
+#ifdef DEBUG
+            cout << endl;
+            cout << "Available Lairs: ";
+            for (unsigned int i=0; i<AvailableRevivingLairs.size(); ++i) {
+                cout << AvailableRevivingLairs[i] << " ";
+            }
+            cout << endl;
+            cout << "Available Items: ";
+            for (unsigned int i=0; i<AvailableItems.size(); ++i) {
+                cout << AvailableItems[i] << " ";
+            }
+            cout << endl;
+            cout << endl;
+#endif
+
             /* Pick a goal */
             GoalIndex = RandomInteger(AvailableGoals.size());
 
@@ -476,6 +491,9 @@ namespace Randomizer {
                     while (AvailableGoals[GoalIndex] == 3) {
                         GoalIndex = RandomInteger(AvailableGoals.size());
                     }
+#ifdef DEBUG
+            cout << "... rerolled into goal " << AvailableGoals[GoalIndex] << ".\n";
+#endif
 
                 }
                 if (!ExcludeLisa && AvailableGoals[GoalIndex] == 4) {
@@ -608,7 +626,7 @@ namespace Randomizer {
                                 /**** Lisa Lair special case ****/
 
 #ifdef DEBUG
-                                cout << "Chest (Lisa case): " << CHEST_LEOS_BRUSH << " <-- " << (*ElementIterator).Index << endl;
+                                cout << "Item (Lisa case): " << CHEST_LEOS_BRUSH << " <-- " << (*ElementIterator).Index << endl;
 #endif
 
                                 /* Keep Leo's Brush in its original location */
@@ -629,13 +647,13 @@ namespace Randomizer {
                                 RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[(*ElementIterator).Index];
 
 #ifdef DEBUG
-                                cout << "Chest: " << AvailableItems[ItemIndex] << " <-- " << (*ElementIterator).Index << endl;
+                                cout << "Item: " << AvailableItems[ItemIndex] << " <-- " << (*ElementIterator).Index << endl;
 #endif
 
                                 /* This Key Item has been collected */
                                 CollectedKeyItems[(*ElementIterator).Index] = true;
 
-                                /* This Chest is no longer available */
+                                /* This Item is no longer available */
                                 AvailableItems.erase(AvailableItems.begin() + ItemIndex);
                             }
                         }

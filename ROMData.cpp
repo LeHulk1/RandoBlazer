@@ -43,11 +43,11 @@ namespace ROMData {
 
         ItemList[1].Contents  = IRON_ARMOR;
 
-        ItemList[2].Contents  = GEMS;
-        ItemList[2].Gems      = 50;
+        ItemList[2].Contents  = GEMS_EXP;
+        ItemList[2].GemsExp   = 50;
 
-        ItemList[3].Contents  = GEMS;
-        ItemList[3].Gems      = 12;
+        ItemList[3].Contents  = GEMS_EXP;
+        ItemList[3].GemsExp   = 12;
 
         ItemList[4].Contents  = MEDICAL_HERB;
 
@@ -63,18 +63,18 @@ namespace ROMData {
 
         ItemList[10].Contents = MOLES_RIBBON;
 
-        ItemList[11].Contents = GEMS;
-        ItemList[11].Gems     = 50;
+        ItemList[11].Contents = GEMS_EXP;
+        ItemList[11].GemsExp  = 50;
 
-        ItemList[12].Contents = GEMS;
-        ItemList[12].Gems     = 150;
+        ItemList[12].Contents = GEMS_EXP;
+        ItemList[12].GemsExp  = 150;
 
         ItemList[13].Contents = MEDICAL_HERB;
 
         ItemList[14].Contents = DELICIOUS_SEEDS;
 
-        ItemList[15].Contents = GEMS;
-        ItemList[15].Gems     = 50;
+        ItemList[15].Contents = GEMS_EXP;
+        ItemList[15].GemsExp  = 50;
 
         ItemList[16].Contents = MEDICAL_HERB;
 
@@ -82,11 +82,11 @@ namespace ROMData {
 
         ItemList[18].Contents = STRANGE_BOTTLE;
 
-        ItemList[19].Contents = GEMS;
-        ItemList[19].Gems     = 100;
+        ItemList[19].Contents = GEMS_EXP;
+        ItemList[19].GemsExp  = 100;
 
-        ItemList[20].Contents = GEMS;
-        ItemList[20].Gems     = 60;
+        ItemList[20].Contents = GEMS_EXP;
+        ItemList[20].GemsExp  = 60;
 
         ItemList[21].Contents = FLAME_PILLAR;
 
@@ -96,8 +96,8 @@ namespace ROMData {
 
         ItemList[24].Contents = EMBLEM_D;
 
-        ItemList[25].Contents = GEMS;
-        ItemList[25].Gems     = 80;
+        ItemList[25].Contents = GEMS_EXP;
+        ItemList[25].GemsExp  = 80;
 
         ItemList[26].Contents = MEDICAL_HERB;
 
@@ -107,20 +107,20 @@ namespace ROMData {
 
         ItemList[29].Contents = MEDICAL_HERB;
 
-        ItemList[30].Contents = GEMS;
-        ItemList[30].Gems     = 60;
+        ItemList[30].Contents = GEMS_EXP;
+        ItemList[30].GemsExp  = 60;
 
         ItemList[31].Contents = CRITICAL_SWORD;
 
         ItemList[32].Contents = STRANGE_BOTTLE;
 
-        ItemList[33].Contents = GEMS;
-        ItemList[33].Gems     = 1;
+        ItemList[33].Contents = GEMS_EXP;
+        ItemList[33].GemsExp  = 1;
 
         ItemList[34].Contents = POWER_BRACELET;
 
-        ItemList[35].Contents = GEMS;
-        ItemList[35].Gems     = 40;
+        ItemList[35].Contents = GEMS_EXP;
+        ItemList[35].GemsExp  = 40;
 
         ItemList[36].Contents = MAGIC_ARMOR;
 
@@ -128,8 +128,8 @@ namespace ROMData {
 
         ItemList[38].Contents = MEDICAL_HERB;
 
-        ItemList[39].Contents = GEMS;
-        ItemList[39].Gems     = 50;
+        ItemList[39].Contents = GEMS_EXP;
+        ItemList[39].GemsExp  = 50;
 
         ItemList[40].Contents = LUCKY_BLADE;
 
@@ -141,20 +141,20 @@ namespace ROMData {
 
         ItemList[44].Contents = LIGHT_ARMOR;
 
-        ItemList[45].Contents = GEMS;
-        ItemList[45].Gems     = 50;
+        ItemList[45].Contents = GEMS_EXP;
+        ItemList[45].GemsExp  = 50;
 
         ItemList[46].Contents = MEDICAL_HERB;
 
-        ItemList[47].Contents = GEMS;
-        ItemList[47].Gems     = 80;
+        ItemList[47].Contents = GEMS_EXP;
+        ItemList[47].GemsExp  = 80;
 
         ItemList[48].Contents = STRANGE_BOTTLE;
 
         ItemList[49].Contents = MEDICAL_HERB;
 
-        ItemList[50].Contents = GEMS;
-        ItemList[50].Gems     = 80;
+        ItemList[50].Contents = GEMS_EXP;
+        ItemList[50].GemsExp  = 80;
 
         ItemList[51].Contents = SPIRIT_SWORD;
 
@@ -162,26 +162,26 @@ namespace ROMData {
 
         ItemList[53].Contents = MEDICAL_HERB;
 
-        ItemList[54].Contents = GEMS;
-        ItemList[54].Gems     = 100;
+        ItemList[54].Contents = GEMS_EXP;
+        ItemList[54].GemsExp  = 100;
 
         ItemList[55].Contents = EMBLEM_B;
 
-        ItemList[56].Contents = GEMS;
-        ItemList[56].Gems     = 80;
+        ItemList[56].Contents = GEMS_EXP;
+        ItemList[56].GemsExp  = 80;
 
-        ItemList[57].Contents = GEMS;
-        ItemList[57].Gems     = 80;
+        ItemList[57].Contents = GEMS_EXP;
+        ItemList[57].GemsExp  = 80;
 
-        ItemList[58].Contents = GEMS;
-        ItemList[58].Gems     = 100;
+        ItemList[58].Contents = GEMS_EXP;
+        ItemList[58].GemsExp  = 100;
 
         ItemList[59].Contents = MEDICAL_HERB;
 
         ItemList[60].Contents = MEDICAL_HERB;
 
-        ItemList[61].Contents = GEMS;
-        ItemList[61].Gems     = 200;
+        ItemList[61].Contents = GEMS_EXP;
+        ItemList[61].GemsExp  = 200;
 
         ItemList[62].Contents = RED_HOT_BALL;
 
@@ -189,8 +189,8 @@ namespace ROMData {
 
         ItemList[64].Contents = SOUL_BLADE;
 
-        ItemList[65].Contents = GEMS;
-        ItemList[65].Gems     = 100;
+        ItemList[65].Contents = GEMS_EXP;
+        ItemList[65].GemsExp  = 100;
 
         /***** NPCs *****/
 
@@ -333,52 +333,52 @@ namespace ROMData {
         ItemList[ITEM_LUE].Contents = THUNDER_RING;
 
         ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Exp      = 80;
+        ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_GRASS_VALLEY].GemsExp  = 80;
 
         ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Exp      = 30;
+        ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].GemsExp  = 30;
 
         ItemList[ITEM_CRYSTAL_LOST_MARSH].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LOST_MARSH].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_LOST_MARSH].Exp      = 150;
+        ItemList[ITEM_CRYSTAL_LOST_MARSH].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_LOST_MARSH].GemsExp  = 150;
 
         ItemList[ITEM_CRYSTAL_WATER_SHRINE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_WATER_SHRINE].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_WATER_SHRINE].Exp      = 180;
+        ItemList[ITEM_CRYSTAL_WATER_SHRINE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_WATER_SHRINE].GemsExp  = 180;
 
         ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Exp      = 300;
+        ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_LUNE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LUNE].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_LUNE].Exp      = 400;
+        ItemList[ITEM_CRYSTAL_LUNE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_LUNE].GemsExp  = 400;
 
         ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Exp      = 300;
+        ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_MODEL_TOWN].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_MODEL_TOWN].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_MODEL_TOWN].Exp      = 300;
+        ItemList[ITEM_CRYSTAL_MODEL_TOWN].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_MODEL_TOWN].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_POWER_PLANT].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_POWER_PLANT].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_POWER_PLANT].Exp      = 300;
+        ItemList[ITEM_CRYSTAL_POWER_PLANT].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_POWER_PLANT].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_ROCKBIRD].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_ROCKBIRD].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_ROCKBIRD].Exp      = 200;
+        ItemList[ITEM_CRYSTAL_ROCKBIRD].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_ROCKBIRD].GemsExp  = 200;
 
         ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Exp      = 300;
+        ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Contents = EXP;
-        ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Exp      = 250;
+        ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].GemsExp  = 250;
     }
 
 
