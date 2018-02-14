@@ -180,7 +180,7 @@ namespace ROMUpdate {
                     Byte = 0x0A;
                     ROMFile.write((char*)(&Byte), 1);
                     ROMFile.write((char*)(&ItemID), 1);
-                    Byte = 0x02;
+                    Byte = 0x00;
                     ROMFile.write((char*)(&Byte), 1);
                 }
                 else {

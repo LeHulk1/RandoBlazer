@@ -677,7 +677,7 @@ namespace Map {
         RegionList[3].InsertGoal(5); /* Leo's Paintings Metal Enemies */
 
         /* Region 4 - Act 2 start, Lost Marshes + Water/Fire Shrines */
-        RegionList[4].InsertElement(ITEM, ITEM_VILLAGE_CHIEF);
+        //RegionList[4].InsertElement(ITEM, ITEM_VILLAGE_CHIEF); Don't randomize Stones
         RegionList[4].InsertElement(LAIR, NPC_BIRD);
         RegionList[4].InsertElement(LAIR, NPC_DOG);
         RegionList[4].InsertElement(LAIR, NPC_SQUIRREL_PSYCHO_SWORD);
@@ -752,7 +752,7 @@ namespace Map {
         RegionList[10].InsertElement(ITEM, 9);
 
         /* Region 11 - Act 3 start, Southerta */
-        RegionList[11].InsertElement(ITEM, ITEM_GREENWOODS_GUARDIAN);
+        //RegionList[11].InsertElement(ITEM, ITEM_GREENWOODS_GUARDIAN); Don't randomize Stones
         RegionList[11].InsertElement(LAIR, NPC_DOLPHIN2);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID4);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID5);
@@ -773,7 +773,7 @@ namespace Map {
         RegionList[13].InsertGoal(16); /* Blester */
 
         /* Region 14 - Act 4 start, Mountain of Souls */
-        RegionList[14].InsertElement(ITEM, ITEM_MERMAID_QUEEN);
+        //RegionList[14].InsertElement(ITEM, ITEM_MERMAID_QUEEN); Don't randomize Stones
         RegionList[14].InsertElement(LAIR, NPC_GIRL);
         RegionList[14].InsertElement(LAIR, NPC_GRANDPA);
         RegionList[14].InsertElement(LAIR, NPC_MUSHROOM);
@@ -887,7 +887,7 @@ namespace Map {
         RegionList[25].InsertGoal(39); /* Last lair of Lune */
 
         /* Region 26 - Act 5 start, first lairs of Leo's Lab Basement */
-        RegionList[26].InsertElement(ITEM, ITEM_NOME);
+        //RegionList[26].InsertElement(ITEM, ITEM_NOME); Don't randomize Stones
         RegionList[26].InsertElement(LAIR, NPC_PLANT);
         RegionList[26].InsertElement(LAIR, NPC_CAT);
         RegionList[26].InsertElement(LAIR, NPC_GREAT_DOOR_ZANTETSU_SWORD);
@@ -949,7 +949,7 @@ namespace Map {
         RegionList[32].InsertElement(ITEM, ITEM_CRYSTAL_POWER_PLANT);
 
         /* Region 33 - Act 6 start, first lairs of Magridd Castle Basement */
-        RegionList[33].InsertElement(ITEM, ITEM_MARIE);
+        //RegionList[33].InsertElement(ITEM, ITEM_MARIE); Don't randomize Stones
         RegionList[33].InsertElement(LAIR, NPC_SOLDIER);
         RegionList[33].InsertElement(ITEM, 50);
         RegionList[33].InsertElement(ITEM, 51);
@@ -1004,7 +1004,7 @@ namespace Map {
         RegionList[36].InsertGoal(37); /* Dr Leo + Queen Magridd cutscene */
 
         /* Region 37 - Act 7 start, World of Evil */
-        RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD);
+        //RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD); Don't randomize Stones
         RegionList[37].InsertElement(ITEM, 60);
         RegionList[37].InsertElement(ITEM, 61);
         RegionList[37].InsertElement(ITEM, CHEST_RED_HOT_BALL);
@@ -1491,6 +1491,7 @@ namespace Map {
 
         /* Goal 66 - Leo's Cat */
         GoalList[66].InsertElement(LAIR, NPC_CAT_DOOR_KEY);
+        GoalList[66].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[66].Target = 67;
 
         /* Goal 67 - Actinidia Plant */
@@ -1499,6 +1500,7 @@ namespace Map {
 
         /* Goal 68 - Elemental Mail soldier */
         GoalList[68].InsertElement(LAIR, NPC_SOLDIER_ELEMENTAL_MAIL);
+        GoalList[68].InsertElement(ITEM, CHEST_DREAM_ROD);
         GoalList[68].Target = 69;
 
         /* Goal 69 - Queen Magridd */
@@ -1847,28 +1849,28 @@ namespace Map {
         NonKeyChestList.push_back(ITEM_GOAT_PEN);
         NonKeyChestList.push_back(ITEM_TEDDY);
         NonKeyChestList.push_back(ITEM_SECRET_CAVE_TILE);
-        NonKeyChestList.push_back(ITEM_VILLAGE_CHIEF);
+        //NonKeyChestList.push_back(ITEM_VILLAGE_CHIEF);
         NonKeyChestList.push_back(ITEM_MAGICIAN);
         NonKeyChestList.push_back(ITEM_CRYSTAL_RECOVERY_SWORD);
         NonKeyChestList.push_back(ITEM_CRYSTAL_MAGIC_BELL);
         NonKeyChestList.push_back(ITEM_WOODSTIN_TRIO);
-        NonKeyChestList.push_back(ITEM_GREENWOODS_GUARDIAN);
+        //NonKeyChestList.push_back(ITEM_GREENWOODS_GUARDIAN);
         NonKeyChestList.push_back(ITEM_MOLE_SHIELD_BRACELET);
         NonKeyChestList.push_back(ITEM_SQUIRREL_PSYCHO_SWORD);
         NonKeyChestList.push_back(ITEM_WATER_SHRINE_TILE);
         NonKeyChestList.push_back(ITEM_CRYSTAL_LIGHT_ARROW);
-        NonKeyChestList.push_back(ITEM_NOME);
+        //NonKeyChestList.push_back(ITEM_NOME);
         NonKeyChestList.push_back(ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR);
         NonKeyChestList.push_back(ITEM_PLANT_HERB);
-        NonKeyChestList.push_back(ITEM_MARIE);
+        //NonKeyChestList.push_back(ITEM_MARIE);
         NonKeyChestList.push_back(ITEM_MOUSE_SPARK_BOMB);
         NonKeyChestList.push_back(ITEM_SOLDIER_ELEMENTAL_MAIL);
         NonKeyChestList.push_back(ITEM_SUPER_BRACELET);
         NonKeyChestList.push_back(ITEM_MAID_HERB);
-        NonKeyChestList.push_back(ITEM_KING_MAGRIDD);
+        //NonKeyChestList.push_back(ITEM_KING_MAGRIDD);
         NonKeyChestList.push_back(ITEM_MERMAID_HERB);
         NonKeyChestList.push_back(ITEM_MERMAID_MAGIC_FLARE);
-        NonKeyChestList.push_back(ITEM_MERMAID_QUEEN);
+        //NonKeyChestList.push_back(ITEM_MERMAID_QUEEN);
         NonKeyChestList.push_back(ITEM_CRYSTAL_GRASS_VALLEY);
         NonKeyChestList.push_back(ITEM_CRYSTAL_UNDERGROUND_CASTLE);
         NonKeyChestList.push_back(ITEM_CRYSTAL_LOST_MARSH);
