@@ -389,12 +389,12 @@ namespace Randomizer {
         list<Element>::const_iterator ElementIterator;
         list<int>::const_iterator GoalIterator;
 
-        int Index, GoalIndex, RevivingLairIndex, ItemIndex, NewRegionIndex;
-        bool SpecialCaseChecked        = false;
-        bool ExcludeLisa               = false;
-        bool VillageChiefSpecialCase   = false;
-        bool VillageChiefSpecialChoice = false;
-        bool LisaLairSpecialCase       = false;
+        int /*Index,*/ GoalIndex, RevivingLairIndex, ItemIndex, NewRegionIndex;
+//        bool SpecialCaseChecked        = false;
+//        bool ExcludeLisa               = false;
+//        bool VillageChiefSpecialCase   = false;
+//        bool VillageChiefSpecialChoice = false;
+//        bool LisaLairSpecialCase       = false;
 
         /* Initialize the randomized lists to the original lair and item lists */
         RandomizedLairList = OriginalLairList;
@@ -447,63 +447,63 @@ namespace Randomizer {
             cout << "Picked goal " << AvailableGoals[GoalIndex] << ".\n";
 #endif
 
-            if (VillageChiefSpecialCase) {
-                if (AvailableGoals[GoalIndex] == 3) {
-                    /* Put Village Chief in the only lair directly locked by Lisa. */
-                    VillageChiefPossibleLairs.push_back(NPC_OLD_MAN);
-                    VillageChiefSpecialChoice = true;
-                    VillageChiefSpecialCase  = false;
-                }
-                else if (AvailableGoals[GoalIndex] == 2) {
-                    /* Put Village Chief somewhere in Leo's Paintings, and make sure that
-                       either Architect or Leo's House is in the lair locked by Lisa. */
-                    VillageChiefPossibleLairs.push_back(NPC_TULIP4);
-                    VillageChiefPossibleLairs.push_back(NPC_LONELY_GOAT);
-                    VillageChiefPossibleLairs.push_back(NPC_IVY);
-                    VillageChiefPossibleLairs.push_back(NPC_GOAT2);
-                    VillageChiefPossibleLairs.push_back(NPC_BOY_CABIN);
-                    VillageChiefPossibleLairs.push_back(NPC_TULIP_PASS);
-                    VillageChiefPossibleLairs.push_back(NPC_BOY_CAVE);
-                    VillageChiefPossibleLairs.push_back(NPC_VILLAGE_CHIEF);
-                    LisaLairSpecialCase       = true;
-                    VillageChiefSpecialChoice = true;
-                    VillageChiefSpecialCase   = false;
-                }
-            }
-
-            if (!SpecialCaseChecked) {
-                if (!VillageChiefSpecialCase && AvailableGoals[GoalIndex] == 3) {
-                    /* If Village Chief is picked before Lisa, Lisa must never be released or the game will softlock.
-                       Remove Lisa's goal, and make sure her Lair is inaccessible in post-processing. */
-                    /* UPDATE: this case will softlock the ending cutscene of the game, so let's leave it aside for now. */
-//                    for (Index = 0; Index < (int)AvailableGoals.size(); Index++) {
-//                        if (AvailableGoals[Index] == 4) {
-//                            AvailableGoals.erase(AvailableGoals.begin() + Index);
-//                            break;
-//                        }
+//            if (VillageChiefSpecialCase) {
+//                if (AvailableGoals[GoalIndex] == 3) {
+//                    /* Put Village Chief in the only lair directly locked by Lisa. */
+//                    VillageChiefPossibleLairs.push_back(NPC_OLD_MAN);
+//                    VillageChiefSpecialChoice = true;
+//                    VillageChiefSpecialCase  = false;
+//                }
+//                else if (AvailableGoals[GoalIndex] == 2) {
+//                    /* Put Village Chief somewhere in Leo's Paintings, and make sure that
+//                       either Architect or Leo's House is in the lair locked by Lisa. */
+//                    VillageChiefPossibleLairs.push_back(NPC_TULIP4);
+//                    VillageChiefPossibleLairs.push_back(NPC_LONELY_GOAT);
+//                    VillageChiefPossibleLairs.push_back(NPC_IVY);
+//                    VillageChiefPossibleLairs.push_back(NPC_GOAT2);
+//                    VillageChiefPossibleLairs.push_back(NPC_BOY_CABIN);
+//                    VillageChiefPossibleLairs.push_back(NPC_TULIP_PASS);
+//                    VillageChiefPossibleLairs.push_back(NPC_BOY_CAVE);
+//                    VillageChiefPossibleLairs.push_back(NPC_VILLAGE_CHIEF);
+//                    LisaLairSpecialCase       = true;
+//                    VillageChiefSpecialChoice = true;
+//                    VillageChiefSpecialCase   = false;
+//                }
+//            }
+//
+//            if (!SpecialCaseChecked) {
+//                if (!VillageChiefSpecialCase && AvailableGoals[GoalIndex] == 3) {
+//                    /* If Village Chief is picked before Lisa, Lisa must never be released or the game will softlock.
+//                       Remove Lisa's goal, and make sure her Lair is inaccessible in post-processing. */
+//                    /* UPDATE: this case will softlock the ending cutscene of the game, so let's leave it aside for now. */
+////                    for (Index = 0; Index < (int)AvailableGoals.size(); Index++) {
+////                        if (AvailableGoals[Index] == 4) {
+////                            AvailableGoals.erase(AvailableGoals.begin() + Index);
+////                            break;
+////                        }
+////                    }
+////                    RegionList[2].NextGoals.clear();
+////                    cout << "Lisa exclusion!!!!!!!!!!!\n";
+////                    ExcludeLisa = true;
+////                    SpecialCaseChecked = true;
+//
+//                    /* Re-roll the picked goal until we get something different from 3 */
+//                    while (AvailableGoals[GoalIndex] == 3) {
+//                        GoalIndex = RandomInteger(AvailableGoals.size());
 //                    }
-//                    RegionList[2].NextGoals.clear();
-//                    cout << "Lisa exclusion!!!!!!!!!!!\n";
-//                    ExcludeLisa = true;
+//#ifdef DEBUG
+//            cout << "... rerolled into goal " << AvailableGoals[GoalIndex] << ".\n";
+//#endif
+//
+//                }
+//                if (!ExcludeLisa && AvailableGoals[GoalIndex] == 4) {
+//                    /* Lisa is picked before Village Chief.
+//                       Make sure that one of the next goal's requirements is locked by Lisa,
+//                       and that Village Chief's lair is in that next goal's targeted region. */
+//                    VillageChiefSpecialCase = true;
 //                    SpecialCaseChecked = true;
-
-                    /* Re-roll the picked goal until we get something different from 3 */
-                    while (AvailableGoals[GoalIndex] == 3) {
-                        GoalIndex = RandomInteger(AvailableGoals.size());
-                    }
-#ifdef DEBUG
-            cout << "... rerolled into goal " << AvailableGoals[GoalIndex] << ".\n";
-#endif
-
-                }
-                if (!ExcludeLisa && AvailableGoals[GoalIndex] == 4) {
-                    /* Lisa is picked before Village Chief.
-                       Make sure that one of the next goal's requirements is locked by Lisa,
-                       and that Village Chief's lair is in that next goal's targeted region. */
-                    VillageChiefSpecialCase = true;
-                    SpecialCaseChecked = true;
-                }
-            }
+//                }
+//            }
 
             /*** DBG!! ***/
 //            cout << "Available Lairs: ";
@@ -525,44 +525,44 @@ namespace Randomizer {
                         if (AvailableRevivingLairs.size() > 0) {
 
                             /* Choose one of the available reviving Monster Lairs and assign this NPC to it */
-                            if (VillageChiefSpecialChoice && (*ElementIterator).Index == NPC_VILLAGE_CHIEF) {
-                                RevivingLairIndex = RandomInteger(VillageChiefPossibleLairs.size());
-                                RandomizedLairList[NPC_VILLAGE_CHIEF] = OriginalLairList[VillageChiefPossibleLairs[RevivingLairIndex]];
-
-#ifdef DEBUG
-                                cout << "Lair (Chief case): " << NPC_VILLAGE_CHIEF << " <-- " << VillageChiefPossibleLairs[RevivingLairIndex] << endl;
-#endif
-
-                                for (Index = 0; Index < (int)AvailableRevivingLairs.size(); Index++) {
-                                    if (AvailableRevivingLairs[Index] == VillageChiefPossibleLairs[RevivingLairIndex]) {
-                                        AvailableRevivingLairs.erase(AvailableRevivingLairs.begin() + Index);
-                                        break;
-                                    }
-                                }
-
-                                RevivedNPCs[NPC_VILLAGE_CHIEF] = true;
-                                VillageChiefSpecialChoice = false;
-                            }
-                            else if (LisaLairSpecialCase &&
-                                     ((*ElementIterator).Index == NPC_ARCHITECT || (*ElementIterator).Index == NPC_LEOS_HOUSE)) {
-
-#ifdef DEBUG
-                                cout << "Lair (Lisa case): " << (*ElementIterator).Index << " <-- " << NPC_OLD_MAN << endl;
-#endif
-
-                                RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[NPC_OLD_MAN];
-
-                                for (Index = 0; Index < (int)AvailableRevivingLairs.size(); Index++) {
-                                    if (AvailableRevivingLairs[Index] == NPC_OLD_MAN) {
-                                        AvailableRevivingLairs.erase(AvailableRevivingLairs.begin() + Index);
-                                        break;
-                                    }
-                                }
-
-                                RevivedNPCs[(*ElementIterator).Index] = true;
-                                LisaLairSpecialCase = false;
-                            }
-                            else {
+//                            if (VillageChiefSpecialChoice && (*ElementIterator).Index == NPC_VILLAGE_CHIEF) {
+//                                RevivingLairIndex = RandomInteger(VillageChiefPossibleLairs.size());
+//                                RandomizedLairList[NPC_VILLAGE_CHIEF] = OriginalLairList[VillageChiefPossibleLairs[RevivingLairIndex]];
+//
+//#ifdef DEBUG
+//                                cout << "Lair (Chief case): " << NPC_VILLAGE_CHIEF << " <-- " << VillageChiefPossibleLairs[RevivingLairIndex] << endl;
+//#endif
+//
+//                                for (Index = 0; Index < (int)AvailableRevivingLairs.size(); Index++) {
+//                                    if (AvailableRevivingLairs[Index] == VillageChiefPossibleLairs[RevivingLairIndex]) {
+//                                        AvailableRevivingLairs.erase(AvailableRevivingLairs.begin() + Index);
+//                                        break;
+//                                    }
+//                                }
+//
+//                                RevivedNPCs[NPC_VILLAGE_CHIEF] = true;
+//                                VillageChiefSpecialChoice = false;
+//                            }
+//                            else if (LisaLairSpecialCase &&
+//                                     ((*ElementIterator).Index == NPC_ARCHITECT || (*ElementIterator).Index == NPC_LEOS_HOUSE)) {
+//
+//#ifdef DEBUG
+//                                cout << "Lair (Lisa case): " << (*ElementIterator).Index << " <-- " << NPC_OLD_MAN << endl;
+//#endif
+//
+//                                RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[NPC_OLD_MAN];
+//
+//                                for (Index = 0; Index < (int)AvailableRevivingLairs.size(); Index++) {
+//                                    if (AvailableRevivingLairs[Index] == NPC_OLD_MAN) {
+//                                        AvailableRevivingLairs.erase(AvailableRevivingLairs.begin() + Index);
+//                                        break;
+//                                    }
+//                                }
+//
+//                                RevivedNPCs[(*ElementIterator).Index] = true;
+//                                LisaLairSpecialCase = false;
+//                            }
+//                            else {
                                 RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
 
                                 if ( (*ElementIterator).Index == NPC_MERMAID_STATUE_ROCKBIRD   ||
@@ -582,18 +582,18 @@ namespace Randomizer {
 
                                 }
 
-                                if (VillageChiefSpecialChoice) {
-                                    /* Make sure nothing gets in the way of Village Chief and Architect/Leo's House in getting in the correct locations. */
-                                    while (AvailableRevivingLairs[RevivingLairIndex] == NPC_OLD_MAN) {
-                                        RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-                                    }
-                                    for (Index = 0; Index < (int)VillageChiefPossibleLairs.size(); Index++) {
-                                        if (VillageChiefPossibleLairs[Index] == AvailableRevivingLairs[RevivingLairIndex]) {
-                                            VillageChiefPossibleLairs.erase(VillageChiefPossibleLairs.begin() + Index);
-                                            break;
-                                        }
-                                    }
-                                }
+//                                if (VillageChiefSpecialChoice) {
+//                                    /* Make sure nothing gets in the way of Village Chief and Architect/Leo's House in getting in the correct locations. */
+//                                    while (AvailableRevivingLairs[RevivingLairIndex] == NPC_OLD_MAN) {
+//                                        RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
+//                                    }
+//                                    for (Index = 0; Index < (int)VillageChiefPossibleLairs.size(); Index++) {
+//                                        if (VillageChiefPossibleLairs[Index] == AvailableRevivingLairs[RevivingLairIndex]) {
+//                                            VillageChiefPossibleLairs.erase(VillageChiefPossibleLairs.begin() + Index);
+//                                            break;
+//                                        }
+//                                    }
+//                                }
 
                                 RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
 
@@ -606,7 +606,7 @@ namespace Randomizer {
 
                                 /* This Lair is no longer available */
                                 AvailableRevivingLairs.erase(AvailableRevivingLairs.begin() + RevivingLairIndex);
-                            }
+//                            }
                         }
                         else {
                             /* FAILURE! */
@@ -621,24 +621,24 @@ namespace Randomizer {
 
                         if (AvailableItems.size() > 0) {
 
-                            if (LisaLairSpecialCase && (*ElementIterator).Index == CHEST_LEOS_BRUSH) {
-
-                                /**** Lisa Lair special case ****/
-
-#ifdef DEBUG
-                                cout << "Item (Lisa case): " << CHEST_LEOS_BRUSH << " <-- " << (*ElementIterator).Index << endl;
-#endif
-
-                                /* Keep Leo's Brush in its original location */
-                                for (Index = 0; Index < (int)AvailableItems.size(); Index++) {
-                                    if (AvailableItems[Index] == CHEST_LEOS_BRUSH) {
-                                        AvailableItems.erase(AvailableItems.begin() + Index);
-                                    }
-                                }
-                                CollectedKeyItems[CHEST_LEOS_BRUSH] = true;
-                                LisaLairSpecialCase = false;
-                            }
-                            else {
+//                            if (LisaLairSpecialCase && (*ElementIterator).Index == CHEST_LEOS_BRUSH) {
+//
+//                                /**** Lisa Lair special case ****/
+//
+//#ifdef DEBUG
+//                                cout << "Item (Lisa case): " << CHEST_LEOS_BRUSH << " <-- " << (*ElementIterator).Index << endl;
+//#endif
+//
+//                                /* Keep Leo's Brush in its original location */
+//                                for (Index = 0; Index < (int)AvailableItems.size(); Index++) {
+//                                    if (AvailableItems[Index] == CHEST_LEOS_BRUSH) {
+//                                        AvailableItems.erase(AvailableItems.begin() + Index);
+//                                    }
+//                                }
+//                                CollectedKeyItems[CHEST_LEOS_BRUSH] = true;
+//                                LisaLairSpecialCase = false;
+//                            }
+//                            else {
 
                                 /**** Normal case ****/
 
@@ -655,7 +655,7 @@ namespace Randomizer {
 
                                 /* This Item is no longer available */
                                 AvailableItems.erase(AvailableItems.begin() + ItemIndex);
-                            }
+//                            }
                         }
                         else {
                             /* FAILURE! */
@@ -697,18 +697,25 @@ namespace Randomizer {
         //Map::GetNonKeyItemList(NonKeyItemList);
         Map::GetNonKeyItemList_v2(NonKeyItemList);
 
-        /* Add the possibly disappearing chest, Monmo's Ribbon chest, Mermaid's Tears chest and Queen Magridd's item */
+        /* Add the possibly disappearing chest in Fire Shrine,
+           Monmo's Ribbon chest,
+           Mermaid's Tears chest,
+           Leo's Brush chest,
+           Queen Magridd's item,
+           and the Old Man lair */
+        AvailableItems.push_back(CHEST_LEOS_BRUSH);
         AvailableItems.push_back(17);
         AvailableItems.push_back(10);
         AvailableItems.push_back(22);
         AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
+        AvailableRevivingLairs.push_back(NPC_OLD_MAN);
 
         /* Lisa exclusion case: lock Lisa in an inaccessible lair if necessary,
            and add a non-key item in the Leo's Brush chest. */
-        if (ExcludeLisa) {
-            RandomizedLairList[NPC_LISA] = OriginalLairList[NPC_OLD_MAN];
-            AvailableItems.push_back(CHEST_LEOS_BRUSH);
-        }
+//        if (ExcludeLisa) {
+//            RandomizedLairList[NPC_LISA] = OriginalLairList[NPC_OLD_MAN];
+//            AvailableItems.push_back(CHEST_LEOS_BRUSH);
+//        }
 
 #ifdef DEBUG
         cout << AvailableRevivingLairs.size() << " available Reviving Lairs, " << NonKeyNPCList.size() << " in NPC list.\n";

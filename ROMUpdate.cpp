@@ -29,7 +29,7 @@ namespace ROMUpdate {
         0x1C116, /* Magic Bell crystal */
         0x1D120, /* Woodstin Trio */
         0x1D525, /* Greenwood's Guardian */
-        0x1D812, /* Greenwood Leaves */
+        0x1D81E, /* Greenwood Leaves */
         0x1DC17, /* Shield Bracelet mole */
         0x1E039, /* Psycho Sword squirrel */
         0x1E1E3, /* Emblem C squirrel */

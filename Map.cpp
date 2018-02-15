@@ -662,7 +662,7 @@ namespace Map {
         RegionList[2].InsertElement(LAIR, NPC_GOAT);
         RegionList[2].InsertElement(LAIR, NPC_TULIP3);
         RegionList[2].InsertElement(LAIR, NPC_LEOS_HOUSE);
-        RegionList[2].InsertGoal(4); /* Lisa, Last part of Underground Castle */
+        //RegionList[2].InsertGoal(4); /* Lisa, Last part of Underground Castle */ => removed because Lisa is ANNOYING
 
         /* Region 3 - Leo's Paintings */
         RegionList[3].InsertElement(LAIR, NPC_TULIP4);
@@ -1356,6 +1356,7 @@ namespace Map {
 
         /* Goal 43 - Emblem A tile */
         GoalList[43].InsertElement(LAIR, NPC_BRIDGE_GUARD);
+        GoalList[43].InsertElement(LAIR, NPC_WATER_MILL);
         GoalList[43].InsertElement(LAIR, NPC_IVY);
         GoalList[43].InsertElement(LAIR, NPC_IVY_EMBLEM_A);
         GoalList[43].Target = 44;
@@ -1654,6 +1655,7 @@ namespace Map {
 
     void GetNonKeyNPCList_v2(vector<int> &NonKeyNPCList) {
         NonKeyNPCList.push_back(NPC_TULIP);
+        NonKeyNPCList.push_back(NPC_LISA); /* Adding Lisa here after removing Goal 4 */
         NonKeyNPCList.push_back(NPC_TULIP2);
         NonKeyNPCList.push_back(NPC_GOAT);
         NonKeyNPCList.push_back(NPC_TULIP3);
