@@ -117,6 +117,7 @@ public:
     bool NoGhostLairPosition(void);
     bool MustBeMetalLairPosition(void);
     bool MustBeGhostLairPosition(void);
+    bool MustNotRandomizeLairPosition(void);
 
     unsigned char Act;                              /* 0A */
     unsigned char PositionData[POSITION_DATA_SIZE]; /* from 0B to 0D */

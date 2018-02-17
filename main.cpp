@@ -14,7 +14,9 @@
 #define MOD_ROM_FILE_NAME  "Soul Blazer Randomized.smc"
 #define SEED_FILE_NAME     "seed"
 
-#define SEED_SIZE  10
+#define SEED_SIZE            10
+#define MAX_NUMBER_OF_TRIES  5
+
 
 
 using namespace std;
@@ -31,23 +33,29 @@ int main ( int argc, char** argv ) {
     ROMFile.clear();
 
     /* Initialize randomness with provided seed, if any */
-//    ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
-//    if (!SeedFile.is_open()) {
+    ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
+    if (!SeedFile.is_open()) {
         long Seed = Random::RandomInit(0);
-//        ofstream NewSeedFile(SEED_FILE_NAME);
-//        NewSeedFile << Seed;
-//        NewSeedFile.close();
-//    }
-//    else {
-//        char SeedChar[SEED_SIZE+1];
-//        long SeedInt;
-//        SeedFile.seekg (0, ios::beg);
-//        SeedFile.readsome(SeedChar, SEED_SIZE);
-//        SeedChar[SEED_SIZE] = '\0';
-//        SeedInt = atoi(SeedChar);
-//        Random::RandomInit(SeedInt);
-//    }
-//    SeedFile.close();
+        ofstream NewSeedFile(SEED_FILE_NAME);
+        NewSeedFile << Seed;
+        NewSeedFile.close();
+    }
+    else {
+        char SeedChar[SEED_SIZE+1];
+        long SeedInt;
+        SeedFile.seekg(0, ios::beg);
+        SeedFile.readsome(SeedChar, SEED_SIZE);
+        SeedChar[SEED_SIZE] = '\0';
+        SeedInt = atoi(SeedChar);
+        Random::RandomInit(SeedInt);
+    }
+    SeedFile.close();
+
+    /* If a modified ROM exists, delete it first */
+    int RemoveResult = remove(MOD_ROM_FILE_NAME);
+    if (RemoveResult == 0) {
+        cout << "Previous randomized ROM detected and removed.\n";
+    }
 
     /* Rename the ROM to be modified */
     int RenameResult = rename(ROM_FILE_NAME, MOD_ROM_FILE_NAME);
@@ -69,9 +77,16 @@ int main ( int argc, char** argv ) {
 
     /* Call the main algorithm to randomize the progression through the game:
        ==> randomize item locations and revived NPCs */
-    bool RandomizationStatus = Randomizer::RandomizeProgression(RandomizedLairList,
-                                                                RandomizedItemList,
-                                                                ROMFile);
+    int RandomizationTry;
+    bool RandomizationStatus = false;
+    for (RandomizationTry = 0; RandomizationTry < MAX_NUMBER_OF_TRIES; RandomizationTry++) {
+        RandomizationStatus = Randomizer::RandomizeProgression(RandomizedLairList,
+                                                               RandomizedItemList,
+                                                               ROMFile);
+        if (RandomizationStatus) {
+            break;
+        }
+    }
     if (!RandomizationStatus) {
         cout << "Randomization failed!\n";
         return 1;
@@ -85,7 +100,7 @@ int main ( int argc, char** argv ) {
     ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
 
     /* Generate the Spoiler Log */
-    //Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+    Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
     /* Close the ROM file */
     ROMFile.close();

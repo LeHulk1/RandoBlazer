@@ -154,7 +154,7 @@ namespace ROMUpdate {
             ItemAddress = NPCItemAddressList[i-NUMBER_OF_CHESTS];
             ItemID = RandomizedItemList[i].Contents;
 
-            if (ItemID == GEMS_EXP) {
+            if (ItemID == GEMS_EXP || ItemID == NOTHING) {
 
                 if (NPCOriginallyGivesEXP(i)) {
                     ROMFile.seekp (ItemAddress, ios::beg);
@@ -189,7 +189,7 @@ namespace ROMUpdate {
                 }
             }
 
-            if (ItemID != GEMS_EXP) {
+            if (ItemID != GEMS_EXP && ItemID != NOTHING) {
                 /* For some NPCs we need to update their text conditions, otherwise it might
                    not give the wished item if the player already has its original item. */
                 switch (i) {
@@ -287,6 +287,9 @@ namespace ROMUpdate {
                     ROMFile.write((char*)(&ItemID), 1);
                     ROMFile.seekp (0xF99D3, ios::beg);
                     ROMFile.write((char*)(&ItemID), 1);
+                    break;
+                default:
+                    /* Do nothing */
                     break;
                 }
             }

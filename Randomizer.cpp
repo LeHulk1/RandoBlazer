@@ -11,18 +11,18 @@
 #define MULTISPAWN_WEIGHT      15
 #define ONE_BY_ONE_PROX_WEIGHT  1
 
-#define NB_ENEMIES_ONE_BY_ONE_MIN  4
-#define NB_ENEMIES_ONE_BY_ONE_MAX  8
-#define NB_ENEMIES_MULTISPAWN_MIN  6
-#define NB_ENEMIES_MULTISPAWN_MAX 16
+#define NB_ENEMIES_ONE_BY_ONE_MIN  2
+#define NB_ENEMIES_ONE_BY_ONE_MAX  6
+#define NB_ENEMIES_MULTISPAWN_MIN  4
+#define NB_ENEMIES_MULTISPAWN_MAX 12
 #define NB_ENEMIES_MULTISPAWN_REDUCED_MIN  4
 #define NB_ENEMIES_MULTISPAWN_REDUCED_MAX  8
 
 #define SPAWN_RATE_MIN 0x03
 #define SPAWN_RATE_MAX 0x20
 
-#define DEBUG
-#define DEBUG_NO_ENEMIES
+//#define DEBUG
+//#define DEBUG_NO_ENEMIES
 
 
 using namespace std;
@@ -69,6 +69,11 @@ namespace Randomizer {
 
         /* Don't randomize enemies from 2-up-2-down lairs, because upside-down enemies can sometimes get away... */
         if (Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
+            return;
+        }
+
+        /* A few lairs should not be randomized (yet) */
+        if (Lair.MustNotRandomizeLairPosition()) {
             return;
         }
 
@@ -397,6 +402,7 @@ namespace Randomizer {
         list<int>::const_iterator GoalIterator;
 
         int GoalIndex, RevivingLairIndex, ItemIndex, NewRegionIndex;
+        bool MountainKingItemRandomized = false;
 
         /* Initialize the randomized lists to the original lair and item lists */
         RandomizedLairList = OriginalLairList;
@@ -512,6 +518,11 @@ namespace Randomizer {
                             /* This Key Item has been collected */
                             CollectedKeyItems[(*ElementIterator).Index] = true;
 
+                            /* If this was Mountain King's item, remember it */
+                            if (AvailableItems[ItemIndex] == ITEM_MOUNTAIN_KING) {
+                                MountainKingItemRandomized = true;
+                            }
+
                             /* This Item is no longer available */
                             AvailableItems.erase(AvailableItems.begin() + ItemIndex);
                         }
@@ -573,6 +584,19 @@ namespace Randomizer {
         cout << AvailableItems.size() << " available Items, " << NonKeyItemList.size() << " in Item list.\n";
 #endif
 
+        /* Make sure Mountain King receives an item different from a Medical Herb, a Strange Bottle, Gems/EXP or nothing */
+        if (MountainKingItemRandomized == false) {
+            ItemIndex = RandomInteger(NonKeyItemList.size());
+            while (OriginalItemList[NonKeyItemList[ItemIndex]].Contents == MEDICAL_HERB ||
+                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == STRANGE_BOTTLE ||
+                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == GEMS_EXP ||
+                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == NOTHING) {
+                ItemIndex = RandomInteger(NonKeyItemList.size());
+            }
+            RandomizedItemList[ITEM_MOUNTAIN_KING] = OriginalItemList[NonKeyItemList[ItemIndex]];
+            NonKeyItemList.erase(NonKeyItemList.begin() + ItemIndex);
+        }
+
         /* Shuffle these lists */
         random_shuffle(NonKeyNPCList.begin(),  NonKeyNPCList.end(),  RandomInteger);
         random_shuffle(NonKeyItemList.begin(), NonKeyItemList.end(), RandomInteger);
@@ -581,9 +605,18 @@ namespace Randomizer {
             /* Fill this lair and remove it from the list */
             RandomizedLairList[NonKeyNPCList[RevivingLairIndex]] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
         }
+
+        int Offset = 0;
         for (ItemIndex = 0; ItemIndex < (int)AvailableItems.size(); ItemIndex++) {
+
+            /* Mountain King's Item has already been assigned */
+            if (AvailableItems[ItemIndex] == ITEM_MOUNTAIN_KING) {
+                Offset = 1;
+                continue;
+            }
+
             /* Fill this item and remove it from the list */
-            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[NonKeyItemList[ItemIndex]];
+            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[NonKeyItemList[ItemIndex-Offset]];
         }
 
         /* Randomization successful! */

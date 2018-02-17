@@ -74,3 +74,11 @@ bool Lair::MustBeGhostLairPosition() {
     /* This lair is supposed to have ghost enemies, requiring the Spirit Sword to defeat */
     return (PositionData[0] == 0x66 && PositionData[1] == 0x2A && PositionData[2] == 0x1E);
 }
+
+bool Lair::MustNotRandomizeLairPosition() {
+    /* This lair should not be randomized (until I find a better way to deal with them) */
+    return ( (PositionData[0] == 0x3E && PositionData[1] == 0x0E && PositionData[2] == 0x26) ||
+             (PositionData[0] == 0x3E && PositionData[1] == 0x17 && PositionData[2] == 0x39) ||
+             (PositionData[0] == 0x3F && PositionData[1] == 0x0A && PositionData[2] == 0x27) ||
+             (PositionData[0] == 0x58 && PositionData[1] == 0x37 && PositionData[2] == 0x34) );
+}
