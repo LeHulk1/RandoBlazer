@@ -566,17 +566,14 @@ namespace Randomizer {
         //Map::GetNonKeyItemList(NonKeyItemList);
         Map::GetNonKeyItemList_v2(NonKeyItemList);
 
-        /* Add the possibly disappearing chest in Fire Shrine,
-           Monmo's Ribbon chest,
-           Mermaid's Tears chest,
-           Leo's Brush chest,
-           Queen Magridd's item,
-           and the Old Man lair */
+        /* Add the items/NPC locations which may not always be accessible,
+           to make sure they still receive a non-key item/NPC. */
         AvailableItems.push_back(CHEST_LEOS_BRUSH);
         AvailableItems.push_back(17);
         AvailableItems.push_back(10);
         AvailableItems.push_back(22);
         AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
+        AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
         AvailableRevivingLairs.push_back(NPC_OLD_MAN);
 
 #ifdef DEBUG

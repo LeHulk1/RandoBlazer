@@ -757,7 +757,7 @@ namespace Log {
         LogFile << endl;
 
 
-        LogFile << "  ----- KEY ITEMS -----" << endl;
+        LogFile << "  ----- EQUIPMENT / KEY ITEMS -----" << endl;
         LogFile << endl;
 
         for (LoggedItemIndex = 0; LoggedItemIndex < 62; LoggedItemIndex++) {
