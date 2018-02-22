@@ -11,6 +11,8 @@
 #define NUMBER_OF_REGIONS   77
 #define NUMBER_OF_GOALS     76
 
+#define GOAL_TO_FIRST_REGION 255
+
 
 enum {
     CHEST_SWORD_OF_LIFE                = 0,
@@ -287,12 +289,14 @@ public:
     void InsertElement(int Type, int Index);
     list<Element> Requirements;
     int Target;
+    int Weight;
 };
 
 
 namespace Map {
     void InitMap(vector<Region> &RegionList, vector<Goal> &GoalList);
     void InitMap_v2(vector<Region> &RegionList, vector<Goal> &GoalList);
+    void CalculateWeights(vector<Region> &RegionList, vector<Goal> &GoalList, int GoalIndex);
     void GetNonKeyNPCList(vector<int> &NonKeyNPCList);
     void GetNonKeyNPCList_v2(vector<int> &NonKeyNPCList);
     void GetNonKeyItemList(vector<int> &NonKeyChestList);

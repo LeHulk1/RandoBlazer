@@ -388,9 +388,18 @@ namespace Randomizer {
         vector<Region> RegionList(NUMBER_OF_REGIONS);
         vector<Goal>   GoalList(NUMBER_OF_GOALS);
 
-        /* Get the map */
+        /* Get the map and calculate the goal weights */
         //Map::InitMap(RegionList, GoalList);
         Map::InitMap_v2(RegionList, GoalList);
+        Map::CalculateWeights(RegionList, GoalList, GOAL_TO_FIRST_REGION);
+
+#ifdef DEBUG
+        cout << endl;
+        for (int GoalIdx = 0; GoalIdx < NUMBER_OF_GOALS; ++GoalIdx) {
+            cout << "Weight for Goal #" << GoalIdx << " -> " << GoalList[GoalIdx].Weight << endl;
+        }
+        cout << endl;
+#endif
 
         vector<int> AvailableRevivingLairs;
         vector<int> AvailableItems;
@@ -426,7 +435,8 @@ namespace Randomizer {
         while (AvailableGoals.size() > 0) {
 
             /* Pick a goal */
-            GoalIndex = RandomInteger(AvailableGoals.size());
+            //GoalIndex = RandomInteger(AvailableGoals.size());
+            GoalIndex = WeightedGoalChoice(GoalList, AvailableGoals);
 
 #ifdef DEBUG
             cout << "Available goals: ";
@@ -620,4 +630,30 @@ namespace Randomizer {
         return true;
     }
 
+
+    int WeightedGoalChoice(vector<Goal>  &GoalList,
+                           vector<int>   &AvailableGoals) {
+
+        int SumOfWeights = 0;
+        unsigned int GoalIndex;
+
+        /* Add up all the weights */
+        for (GoalIndex = 0; GoalIndex < AvailableGoals.size(); ++GoalIndex) {
+            SumOfWeights += GoalList[AvailableGoals[GoalIndex]].Weight;
+        }
+
+        /* Pick a number and determine which Goal it corresponds to */
+        int RandomNumber = Random::RandomInteger(SumOfWeights);
+        for (GoalIndex = 0; GoalIndex < AvailableGoals.size(); ++GoalIndex) {
+            if (RandomNumber < GoalList[AvailableGoals[GoalIndex]].Weight) {
+                return GoalIndex;
+            }
+            else {
+                RandomNumber -= GoalList[AvailableGoals[GoalIndex]].Weight;
+            }
+        }
+
+        /* We shouldn't end up here */
+        return 0;
+    }
 }

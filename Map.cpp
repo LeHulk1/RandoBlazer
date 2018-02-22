@@ -20,7 +20,9 @@ void Region::InsertGoal(int Index) {
     NextGoals.push_back(Index);
 }
 
-Goal::Goal()  {}
+Goal::Goal()  {
+    Weight = 0;
+}
 Goal::~Goal() {}
 
 void Goal::InsertElement(int Type, int Index) {
@@ -1537,6 +1539,40 @@ namespace Map {
         /* Goal 75 - Demon Bird */
         GoalList[75].InsertElement(ITEM, ITEM_DR_LEO);
         GoalList[75].Target = 76;
+    }
+
+
+    void CalculateWeights(vector<Region> &RegionList, vector<Goal> &GoalList, int GoalID) {
+
+        int TargetRegionIndex = (GoalID == GOAL_TO_FIRST_REGION ? 0 : GoalList[GoalID].Target);
+
+        /* If this region doesn't have any goal, the goal leading to it only has a weight of 1 */
+        if (RegionList[TargetRegionIndex].NextGoals.empty()) {
+            if (GoalID != GOAL_TO_FIRST_REGION) {
+                GoalList[GoalID].Weight = 1;
+            }
+            return;
+        }
+
+        int CurrentSubGoalID;
+        int MaximumDepth = 1;
+        list<int>::const_iterator GoalIterator;
+        for (GoalIterator = RegionList[TargetRegionIndex].NextGoals.begin();
+             GoalIterator != RegionList[TargetRegionIndex].NextGoals.end();
+             ++GoalIterator) {
+            CurrentSubGoalID = *GoalIterator;
+
+            /* Calculate weights of all sub-goals, and keep the maximum depth found */
+            CalculateWeights(RegionList, GoalList, CurrentSubGoalID);
+            if (GoalList[CurrentSubGoalID].Weight > MaximumDepth) {
+                MaximumDepth = GoalList[CurrentSubGoalID].Weight;
+            }
+        }
+
+        /* This goal's weight will be the maximum depth of the attached sub-tree + 1 */
+        if (GoalID != GOAL_TO_FIRST_REGION) {
+            GoalList[GoalID].Weight = MaximumDepth + 1;
+        }
     }
 
 

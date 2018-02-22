@@ -31,6 +31,9 @@ namespace Randomizer {
     bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
                               vector<Item>  &RandomizedItemList,
                               fstream       &ROMFile);
+
+    int WeightedGoalChoice(vector<Goal>  &GoalList,
+                           vector<int>   &AvailableGoals);
 }
 
 #endif // __RANDOMIZER_H__
