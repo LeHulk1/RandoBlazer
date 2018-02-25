@@ -643,7 +643,7 @@ namespace Randomizer {
         }
 
         /* Pick a number and determine which Goal it corresponds to */
-        int RandomNumber = Random::RandomInteger(SumOfWeights);
+        int RandomNumber = RandomInteger(SumOfWeights);
         for (GoalIndex = 0; GoalIndex < AvailableGoals.size(); ++GoalIndex) {
             if (RandomNumber < GoalList[AvailableGoals[GoalIndex]].Weight) {
                 return GoalIndex;
