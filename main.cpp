@@ -4,6 +4,7 @@
 #include "Random.h"
 #include "Randomizer.h"
 #include "ROMUpdate.h"
+#include "TextUpdate.h"
 
 #include <fstream>
 #include <iostream>
@@ -99,8 +100,11 @@ int main ( int argc, char** argv ) {
     ROMUpdate::ROMUpdateLairs(RandomizedLairList, ROMFile);
     ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
 
+    /* General text modification */
+    TextUpdate::GeneralTextUpdate(ROMFile);
+
     /* Generate the Spoiler Log */
-    Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+    //Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
     /* Close the ROM file */
     ROMFile.close();
