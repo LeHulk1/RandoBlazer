@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "ROMUpdate.h"
 #include "ROMData.h"
+#include "TextUpdate.h"
 
 #include <iostream>
 #include <fstream>
@@ -293,6 +294,9 @@ namespace ROMUpdate {
                     break;
                 }
             }
+
+            /* Update the NPC's text accordingly */
+            TextUpdate::NPCItemTextUpdate(i, ItemID, ROMFile);
         }
 
     }

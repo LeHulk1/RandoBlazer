@@ -22,7 +22,8 @@
 #define SPAWN_RATE_MAX 0x20
 
 //#define DEBUG
-//#define DEBUG_NO_ENEMIES
+#define DEBUG_NO_ENEMIES
+//#define DONT_RANDOMIZE
 
 
 using namespace std;
@@ -416,6 +417,10 @@ namespace Randomizer {
         /* Initialize the randomized lists to the original lair and item lists */
         RandomizedLairList = OriginalLairList;
         RandomizedItemList = OriginalItemList;
+
+#ifdef DONT_RANDOMIZE
+        return true;
+#endif
 
         /* Initialization: Region 0 is available at the start, so let's explore it */
         ExploreRegion(RegionList,
