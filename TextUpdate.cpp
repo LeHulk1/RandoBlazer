@@ -7,11 +7,12 @@
 #include <fstream>
 #include <string.h>
 
-#define NB_NPC_TO_DISABLE_ADDRESSES 22
+#define NB_NPC_TO_DISABLE_ADDRESSES 23
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
 #define TEXT_ENDTYPE_46EC 2
+#define TEXT_ENDTYPE_1EA5 3
 
 
 
@@ -42,6 +43,10 @@
     case TEXT_ENDTYPE_46EC:   \
         TEXT_WriteByte(0x46); \
         TEXT_WriteByte(0xEC); \
+    break;                    \
+    case TEXT_ENDTYPE_1EA5:   \
+        TEXT_WriteByte(0x1E); \
+        TEXT_WriteByte(0xA5); \
     break;                    \
     }                         \
 }
@@ -92,6 +97,7 @@ namespace TextUpdate {
         0x1CA7F, /* Sleeping bird */
         0x1D532, /* Greenwood's Guardian */
         0x1D869, /* Mole (helping soul) */
+        0x1ECBD, /* Master's text before entering World of Evil */
         0x22E7F, /* Great Door (helping soul) */
         0x22FF4, /* Leo's cat */
         0x23FC5, /* Soldier next to basement entrance */
@@ -126,18 +132,18 @@ namespace TextUpdate {
         0x1E046, /* Psycho Sword squirrel */ // 46 EC
         0x1E1EF, /* Emblem C squirrel */ // 46 EC
         0x1E49F, /* Water Shrine Strange Bottle */ // 46 EC
-        0x1E572, /* Light Arrow crystal */
-        0x1EBC3, /* Lost Marsh crystal */
-        0x1EBC3, /* Water Shrine crystal */
-        0x207D3, /* Mountain King */
-        0x20D74, /* Mushroom Shoes boy */
-        0x210CD, /* Nome */
-        0x21A7A, /* Emblem E snail */
-        0x21EB0, /* Emblem F tile */
-        0x2249B, /* Mountain of Souls crystal */
-        0x2249B, /* Lune crystal */
-        0x22ADD, /* Emblem G under chest of drawers */
-        0x22A7C, /* Chest of drawers (Mystic Armor) */
+        0x1E572, /* Light Arrow crystal */ // 46 EC
+        0x1EBC3, /* Lost Marsh crystal */ // 46 EC
+        0x1EBC3, /* Water Shrine crystal */ // 46 EC
+        0x209D5, /* Mountain King */ // 1E A5
+        0x20DDD, /* Mushroom Shoes boy */ // 1E A5
+        0x210CD, /* Nome */ // 1E A5
+        0x21A7A, /* Emblem E snail */ // 1E A5
+        0x21EB0, /* Emblem F tile */ // 1E A5
+        0x2249B, /* Mountain of Souls crystal */ // 1E A5
+        0x2249B, /* Lune crystal */ // 1E A5
+        0x22ADD, /* Emblem G under chest of drawers */ // A3 BF
+        0x22A7C, /* Chest of drawers (Mystic Armor) */ // A3 BF
         0x22BC9, /* Herb Plant in Leo's Lab */
         0x2306D, /* Leo's Cat (door key) */
         0x231AE, /* Actinidia plant */
@@ -186,19 +192,19 @@ namespace TextUpdate {
         0x1DD73, /* Shield Bracelet mole */
         0x1E11C, /* Psycho Sword squirrel */
         0x1E22C, /* Emblem C squirrel */
-        0x1E49F, /* Water Shrine Strange Bottle */
-        0x1E572, /* Light Arrow crystal */
-        0x1EBC3, /* Lost Marsh crystal */
-        0x1EBC3, /* Water Shrine crystal */
-        0x207D3, /* Mountain King */
-        0x20D74, /* Mushroom Shoes boy */
-        0x210CD, /* Nome */
-        0x21A7A, /* Emblem E snail */
-        0x21EB0, /* Emblem F tile */
-        0x2249B, /* Mountain of Souls crystal */
-        0x2249B, /* Lune crystal */
-        0x22ADD, /* Emblem G under chest of drawers */
-        0x22A7C, /* Chest of drawers (Mystic Armor) */
+        0, /* Water Shrine Strange Bottle */
+        0, /* Light Arrow crystal */
+        0, /* Lost Marsh crystal */
+        0, /* Water Shrine crystal */
+        0, /* Mountain King */
+        0x20E73, /* Mushroom Shoes boy */
+        0, /* Nome */
+        0x21AB9, /* Emblem E snail */
+        0, /* Emblem F tile */
+        0, /* Mountain of Souls crystal */
+        0, /* Lune crystal */
+        0, /* Emblem G under chest of drawers */
+        0x22AB9, /* Chest of drawers (Mystic Armor) */
         0x22BC9, /* Herb Plant in Leo's Lab */
         0x2306D, /* Leo's Cat (door key) */
         0x231AE, /* Actinidia plant */
@@ -363,6 +369,28 @@ namespace TextUpdate {
         TEXT_WriteString("Tadaaa!\rTry to guess where\rI go.");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
+        /* Lost Marsh raft */
+        ROMFile.seekp(0x1E68E, ios::beg);
+        TEXT_WriteString("You're missing the\rGreenwood Leaves!");
+        TEXT_EndText(TEXT_ENDTYPE_46EC);
+        ROMFile.seekp(0x1E713, ios::beg);
+        TEXT_WriteString("Get on!");
+        TEXT_EndText(TEXT_ENDTYPE_46EC);
+
+        /* Mountain King */
+        ROMFile.seekp(0x20740, ios::beg);
+        TEXT_WriteString("Did you find the\rthree Red-Hot items?");
+        TEXT_EndText(TEXT_ENDTYPE_1EA5);
+        ROMFile.seekp(0x20905, ios::beg);
+        TEXT_WriteString("- DANCING GRANDMAS! -");
+        TEXT_EndText(TEXT_ENDTYPE_1EA5);
+        ROMFile.seekp(0x2092B, ios::beg);
+        TEXT_WriteString("Final boss time!");
+        TEXT_EndText(TEXT_ENDTYPE_1EA5);
+        ROMFile.seekp(0x209F3, ios::beg);
+        TEXT_WriteString("Good luck!");
+        TEXT_EndText(TEXT_ENDTYPE_1EA5);
+
         /* Leo's Lab entrance door */
         ROMFile.seekp(0x23A7B, ios::beg);
         //ROMFile.write("Welcome!", 8);
@@ -404,7 +432,19 @@ namespace TextUpdate {
             TEXT_WriteString(".");
             TEXT_EndText(TEXT_ENDTYPE_46EC);
         }
+        else if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
+                 ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
+                 ItemIndex == ITEM_CRYSTAL_MOUNTAIN_OF_SOULS ||
+                 ItemIndex == ITEM_CRYSTAL_LUNE) {
+            /* Crystal fairies with shared text */
+            TEXT_HeroReceived;
+            TEXT_WriteString("something...");
+            TEXT_WriteByte(0x11);
+            TEXT_WriteByte(0x0C);
+            //TEXT_EndText(TEXT_ENDTYPE_46EC);
+        }
         else {
+            /* Normal case */
             TEXT_HeroReceived;
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
@@ -419,7 +459,8 @@ namespace TextUpdate {
             ROMFile.seekp(NPCAlreadyHaveItemTextAddressList[NPCItemIndex], ios::beg);
             if (ItemIndex == ITEM_BIRD_RED_HOT_MIRROR ||
                 ItemIndex == ITEM_SQUIRREL_PSYCHO_SWORD ||
-                ItemIndex == ITEM_SQUIRREL_EMBLEM_C) {
+                ItemIndex == ITEM_SQUIRREL_EMBLEM_C ||
+                ItemIndex == ITEM_SNAIL_EMBLEM_E) {
                 /* Particular cases where we need shorter text */
                 TEXT_WriteByte(0x95); /* "You " */
                 TEXT_WriteByte(0xB5); /* "have " */
@@ -430,7 +471,7 @@ namespace TextUpdate {
             else {
                 TEXT_WriteByte(0x95); /* "You " */
                 //ROMFile.write("already ", 8);
-                TEXT_WriteString("already.");
+                TEXT_WriteString("already ");
                 TEXT_WriteByte(0xB5); /* "have " */
                 TEXT_WriteByte(0x97); /* "a " */
                 TEXT_WriteByte(0x0D); /* Carriage return */
@@ -476,7 +517,16 @@ namespace TextUpdate {
             TEXT_EndText(TEXT_ENDTYPE_88B9);
         }
 
-
+        /* Mushroom Shoes boy's revival text */
+        if (ItemIndex == ITEM_BOY_MUSHROOM_SHOES) {
+            ROMFile.seekp(0x20D74, ios::beg);
+            TEXT_WriteString("I have a nice\r");
+            TEXT_YellowStyle;
+            TEXT_WriteString(ItemName);
+            TEXT_EndStyle;
+            TEXT_WriteString("\rfor you!");
+            TEXT_EndText(TEXT_ENDTYPE_1EA5);
+        }
     }
 
 }
