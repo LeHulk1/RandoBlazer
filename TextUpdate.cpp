@@ -7,12 +7,15 @@
 #include <fstream>
 #include <string.h>
 
-#define NB_NPC_TO_DISABLE_ADDRESSES 23
+#define NB_NPC_TO_DISABLE_ADDRESSES 26
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
 #define TEXT_ENDTYPE_46EC 2
 #define TEXT_ENDTYPE_1EA5 3
+#define TEXT_ENDTYPE_A3BF 4
+#define TEXT_ENDTYPE_DFF0 5
+#define TEXT_ENDTYPE_44AA 6
 
 
 
@@ -47,6 +50,18 @@
     case TEXT_ENDTYPE_1EA5:   \
         TEXT_WriteByte(0x1E); \
         TEXT_WriteByte(0xA5); \
+    break;                    \
+    case TEXT_ENDTYPE_A3BF:   \
+        TEXT_WriteByte(0xA3); \
+        TEXT_WriteByte(0xBF); \
+    break;                    \
+    case TEXT_ENDTYPE_DFF0:   \
+        TEXT_WriteByte(0xDF); \
+        TEXT_WriteByte(0xF0); \
+    break;                    \
+    case TEXT_ENDTYPE_44AA:   \
+        TEXT_WriteByte(0x44); \
+        TEXT_WriteByte(0xAA); \
     break;                    \
     }                         \
 }
@@ -100,21 +115,25 @@ namespace TextUpdate {
         0x1ECBD, /* Master's text before entering World of Evil */
         0x22E7F, /* Great Door (helping soul) */
         0x22FF4, /* Leo's cat */
+        0x23559, /* Marie */
         0x23FC5, /* Soldier next to basement entrance */
         0x24112, /* Soldier next to Castle entrance */
         0x24616, /* Singer */
+        0x249D2, /* Queen Magridd */
         0x2521B, /* Soldier (helping soul) */
+        0x255E5, /* King Magridd */
         0x25BAF, /* Soldier with Leo */
         0x25FE0, /* Dr. Leo (when the two soldiers are not present) */
         0x26033, /* Dr. Leo (when the two soldiers are present) */
         0xF8109, /* Angelfish (helping soul) */
-        0xF8ACF  /* Mermaid statues */
+        0xF8ACF /* Mermaid statues */
+        //0xF9247  /* Mermaid Queen */
     };
 
     static int NPCItemTextAddressList[58] = {
         0x183AE, /* Tool shop owner */
         0x188FD, /* Emblem A tile */
-        0x18979, /* Goat pen corner */
+        0x18A2C, /* Goat pen corner */
         0x19256, /* Tool shop owner's son Teddy */
         0x19870, /* A Pass */
         0x199DD, /* Tile at end of child's secret cave */
@@ -129,7 +148,7 @@ namespace TextUpdate {
         0x1D53B, /* Greenwood's Guardian */ // 46 EC
         0x1D827, /* Greenwood Leaves */ // 46 EC
         0x1DC1A, /* Shield Bracelet mole */ // 46 EC
-        0x1E046, /* Psycho Sword squirrel */ // 46 EC
+        0x1E0DE, /* Psycho Sword squirrel */ // 46 EC
         0x1E1EF, /* Emblem C squirrel */ // 46 EC
         0x1E49F, /* Water Shrine Strange Bottle */ // 46 EC
         0x1E572, /* Light Arrow crystal */ // 46 EC
@@ -144,32 +163,32 @@ namespace TextUpdate {
         0x2249B, /* Lune crystal */ // 1E A5
         0x22ADD, /* Emblem G under chest of drawers */ // A3 BF
         0x22A7C, /* Chest of drawers (Mystic Armor) */ // A3 BF
-        0x22BC9, /* Herb Plant in Leo's Lab */
-        0x2306D, /* Leo's Cat (door key) */
-        0x231AE, /* Actinidia plant */
-        0x23562, /* Marie */
-        0x238F9, /* Spark Bomb mouse */
-        0x23F34, /* Leo's Lab Basement crystal */
-        0x23F34, /* Model Town 1 crystal */
-        0x23F34, /* Power Plant crystal */
-        0x242EC, /* Elemental Mail soldier */
-        0x24AB7, /* Super Bracelet tile */
-        0x249D9, /* Queen Magridd (VIP card) */
-        0x24C49, /* Platinum Card soldier */
-        0x24E9E, /* Maid (Herb) */
-        0x253C4, /* Emblem H tile */
-        0x255EE, /* Magridd King */
-        0x264C4, /* Leo on the Airship deck (Mobile key) */
-        0x26A17, /* Harp String tile */
-        0xF831D, /* North-eastern Mermaid (Herb) */
-        0xF8BBD, /* Bubble Armor Mermaid */
-        0xF909A, /* Magic Flair Mermaid */
-        0xF9253, /* Mermaid Queen */
-        0xF9874, /* Red-Hot Stick Mermaid */
-        0xF9BFB, /* Lue */
-        0xFA9C6, /* Rockbird crystal */
-        0xFA9C6, /* Seabed crystal near Blester */
-        0xFA9C6  /* Seabed crystal near Durean */
+        0x22BE3, /* Herb Plant in Leo's Lab */ // A3 BF
+        0x2306D, /* Leo's Cat (door key) */ // A3 BF
+        0x231AE, /* Actinidia plant */ // A3 BF
+        0x235AD, /* Marie */ // A3 BF
+        0x23922, /* Spark Bomb mouse */ // A3 BF
+        0x23F34, /* Leo's Lab Basement crystal */ // A3 BF
+        0x23F34, /* Model Town 1 crystal */ // A3 BF
+        0x23F34, /* Power Plant crystal */ // A3 BF
+        0x24317, /* Elemental Mail soldier */ // DF F0
+        0x24AB7, /* Super Bracelet tile */ // DF F0
+        0x24A47, /* Queen Magridd (VIP card) */ // DF F0
+        0x24D46, /* Platinum Card soldier */ // DF F0
+        0x24EBA, /* Maid (Herb) */ // DF F0
+        0x253C4, /* Emblem H tile */ // DF F0
+        0x2563A, /* Magridd King */ // DF F0
+        0x264C4, /* Leo on the Airship deck (Mobile key) */ // DF F0
+        0x26A17, /* Harp String tile */ // DF F0
+        0xF831D, /* North-eastern Mermaid (Herb) */ // 44 AA
+        0xF8BF8, /* Bubble Armor Mermaid */ // 44 AA
+        0xF909A, /* Magic Flair Mermaid */ // 44 AA
+        0xF9253, /* Mermaid Queen */ // 44 AA
+        0xF9874, /* Red-Hot Stick Mermaid */ // 44 AA
+        0xF9C13, /* Lue */ // 44 AA
+        0xFA9C6, /* Rockbird crystal */ // 44 AA
+        0xFA9C6, /* Seabed crystal near Blester */ // 44 AA
+        0xFA9C6  /* Seabed crystal near Durean */ // 44 AA
     };
 
     static int NPCAlreadyHaveItemTextAddressList[58] = {
@@ -205,32 +224,32 @@ namespace TextUpdate {
         0, /* Lune crystal */
         0, /* Emblem G under chest of drawers */
         0x22AB9, /* Chest of drawers (Mystic Armor) */
-        0x22BC9, /* Herb Plant in Leo's Lab */
-        0x2306D, /* Leo's Cat (door key) */
-        0x231AE, /* Actinidia plant */
-        0x23562, /* Marie */
-        0x238F9, /* Spark Bomb mouse */
-        0x23F34, /* Leo's Lab Basement crystal */
-        0x23F34, /* Model Town 1 crystal */
-        0x23F34, /* Power Plant crystal */
-        0x242EC, /* Elemental Mail soldier */
-        0x24AB7, /* Super Bracelet tile */
-        0x249D9, /* Queen Magridd (VIP card) */
-        0x24C49, /* Platinum Card soldier */
-        0x24E9E, /* Maid (Herb) */
-        0x253C4, /* Emblem H tile */
-        0x255EE, /* Magridd King */
-        0x264C4, /* Leo on the Airship deck (Mobile key) */
-        0x26A17, /* Harp String tile */
-        0xF831D, /* North-eastern Mermaid (Herb) */
-        0xF8BBD, /* Bubble Armor Mermaid */
-        0xF909A, /* Magic Flair Mermaid */
-        0xF9253, /* Mermaid Queen */
-        0xF9874, /* Red-Hot Stick Mermaid */
-        0xF9BFB, /* Lue */
-        0xFA9C6, /* Rockbird crystal */
-        0xFA9C6, /* Seabed crystal near Blester */
-        0xFA9C6  /* Seabed crystal near Durean */
+        0x22C22, /* Herb Plant in Leo's Lab */
+        0, /* Leo's Cat (door key) */
+        0x23201, /* Actinidia plant */
+        0, /* Marie */
+        0x23977, /* Spark Bomb mouse */
+        0, /* Leo's Lab Basement crystal */
+        0, /* Model Town 1 crystal */
+        0, /* Power Plant crystal */
+        0, /* Elemental Mail soldier */
+        0, /* Super Bracelet tile */
+        0x24A77, /* Queen Magridd (VIP card) */
+        0, /* Platinum Card soldier */
+        0x24F0F, /* Maid (Herb) */
+        0, /* Emblem H tile */
+        0, /* Magridd King */
+        0, /* Leo on the Airship deck (Mobile key) */
+        0, /* Harp String tile */
+        0xF836D, /* North-eastern Mermaid (Herb) */
+        0, /* Bubble Armor Mermaid */
+        0xF90B6, /* Magic Flair Mermaid */
+        0, /* Mermaid Queen */
+        0, /* Red-Hot Stick Mermaid */
+        0xF9D87, /* Lue */
+        0, /* Rockbird crystal */
+        0, /* Seabed crystal near Blester */
+        0  /* Seabed crystal near Durean */
     };
 
 
@@ -260,15 +279,15 @@ namespace TextUpdate {
         "Flame Pillar",
         "Tornado",
         "Phoenix",
-        "Goat's Food",
+        "Goat`s Food",
         "Harp String",
         "Pass",
         "Dream Rod",
-        "Leo's Brush",
+        "Leo`s Brush",
         "Greenwood Leaf",
-        "Mole's Ribbon",
+        "Mole`s Ribbon",
         "Big Pearl",
-        "Mermaid's Tears",
+        "Mermaid`s Tears",
         "Mushroom Shoes",
         "Mobile Key",
         "Thunder Ring",
@@ -303,6 +322,27 @@ namespace TextUpdate {
     };
 
 
+    static int PickEndTextCode(int NPCItemIndex) {
+        int EndTextCode = TEXT_ENDTYPE_44AA;
+        if (NPCItemIndex <= 10) {
+            EndTextCode = TEXT_ENDTYPE_88B9;
+        }
+        else if (NPCItemIndex <= 22) {
+            EndTextCode = TEXT_ENDTYPE_46EC;
+        }
+        else if (NPCItemIndex <= 29) {
+            EndTextCode = TEXT_ENDTYPE_1EA5;
+        }
+        else if (NPCItemIndex <= 39) {
+            EndTextCode = TEXT_ENDTYPE_A3BF;
+        }
+        else if (NPCItemIndex <= 48) {
+            EndTextCode = TEXT_ENDTYPE_DFF0;
+        }
+        return EndTextCode;
+    }
+
+
     void GeneralTextUpdate(fstream &ROMFile) {
 
         unsigned char Byte;
@@ -312,6 +352,10 @@ namespace TextUpdate {
             ROMFile.seekp(NPCToDisableAddressList[i], ios::beg);
             TEXT_WriteByte(0x00);
         }
+
+        /* Old Woman */
+//        ROMFile.seekp(0x1832E, ios::beg);
+//        TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /* Master's text when hero dies */
         ROMFile.seekp(0x786B, ios::beg);
@@ -371,7 +415,7 @@ namespace TextUpdate {
 
         /* Lost Marsh raft */
         ROMFile.seekp(0x1E68E, ios::beg);
-        TEXT_WriteString("You're missing the\rGreenwood Leaves!");
+        TEXT_WriteString("You`re missing the\rGreenwood Leaves!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
         ROMFile.seekp(0x1E713, ios::beg);
         TEXT_WriteString("Get on!");
@@ -395,13 +439,18 @@ namespace TextUpdate {
         ROMFile.seekp(0x23A7B, ios::beg);
         //ROMFile.write("Welcome!", 8);
         TEXT_WriteString("Welcome!");
-        TEXT_EndText(TEXT_ENDTYPE_88B9);/* A3BF */
+        TEXT_EndText(TEXT_ENDTYPE_A3BF);
+
+        /* Herb Mermaid of St. Elles */
+        ROMFile.seekp(0xF8356, ios::beg);
+        TEXT_WriteString("Here you go!");
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
 
         /* Mermaid statue (Southerta) */
-        ROMFile.seekp(0xFA03C, ios::beg);
+        ROMFile.seekp(0xFA040, ios::beg);
         //ROMFile.write("Southerta is open!", 18);
         TEXT_WriteString("Southerta is open!");
-        TEXT_EndText(TEXT_ENDTYPE_88B9);/* 44AA */
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
     }
 
 
@@ -421,26 +470,34 @@ namespace TextUpdate {
 
         /* Update text when NPC gives the item */
         ROMFile.seekp(NPCItemTextAddressList[NPCItemIndex], ios::beg);
-        if (ItemIndex == ITEM_WATER_SHRINE_TILE) {
+        if (ItemIndex == ITEM_WATER_SHRINE_TILE ||
+            ItemIndex == ITEM_EMBLEM_H) {
             /* Particular cases where we need shorter text */
             TEXT_WriteByte(0x93); /* "There " */
             TEXT_WriteByte(0xBA); /* "is " */
             TEXT_WriteByte(0x97); /* "a " */
+            TEXT_WriteByte(0x0D); /* Carriage return */
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
             TEXT_WriteString(".");
-            TEXT_EndText(TEXT_ENDTYPE_46EC);
+            TEXT_EndText(PickEndTextCode(NPCItemIndex));
         }
         else if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
                  ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
                  ItemIndex == ITEM_CRYSTAL_MOUNTAIN_OF_SOULS ||
-                 ItemIndex == ITEM_CRYSTAL_LUNE) {
+                 ItemIndex == ITEM_CRYSTAL_LUNE ||
+                 ItemIndex == ITEM_CRYSTAL_LEOS_LAB_BASEMENT ||
+                 ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
+                 ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
+                 ItemIndex == ITEM_CRYSTAL_ROCKBIRD ||
+                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
+                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN) {
             /* Crystal fairies with shared text */
             TEXT_HeroReceived;
             TEXT_WriteString("something...");
             TEXT_WriteByte(0x11);
-            TEXT_WriteByte(0x0C);
+            TEXT_WriteByte(0x0C); /* Question prompt */
             //TEXT_EndText(TEXT_ENDTYPE_46EC);
         }
         else {
@@ -450,7 +507,7 @@ namespace TextUpdate {
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
             TEXT_WriteString(".");
-            TEXT_EndText(TEXT_ENDTYPE_88B9);
+            TEXT_EndText(PickEndTextCode(NPCItemIndex));
         }
 
         /* Update text when NPC doesn't give its item because the hero already has it */
@@ -460,7 +517,9 @@ namespace TextUpdate {
             if (ItemIndex == ITEM_BIRD_RED_HOT_MIRROR ||
                 ItemIndex == ITEM_SQUIRREL_PSYCHO_SWORD ||
                 ItemIndex == ITEM_SQUIRREL_EMBLEM_C ||
-                ItemIndex == ITEM_SNAIL_EMBLEM_E) {
+                ItemIndex == ITEM_SNAIL_EMBLEM_E ||
+                ItemIndex == ITEM_PLANT_ACTINIDIA_LEAVES ||
+                ItemIndex == ITEM_MAID_HERB) {
                 /* Particular cases where we need shorter text */
                 TEXT_WriteByte(0x95); /* "You " */
                 TEXT_WriteByte(0xB5); /* "have " */
@@ -478,13 +537,13 @@ namespace TextUpdate {
                 TEXT_WriteString(ItemName);
                 TEXT_WriteString(".");
             }
-            TEXT_EndText(TEXT_ENDTYPE_88B9);
+            TEXT_EndText(PickEndTextCode(NPCItemIndex));
         }
 
         /* Magic Bell crystal fairy's text */
         if (ItemIndex == ITEM_CRYSTAL_MAGIC_BELL) {
             ROMFile.seekp(0x1C11E, ios::beg);
-            TEXT_WriteString("If you bring me all 8\rMaster's Emblems,\rI will give you a");
+            TEXT_WriteString("If you bring me all 8\rMaster`s Emblems,\rI will give you a");
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
@@ -495,7 +554,7 @@ namespace TextUpdate {
         /* Woodstin Trio's text */
         if (ItemIndex == ITEM_WOODSTIN_TRIO) {
             ROMFile.seekp(0x1D135, ios::beg);
-            TEXT_WriteString("Let's start the show!\rThe prize is a\r");
+            TEXT_WriteString("Let`s start the show!\rThe prize is a\r");
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
@@ -526,6 +585,68 @@ namespace TextUpdate {
             TEXT_EndStyle;
             TEXT_WriteString("\rfor you!");
             TEXT_EndText(TEXT_ENDTYPE_1EA5);
+        }
+
+        /* Leo's Lab herb plant's first question */
+        if (ItemIndex == ITEM_PLANT_HERB) {
+            ROMFile.seekp(0x22BC9, ios::beg);
+            TEXT_WriteString("Fancy ");
+            TEXT_WriteByte(0x97); /* "a " */
+            TEXT_WriteByte(0x0D); /* Carriage return */
+            TEXT_WriteString(ItemName);
+            TEXT_WriteString("? ");
+            TEXT_WriteByte(0x0C); /* Question prompt */
+        }
+
+        /* Platinum Card soldier text */
+        if (ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
+            ROMFile.seekp(0x24C49, ios::beg);
+            TEXT_WriteByte(0x93); /* "There " */
+            TEXT_WriteByte(0xBA); /* "is " */
+            TEXT_WriteByte(0x97); /* "a " */
+            TEXT_WriteByte(0x0D); /* Carriage return */
+            TEXT_YellowStyle;
+            TEXT_WriteString(ItemName);
+            TEXT_EndStyle;
+            TEXT_WriteString(" under\rthe guard`s feet.")
+            TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        }
+
+        /* Magridd Castle herb maid's first question */
+        if (ItemIndex == ITEM_MAID_HERB) {
+            ROMFile.seekp(0x24E9E, ios::beg);
+            TEXT_WriteString("Would ");
+            TEXT_WriteByte(0xFE); /* "you " */
+            TEXT_WriteByte(0xBE); /* "like " */
+            TEXT_WriteByte(0x97); /* "a " */
+            TEXT_WriteByte(0x0D); /* Carriage return */
+            TEXT_WriteString(ItemName);
+            TEXT_WriteString("? ");
+            TEXT_WriteByte(0x0C); /* Question prompt */
+        }
+
+        /* St. Elles herb mermaid's first question */
+        if (ItemIndex == ITEM_MERMAID_HERB) {
+            ROMFile.seekp(0xF831D, ios::beg);
+            TEXT_WriteString("Would ");
+            TEXT_WriteByte(0xFE); /* "you " */
+            TEXT_WriteByte(0xBE); /* "like " */
+            TEXT_WriteByte(0x97); /* "a " */
+            TEXT_WriteByte(0x0D); /* Carriage return */
+            TEXT_WriteString(ItemName);
+            TEXT_WriteString("? ");
+            TEXT_WriteByte(0x0C); /* Question prompt */
+        }
+
+        /* Bubble Armor mermaid's revival text */
+        if (ItemIndex == ITEM_MERMAID_BUBBLE_ARMOR) {
+            ROMFile.seekp(0xF8BBD, ios::beg);
+            TEXT_WriteString("Does anyone want my\r");
+            TEXT_YellowStyle;
+            TEXT_WriteString(ItemName);
+            TEXT_EndStyle;
+            TEXT_WriteString("?");
+            TEXT_EndText(TEXT_ENDTYPE_44AA);
         }
     }
 
