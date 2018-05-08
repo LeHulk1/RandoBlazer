@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string.h>
 
-#define NB_NPC_TO_DISABLE_ADDRESSES 29
+#define NB_NPC_TO_DISABLE_ADDRESSES 28
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
@@ -16,6 +16,7 @@
 #define TEXT_ENDTYPE_A3BF 4
 #define TEXT_ENDTYPE_DFF0 5
 #define TEXT_ENDTYPE_44AA 6
+#define TEXT_ENDTYPE_C5EE 7
 
 
 
@@ -62,6 +63,10 @@
     case TEXT_ENDTYPE_44AA:   \
         TEXT_WriteByte(0x44); \
         TEXT_WriteByte(0xAA); \
+    break;                    \
+    case TEXT_ENDTYPE_C5EE:   \
+        TEXT_WriteByte(0xC5); \
+        TEXT_WriteByte(0xEE); \
     break;                    \
     }                         \
 }
@@ -111,7 +116,6 @@ namespace TextUpdate {
         0x1CA7F, /* Sleeping bird */
         0x1D532, /* Greenwood's Guardian */
         0x1D869, /* Mole (helping soul) */
-        0x1ECBD, /* Master's text before entering World of Evil */
         0x22E7F, /* Great Door (helping soul) */
         0x22FF4, /* Leo's cat */
         0x23559, /* Marie */
@@ -358,11 +362,11 @@ namespace TextUpdate {
             /* For leader NPCs, keep the 02 37 code to heal the hero */
             if (i == 5  || /* Village Chief */
                 i == 8  || /* Greenwood's Guardian */
-                i == 13 || /* Marie */
-                i == 18 || /* King Magridd */
-                i == 27) { /* Mermaid Queen */
+                i == 12 || /* Marie */
+                i == 17 || /* King Magridd */
+                i == 26) { /* Mermaid Queen */
                 TEXT_WriteByte(0x37); /* Heal the hero completely */
-                if (i == 27) {
+                if (i == 26) {
                     /* You have to restore this for Mermaid Queen or her revival text glitches out.
                        I have no idea what it does... */
                     TEXT_WriteByte(0x9C);
@@ -434,6 +438,11 @@ namespace TextUpdate {
         TEXT_WriteString("Tadaaa!\rTry to guess where\rI go.");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
+        /* Turbo's text in sleeping bird's dream */
+        ROMFile.seekp(0x1E344, ios::beg);
+        TEXT_WriteString("Peace, guys.");
+        TEXT_EndText(TEXT_ENDTYPE_46EC);
+
         /* Lost Marsh raft */
         ROMFile.seekp(0x1E68E, ios::beg);
         TEXT_WriteString("You`re missing the\rGreenwood Leaves!");
@@ -441,6 +450,11 @@ namespace TextUpdate {
         ROMFile.seekp(0x1E713, ios::beg);
         TEXT_WriteString("Get on!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
+
+        /* Master's text after World of Evil is opened */
+        ROMFile.seekp(0x1ED47, ios::beg);
+        TEXT_WriteString("Ready for the finale?");
+        TEXT_EndText(TEXT_ENDTYPE_C5EE);
 
         /* Mountain King */
         ROMFile.seekp(0x20740, ios::beg);
@@ -460,6 +474,79 @@ namespace TextUpdate {
         ROMFile.seekp(0x23A7B, ios::beg);
         TEXT_WriteString("Welcome!");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
+
+        /* Leo's cat's dream */
+        ROMFile.seekp(0x23B89, ios::beg);
+        TEXT_WriteString("We can`t let him make\ra deal with Deathtoll!");
+        TEXT_EndText(TEXT_ENDTYPE_A3BF);
+        ROMFile.seekp(0x23C90, ios::beg);
+        TEXT_WriteString("Do it for Lisa.");
+        TEXT_EndText(TEXT_ENDTYPE_A3BF);
+        ROMFile.seekp(0x23D14, ios::beg);
+        TEXT_WriteString("Oh Master, please\rforgive me.");
+        TEXT_EndText(TEXT_ENDTYPE_A3BF);
+
+        /* Singer's text */
+        ROMFile.seekp(0x24677, ios::beg);
+        TEXT_WriteString("Let`s jam it!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+
+        /* Dr. Leo/Queen Magridd cutscene */
+        ROMFile.seekp(0x26144, ios::beg);
+        TEXT_WriteString("We have to defeat\rDeathtoll!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x25C7F, ios::beg);
+        TEXT_WriteString("We`re ready to roll!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x25D4E, ios::beg);
+        TEXT_WriteString("Queen Magridd!");
+        TEXT_WriteByte(0x11); /* Input prompt */
+        TEXT_WriteByte(0x10); /* New textbox */
+        TEXT_WriteString("Muahahahaa!!\rKill this loser.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x26241, ios::beg);
+        TEXT_WriteByte(0x95); /* "You " */
+        TEXT_WriteByte(0x98); /* "are " */
+        TEXT_WriteString("worse than\revil!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x2626E, ios::beg);
+        TEXT_WriteString("Wait, there`s more!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x262BA, ios::beg);
+        TEXT_WriteString("Daddy!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x262EE, ios::beg);
+        TEXT_WriteString("Dr. Leo, will you\rcooperate now?");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x26383, ios::beg);
+        TEXT_WriteString("All right. But please\rlet her go.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x26459, ios::beg);
+        TEXT_WriteString("Deal.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x264EC, ios::beg);
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x2650A, ios::beg);
+        TEXT_WriteString("This is it.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x26773, ios::beg);
+        TEXT_WriteString("Thanks for everything\ryou are doing for us.\rPlease leave while my\rback is turned.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+
+        /* Sleeping Soldier's dream */
+        ROMFile.seekp(0x26AA7, ios::beg);
+        TEXT_WriteString("My inventions should\rmake people happy,\rbut they are being\rused for evil.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x26C9E, ios::beg);
+        TEXT_WriteByte(0x91); /* "The " */
+        TEXT_WriteByte(0xF6); /* "world " */
+        TEXT_WriteByte(0xF1); /* "will " */
+        TEXT_WriteByte(0xA1); /* "be " */
+        TEXT_WriteString("\rdestroyed!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        ROMFile.seekp(0x26CBF, ios::beg);
+        TEXT_WriteString("I am sorry but\rI have orders.");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /* Herb Mermaid of St. Elles */
         ROMFile.seekp(0xF8356, ios::beg);
