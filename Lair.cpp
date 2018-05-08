@@ -76,10 +76,11 @@ bool Lair::MustBeGhostLairPosition() {
 }
 
 bool Lair::MustNotRandomizeLairPosition() {
-    /* This lair should not be randomized (until I find a better way to deal with them) */
+    /* These lairs should not be randomized (until I find a better way to deal with them) */
     return ( (PositionData[0] == 0x20 && PositionData[1] == 0x08 && PositionData[2] == 0x27) ||
              (PositionData[0] == 0x3E && PositionData[1] == 0x0E && PositionData[2] == 0x26) ||
              (PositionData[0] == 0x3E && PositionData[1] == 0x17 && PositionData[2] == 0x39) ||
              (PositionData[0] == 0x3F && PositionData[1] == 0x0A && PositionData[2] == 0x27) ||
+             (PositionData[0] == 0x56 && PositionData[1] == 0x2D && PositionData[2] == 0x31) ||
              (PositionData[0] == 0x58 && PositionData[1] == 0x37 && PositionData[2] == 0x34) );
 }
