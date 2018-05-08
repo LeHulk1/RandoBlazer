@@ -333,6 +333,7 @@ namespace Log {
          "Light Arrow crystal fairy in Fire Shrine",
          "Lost Marsh crystal fairy (near Light Shrine entrance)",
          "Water Shrine 2nd screen crystal fairy",
+         "Fire Shrine 1st screen crystal fairy",
          "Mountain King's item",
          "Mushroom Shoes boy's item",
          "Nome's item",

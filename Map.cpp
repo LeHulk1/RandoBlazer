@@ -746,6 +746,7 @@ namespace Map {
         /* Region 8 - Fire Shrine Scorpions */
         RegionList[8].InsertElement(LAIR, NPC_BIRD3);
         RegionList[8].InsertElement(ITEM, 18);
+        RegionList[8].InsertElement(ITEM, ITEM_CRYSTAL_FIRE_SHRINE);
 
         /* Region 9 - Monmo's Treasure */
         //RegionList[9].InsertElement(CHEST, 10);  WARNING: this chest can sometimes be already opened, let's take it out for now
@@ -1913,6 +1914,7 @@ namespace Map {
         NonKeyChestList.push_back(ITEM_CRYSTAL_UNDERGROUND_CASTLE);
         NonKeyChestList.push_back(ITEM_CRYSTAL_LOST_MARSH);
         NonKeyChestList.push_back(ITEM_CRYSTAL_WATER_SHRINE);
+        NonKeyChestList.push_back(ITEM_CRYSTAL_FIRE_SHRINE);
         NonKeyChestList.push_back(ITEM_CRYSTAL_MOUNTAIN_OF_SOULS);
         NonKeyChestList.push_back(ITEM_CRYSTAL_LUNE);
         NonKeyChestList.push_back(ITEM_CRYSTAL_LEOS_LAB_BASEMENT);

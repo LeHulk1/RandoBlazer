@@ -13,7 +13,7 @@
 
 namespace ROMUpdate {
 
-    static int NPCItemAddressList[58] =
+    static int NPCItemAddressList[59] =
     {
         0x183AB, /* Tool shop owner */
         0x1875E, /* Emblem A tile */
@@ -38,6 +38,7 @@ namespace ROMUpdate {
         0x1E569, /* Light Arrow crystal */
         0x1E4E3, /* Lost Marsh crystal */
         0x1E537, /* Water Shrine crystal */
+        0x1E5B5, /* Fire Shrine crystal */
         0x205A5, /* Mountain King */
         0x20D63, /* Mushroom Shoes boy */
         0x210C1, /* Nome */
@@ -81,6 +82,7 @@ namespace ROMUpdate {
         case ITEM_CRYSTAL_UNDERGROUND_CASTLE:
         case ITEM_CRYSTAL_LOST_MARSH:
         case ITEM_CRYSTAL_WATER_SHRINE:
+        case ITEM_CRYSTAL_FIRE_SHRINE:
         case ITEM_CRYSTAL_MOUNTAIN_OF_SOULS:
         case ITEM_CRYSTAL_LUNE:
         case ITEM_CRYSTAL_LEOS_LAB_BASEMENT:
@@ -181,8 +183,20 @@ namespace ROMUpdate {
                     Byte = 0x0A;
                     ROMFile.write((char*)(&Byte), 1);
                     ROMFile.write((char*)(&ItemID), 1);
-                    Byte = 0x00;
-                    ROMFile.write((char*)(&Byte), 1);
+
+                    if (i == ITEM_CRYSTAL_FIRE_SHRINE) {
+                        /* Keep more bytes in this case, or the textbox glitches out */
+                        Byte = 0x82;
+                        ROMFile.write((char*)(&Byte), 1);
+                        Byte = 0x2F;
+                        ROMFile.write((char*)(&Byte), 1);
+                        Byte = 0xFF;
+                        ROMFile.write((char*)(&Byte), 1);
+                    }
+                    else {
+                        Byte = 0x00;
+                        ROMFile.write((char*)(&Byte), 1);
+                    }
                 }
                 else {
                     ROMFile.seekp (ItemAddress, ios::beg);

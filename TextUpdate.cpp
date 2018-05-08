@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string.h>
 
-#define NB_NPC_TO_DISABLE_ADDRESSES 26
+#define NB_NPC_TO_DISABLE_ADDRESSES 29
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
@@ -108,7 +108,6 @@ namespace TextUpdate {
         0x19506, /* Old man in Leo's Paintings house */
         0x1A13A, /* Village Chief */
         0x1AA56, /* Tulip next to Underground Castle */
-        0x1AC5B, /* Revival of first Underground Castle Crystal Fairy */
         0x1CA7F, /* Sleeping bird */
         0x1D532, /* Greenwood's Guardian */
         0x1D869, /* Mole (helping soul) */
@@ -117,7 +116,6 @@ namespace TextUpdate {
         0x22FF4, /* Leo's cat */
         0x23559, /* Marie */
         0x23FC5, /* Soldier next to basement entrance */
-        0x24112, /* Soldier next to Castle entrance */
         0x24616, /* Singer */
         0x249D2, /* Queen Magridd */
         0x2521B, /* Soldier (helping soul) */
@@ -126,11 +124,15 @@ namespace TextUpdate {
         0x25FE0, /* Dr. Leo (when the two soldiers are not present) */
         0x26033, /* Dr. Leo (when the two soldiers are present) */
         0xF8109, /* Angelfish (helping soul) */
-        0xF8ACF /* Mermaid statues */
-        //0xF9247  /* Mermaid Queen */
+        0xF87FA, /* Mermaid statue (Blester) */
+        0xF8ACF, /* Mermaid statue (Rockbird) */
+        0xF8EEA, /* Mermaid statue (Durean) */
+        0xF966D, /* Mermaid statue (Ghost Ship) */
+        0xF9247, /* Mermaid Queen */
+        0xF9BF4  /* Lue */
     };
 
-    static int NPCItemTextAddressList[58] = {
+    static int NPCItemTextAddressList[59] = {
         0x183AE, /* Tool shop owner */
         0x188FD, /* Emblem A tile */
         0x18A2C, /* Goat pen corner */
@@ -154,6 +156,7 @@ namespace TextUpdate {
         0x1E572, /* Light Arrow crystal */ // 46 EC
         0x1EBC3, /* Lost Marsh crystal */ // 46 EC
         0x1EBC3, /* Water Shrine crystal */ // 46 EC
+        0x1EBC3, /* Fire Shrine crystal */ // 46 EC
         0x209D5, /* Mountain King */ // 1E A5
         0x20DDD, /* Mushroom Shoes boy */ // 1E A5
         0x210CD, /* Nome */ // 1E A5
@@ -174,7 +177,7 @@ namespace TextUpdate {
         0x24317, /* Elemental Mail soldier */ // DF F0
         0x24AB7, /* Super Bracelet tile */ // DF F0
         0x24A47, /* Queen Magridd (VIP card) */ // DF F0
-        0x24D46, /* Platinum Card soldier */ // DF F0
+        0x24C80, /* Platinum Card soldier */ // DF F0
         0x24EBA, /* Maid (Herb) */ // DF F0
         0x253C4, /* Emblem H tile */ // DF F0
         0x2563A, /* Magridd King */ // DF F0
@@ -191,7 +194,7 @@ namespace TextUpdate {
         0xFA9C6  /* Seabed crystal near Durean */ // 44 AA
     };
 
-    static int NPCAlreadyHaveItemTextAddressList[58] = {
+    static int NPCAlreadyHaveItemTextAddressList[59] = {
         0x18429, /* Tool shop owner */
         0, /* Emblem A tile */
         0, /* Goat pen corner */
@@ -215,6 +218,7 @@ namespace TextUpdate {
         0, /* Light Arrow crystal */
         0, /* Lost Marsh crystal */
         0, /* Water Shrine crystal */
+        0, /* Fire Shrine crystal */
         0, /* Mountain King */
         0x20E73, /* Mushroom Shoes boy */
         0, /* Nome */
@@ -327,16 +331,16 @@ namespace TextUpdate {
         if (NPCItemIndex <= 10) {
             EndTextCode = TEXT_ENDTYPE_88B9;
         }
-        else if (NPCItemIndex <= 22) {
+        else if (NPCItemIndex <= 23) {
             EndTextCode = TEXT_ENDTYPE_46EC;
         }
-        else if (NPCItemIndex <= 29) {
+        else if (NPCItemIndex <= 30) {
             EndTextCode = TEXT_ENDTYPE_1EA5;
         }
-        else if (NPCItemIndex <= 39) {
+        else if (NPCItemIndex <= 40) {
             EndTextCode = TEXT_ENDTYPE_A3BF;
         }
-        else if (NPCItemIndex <= 48) {
+        else if (NPCItemIndex <= 49) {
             EndTextCode = TEXT_ENDTYPE_DFF0;
         }
         return EndTextCode;
@@ -350,28 +354,39 @@ namespace TextUpdate {
         /* NPC actions to disable (mostly to remove NPC revival text) */
         for (int i=0; i<NB_NPC_TO_DISABLE_ADDRESSES; ++i) {
             ROMFile.seekp(NPCToDisableAddressList[i], ios::beg);
-            TEXT_WriteByte(0x00);
-        }
 
-        /* Old Woman */
-//        ROMFile.seekp(0x1832E, ios::beg);
-//        TEXT_EndText(TEXT_ENDTYPE_88B9);
+            /* For leader NPCs, keep the 02 37 code to heal the hero */
+            if (i == 5  || /* Village Chief */
+                i == 8  || /* Greenwood's Guardian */
+                i == 13 || /* Marie */
+                i == 18 || /* King Magridd */
+                i == 27) { /* Mermaid Queen */
+                TEXT_WriteByte(0x37); /* Heal the hero completely */
+                if (i == 27) {
+                    /* You have to restore this for Mermaid Queen or her revival text glitches out.
+                       I have no idea what it does... */
+                    TEXT_WriteByte(0x9C);
+                    TEXT_WriteByte(0xFB);
+                    TEXT_WriteByte(0x03);
+                }
+                TEXT_WriteByte(0x02);
+            }
+            TEXT_WriteByte(0x86);
+            TEXT_WriteByte(0x6B); /* End code byte */
+        }
 
         /* Master's text when hero dies */
         ROMFile.seekp(0x786B, ios::beg);
-        //ROMFile.write("Tough luck huh?", 15);
         TEXT_WriteString("Tough luck huh?");
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
         /* Master's text after Brown Stone */
         ROMFile.seekp(0x78BC, ios::beg);
-        //ROMFile.write("One down,\rfive to go!", 21);
         TEXT_WriteString("One down,\rfive to go!");
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
         /* Master's first text */
         ROMFile.seekp(0x7999, ios::beg);
-        //ROMFile.write("420 Soul blaze it!", 18);
         TEXT_WriteString("420 Soul blaze it!");
         TEXT_EndText(TEXT_ENDTYPE_52FA);
         ROMFile.seekp(0x7A07, ios::beg);
@@ -379,34 +394,40 @@ namespace TextUpdate {
 
         /* PUSH START */
         ROMFile.seekp(0x13B2B, ios::beg);
-        //ROMFile.write("RANDO HYPE", 10);
         TEXT_WriteString("RANDO HYPE");
 
         /* Bridge guard */
         ROMFile.seekp(0x18644, ios::beg);
-        //ROMFile.write("Please pass.", 12);
         TEXT_WriteString("Please pass.");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /* Water mill keeper */
         ROMFile.seekp(0x1877C, ios::beg);
-        //ROMFile.write("Could you please\rturn this wheel?", 33);
         TEXT_WriteString("Could you please\rturn this wheel?");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
         ROMFile.seekp(0x188B9, ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
+        /* Sleeping tulip (move this text to make room for the Pass tile text) */
+        ROMFile.seekp(0x1984E, ios::beg);
+        TEXT_WriteByte(0x9A); /* Change text pointer */
+        ROMFile.seekp(0x1989A, ios::beg);
+        TEXT_WriteByte(0x10);
+        TEXT_WriteString("Hello...");
+
         /* Village Chief */
         ROMFile.seekp(0x1A2C5, ios::beg);
-        //ROMFile.write("Good job!", 9);
         TEXT_WriteString("Good job!");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /* Magician text 2 */
         ROMFile.seekp(0x1A914, ios::beg);
-        //ROMFile.write("Good luck and/or\rblame Everhate.", 32);
         TEXT_WriteString("Good luck and/or\rblame Everhate.");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
+
+        /* Revival of first Underground Castle Crystal Fairy */
+        ROMFile.seekp(0x1AC5B, ios::beg);
+        TEXT_WriteByte(0x00);
 
         /* Woodstin Trio */
         ROMFile.seekp(0x1D1E6, ios::beg);
@@ -437,7 +458,6 @@ namespace TextUpdate {
 
         /* Leo's Lab entrance door */
         ROMFile.seekp(0x23A7B, ios::beg);
-        //ROMFile.write("Welcome!", 8);
         TEXT_WriteString("Welcome!");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
@@ -446,9 +466,20 @@ namespace TextUpdate {
         TEXT_WriteString("Here you go!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
 
-        /* Mermaid statue (Southerta) */
+        /* Mermaid statues */
+        ROMFile.seekp(0xF8801, ios::beg);
+        TEXT_WriteString("Blester is open!");
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
+        ROMFile.seekp(0xF8AD6, ios::beg);
+        TEXT_WriteString("Rockbird is open!");
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
+        ROMFile.seekp(0xF8EF1, ios::beg);
+        TEXT_WriteString("Durean is open!");
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
+        ROMFile.seekp(0xF9674, ios::beg);
+        TEXT_WriteString("Ghost Ship is open!");
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
         ROMFile.seekp(0xFA040, ios::beg);
-        //ROMFile.write("Southerta is open!", 18);
         TEXT_WriteString("Southerta is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
     }
@@ -485,6 +516,7 @@ namespace TextUpdate {
         }
         else if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
                  ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
+                 ItemIndex == ITEM_CRYSTAL_FIRE_SHRINE ||
                  ItemIndex == ITEM_CRYSTAL_MOUNTAIN_OF_SOULS ||
                  ItemIndex == ITEM_CRYSTAL_LUNE ||
                  ItemIndex == ITEM_CRYSTAL_LEOS_LAB_BASEMENT ||
@@ -498,10 +530,13 @@ namespace TextUpdate {
             TEXT_WriteString("something...");
             TEXT_WriteByte(0x11);
             TEXT_WriteByte(0x0C); /* Question prompt */
-            //TEXT_EndText(TEXT_ENDTYPE_46EC);
         }
         else {
             /* Normal case */
+            if (ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
+                /* This text has been moved from its original location */
+                TEXT_WriteByte(0x10);
+            }
             TEXT_HeroReceived;
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
@@ -525,11 +560,9 @@ namespace TextUpdate {
                 TEXT_WriteByte(0xB5); /* "have " */
                 TEXT_WriteByte(0xC2); /* "my " */
                 TEXT_WriteString("item.");
-                //ROMFile.write("item.", 5);
             }
             else {
                 TEXT_WriteByte(0x95); /* "You " */
-                //ROMFile.write("already ", 8);
                 TEXT_WriteString("already ");
                 TEXT_WriteByte(0xB5); /* "have " */
                 TEXT_WriteByte(0x97); /* "a " */
@@ -565,13 +598,10 @@ namespace TextUpdate {
         /* Psycho Sword squirrel's revival text */
         if (ItemIndex == ITEM_SQUIRREL_PSYCHO_SWORD) {
             ROMFile.seekp(0x1E14D, ios::beg);
-            //ROMFile.write("I will exchange this\r", 20);
             TEXT_WriteString("I will exchange this\r");
             TEXT_YellowStyle;
-            //ROMFile.write(ItemName, strlen(ItemName));
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
-            //ROMFile.write("\rfor food...", 12);
             TEXT_WriteString("\rfor food...");
             TEXT_EndText(TEXT_ENDTYPE_88B9);
         }
@@ -598,8 +628,26 @@ namespace TextUpdate {
             TEXT_WriteByte(0x0C); /* Question prompt */
         }
 
+        /* Soldier text: tells what item the sleeping soldier has */
+        if (ItemIndex == ITEM_SOLDIER_ELEMENTAL_MAIL) {
+            ROMFile.seekp(0x24119, ios::beg);
+            TEXT_WriteString("I know a sleeping\rsoldier who has a\r");
+            TEXT_YellowStyle;
+            TEXT_WriteString(ItemName);
+            TEXT_EndStyle;
+            TEXT_WriteString("...");
+            TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        }
+
         /* Platinum Card soldier text */
         if (ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
+
+            /* Move the item text location */
+            ROMFile.seekp(0x24C3E, ios::beg);
+            TEXT_WriteByte(0x80);
+            TEXT_WriteByte(0xCC);
+
+            /* Change Soldier's text */
             ROMFile.seekp(0x24C49, ios::beg);
             TEXT_WriteByte(0x93); /* "There " */
             TEXT_WriteByte(0xBA); /* "is " */
@@ -608,7 +656,7 @@ namespace TextUpdate {
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
-            TEXT_WriteString(" under\rthe guard`s feet.")
+            TEXT_WriteString(" under\rthe guard`s feet.");
             TEXT_EndText(TEXT_ENDTYPE_DFF0);
         }
 

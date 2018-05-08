@@ -348,6 +348,10 @@ namespace ROMData {
         ItemList[ITEM_CRYSTAL_WATER_SHRINE].Contents = GEMS_EXP;
         ItemList[ITEM_CRYSTAL_WATER_SHRINE].GemsExp  = 180;
 
+        ItemList[ITEM_CRYSTAL_FIRE_SHRINE].Type     = TYPE_NPC;
+        ItemList[ITEM_CRYSTAL_FIRE_SHRINE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_FIRE_SHRINE].GemsExp  = 1;
+
         ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Type     = TYPE_NPC;
         ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Contents = GEMS_EXP;
         ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].GemsExp  = 300;

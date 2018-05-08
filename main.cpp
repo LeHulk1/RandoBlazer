@@ -104,7 +104,7 @@ int main ( int argc, char** argv ) {
     TextUpdate::GeneralTextUpdate(ROMFile);
 
     /* Generate the Spoiler Log */
-    //Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+    Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
     /* Close the ROM file */
     ROMFile.close();
