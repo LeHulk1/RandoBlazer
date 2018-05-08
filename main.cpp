@@ -4,6 +4,7 @@
 #include "Random.h"
 #include "Randomizer.h"
 #include "ROMUpdate.h"
+#include "Sprite.h"
 #include "TextUpdate.h"
 
 #include <fstream>
@@ -69,9 +70,10 @@ int main ( int argc, char** argv ) {
     ofstream ROMFileCopy    (ROM_FILE_NAME,     ios::binary);
     ROMFileCopy << ROMFileOriginal.rdbuf();
 
-    /* Initialize the final lists of randomized lairs and chests */
+    /* Initialize the final lists of randomized lairs, chests and sprites */
     vector<Lair> RandomizedLairList;
     vector<Item> RandomizedItemList;
+    vector<Sprite> RandomizedSpriteList;
 
     /* Re-open ROM to be modified */
     ROMFile.open(MOD_ROM_FILE_NAME, ios::in | ios::out | ios::binary | ios::ate);
@@ -96,9 +98,13 @@ int main ( int argc, char** argv ) {
     /* Randomize monster lair contents: enemy types, lair types, number of enemies and spawn rates */
     Randomizer::RandomizeLairContents(RandomizedLairList);
 
+    /* Randomize static enemies in maps */
+    Randomizer::RandomizeMapSprites(RandomizedSpriteList, ROMFile);
+
     /* Modify the ROM with the randomized lists */
     ROMUpdate::ROMUpdateLairs(RandomizedLairList, ROMFile);
     ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
+    ROMUpdate::ROMUpdateMapSprites(RandomizedSpriteList, ROMFile);
 
     /* General text modification */
     TextUpdate::GeneralTextUpdate(ROMFile);

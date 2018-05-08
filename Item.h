@@ -1,5 +1,5 @@
-#ifndef __CHEST_H__
-#define __CHEST_H__
+#ifndef __ITEM_H__
+#define __ITEM_H__
 
 #define TYPE_CHEST  0
 #define TYPE_NPC    1
@@ -84,4 +84,4 @@ public:
     int GemsExp;
 };
 
-#endif // __CHEST_H__
+#endif // __ITEM_H__

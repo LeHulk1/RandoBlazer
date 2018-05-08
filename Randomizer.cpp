@@ -22,7 +22,7 @@
 #define SPAWN_RATE_MAX 0x20
 
 //#define DEBUG
-#define DEBUG_NO_ENEMIES
+//#define DEBUG_NO_ENEMIES
 //#define DONT_RANDOMIZE
 
 
@@ -35,9 +35,11 @@ namespace Randomizer {
         {ACT1_GOBLIN, ACT1_IMP, ACT1_FLY, ACT1_PLANT, ACT1_SLIME, ACT1_TORCH};
     static int LeosPaintingsEnemies[4] =
         {ACT1_ARMOR, ACT1_BIRD, ACT1_TORCH2, ACT1_BLOCK};
-    static int WaterShrineEnemies[4] =
-        {ACT2_WATER_DRAGON, ACT2_MUDMAN, ACT2_BUSH, ACT2_STATUE};
-    static int FireLightShrineEnemies[4] =
+    static int WaterShrineEnemies[5] =
+        {ACT2_WATER_DRAGON, ACT2_MUDMAN, ACT2_BUSH, ACT2_STATUE, ACT2_FLOWER};
+    static int FireLightShrineEnemies[5] =
+        {ACT2_FIRE_SPIRIT, ACT2_GHOST, ACT2_LIZARDMAN, ACT2_TP_LIZARDMAN, ACT2_FIREMAN};
+    static int FireLightShrineEnemiesNoFireSpirit[4] =
         {ACT2_GHOST, ACT2_LIZARDMAN, ACT2_TP_LIZARDMAN, ACT2_FIREMAN};
     static int SeabedEnemies[5] =
         {ACT3_URCHIN, ACT3_JELLYFISH, ACT3_CRAB, ACT3_RAY, ACT3_SEAHORSE};
@@ -45,9 +47,13 @@ namespace Randomizer {
         {ACT3_PALM_TREE, ACT3_ROCK, ACT3_FISH, ACT3_GORILLA, ACT3_EAGLE};
     static int IslandsEnemiesNoFish[4] =
         {ACT3_PALM_TREE, ACT3_ROCK, ACT3_GORILLA, ACT3_EAGLE};
-    static int MountainEnemies[4] =
-        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT/*, ACT4_SNOWBALL*/};
-    static int LaynoleLuneEnemies[5] =
+    static int MountainEnemies[5] =
+        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT, ACT4_SNOWBALL};
+    static int MountainEnemiesNoSnowball[4] =
+        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT};
+    static int LaynoleLuneEnemies[6] =
+        {ACT4_PURPLE_WIZARD, ACT4_RED_WIZARD, ACT4_ICE_HEAD, ACT4_ICE_BLOCK, ACT4_CIRCLING_BAT, ACT4_SLIME};
+    static int LaynoleLuneEnemiesNoIceBlock[5] =
         {ACT4_PURPLE_WIZARD, ACT4_RED_WIZARD, ACT4_ICE_HEAD, ACT4_CIRCLING_BAT, ACT4_SLIME};
     static int LeosBasementEnemies[5] =
         {ACT5_METAL_MOUSE, ACT5_BULLDOZER, ACT5_HELICOPTER, ACT5_WORM, ACT5_ROBOT};
@@ -63,7 +69,9 @@ namespace Randomizer {
         {ACT6_ORB, ACT6_SNAKE, ACT6_SKELETON};
     static int CastleTowersEnemies[5] =
         {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
-    static int WorldOfEvilEnemies[2] =
+    static int WorldOfEvilEnemies[3] =
+        {ACT7_DEMON, ACT7_FLY, ACT7_BRICK};
+    static int WorldOfEvilEnemiesNoBrick[2] =
         {ACT7_DEMON, ACT7_FLY};
 
     void RandomizeLairEnemies(Lair &Lair) {
@@ -101,11 +109,11 @@ namespace Randomizer {
                 Enemy != ELEMENTAL_STATUE) {
                 if (Enemy < ACT2_FIRE_SPIRIT) {
                     /* Lair is in Lost Marsh or Water Shrine */
-                    Enemy = WaterShrineEnemies[RandomInteger(4)];
+                    Enemy = WaterShrineEnemies[RandomInteger(5)];
                 }
                 else {
                     /* Lair is in Fire Shrine or Light Shrine */
-                    Enemy = FireLightShrineEnemies[RandomInteger(4)];
+                    Enemy = FireLightShrineEnemiesNoFireSpirit[RandomInteger(4)];
                 }
             }
             break;
@@ -131,11 +139,11 @@ namespace Randomizer {
             if (Enemy != POSEIDON) {
                 if (Enemy < ACT4_PURPLE_WIZARD) {
                     /* Lair is in Mountain of Souls */
-                    Enemy = MountainEnemies[RandomInteger(4)];
+                    Enemy = MountainEnemiesNoSnowball[RandomInteger(4)];
                 }
                 else {
                     /* Lair is in Laynole or Lune */
-                    Enemy = LaynoleLuneEnemies[RandomInteger(5)];
+                    Enemy = LaynoleLuneEnemiesNoIceBlock[RandomInteger(5)];
                 }
             }
             break;
@@ -181,7 +189,7 @@ namespace Randomizer {
             break;
         case ACT_7:
             /* Lair is in World of Evil */
-            Enemy = WorldOfEvilEnemies[RandomInteger(2)];
+            Enemy = WorldOfEvilEnemiesNoBrick[RandomInteger(2)];
             break;
         default:
             /* Should not happen! */
@@ -303,6 +311,99 @@ namespace Randomizer {
 
             /* Change Spawn Rate */
             RandomizeLairSpawnRate(LairList[LairIndex]);
+        }
+    }
+
+
+
+    void RandomizeMapSprites(vector<Sprite> &RandomizedSpriteList, fstream &ROMFile) {
+
+        /* Initialize the list */
+        vector<Sprite> OriginalSpriteList(NUMBER_OF_SPRITES);
+        ROMData::GetOriginalMapSpriteData(OriginalSpriteList, ROMFile);
+        RandomizedSpriteList = OriginalSpriteList;
+
+        unsigned char Enemy;
+        for (int SpriteIndex = 0; SpriteIndex < NUMBER_OF_SPRITES; ++SpriteIndex) {
+
+            Enemy = RandomizedSpriteList[SpriteIndex].Enemy;
+
+            switch (RandomizedSpriteList[SpriteIndex].Act) {
+            case ACT_1:
+                if (Enemy < ACT1_ARMOR) {
+                    /* Sprite is in Underground Castle */
+                    Enemy = UndergroundCastleEnemies[RandomInteger(6)];
+                }
+                else {
+                    /* Sprite is in Leo's Paintings */
+                    Enemy = LeosPaintingsEnemies[RandomInteger(4)];
+                }
+                break;
+            case ACT_2:
+                if (Enemy < ACT2_FIRE_SPIRIT) {
+                    /* Sprite is in Lost Marsh or Water Shrine */
+                    Enemy = WaterShrineEnemies[RandomInteger(5)];
+                }
+                else {
+                    /* Sprite is in Fire Shrine or Light Shrine */
+                    Enemy = FireLightShrineEnemies[RandomInteger(5)];
+                }
+                break;
+            case ACT_3:
+                if (Enemy < ACT3_PALM_TREE) {
+                    /* Sprite is in Seabed */
+                    Enemy = SeabedEnemies[RandomInteger(5)];
+                }
+                else {
+                    /* Sprite is in Islands */
+                    Enemy = IslandsEnemies[RandomInteger(5)];
+                }
+                break;
+            case ACT_4:
+                if (Enemy < ACT4_PURPLE_WIZARD) {
+                    /* Sprite is in Mountain of Souls */
+                    Enemy = MountainEnemies[RandomInteger(5)];
+                }
+                else {
+                    /* Sprite is in Laynole or Lune */
+                    Enemy = LaynoleLuneEnemies[RandomInteger(5)];
+                }
+                break;
+            case ACT_5:
+                if (Enemy < ACT5_MINI_KNIGHT) {
+                    /* Sprite is in Leo's Lab Basement or Power Plant */
+                    Enemy = LeosBasementEnemies[RandomInteger(5)];
+                }
+                else {
+                    /* Sprite is in one of the Model Towns */
+                    Enemy = ModelTownsEnemies[RandomInteger(5)];
+                }
+                break;
+            case ACT_6:
+                if (Enemy < ACT6_PURPLE_KNIGHT) {
+                    /* Sprite is in Magridd Castle Basement */
+                    Enemy = CastleBasementEnemies[RandomInteger(4)];
+                }
+                else {
+                    /* Sprite is in one of the Magridd Castle Towers */
+                    Enemy = CastleTowersEnemies[RandomInteger(5)];
+                }
+                break;
+            case ACT_7:
+                /* Sprite is in World of Evil */
+                Enemy = WorldOfEvilEnemies[RandomInteger(3)];
+                break;
+            default:
+                /* Should not happen! */
+                break;
+            }
+
+            if (Enemy != RandomizedSpriteList[SpriteIndex].Enemy) {
+                /* Reset orientation if the enemy type has changed */
+                RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
+            }
+
+            RandomizedSpriteList[SpriteIndex].Enemy = Enemy;
         }
     }
 

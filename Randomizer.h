@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "Lair.h"
 #include "Map.h"
+#include "Sprite.h"
 
 #include <fstream>
 #include <vector>
@@ -18,6 +19,7 @@ namespace Randomizer {
     void RandomizeLairNbEnemies(Lair &Lair);
     void RandomizeLairSpawnRate(Lair &Lair);
     void RandomizeLairContents(vector<Lair> &LairList);
+    void RandomizeMapSprites(vector<Sprite> &RandomizedSpriteList, fstream &ROMFile);
 
     void ExploreRegion(vector<Region>  &RegionList,
                        vector<Goal>    &GoalList,

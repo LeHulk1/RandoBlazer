@@ -346,4 +346,20 @@ namespace ROMUpdate {
             ROMFile.seekp(8, ios::cur);
         }
     }
+
+
+    void ROMUpdateMapSprites(vector<Sprite> RandomizedSpriteList, fstream &ROMFile) {
+        int Address;
+        for (int SpriteIndex = 0; SpriteIndex < NUMBER_OF_SPRITES; ++SpriteIndex) {
+            /* Get the ROM address of this sprite data */
+            Address = RandomizedSpriteList[SpriteIndex].Address;
+
+            /* Update the contents of this Sprite */
+            ROMFile.seekp (Address, ios::beg);
+            ROMFile.write((char*)(&RandomizedSpriteList[SpriteIndex].x), 1);
+            ROMFile.write((char*)(&RandomizedSpriteList[SpriteIndex].y), 1);
+            ROMFile.write((char*)(&RandomizedSpriteList[SpriteIndex].Orientation), 1);
+            ROMFile.write((char*)(&RandomizedSpriteList[SpriteIndex].Enemy), 1);
+        }
+    }
 }
