@@ -140,7 +140,7 @@ namespace TextUpdate {
         0x183AE, /* Tool shop owner */
         0x188FD, /* Emblem A tile */
         0x18A2C, /* Goat pen corner */
-        0x19256, /* Tool shop owner's son Teddy */
+        0x192DA, /* Tool shop owner's son Teddy */
         0x19870, /* A Pass */
         0x199DD, /* Tile at end of child's secret cave */
         0x1A192, /* Village Chief */
@@ -660,10 +660,23 @@ namespace TextUpdate {
             TEXT_EndText(PickEndTextCode(NPCItemIndex));
         }
 
+        /* Tool shop owner's son Teddy */
+        if (ItemIndex == ITEM_TEDDY) {
+            ROMFile.seekp(0x19256, ios::beg);
+            TEXT_WriteString("Fancy ");
+            TEXT_WriteByte(0x97); /* "a " */
+            TEXT_WriteByte(0x0D); /* Carriage return */
+            TEXT_YellowStyle;
+            TEXT_WriteString(ItemName);
+            TEXT_EndStyle;
+            TEXT_WriteString("\rfor a billion dollars?");
+            TEXT_WriteByte(0x0C); /* Question prompt */
+        }
+
         /* Magic Bell crystal fairy's text */
         if (ItemIndex == ITEM_CRYSTAL_MAGIC_BELL) {
             ROMFile.seekp(0x1C11E, ios::beg);
-            TEXT_WriteString("If you bring me all 8\rMaster`s Emblems,\rI will give you a");
+            TEXT_WriteString("If you bring me all 8\rMaster`s Emblems,\rI will give you a\r");
             TEXT_YellowStyle;
             TEXT_WriteString(ItemName);
             TEXT_EndStyle;
