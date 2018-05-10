@@ -1,5 +1,6 @@
 #include "Item.h"
 #include "Map.h"
+#include "Random.h"
 #include "ROMData.h"
 #include "TextUpdate.h"
 
@@ -8,6 +9,8 @@
 #include <string.h>
 
 #define NB_NPC_TO_DISABLE_ADDRESSES 28
+#define NB_MASTER_INTRO_TEXTS 25
+#define NB_MASTER_DEATH_TEXTS 13
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
@@ -329,6 +332,50 @@ namespace TextUpdate {
         "Magic Bell"
     };
 
+    static string MasterIntroTextList[NB_MASTER_INTRO_TEXTS] = {
+        "420 Soul blaze it!",
+        "I`m calling\rSoul Blade in its\rvanilla location.",
+        "Good luck!\rYou`ll need it!",
+        "Are we on\rSpeedgaming yet?",
+        "This run is\rZantetsu-less until\rZantetsu.",
+        "It`s show time!",
+        "Dancing grandmas\r    HYPE!!!!    ",
+        "Thank you so much\rfor playing my game!",
+        "Extra credit if\ryou get sub-2h!",
+        "I`m calling pedestal\rseed on this one.",
+        "Fun fact: there are\rexactly 400 monster\rlairs in this game.",
+        "GLHF!",
+        "Look mom,\rI`m on stream!!!",
+        "Go and bring back\rthe peace!\r.....Or whatever this\rgame is about.",
+        "This is totally\rnot a trolly seed.",
+        "This seed is\rarmor-less until\rWorld of Evil.",
+        "I can`t wait to\rsee the forced\rmagic-less Laynole.",
+        "Break a leg!",
+        "Initializing\rvideogame.....\r     .....complete!",
+        "Super Nintendo is\rthe best console.\rFite me.",
+        "So you think you\rhave what it takes?",
+        "Let`s go!\rYou can do it!",
+        "My PB on this\rseed is 35:37.\rBlindfolded.",
+        "Help me,\rObi-Wan Kenobi.\rYou`re my only hope.",
+        "Phoenix in hype cave.\rI`m calling it."
+    };
+
+    static string MasterDeathTextList[NB_MASTER_DEATH_TEXTS] = {
+        "Ouch! Tough luck :/",
+        "Better luck next time!",
+        "Don`t be patient.\rThis is a speedrun\rafter all.",
+        "Cheer up!\rYou can do it!",
+        "Trolly seed, huh?",
+        "Git gud n00b\rLOL",
+        "Don`t push yourself\rtoo hard.",
+        "That death was\rRNG manipulation.",
+        "I`m sorry for\rmaking this seed...",
+        "Be more careful\rnext time!",
+        "I`m sure this\rwas a deathwarp!\r       .....Right?",
+        "Come on! Let`s go!",
+        "Don`t give up.\rYou got this!"
+    };
+
 
     static int PickEndTextCode(int NPCItemIndex) {
         int EndTextCode = TEXT_ENDTYPE_44AA;
@@ -354,6 +401,7 @@ namespace TextUpdate {
     void GeneralTextUpdate(fstream &ROMFile, long Seed) {
 
         unsigned char Byte;
+        const char* Text;
 
         /* NPC actions to disable (mostly to remove NPC revival text) */
         for (int i=0; i<NB_NPC_TO_DISABLE_ADDRESSES; ++i) {
@@ -381,7 +429,8 @@ namespace TextUpdate {
 
         /* Master's text when hero dies */
         ROMFile.seekp(0x786B, ios::beg);
-        TEXT_WriteString("Tough luck huh?");
+        Text = MasterDeathTextList[Random::RandomInteger(NB_MASTER_DEATH_TEXTS)].c_str();
+        TEXT_WriteString(Text);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
         /* Master's text after Brown Stone */
@@ -391,7 +440,8 @@ namespace TextUpdate {
 
         /* Master's first text */
         ROMFile.seekp(0x7999, ios::beg);
-        TEXT_WriteString("420 Soul blaze it!");
+        Text = MasterIntroTextList[Random::RandomInteger(NB_MASTER_INTRO_TEXTS)].c_str();
+        TEXT_WriteString(Text);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
         ROMFile.seekp(0x7A07, ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
@@ -646,23 +696,6 @@ namespace TextUpdate {
             TEXT_WriteString(".");
             TEXT_EndText(PickEndTextCode(NPCItemIndex));
         }
-//        else if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
-//                 ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
-//                 ItemIndex == ITEM_CRYSTAL_FIRE_SHRINE ||
-//                 ItemIndex == ITEM_CRYSTAL_MOUNTAIN_OF_SOULS ||
-//                 ItemIndex == ITEM_CRYSTAL_LUNE ||
-//                 ItemIndex == ITEM_CRYSTAL_LEOS_LAB_BASEMENT ||
-//                 ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
-//                 ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
-//                 ItemIndex == ITEM_CRYSTAL_ROCKBIRD ||
-//                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
-//                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN) {
-//            /* Crystal fairies with shared text */
-//            TEXT_HeroReceived;
-//            TEXT_WriteString("something...");
-//            TEXT_WriteByte(0x11);
-//            TEXT_WriteByte(0x0C); /* Question prompt */
-//        }
         else {
             /* Normal case */
             if (ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
