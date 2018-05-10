@@ -159,15 +159,15 @@ namespace TextUpdate {
         0x1E49F, /* Water Shrine Strange Bottle */ // 46 EC
         0x1E572, /* Light Arrow crystal */ // 46 EC
         0x1EBC3, /* Lost Marsh crystal */ // 46 EC
-        0x1EBC3, /* Water Shrine crystal */ // 46 EC
-        0x1EBC3, /* Fire Shrine crystal */ // 46 EC
+        0x1E6C0, /* Water Shrine crystal */ // 46 EC
+        0x1E360, /* Fire Shrine crystal */ // 46 EC
         0x209D5, /* Mountain King */ // 1E A5
         0x20DDD, /* Mushroom Shoes boy */ // 1E A5
         0x210CD, /* Nome */ // 1E A5
         0x21A7A, /* Emblem E snail */ // 1E A5
         0x21EB0, /* Emblem F tile */ // 1E A5
         0x2249B, /* Mountain of Souls crystal */ // 1E A5
-        0x2249B, /* Lune crystal */ // 1E A5
+        0x21100, /* Lune crystal */ // 1E A5
         0x22ADD, /* Emblem G under chest of drawers */ // A3 BF
         0x22A7C, /* Chest of drawers (Mystic Armor) */ // A3 BF
         0x22BE3, /* Herb Plant in Leo's Lab */ // A3 BF
@@ -176,8 +176,8 @@ namespace TextUpdate {
         0x235AD, /* Marie */ // A3 BF
         0x23922, /* Spark Bomb mouse */ // A3 BF
         0x23F34, /* Leo's Lab Basement crystal */ // A3 BF
-        0x23F34, /* Model Town 1 crystal */ // A3 BF
-        0x23F34, /* Power Plant crystal */ // A3 BF
+        0x23BC0, /* Model Town 1 crystal */ // A3 BF
+        0x23C00, /* Power Plant crystal */ // A3 BF
         0x24317, /* Elemental Mail soldier */ // DF F0
         0x24AB7, /* Super Bracelet tile */ // DF F0
         0x24A47, /* Queen Magridd (VIP card) */ // DF F0
@@ -194,8 +194,8 @@ namespace TextUpdate {
         0xF9874, /* Red-Hot Stick Mermaid */ // 44 AA
         0xF9C13, /* Lue */ // 44 AA
         0xFA9C6, /* Rockbird crystal */ // 44 AA
-        0xFA9C6, /* Seabed crystal near Blester */ // 44 AA
-        0xFA9C6  /* Seabed crystal near Durean */ // 44 AA
+        0xF9C40, /* Seabed crystal near Blester */ // 44 AA
+        0xFA060  /* Seabed crystal near Durean */ // 44 AA
     };
 
     static int NPCAlreadyHaveItemTextAddressList[59] = {
@@ -351,7 +351,7 @@ namespace TextUpdate {
     }
 
 
-    void GeneralTextUpdate(fstream &ROMFile) {
+    void GeneralTextUpdate(fstream &ROMFile, long Seed) {
 
         unsigned char Byte;
 
@@ -396,9 +396,22 @@ namespace TextUpdate {
         ROMFile.seekp(0x7A07, ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
-        /* PUSH START */
+        /* Title + file selection screens */
         ROMFile.seekp(0x13B2B, ios::beg);
         TEXT_WriteString("RANDO HYPE");
+        ROMFile.seekp(0x13B3C, ios::beg);
+        TEXT_WriteString("RandoBlazer v0.4   ");
+        ROMFile.seekp(0x143B9, ios::beg);
+        TEXT_WriteString("Seed ");
+        char SeedChr[11] = {'\0'};
+        sprintf(SeedChr, "%10lu", Seed);
+        TEXT_WriteString(SeedChr);
+
+        /* Greenwood + Actinidia leaves */
+        ROMFile.seekp(0x1514C, ios::beg);
+        TEXT_WriteString("G.Leaf");
+        ROMFile.seekp(0x151B2, ios::beg);
+        TEXT_WriteString("A.Leaf");
 
         /* Bridge guard */
         ROMFile.seekp(0x18644, ios::beg);
@@ -451,6 +464,14 @@ namespace TextUpdate {
         TEXT_WriteString("Get on!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
+        /* Act 2 crystal fairies: change text pointers */
+        ROMFile.seekp(0x1E533, ios::beg); /* Water Shrine crystal */
+        TEXT_WriteByte(0xC0);
+        TEXT_WriteByte(0xE6);
+        ROMFile.seekp(0x1E5B1, ios::beg); /* Fire Shrine crystal */
+        TEXT_WriteByte(0x60);
+        TEXT_WriteByte(0xE3);
+
         /* Master's text after World of Evil is opened */
         ROMFile.seekp(0x1ED47, ios::beg);
         TEXT_WriteString("Ready for the finale?");
@@ -470,6 +491,11 @@ namespace TextUpdate {
         TEXT_WriteString("Good luck!");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
 
+        /* Act 4 crystal fairies: change text pointers */
+        ROMFile.seekp(0x21F45, ios::beg); /* Lune crystal */
+        TEXT_WriteByte(0x00);
+        TEXT_WriteByte(0x91);
+
         /* Leo's Lab entrance door */
         ROMFile.seekp(0x23A7B, ios::beg);
         TEXT_WriteString("Welcome!");
@@ -486,13 +512,21 @@ namespace TextUpdate {
         TEXT_WriteString("Oh Master, please\rforgive me.");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
+        /* Act 5 crystal fairies: change text pointers */
+        ROMFile.seekp(0x23E4A, ios::beg); /* Model Town 1 crystal */
+        TEXT_WriteByte(0xC0);
+        TEXT_WriteByte(0xBB);
+        ROMFile.seekp(0x23E7A, ios::beg); /* Power Plant crystal */
+        TEXT_WriteByte(0x00);
+        TEXT_WriteByte(0xBC);
+
         /* Singer's text */
         ROMFile.seekp(0x24677, ios::beg);
         TEXT_WriteString("Let`s jam it!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /* Dr. Leo/Queen Magridd cutscene */
-        ROMFile.seekp(0x26144, ios::beg);
+        ROMFile.seekp(0x26145, ios::beg);
         TEXT_WriteString("We have to defeat\rDeathtoll!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
         ROMFile.seekp(0x25C7F, ios::beg);
@@ -502,7 +536,7 @@ namespace TextUpdate {
         TEXT_WriteString("Queen Magridd!");
         TEXT_WriteByte(0x11); /* Input prompt */
         TEXT_WriteByte(0x10); /* New textbox */
-        TEXT_WriteString("Muahahahaa!!\rKill this loser.");
+        TEXT_WriteString("Muahahahaaa!!!\rKill this loser.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
         ROMFile.seekp(0x26241, ios::beg);
         TEXT_WriteByte(0x95); /* "You " */
@@ -530,7 +564,10 @@ namespace TextUpdate {
         TEXT_WriteString("This is it.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
         ROMFile.seekp(0x26773, ios::beg);
-        TEXT_WriteString("Thanks for everything\ryou are doing for us.\rPlease leave while my\rback is turned.");
+        TEXT_WriteString("Thanks for everything\ryou are doing for us.\rAre you a real human\rbeing like me?");
+        TEXT_WriteByte(0x0C); /* Question prompt */
+        ROMFile.seekp(0x26874, ios::beg);
+        TEXT_WriteString("I see.........\rPlease leave while my\rback is turned.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /* Sleeping Soldier's dream */
@@ -569,6 +606,14 @@ namespace TextUpdate {
         ROMFile.seekp(0xFA040, ios::beg);
         TEXT_WriteString("Southerta is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
+
+        /* Act 3 crystal fairies: change text pointers */
+        ROMFile.seekp(0xFA4B7, ios::beg); /* Seabed crystal near Blester */
+        TEXT_WriteByte(0x40);
+        TEXT_WriteByte(0x9C);
+        ROMFile.seekp(0xFA4E7, ios::beg); /* Seabed crystal near Durean */
+        TEXT_WriteByte(0x60);
+        TEXT_WriteByte(0xA0);
     }
 
 
@@ -601,27 +646,34 @@ namespace TextUpdate {
             TEXT_WriteString(".");
             TEXT_EndText(PickEndTextCode(NPCItemIndex));
         }
-        else if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
-                 ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
-                 ItemIndex == ITEM_CRYSTAL_FIRE_SHRINE ||
-                 ItemIndex == ITEM_CRYSTAL_MOUNTAIN_OF_SOULS ||
-                 ItemIndex == ITEM_CRYSTAL_LUNE ||
-                 ItemIndex == ITEM_CRYSTAL_LEOS_LAB_BASEMENT ||
-                 ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
-                 ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
-                 ItemIndex == ITEM_CRYSTAL_ROCKBIRD ||
-                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
-                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN) {
-            /* Crystal fairies with shared text */
-            TEXT_HeroReceived;
-            TEXT_WriteString("something...");
-            TEXT_WriteByte(0x11);
-            TEXT_WriteByte(0x0C); /* Question prompt */
-        }
+//        else if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
+//                 ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
+//                 ItemIndex == ITEM_CRYSTAL_FIRE_SHRINE ||
+//                 ItemIndex == ITEM_CRYSTAL_MOUNTAIN_OF_SOULS ||
+//                 ItemIndex == ITEM_CRYSTAL_LUNE ||
+//                 ItemIndex == ITEM_CRYSTAL_LEOS_LAB_BASEMENT ||
+//                 ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
+//                 ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
+//                 ItemIndex == ITEM_CRYSTAL_ROCKBIRD ||
+//                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
+//                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN) {
+//            /* Crystal fairies with shared text */
+//            TEXT_HeroReceived;
+//            TEXT_WriteString("something...");
+//            TEXT_WriteByte(0x11);
+//            TEXT_WriteByte(0x0C); /* Question prompt */
+//        }
         else {
             /* Normal case */
-            if (ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
-                /* This text has been moved from its original location */
+            if (ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
+                ItemIndex == ITEM_CRYSTAL_FIRE_SHRINE ||
+                ItemIndex == ITEM_CRYSTAL_LUNE ||
+                ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
+                ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
+                ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
+                ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN ||
+                ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
+                /* These texts have been moved from their original location */
                 TEXT_WriteByte(0x10);
             }
             TEXT_HeroReceived;

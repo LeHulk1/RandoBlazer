@@ -8,7 +8,7 @@
 using namespace std;
 
 namespace TextUpdate {
-    void GeneralTextUpdate(fstream &ROMFile);
+    void GeneralTextUpdate(fstream &ROMFile, long Seed);
     void NPCItemTextUpdate(int ItemIndex, int ItemID, fstream &ROMFile);
 }
 

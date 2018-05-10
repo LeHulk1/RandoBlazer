@@ -706,7 +706,7 @@ namespace Map {
         RegionList[4].InsertElement(ITEM, 14);
         RegionList[4].InsertElement(ITEM, 15);
         RegionList[4].InsertElement(ITEM, 16);
-        //RegionList[4].InsertElement(CHEST, 17);  WARNING: this (normally empty) chest can disappear!!!
+        //RegionList[4].InsertElement(ITEM, 17);  WARNING: this (normally empty) chest can disappear!!!
         RegionList[4].InsertElement(ITEM, 19);
         RegionList[4].InsertElement(ITEM, 20);
         RegionList[4].InsertElement(ITEM, ITEM_CRYSTAL_WATER_SHRINE);
@@ -859,8 +859,7 @@ namespace Map {
         RegionList[22].InsertElement(ITEM, 26);
         RegionList[22].InsertElement(ITEM, 27);
 
-        /* Region 23 - Mermaid's Tears chest */
-        //RegionList[23].InsertElement(CHEST, 22);  WARNING: this chest can sometimes be already opened, let's take it out for now
+        /* Region 23 - Used to be Mermaid's Tears chest, now useless */
 
         /* Region 24 - Mountain of Souls last lair + Laynole */
         RegionList[24].InsertElement(LAIR, NPC_GRANDMA);
@@ -1076,10 +1075,11 @@ namespace Map {
         RegionList[55].InsertElement(ITEM, ITEM_MERMAID_HERB);
 
         /* Region 56 - Common Mermaid house */
+        RegionList[56].InsertElement(ITEM, 22);  /* WARNING: I hope this chest is safe */
         RegionList[56].InsertElement(ITEM, ITEM_MERMAID_BUBBLE_ARMOR);
         RegionList[56].InsertGoal(12); /* Last soul of Southerta */
         RegionList[56].InsertGoal(14); /* Big Pearl chest */
-        RegionList[56].InsertGoal(22); /* Mermaid's Tears chest */
+        //RegionList[56].InsertGoal(22); /* Mermaid's Tears chest */
         RegionList[56].InsertGoal(57); /* Red-Hot Stick mermaid */
         RegionList[56].InsertGoal(58); /* Lue */
 
@@ -1255,7 +1255,7 @@ namespace Map {
         GoalList[21].Target = 22;
 
         /* Goal 22 - Mermaid's Tears chest */
-        GoalList[22].InsertElement(LAIR, NPC_MERMAID_TEARS);
+        //GoalList[22].InsertElement(LAIR, NPC_MERMAID_TEARS); /* We actually don't need this mermaid */
         GoalList[22].Target = 23;
 
         /* Goal 23 - Get Mushroom Shoes */
@@ -1722,6 +1722,7 @@ namespace Map {
         NonKeyNPCList.push_back(NPC_MERMAID4);
         NonKeyNPCList.push_back(NPC_MERMAID5);
         NonKeyNPCList.push_back(NPC_MERMAID6);
+        NonKeyNPCList.push_back(NPC_MERMAID_TEARS);
         NonKeyNPCList.push_back(NPC_ANGELFISH3);
         NonKeyNPCList.push_back(NPC_ANGELFISH_SOUL_OF_SHIELD);
         NonKeyNPCList.push_back(NPC_MERMAID7);

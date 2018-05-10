@@ -67,8 +67,12 @@ namespace Randomizer {
         {ACT6_ORB, ACT6_GHOST, ACT6_SNAKE, ACT6_SKELETON};
     static int CastleBasementEnemiesNoGhost[3] =
         {ACT6_ORB, ACT6_SNAKE, ACT6_SKELETON};
+    static int CastleBasementEnemiesFull[6] =
+        {ACT6_SKULL, ACT6_ORB, ACT6_GHOST, ACT6_SNAKE, ACT6_FIRE, ACT6_SKELETON};
     static int CastleTowersEnemies[5] =
         {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
+    static int CastleTowersEnemiesFull[7] =
+        {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_FIRE2, ACT6_SKULL2, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
     static int WorldOfEvilEnemies[3] =
         {ACT7_DEMON, ACT7_FLY, ACT7_BRICK};
     static int WorldOfEvilEnemiesNoBrick[2] =
@@ -382,11 +386,11 @@ namespace Randomizer {
             case ACT_6:
                 if (Enemy < ACT6_PURPLE_KNIGHT) {
                     /* Sprite is in Magridd Castle Basement */
-                    Enemy = CastleBasementEnemies[RandomInteger(4)];
+                    Enemy = CastleBasementEnemiesFull[RandomInteger(6)];
                 }
                 else {
                     /* Sprite is in one of the Magridd Castle Towers */
-                    Enemy = CastleTowersEnemies[RandomInteger(5)];
+                    Enemy = CastleTowersEnemiesFull[RandomInteger(7)];
                 }
                 break;
             case ACT_7:
@@ -687,7 +691,7 @@ namespace Randomizer {
         AvailableItems.push_back(CHEST_LEOS_BRUSH);
         AvailableItems.push_back(17);
         AvailableItems.push_back(10);
-        AvailableItems.push_back(22);
+        //AvailableItems.push_back(22);
         AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
         AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
         AvailableRevivingLairs.push_back(NPC_OLD_MAN);

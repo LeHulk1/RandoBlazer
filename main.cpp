@@ -34,22 +34,23 @@ int main ( int argc, char** argv ) {
     ROMFile.close();
     ROMFile.clear();
 
+    long Seed = 0;
+
     /* Initialize randomness with provided seed, if any */
     ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
     if (!SeedFile.is_open()) {
-        long Seed = Random::RandomInit(0);
+        Seed = Random::RandomInit(0);
         ofstream NewSeedFile(SEED_FILE_NAME);
         NewSeedFile << Seed;
         NewSeedFile.close();
     }
     else {
         char SeedChar[SEED_SIZE+1];
-        long SeedInt;
         SeedFile.seekg(0, ios::beg);
         SeedFile.readsome(SeedChar, SEED_SIZE);
         SeedChar[SEED_SIZE] = '\0';
-        SeedInt = atoi(SeedChar);
-        Random::RandomInit(SeedInt);
+        Seed = atoi(SeedChar);
+        Random::RandomInit(Seed);
     }
     SeedFile.close();
 
@@ -107,7 +108,7 @@ int main ( int argc, char** argv ) {
     ROMUpdate::ROMUpdateMapSprites(RandomizedSpriteList, ROMFile);
 
     /* General text modification */
-    TextUpdate::GeneralTextUpdate(ROMFile);
+    TextUpdate::GeneralTextUpdate(ROMFile, Seed);
 
     /* Generate the Spoiler Log */
     Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
