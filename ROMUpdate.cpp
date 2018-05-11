@@ -185,12 +185,8 @@ namespace ROMUpdate {
                     ROMFile.write((char*)(&ItemID), 1);
 
                     if (i == ITEM_CRYSTAL_FIRE_SHRINE) {
-                        /* Keep more bytes in this case, or the textbox glitches out */
-                        Byte = 0x82;
-                        ROMFile.write((char*)(&Byte), 1);
-                        Byte = 0x2F;
-                        ROMFile.write((char*)(&Byte), 1);
-                        Byte = 0xFF;
+                        /* This one is really weird, the textbox sometimes glitches out */
+                        Byte = 0x02;
                         ROMFile.write((char*)(&Byte), 1);
                     }
                     else {

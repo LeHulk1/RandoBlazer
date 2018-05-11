@@ -161,9 +161,9 @@ namespace TextUpdate {
         0x1E1EF, /* Emblem C squirrel */ // 46 EC
         0x1E49F, /* Water Shrine Strange Bottle */ // 46 EC
         0x1E572, /* Light Arrow crystal */ // 46 EC
-        0x1EBC3, /* Lost Marsh crystal */ // 46 EC
+        0x1E360, /* Lost Marsh crystal */ // 46 EC
         0x1E6C0, /* Water Shrine crystal */ // 46 EC
-        0x1E360, /* Fire Shrine crystal */ // 46 EC
+        0x1EBC3, /* Fire Shrine crystal */ // 46 EC
         0x209D5, /* Mountain King */ // 1E A5
         0x20DDD, /* Mushroom Shoes boy */ // 1E A5
         0x210CD, /* Nome */ // 1E A5
@@ -515,12 +515,12 @@ namespace TextUpdate {
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /* Act 2 crystal fairies: change text pointers */
+        ROMFile.seekp(0x1E4DF, ios::beg); /* Lost Marsh crystal */
+        TEXT_WriteByte(0x60);
+        TEXT_WriteByte(0xE3);
         ROMFile.seekp(0x1E533, ios::beg); /* Water Shrine crystal */
         TEXT_WriteByte(0xC0);
         TEXT_WriteByte(0xE6);
-        ROMFile.seekp(0x1E5B1, ios::beg); /* Fire Shrine crystal */
-        TEXT_WriteByte(0x60);
-        TEXT_WriteByte(0xE3);
 
         /* Master's text after World of Evil is opened */
         ROMFile.seekp(0x1ED47, ios::beg);
@@ -528,7 +528,7 @@ namespace TextUpdate {
         TEXT_EndText(TEXT_ENDTYPE_C5EE);
 
         /* Mountain King */
-        ROMFile.seekp(0x20740, ios::beg);
+        ROMFile.seekp(0x20742, ios::beg);
         TEXT_WriteString("Did you find the\rthree Red-Hot items?");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
         ROMFile.seekp(0x20905, ios::beg);
@@ -698,8 +698,8 @@ namespace TextUpdate {
         }
         else {
             /* Normal case */
-            if (ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
-                ItemIndex == ITEM_CRYSTAL_FIRE_SHRINE ||
+            if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
+                ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
                 ItemIndex == ITEM_CRYSTAL_LUNE ||
                 ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
                 ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||

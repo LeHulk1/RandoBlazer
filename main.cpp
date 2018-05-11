@@ -19,6 +19,8 @@
 #define SEED_SIZE            10
 #define MAX_NUMBER_OF_TRIES  5
 
+//#define DONT_CREATE_SEED
+
 
 
 using namespace std;
@@ -40,9 +42,11 @@ int main ( int argc, char** argv ) {
     ifstream SeedFile(SEED_FILE_NAME, ios::in | ios::binary);
     if (!SeedFile.is_open()) {
         Seed = Random::RandomInit(0);
+#ifndef DONT_CREATE_SEED
         ofstream NewSeedFile(SEED_FILE_NAME);
         NewSeedFile << Seed;
         NewSeedFile.close();
+#endif // DONT_CREATE_SEED
     }
     else {
         char SeedChar[SEED_SIZE+1];
