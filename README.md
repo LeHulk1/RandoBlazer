@@ -5,7 +5,7 @@ This randomizer should be used with the US version of the ROM:
   
 ### Make a randomized ROM
 
-Your original ROM should have the exact name "Soul Blazer (U) [!].smc", so please rename it if needed. Put the original ROM in the same folder as the RandoBlazer executable, and launch it. The program will create the patched ROM (the original will stay intact), a seed file and a Spoiler log. The seed file is just a text file containing the seed which has been used for the randomization (it's just a timestamp, really). If you want to make a randomized ROM from a seed, make a "seed" file yourself with the seed you want to use, before launching the program. The seed should be an integer (not too large, I'm not sure it will work well with more than 10 digits).
+Your original ROM should have the exact name "Soul Blazer (U) [!].smc", so please rename it if needed. The program should work correctly whether your original ROM is headered or not. Put the original ROM in the same folder as the RandoBlazer executable, and launch it. The program will create the patched ROM (the original will stay intact), a seed file and a Spoiler log. The seed file is just a text file containing the seed which has been used for the randomization (it's just a timestamp, really). If you want to make a randomized ROM from a seed, make a "seed" file yourself with the seed you want to use, before launching the program. The seed should be an integer (not too large, I'm not sure it will work well with more than 10 digits).
 
 ### Version 0.4a features
 
