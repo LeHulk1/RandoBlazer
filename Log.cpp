@@ -623,7 +623,7 @@ namespace Log {
         case 0x22:
             return "Elemental Statues' Lair";
         case 0x2A:
-            return "Seabed (next to St Elles entrance)";
+            return "Seabed (south screen)";
         case 0x2E:
             return "Southerta";
         case 0x2F:
@@ -635,7 +635,7 @@ namespace Log {
         case 0x32:
             return "Floating Skull's Lair";
         case 0x34:
-            return "Seabed (to Blester and Ghost Ship)";
+            return "Seabed (north screen)";
         case 0x3E:
             return "Mountain of Souls 1st screen";
         case 0x3F:

@@ -17,6 +17,7 @@
 #define MOD_ROM_FILE_NAME  "Soul Blazer Randomized.smc"
 #define SEED_FILE_NAME     "seed"
 
+#define HEADER_OFFSET        0x200
 #define SEED_SIZE            10
 #define MAX_NUMBER_OF_TRIES  5
 
@@ -27,6 +28,11 @@
 using namespace std;
 
 int main ( int argc, char** argv ) {
+
+
+    /****************************\
+    |*  Check the original ROM  *|
+    \****************************/
 
     ROMStatus OriginalROMStatus;
 
@@ -50,6 +56,11 @@ int main ( int argc, char** argv ) {
     ROMFile.close();
     ROMFile.clear();
 
+
+    /*********************\
+    |*  Check Seed file  *|
+    \*********************/
+
     long Seed = 0;
 
     /* Initialize randomness with provided seed, if any */
@@ -71,6 +82,12 @@ int main ( int argc, char** argv ) {
         Random::RandomInit(Seed);
     }
     SeedFile.close();
+    SeedFile.clear();
+
+
+    /***************************************************\
+    |*  Delete old modified ROM / backup original ROM  *|
+    \***************************************************/
 
     /* If a modified ROM exists, delete it first */
     int RemoveResult = remove(MOD_ROM_FILE_NAME);
@@ -78,41 +95,30 @@ int main ( int argc, char** argv ) {
         cout << "Previous randomized ROM detected and removed.\n";
     }
 
-    /* Rename the ROM to be modified */
-//    int RenameResult = rename(ROM_FILE_NAME, MOD_ROM_FILE_NAME);
-//    if (RenameResult != 0) {
-//        cout << "Failure renaming ROM file!\n";
-//    }
-
     /* Back up the original ROM */
     ifstream ROMFileOriginal(ROM_FILE_NAME, ios::binary);
     ofstream ROMFileCopy    (MOD_ROM_FILE_NAME,     ios::binary);
 
-
-
     ROMFileOriginal.seekg(0, ios::end);
-    long fileSize = ROMFileOriginal.tellg();
+    long ROMFileSize = ROMFileOriginal.tellg();
     if (OriginalROMStatus == HEADERED) {
-        fileSize -= 0x200;
-        }
-    cout << "Buffer size = " << fileSize;
+        /* For headered ROM, ignore the first 512 bytes */
+        ROMFileSize -= HEADER_OFFSET;
+    }
+
     if(ROMFileOriginal.is_open() && ROMFileCopy.is_open()) {
-		unsigned char * buffer = new unsigned char[fileSize];
-		//Determine the file's size
-		//Then starts from the beginning
+		unsigned char *DataBuffer = new unsigned char[ROMFileSize];
 		if (OriginalROMStatus == HEADERED) {
-        ROMFileOriginal.seekg(0x200, ios::beg);
+		    /* For headered ROM, ignore the first 512 bytes */
+            ROMFileOriginal.seekg(HEADER_OFFSET, ios::beg);
         }
         else {
             ROMFileOriginal.seekg(0, ios::beg);
         }
-		//Then read enough of the file to fill the buffer
-		ROMFileOriginal.read((char*)buffer, fileSize);
-		//And then write out all that was read
-		ROMFileCopy.write((char*)buffer, fileSize);
-		delete[] buffer;
+		ROMFileOriginal.read((char*)DataBuffer, ROMFileSize);
+		ROMFileCopy.write((char*)DataBuffer, ROMFileSize);
+		delete[] DataBuffer;
 	}
-	//If there were any problems with the copying process, let the user know
 	else if(!ROMFileCopy.is_open())	{
 		cout << "Failure backing up the ROM!\n";
 		return 1;
@@ -124,8 +130,13 @@ int main ( int argc, char** argv ) {
 
 	ROMFileOriginal.close();
 	ROMFileCopy.close();
+	ROMFileOriginal.clear();
+	ROMFileCopy.clear();
 
-    //ROMFileCopy << ROMFileOriginal.rdbuf();
+
+	/****************\
+    |*  Randomize!  *|
+    \****************/
 
     /* Initialize the final lists of randomized lairs, chests and sprites */
     vector<Lair> RandomizedLairList;
