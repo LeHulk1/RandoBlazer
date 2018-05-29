@@ -122,7 +122,7 @@ namespace TextUpdate {
         0x22E7F, /* Great Door (helping soul) */
         0x22FF4, /* Leo's cat */
         0x23559, /* Marie */
-        0x23FC5, /* Soldier next to basement entrance */
+        0x23FCA, /* Soldier next to basement entrance */
         0x24616, /* Singer */
         0x249D2, /* Queen Magridd */
         0x2521B, /* Soldier (helping soul) */
@@ -256,7 +256,7 @@ namespace TextUpdate {
         0, /* Bubble Armor Mermaid */
         0xF90B6, /* Magic Flair Mermaid */
         0, /* Mermaid Queen */
-        0, /* Red-Hot Stick Mermaid */
+        0xF98C7, /* Red-Hot Stick Mermaid */
         0xF9D87, /* Lue */
         0, /* Rockbird crystal */
         0, /* Seabed crystal near Blester */
@@ -457,7 +457,9 @@ namespace TextUpdate {
         sprintf(SeedChr, "%10lu", Seed);
         TEXT_WriteString(SeedChr);
 
-        /* Greenwood + Actinidia leaves */
+        /* Correct Marig Flare typo + Greenwood/Actinidia leaves */
+        ROMFile.seekp(0x150EC, ios::beg);
+        TEXT_WriteString("re");
         ROMFile.seekp(0x1514C, ios::beg);
         TEXT_WriteString("G.Leaf");
         ROMFile.seekp(0x151B2, ios::beg);
@@ -600,7 +602,7 @@ namespace TextUpdate {
         TEXT_WriteString("Daddy!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
         ROMFile.seekp(0x262EE, ios::beg);
-        TEXT_WriteString("Dr. Leo, will you\rcooperate now?");
+        TEXT_WriteString("Dr.Leo, will you\rcooperate now?");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
         ROMFile.seekp(0x26383, ios::beg);
         TEXT_WriteString("All right. But please\rlet her go.");
@@ -653,6 +655,9 @@ namespace TextUpdate {
         ROMFile.seekp(0xF9674, ios::beg);
         TEXT_WriteString("Ghost Ship is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
+
+        ROMFile.seekp(0xFA029, ios::beg);
+        TEXT_WriteByte(0x31); /* Change pointer to open Southerta even if other statues are present */
         ROMFile.seekp(0xFA040, ios::beg);
         TEXT_WriteString("Southerta is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
