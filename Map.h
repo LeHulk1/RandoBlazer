@@ -8,8 +8,8 @@
 #define LAIR 0
 #define ITEM 1
 
-#define NUMBER_OF_REGIONS   77
-#define NUMBER_OF_GOALS     76
+#define NUMBER_OF_REGIONS   79
+#define NUMBER_OF_GOALS     78
 
 #define GOAL_TO_FIRST_REGION 255
 
@@ -65,29 +65,30 @@ enum {
     ITEM_PLANT_HERB                    = 99,
     ITEM_CAT_DOOR_KEY                  = 100,
     ITEM_PLANT_ACTINIDIA_LEAVES        = 101,
-    ITEM_MARIE                         = 102,
-    ITEM_MOUSE_SPARK_BOMB              = 103,
-    ITEM_CRYSTAL_LEOS_LAB_BASEMENT     = 104,
-    ITEM_CRYSTAL_MODEL_TOWN            = 105,
-    ITEM_CRYSTAL_POWER_PLANT           = 106,
-    ITEM_SOLDIER_ELEMENTAL_MAIL        = 107,
-    ITEM_SUPER_BRACELET                = 108,
-    ITEM_QUEEN_MAGRIDD                 = 109,
-    ITEM_SOLDIER_PLATINUM_CARD         = 110,
-    ITEM_MAID_HERB                     = 111,
-    ITEM_EMBLEM_H                      = 112,
-    ITEM_KING_MAGRIDD                  = 113,
-    ITEM_DR_LEO                        = 114,
-    ITEM_HARP_STRING                   = 115,
-    ITEM_MERMAID_HERB                  = 116,
-    ITEM_MERMAID_BUBBLE_ARMOR          = 117,
-    ITEM_MERMAID_MAGIC_FLARE           = 118,
-    ITEM_MERMAID_QUEEN                 = 119,
-    ITEM_MERMAID_RED_HOT_STICK         = 120,
-    ITEM_LUE                           = 121,
-    ITEM_CRYSTAL_ROCKBIRD              = 122,
-    ITEM_CRYSTAL_SEABED_NEAR_BLESTER   = 123,
-    ITEM_CRYSTAL_SEABED_NEAR_DUREAN    = 124
+    ITEM_CHEST_OF_DRAWERS_HERB         = 102,
+    ITEM_MARIE                         = 103,
+    ITEM_MOUSE_SPARK_BOMB              = 104,
+    ITEM_CRYSTAL_LEOS_LAB_BASEMENT     = 105,
+    ITEM_CRYSTAL_MODEL_TOWN            = 106,
+    ITEM_CRYSTAL_POWER_PLANT           = 107,
+    ITEM_SOLDIER_ELEMENTAL_MAIL        = 108,
+    ITEM_SUPER_BRACELET                = 109,
+    ITEM_QUEEN_MAGRIDD                 = 110,
+    ITEM_SOLDIER_PLATINUM_CARD         = 111,
+    ITEM_MAID_HERB                     = 112,
+    ITEM_EMBLEM_H                      = 113,
+    ITEM_KING_MAGRIDD                  = 114,
+    ITEM_DR_LEO                        = 115,
+    ITEM_HARP_STRING                   = 116,
+    ITEM_MERMAID_HERB                  = 117,
+    ITEM_MERMAID_BUBBLE_ARMOR          = 118,
+    ITEM_MERMAID_MAGIC_FLARE           = 119,
+    ITEM_MERMAID_QUEEN                 = 120,
+    ITEM_MERMAID_RED_HOT_STICK         = 121,
+    ITEM_LUE                           = 122,
+    ITEM_CRYSTAL_ROCKBIRD              = 123,
+    ITEM_CRYSTAL_SEABED_NEAR_BLESTER   = 124,
+    ITEM_CRYSTAL_SEABED_NEAR_DUREAN    = 125
 };
 
 enum {

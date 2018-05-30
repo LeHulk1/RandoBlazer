@@ -1114,9 +1114,9 @@ namespace Map {
         /* Region 66 - Model Town room */
         RegionList[66].InsertGoal(28); /* Model Town 1 */
         RegionList[66].InsertGoal(29); /* Model Town 2 */
-        RegionList[66].InsertGoal(32); /* Marie ==> Act 6 */
         RegionList[66].InsertGoal(66); /* Leo's Cat */
         RegionList[66].InsertGoal(67); /* Actinidia Plant */
+        RegionList[66].InsertGoal(76); /* Attic */
 
         /* Region 67 - Leo's Cat */
         RegionList[67].InsertElement(ITEM, ITEM_CAT_DOOR_KEY);
@@ -1148,6 +1148,14 @@ namespace Map {
         /* Region 76 - Demon Bird's lair */
         //RegionList[76].InsertElement(NPC, NPC_KING_MAGRIDD); ==> Don't randomize King Magridd's location
         RegionList[76].InsertGoal(36); /* King Magridd ==> Act 7 */
+
+        /* Region 77 - Leo's Lab Attic */
+        RegionList[77].InsertGoal(32); /* Marie ==> Act 6 */
+        RegionList[77].InsertGoal(77); /* Chest of Drawers */
+
+        /* Region 78 - Chest of Drawers in Attic */
+        RegionList[78].InsertElement(ITEM, ITEM_CHEST_OF_DRAWERS_HERB);
+
 
 
         /******** GOALS ********/
@@ -1303,7 +1311,6 @@ namespace Map {
         GoalList[31].Target = 32;
 
         /* Goal 32 - Marie ==> Act 6 */
-        GoalList[32].InsertElement(LAIR, NPC_STEPS_MARIE);
         GoalList[32].InsertElement(LAIR, NPC_MARIE);
         GoalList[32].Target = 33;
 
@@ -1540,6 +1547,14 @@ namespace Map {
         /* Goal 75 - Demon Bird */
         GoalList[75].InsertElement(ITEM, ITEM_DR_LEO);
         GoalList[75].Target = 76;
+
+        /* Goal 76 - Leo's Lab Attic */
+        GoalList[76].InsertElement(LAIR, NPC_STEPS_MARIE);
+        GoalList[76].Target = 77;
+
+        /* Goal 77 - Chest of Drawers in the Attic */
+        GoalList[77].InsertElement(LAIR, NPC_CHEST_OF_DRAWERS2);
+        GoalList[77].Target = 78;
     }
 
 
@@ -1751,7 +1766,6 @@ namespace Map {
         NonKeyNPCList.push_back(NPC_MOUSE3);
         NonKeyNPCList.push_back(NPC_GREAT_DOOR_SOUL_OF_DETECTION);
         NonKeyNPCList.push_back(NPC_MOUSE4);
-        NonKeyNPCList.push_back(NPC_CHEST_OF_DRAWERS2);
         NonKeyNPCList.push_back(NPC_MOUSE5);
         NonKeyNPCList.push_back(NPC_CAT4);
         NonKeyNPCList.push_back(NPC_SOLDIER);
@@ -1902,6 +1916,7 @@ namespace Map {
         //NonKeyChestList.push_back(ITEM_NOME);
         NonKeyChestList.push_back(ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR);
         NonKeyChestList.push_back(ITEM_PLANT_HERB);
+        NonKeyChestList.push_back(ITEM_CHEST_OF_DRAWERS_HERB);
         //NonKeyChestList.push_back(ITEM_MARIE);
         NonKeyChestList.push_back(ITEM_MOUSE_SPARK_BOMB);
         NonKeyChestList.push_back(ITEM_SOLDIER_ELEMENTAL_MAIL);

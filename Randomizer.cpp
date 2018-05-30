@@ -21,7 +21,7 @@
 #define SPAWN_RATE_MIN 0x03
 #define SPAWN_RATE_MAX 0x20
 
-//#define DEBUG
+#define DEBUG
 //#define DEBUG_NO_ENEMIES
 //#define DONT_RANDOMIZE
 

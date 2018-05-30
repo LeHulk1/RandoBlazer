@@ -13,7 +13,7 @@
 
 namespace ROMUpdate {
 
-    static int NPCItemAddressList[59] =
+    static int NPCItemAddressList[60] =
     {
         0x183AB, /* Tool shop owner */
         0x1875E, /* Emblem A tile */
@@ -51,6 +51,7 @@ namespace ROMUpdate {
         0x22BC1, /* Herb Plant in Leo's Lab */
         0x22FB3, /* Leo's Cat (door key) */
         0x231AB, /* Actinidia plant */
+        0x23311, /* Chest of drawers (Herb) */
         0x2354D, /* Marie */
         0x238F6, /* Spark Bomb mouse */
         0x23DFA, /* Leo's Lab Basement crystal */
@@ -254,6 +255,10 @@ namespace ROMUpdate {
                     break;
                 case ITEM_PLANT_ACTINIDIA_LEAVES:
                     ROMFile.seekp (0x2319B, ios::beg);
+                    ROMFile.write((char*)(&ItemID), 1);
+                    break;
+                case ITEM_CHEST_OF_DRAWERS_HERB:
+                    ROMFile.seekp (0x23301, ios::beg);
                     ROMFile.write((char*)(&ItemID), 1);
                     break;
                 case ITEM_MOUSE_SPARK_BOMB:

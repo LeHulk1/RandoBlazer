@@ -140,7 +140,7 @@ namespace TextUpdate {
         0xF9BF4  /* Lue */
     };
 
-    static int NPCItemTextAddressList[59] = {
+    static int NPCItemTextAddressList[60] = {
         0x183AE, /* Tool shop owner */
         0x188FD, /* Emblem A tile */
         0x18A2C, /* Goat pen corner */
@@ -177,6 +177,7 @@ namespace TextUpdate {
         0x22BE3, /* Herb Plant in Leo's Lab */ // A3 BF
         0x2306D, /* Leo's Cat (door key) */ // A3 BF
         0x231AE, /* Actinidia plant */ // A3 BF
+        0x23404, /* Chest of drawers (Herb) */ // A3 BF
         0x235AD, /* Marie */ // A3 BF
         0x23922, /* Spark Bomb mouse */ // A3 BF
         0x23F34, /* Leo's Lab Basement crystal */ // A3 BF
@@ -202,7 +203,7 @@ namespace TextUpdate {
         0xFA060  /* Seabed crystal near Durean */ // 44 AA
     };
 
-    static int NPCAlreadyHaveItemTextAddressList[59] = {
+    static int NPCAlreadyHaveItemTextAddressList[60] = {
         0x18429, /* Tool shop owner */
         0, /* Emblem A tile */
         0, /* Goat pen corner */
@@ -239,6 +240,7 @@ namespace TextUpdate {
         0x22C22, /* Herb Plant in Leo's Lab */
         0, /* Leo's Cat (door key) */
         0x23201, /* Actinidia plant */
+        0x2342F,  /* Chest of drawers (Herb) */
         0, /* Marie */
         0x23977, /* Spark Bomb mouse */
         0, /* Leo's Lab Basement crystal */
@@ -389,10 +391,10 @@ namespace TextUpdate {
         else if (NPCItemIndex <= 30) {
             EndTextCode = TEXT_ENDTYPE_1EA5;
         }
-        else if (NPCItemIndex <= 40) {
+        else if (NPCItemIndex <= 41) {
             EndTextCode = TEXT_ENDTYPE_A3BF;
         }
-        else if (NPCItemIndex <= 49) {
+        else if (NPCItemIndex <= 50) {
             EndTextCode = TEXT_ENDTYPE_DFF0;
         }
         return EndTextCode;
@@ -451,14 +453,14 @@ namespace TextUpdate {
         ROMFile.seekp(0x13B2B, ios::beg);
         TEXT_WriteString("RANDO HYPE");
         ROMFile.seekp(0x13B3C, ios::beg);
-        TEXT_WriteString("RandoBlazer v0.4   ");
+        TEXT_WriteString("RandoBlazer v0.4b  ");
         ROMFile.seekp(0x143B9, ios::beg);
         TEXT_WriteString("Seed ");
         char SeedChr[11] = {'\0'};
         sprintf(SeedChr, "%10lu", Seed);
         TEXT_WriteString(SeedChr);
 
-        /* Correct Marig Flare typo + Greenwood/Actinidia leaves */
+        /* Correct Magic Flare typo + Greenwood/Actinidia leaves */
         ROMFile.seekp(0x150EC, ios::beg);
         TEXT_WriteString("re");
         ROMFile.seekp(0x1514C, ios::beg);
@@ -548,6 +550,12 @@ namespace TextUpdate {
         ROMFile.seekp(0x21F45, ios::beg); /* Lune crystal */
         TEXT_WriteByte(0x00);
         TEXT_WriteByte(0x91);
+
+        /* Chest of drawers - Hack to turn it into a simple NPC giving an item */
+        ROMFile.seekp(0x232CE, ios::beg);
+        TEXT_WriteByte(0x08); /* Invert flag check */
+        ROMFile.seekp(0x23312, ios::beg);
+        TEXT_WriteByte(0x6B); /* Prevent setting the flag */
 
         /* Leo's Lab entrance door */
         ROMFile.seekp(0x23A7B, ios::beg);

@@ -281,6 +281,9 @@ namespace ROMData {
         ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Type     = TYPE_NPC;
         ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Contents = ACTINIDIA_LEAF;
 
+        ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Type     = TYPE_NPC;
+        ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Contents = MEDICAL_HERB;
+
         ItemList[ITEM_MARIE].Type     = TYPE_NPC;
         ItemList[ITEM_MARIE].Contents = PURPLE_STONE;
 
