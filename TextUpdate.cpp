@@ -7,8 +7,9 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <vector>
 
-#define NB_NPC_TO_DISABLE_ADDRESSES 28
+#define NB_NPC_TO_DISABLE_ADDRESSES 27
 #define NB_MASTER_INTRO_TEXTS 25
 #define NB_MASTER_DEATH_TEXTS 13
 
@@ -135,7 +136,7 @@ namespace TextUpdate {
         0xF8ACF, /* Mermaid statue (Rockbird) */
         0xF8EEA, /* Mermaid statue (Durean) */
         0xF966D, /* Mermaid statue (Ghost Ship) */
-        0xF9247, /* Mermaid Queen */
+        /*0xF9247,*/ /* Mermaid Queen */
         0xF9BF4  /* Lue */
     };
 
@@ -193,7 +194,7 @@ namespace TextUpdate {
         0xF831D, /* North-eastern Mermaid (Herb) */ // 44 AA
         0xF8BF8, /* Bubble Armor Mermaid */ // 44 AA
         0xF909A, /* Magic Flair Mermaid */ // 44 AA
-        0xF9253, /* Mermaid Queen */ // 44 AA
+        0xF9280, /* Mermaid Queen */ // 44 AA
         0xF9874, /* Red-Hot Stick Mermaid */ // 44 AA
         0xF9C13, /* Lue */ // 44 AA
         0xFA9C6, /* Rockbird crystal */ // 44 AA
@@ -411,16 +412,16 @@ namespace TextUpdate {
             if (i == 5  || /* Village Chief */
                 i == 8  || /* Greenwood's Guardian */
                 i == 12 || /* Marie */
-                i == 17 || /* King Magridd */
-                i == 26) { /* Mermaid Queen */
+                i == 17 /*||  King Magridd
+                i == 26*/) { /* Mermaid Queen */
                 TEXT_WriteByte(0x37); /* Heal the hero completely */
-                if (i == 26) {
-                    /* You have to restore this for Mermaid Queen or her revival text glitches out.
-                       I have no idea what it does... */
-                    TEXT_WriteByte(0x9C);
-                    TEXT_WriteByte(0xFB);
-                    TEXT_WriteByte(0x03);
-                }
+//                if (i == 26) {
+//                    /* You have to restore this for Mermaid Queen or her revival text glitches out.
+//                       I have no idea what it does... */
+//                    TEXT_WriteByte(0x9C);
+//                    TEXT_WriteByte(0xFB);
+//                    TEXT_WriteByte(0x03);
+//                }
                 TEXT_WriteByte(0x02);
             }
             TEXT_WriteByte(0x86);
@@ -662,6 +663,31 @@ namespace TextUpdate {
         TEXT_WriteString("Southerta is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
 
+        /* Mermaid Queen - Hack to open Southerta in case the initial Mermaid Statue disappeared */
+        ROMFile.seekp(0xF9219, ios::beg);
+        TEXT_WriteByte(0x2F); /* Change pointer */
+        ROMFile.seekp(0xF921D, ios::beg);
+        TEXT_WriteByte(0x80); /* Change text pointer */
+        ROMFile.seekp(0xF9228, ios::beg);
+        unsigned char Buffer[57] = {
+            0x02, 0x08, 0x02, 0x85, 0x58, 0x92, 0x6B, /* If Southerta isn't open, jump to F9258 */
+            0x02, 0x01, 0x8C, 0x93, 0x6B,             /* Point to chunk of weird empty text before "Queen!", not sure what this does */
+            0xA9, 0xFF, 0xFF, 0x8D, 0xFB, 0x03,       /* This is not a COP routine call, no idea what it does */
+            0x02, 0x14, 0xBD, 0x00, 0x48, 0x92,       /* If one of the mermaids by the Queen's side is released, jump to F9248 */
+            0x02, 0x14, 0x92, 0x00, 0x48, 0x92,       /* If the other mermaid by the Queen's side is released, jump to F9248 */
+            0x80, 0x04,                               /* This is not a COP routine call, no idea what it does */
+            0x02, 0x01, 0x90, 0x93,                   /* Point to mermaids' text "Queen!" */
+            0x02, 0x01, 0x9F, 0x93,                   /* Point to mermaid Queen's revival text "A beautiful voice..." */
+            0x02, 0x37,                               /* Heal the player fully */
+            0x9C, 0xFB, 0x03,                         /* This is not a COP routine call, no idea what it does */
+            0x02, 0x86, 0x6B,                         /* Some "quit" function maybe? */
+            0x02, 0x01, 0x61, 0x92,                   /* Point to our new text "Southerta is open!" at F9261 */
+            0x02, 0x09, 0x02, 0x85, 0x6B};            /* Set the flag to open Southerta */
+        ROMFile.write((char*)(&Buffer), 57);
+        TEXT_WriteByte(0x10); /* Open textbox */
+        TEXT_WriteString("Southerta is open!");
+        TEXT_EndText(TEXT_ENDTYPE_44AA);
+
         /* Act 3 crystal fairies: change text pointers */
         ROMFile.seekp(0xFA4B7, ios::beg); /* Seabed crystal near Blester */
         TEXT_WriteByte(0x40);
@@ -710,7 +736,8 @@ namespace TextUpdate {
                 ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
                 ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN ||
-                ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
+                ItemIndex == ITEM_SOLDIER_PLATINUM_CARD ||
+                ItemIndex == ITEM_MERMAID_QUEEN) {
                 /* These texts have been moved from their original location */
                 TEXT_WriteByte(0x10);
             }

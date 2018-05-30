@@ -585,21 +585,21 @@ namespace Randomizer {
 
                             RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
 
-                            if ( (*ElementIterator).Index == NPC_MERMAID_STATUE_ROCKBIRD   ||
-                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_DUREAN     ||
-                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_BLESTER    ||
-                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_GHOST_SHIP ||
-                                 (*ElementIterator).Index == NPC_MERMAID_QUEEN ) {
-                                /* First Mermaid Statue problem fix: make sure these NPCs can only be found in Lairs from Act 3 or later */
-                                while ( (AvailableRevivingLairs[RevivingLairIndex] < NPC_DOLPHIN) ||
-                                        (AvailableRevivingLairs[RevivingLairIndex] == NPC_MERMAID_STATUE_ROCKBIRD) ) {
-                                    RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-                                }
-#ifdef DEBUG
-                                cout << "Mermaid special Lair : " << (*ElementIterator).Index << " <-- "
-                                    << AvailableRevivingLairs[RevivingLairIndex] << endl;
-#endif
-                            }
+//                            if ( (*ElementIterator).Index == NPC_MERMAID_STATUE_ROCKBIRD   ||
+//                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_DUREAN     ||
+//                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_BLESTER    ||
+//                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_GHOST_SHIP ||
+//                                 (*ElementIterator).Index == NPC_MERMAID_QUEEN ) {
+//                                /* First Mermaid Statue problem fix: make sure these NPCs can only be found in Lairs from Act 3 or later */
+//                                while ( (AvailableRevivingLairs[RevivingLairIndex] < NPC_DOLPHIN) ||
+//                                        (AvailableRevivingLairs[RevivingLairIndex] == NPC_MERMAID_STATUE_ROCKBIRD) ) {
+//                                    RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
+//                                }
+//#ifdef DEBUG
+//                                cout << "Mermaid special Lair : " << (*ElementIterator).Index << " <-- "
+//                                    << AvailableRevivingLairs[RevivingLairIndex] << endl;
+//#endif
+//                            }
 
                             RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
 
