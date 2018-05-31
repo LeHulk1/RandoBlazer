@@ -85,7 +85,7 @@ namespace Log {
          NPC_DANCING_GRANDMA2,
          NPC_NOME,
          NPC_MOUNTAIN_KING};
-    static int Act5NPCs[17] =
+    static int Act5NPCs[18] =
         {NPC_GREAT_DOOR_ZANTETSU_SWORD,
          NPC_STEPS_UPSTAIRS,
          NPC_GREAT_DOOR_MODEL_TOWNS,
@@ -102,6 +102,7 @@ namespace Log {
          NPC_CAT_DOOR_KEY,
          NPC_GREAT_DOOR,
          NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR,
+         NPC_CHEST_OF_DRAWERS2,
          NPC_MARIE};
     static int Act6NPCs[12] =
         {NPC_SINGER_CONCERT_HALL,
@@ -346,6 +347,7 @@ namespace Log {
          "Medical Herb plant in Leo's Lab main room",
          "Leo's Cat's item",
          "Actinidia Leaf plant's item",
+         "Inside Chest of Drawers in the attic",
          "Marie's item",
          "Spark Bomb Mouse's item (in mouse hole)",
          "Leo's Lab basement 2nd screen crystal fairy",
@@ -552,6 +554,8 @@ namespace Log {
             return "Locked Door to south-western room";
         case NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR:
             return "Chest of Drawers (gives Mystic Armor)";
+        case NPC_CHEST_OF_DRAWERS2:
+            return "Chest of Drawers (Herb storage)";
         case NPC_MARIE:
             return "Marie (leads to Act 6)";
         case NPC_SINGER_CONCERT_HALL:
