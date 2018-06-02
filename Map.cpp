@@ -1131,7 +1131,7 @@ namespace Map {
         //RegionList[70].InsertElement(ITEM, ITEM_QUEEN_MAGRIDD); WARNING: this item can be lost if the Queen is already dead
 
         /* Region 71 - Platinum Card soldier */
-        //RegionList[71].InsertElement(ITEM, ITEM_SOLDIER_PLATINUM_CARD); WARNING: same as Queen's item
+        RegionList[71].InsertElement(ITEM, ITEM_SOLDIER_PLATINUM_CARD); /* Back into logic */
 
         /* Region 72 - Medical Herb maid */
         RegionList[72].InsertElement(ITEM, ITEM_MAID_HERB);

@@ -21,7 +21,7 @@
 #define SEED_SIZE            10
 #define MAX_NUMBER_OF_TRIES  5
 
-//#define DONT_CREATE_SEED_FILE
+#define DONT_CREATE_SEED_FILE
 
 
 
@@ -146,6 +146,9 @@ int main ( int argc, char** argv ) {
     /* Re-open ROM to be modified */
     ROMFile.open(MOD_ROM_FILE_NAME, ios::in | ios::out | ios::binary | ios::ate);
 
+    /* General text modification */
+    TextUpdate::GeneralTextUpdate(ROMFile, Seed);
+
     /* Call the main algorithm to randomize the progression through the game:
        ==> randomize item locations and revived NPCs */
     int RandomizationTry;
@@ -173,9 +176,6 @@ int main ( int argc, char** argv ) {
     ROMUpdate::ROMUpdateLairs(RandomizedLairList, ROMFile);
     ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
     ROMUpdate::ROMUpdateMapSprites(RandomizedSpriteList, ROMFile);
-
-    /* General text modification */
-    TextUpdate::GeneralTextUpdate(ROMFile, Seed);
 
     /* Generate the Spoiler Log */
     Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);

@@ -60,7 +60,7 @@ namespace ROMUpdate {
         0x242A3, /* Elemental Mail soldier */
         0x2499B, /* Super Bracelet tile */
         0x249C2, /* Queen Magridd (VIP card) */
-        0x24C44, /* Platinum Card soldier */
+        0x24C3B, /* Platinum Card soldier - address modified */
         0x24E94, /* Maid (Herb) */
         0x25345, /* Emblem H tile */
         0x255D9, /* Magridd King */
@@ -274,7 +274,7 @@ namespace ROMUpdate {
                     ROMFile.write((char*)(&ItemID), 1);
                     break;
                 case ITEM_SOLDIER_PLATINUM_CARD:
-                    ROMFile.seekp (0x24BEF, ios::beg);
+                    ROMFile.seekp (0x24BE9, ios::beg); /* Moved location */
                     ROMFile.write((char*)(&ItemID), 1);
                     break;
                 case ITEM_MAID_HERB:

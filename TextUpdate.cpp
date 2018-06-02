@@ -100,7 +100,6 @@
 
 #define TEXT_EndStyle     \
 {                         \
-    /*TEXT_WriteByte(0x20);*/ \
     TEXT_WriteByte(0x03); \
     TEXT_WriteByte(0x20); \
 }                         \
@@ -501,6 +500,12 @@ namespace TextUpdate {
         ROMFile.seekp(0x1AC5B, ios::beg);
         TEXT_WriteByte(0x00);
 
+        /* Underground Castle east part Crystal fairy */
+        ROMFile.seekp(0x1AE14, ios::beg);
+        TEXT_WriteString("I`ve got nothing\rfor you.");
+        TEXT_WriteByte(0x11);
+        TEXT_WriteByte(0x0C);
+
         /* Woodstin Trio */
         ROMFile.seekp(0x1D1E6, ios::beg);
         TEXT_WriteString("Tadaaa!\rTry to guess where\rI go.");
@@ -517,6 +522,11 @@ namespace TextUpdate {
         TEXT_EndText(TEXT_ENDTYPE_46EC);
         ROMFile.seekp(0x1E713, ios::beg);
         TEXT_WriteString("Get on!");
+        TEXT_EndText(TEXT_ENDTYPE_46EC);
+
+        /* Sleeping stump */
+        ROMFile.seekp(0x1E427, ios::beg);
+        TEXT_WriteString("I believe I can\rflyyyyy...");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /* Act 2 crystal fairies: change text pointers */
@@ -550,6 +560,11 @@ namespace TextUpdate {
         ROMFile.seekp(0x21F45, ios::beg); /* Lune crystal */
         TEXT_WriteByte(0x00);
         TEXT_WriteByte(0x91);
+
+        /* Chest of drawers (Mystic Armor) */
+        ROMFile.seekp(0x22A9E, ios::beg);
+        TEXT_WriteString("Hope you like it!");
+        TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
         /* Chest of drawers - Hack to turn it into a simple NPC giving an item */
         ROMFile.seekp(0x232CE, ios::beg);
@@ -585,6 +600,36 @@ namespace TextUpdate {
         ROMFile.seekp(0x24677, ios::beg);
         TEXT_WriteString("Let`s jam it!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
+
+        /* Platinum Card Soldier - Hack so his item is not permanently missable */
+        ROMFile.seekp(0x24BE3, ios::beg);
+        unsigned char PlatCardSoldierBuffer[92] = {
+            0x02, 0x17, 0x1A, 0xCC,
+            0x02, 0x18, 0x28, 0xF2, 0xCB, 			/* If you don't have the item, jump */
+            0x02, 0x17, 0x24, 0xCC,
+            0x80, 0x07,
+            0x02, 0xB0, 0x29, 0xCC, 0x04, 0x00, 0x20,
+            0x02, 0x15,
+            0x02, 0x05, 0x01, 0x00, 				/* Loop until... ? */
+            0x02, 0x16,                                         /* This is probably to wait for the guard */
+            0x02, 0x17, 0x00, 0x00,                             /* to reach his final position after */
+            0x02, 0x81, 0x17, 0x02,                             /* the singer has started his music */
+            0x02, 0x83,
+            0x02, 0x81, 0x16, 0x03,
+            0x02, 0x83,
+            0x02, 0x17, 0x1F, 0xCC,
+            0x02, 0x15,
+            0x02, 0x91, 0x6B,
+            0x02, 0x01, 0x3F, 0xCC, 0x6B,                       /* Text: tell what item is under the guard's feet */
+            0x02, 0x01, 0xDF, 0xCC, 0x6B,                       /* Text when guard is at the front row */
+            0x02, 0x01, 0x1B, 0xCD, 0x6B,	                /* Text: guard tired of his job */
+            0x02, 0x91,
+            0x02, 0x0D, 0x00, 0x0B, 0x30, 0x3C, 0xCC, 0x6B, 	/* Conditional branch (?) */
+            0x02, 0x01, 0x80, 0xCD,		                /* Move the item text location */
+            0x00, 0x5E,
+            0x02, 0x0A, 0x28,                                   /* Get the item */
+            0x02, 0x86, 0x6B};
+        ROMFile.write((char*)(&PlatCardSoldierBuffer), 92);
 
         /* Dr. Leo/Queen Magridd cutscene */
         ROMFile.seekp(0x26145, ios::beg);
@@ -646,6 +691,12 @@ namespace TextUpdate {
         TEXT_WriteString("I am sorry but\rI have orders.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
+        /* Left Tower Crystal fairy */
+        ROMFile.seekp(0x26DF3, ios::beg);
+        TEXT_WriteString("I`ve got nothing\rfor you.");
+        TEXT_WriteByte(0x11);
+        TEXT_WriteByte(0x0C);
+
         /* Herb Mermaid of St. Elles */
         ROMFile.seekp(0xF8356, ios::beg);
         TEXT_WriteString("Here you go!");
@@ -677,7 +728,7 @@ namespace TextUpdate {
         ROMFile.seekp(0xF921D, ios::beg);
         TEXT_WriteByte(0x80); /* Change text pointer */
         ROMFile.seekp(0xF9228, ios::beg);
-        unsigned char Buffer[57] = {
+        unsigned char MermaidQueenBuffer[57] = {
             0x02, 0x08, 0x02, 0x85, 0x58, 0x92, 0x6B, /* If Southerta isn't open, jump to F9258 */
             0x02, 0x01, 0x8C, 0x93, 0x6B,             /* Point to chunk of weird empty text before "Queen!", not sure what this does */
             0xA9, 0xFF, 0xFF, 0x8D, 0xFB, 0x03,       /* This is not a COP routine call, no idea what it does */
@@ -691,7 +742,7 @@ namespace TextUpdate {
             0x02, 0x86, 0x6B,                         /* Some "quit" function maybe? */
             0x02, 0x01, 0x61, 0x92,                   /* Point to our new text "Southerta is open!" at F9261 */
             0x02, 0x09, 0x02, 0x85, 0x6B};            /* Set the flag to open Southerta */
-        ROMFile.write((char*)(&Buffer), 57);
+        ROMFile.write((char*)(&MermaidQueenBuffer), 57);
         TEXT_WriteByte(0x10); /* Open textbox */
         TEXT_WriteString("Southerta is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
@@ -868,12 +919,13 @@ namespace TextUpdate {
         if (ItemIndex == ITEM_SOLDIER_PLATINUM_CARD) {
 
             /* Move the item text location */
-            ROMFile.seekp(0x24C3E, ios::beg);
-            TEXT_WriteByte(0x80);
-            TEXT_WriteByte(0xCC);
+//            ROMFile.seekp(0x24C3E, ios::beg);
+//            TEXT_WriteByte(0x80);
+//            TEXT_WriteByte(0xCC);
 
             /* Change Soldier's text */
-            ROMFile.seekp(0x24C49, ios::beg);
+            ROMFile.seekp(0x24C3F, ios::beg);
+            TEXT_WriteByte(0x10); /* Start textbox */
             TEXT_WriteByte(0x93); /* "There " */
             TEXT_WriteByte(0xBA); /* "is " */
             TEXT_WriteByte(0x97); /* "a " */

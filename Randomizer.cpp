@@ -21,7 +21,7 @@
 #define SPAWN_RATE_MIN 0x03
 #define SPAWN_RATE_MAX 0x20
 
-#define DEBUG
+//#define DEBUG
 //#define DEBUG_NO_ENEMIES
 //#define DONT_RANDOMIZE
 
@@ -693,7 +693,7 @@ namespace Randomizer {
         AvailableItems.push_back(10);
         //AvailableItems.push_back(22);
         AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
-        AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
+        //AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
         AvailableRevivingLairs.push_back(NPC_OLD_MAN);
 
 #ifdef DEBUG
