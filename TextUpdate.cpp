@@ -467,6 +467,11 @@ namespace TextUpdate {
         ROMFile.seekp(0x151B2, ios::beg);
         TEXT_WriteString("A.Leaf");
 
+        /* Old Woman */
+        ROMFile.seekp(0x18121, ios::beg);
+        TEXT_WriteByte(0x3C); /* Move her to a different location around Lisa's bed */
+        TEXT_WriteByte(0x20);
+
         /* Bridge guard */
         ROMFile.seekp(0x18644, ios::beg);
         TEXT_WriteString("Please pass.");
@@ -507,6 +512,9 @@ namespace TextUpdate {
         TEXT_WriteByte(0x0C);
 
         /* Woodstin Trio */
+        ROMFile.seekp(0x1D175, ios::beg);
+        TEXT_WriteString("Show time!");
+        TEXT_EndText(TEXT_ENDTYPE_46EC);
         ROMFile.seekp(0x1D1E6, ios::beg);
         TEXT_WriteString("Tadaaa!\rTry to guess where\rI go.");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
@@ -560,6 +568,11 @@ namespace TextUpdate {
         ROMFile.seekp(0x21F45, ios::beg); /* Lune crystal */
         TEXT_WriteByte(0x00);
         TEXT_WriteByte(0x91);
+
+        /* Mouse (mouse hole entrance) */
+        ROMFile.seekp(0x22751, ios::beg);
+        TEXT_WriteString("Thanks!\rPlease come in!");
+        TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
         /* Chest of drawers (Mystic Armor) */
         ROMFile.seekp(0x22A9E, ios::beg);
