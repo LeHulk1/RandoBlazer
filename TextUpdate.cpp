@@ -484,6 +484,13 @@ namespace TextUpdate {
         ROMFile.seekp(0x188B9, ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
+        /* Lisa - Hack so her dream is always accessible */
+        ROMFile.seekp(0x18A6F, ios::beg);
+        TEXT_WriteByte(0x00); /* Require to not have a non-existing item */
+        ROMFile.seekp(0x18A7D, ios::beg);
+        TEXT_WriteByte(0x7F); /* Change pointer when Village Chief is revived */
+        TEXT_WriteByte(0x8A);
+
         /* Sleeping tulip (move this text to make room for the Pass tile text) */
         ROMFile.seekp(0x1984E, ios::beg);
         TEXT_WriteByte(0x9A); /* Change text pointer */
@@ -637,8 +644,8 @@ namespace TextUpdate {
             0x02, 0x01, 0xDF, 0xCC, 0x6B,                       /* Text when guard is at the front row */
             0x02, 0x01, 0x1B, 0xCD, 0x6B,	                /* Text: guard tired of his job */
             0x02, 0x91,
-            0x02, 0x0D, 0x00, 0x0B, 0x30, 0x3C, 0xCC, 0x6B, 	/* Conditional branch (?) */
-            0x02, 0x01, 0x80, 0xCD,		                /* Move the item text location */
+            0x02, 0x0D, 0x00, 0x0B, 0x30, 0x33, 0xCC, 0x6B, 	/* Conditional branch (?) */
+            0x02, 0x01, 0x80, 0xCC,		                /* Move the item text location */
             0x00, 0x5E,
             0x02, 0x0A, 0x28,                                   /* Get the item */
             0x02, 0x86, 0x6B};
@@ -767,6 +774,12 @@ namespace TextUpdate {
         ROMFile.seekp(0xFA4E7, ios::beg); /* Seabed crystal near Durean */
         TEXT_WriteByte(0x60);
         TEXT_WriteByte(0xA0);
+
+        /* Blester Crystal fairy */
+        ROMFile.seekp(0xFA517, ios::beg);
+        TEXT_WriteString("I`ve got nothing\rfor you.");
+        TEXT_WriteByte(0x11);
+        TEXT_WriteByte(0x0C);
     }
 
 

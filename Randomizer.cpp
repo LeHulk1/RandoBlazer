@@ -22,7 +22,7 @@
 #define SPAWN_RATE_MAX 0x20
 
 //#define DEBUG
-//#define DEBUG_NO_ENEMIES
+#define DEBUG_NO_ENEMIES
 //#define DONT_RANDOMIZE
 
 
@@ -688,13 +688,13 @@ namespace Randomizer {
 
         /* Add the items/NPC locations which may not always be accessible,
            to make sure they still receive a non-key item/NPC. */
-        AvailableItems.push_back(CHEST_LEOS_BRUSH);
+        //AvailableItems.push_back(CHEST_LEOS_BRUSH);
         AvailableItems.push_back(17);
         AvailableItems.push_back(10);
         //AvailableItems.push_back(22);
         AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
         //AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
-        AvailableRevivingLairs.push_back(NPC_OLD_MAN);
+        //AvailableRevivingLairs.push_back(NPC_OLD_MAN);
 
 #ifdef DEBUG
         cout << AvailableRevivingLairs.size() << " available Reviving Lairs, " << NonKeyNPCList.size() << " in NPC list.\n";
