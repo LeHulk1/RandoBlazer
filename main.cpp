@@ -6,7 +6,6 @@
 #include "ROMCheck.h"
 #include "ROMUpdate.h"
 #include "Sprite.h"
-#include "TextUpdate.h"
 
 #include <fstream>
 #include <iostream>
@@ -146,9 +145,6 @@ int main ( int argc, char** argv ) {
     /* Re-open ROM to be modified */
     ROMFile.open(MOD_ROM_FILE_NAME, ios::in | ios::out | ios::binary | ios::ate);
 
-    /* General text modification */
-    TextUpdate::GeneralTextUpdate(ROMFile, Seed);
-
     /* Call the main algorithm to randomize the progression through the game:
        ==> randomize item locations and revived NPCs */
     int RandomizationTry;
@@ -174,8 +170,11 @@ int main ( int argc, char** argv ) {
 
     /* Modify the ROM with the randomized lists */
     ROMUpdate::ROMUpdateLairs(RandomizedLairList, ROMFile);
-    ROMUpdate::ROMUpdateItems(RandomizedItemList, ROMFile);
     ROMUpdate::ROMUpdateMapSprites(RandomizedSpriteList, ROMFile);
+    ROMUpdate::ROMUpdateTextAndItems(RandomizedLairList,
+                                     RandomizedItemList,
+                                     ROMFile,
+                                     Seed);
 
     /* Generate the Spoiler Log */
     Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
