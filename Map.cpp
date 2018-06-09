@@ -375,7 +375,7 @@ namespace Map {
         RegionList[33].InsertGoal(69); /* Queen Magridd */
         RegionList[33].InsertGoal(70); /* Platinum Card soldier */
         RegionList[33].InsertGoal(71); /* Medical Herb maid */
-        RegionList[33].InsertGoal(72); /* Emblem H tile */
+        RegionList[33].InsertGoal(72); /* Castle + Emblem H tile */
 
         /* Region 34 - Magridd Castle Basement */
         RegionList[34].InsertElement(LAIR, NPC_SOLDIER2);
@@ -416,6 +416,7 @@ namespace Map {
         RegionList[36].InsertElement(ITEM, 58);
         RegionList[36].InsertElement(ITEM, 59);
         RegionList[36].InsertGoal(37); /* Dr Leo + Queen Magridd cutscene */
+        RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 37 - Act 7 start, World of Evil */
         //RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD); Don't randomize Stones
@@ -428,7 +429,6 @@ namespace Map {
 
         /* Region 38 - Dr Leo + Queen Magridd cutscene */
         RegionList[38].InsertElement(ITEM, ITEM_DR_LEO);
-        RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 39 - Dazzling Space */
         RegionList[39].InsertElement(ITEM, CHEST_SOUL_BLADE);
@@ -548,8 +548,9 @@ namespace Map {
         /* Region 72 - Medical Herb maid */
         RegionList[72].InsertElement(ITEM, ITEM_MAID_HERB);
 
-        /* Region 73 - Emblem H tile */
+        /* Region 73 - Magridd Castle + Emblem H tile */
         RegionList[73].InsertElement(ITEM, ITEM_EMBLEM_H);
+        RegionList[76].InsertGoal(36); /* King Magridd ==> Act 7 */
 
         /* Region 74 - Super Bracelet tile */
         RegionList[74].InsertElement(ITEM, ITEM_SUPER_BRACELET);
@@ -558,8 +559,7 @@ namespace Map {
         RegionList[75].InsertElement(ITEM, ITEM_GREENWOOD_LEAVES);
 
         /* Region 76 - Demon Bird's lair */
-        RegionList[76].InsertElement(LAIR, NPC_KING_MAGRIDD); /*==> Don't randomize King Magridd's location*/
-        RegionList[76].InsertGoal(36); /* King Magridd ==> Act 7 */
+        RegionList[76].InsertElement(LAIR, NPC_KING_MAGRIDD);
 
         /* Region 77 - Leo's Lab Attic */
         RegionList[77].InsertGoal(32); /* Marie ==> Act 6 */
@@ -741,8 +741,7 @@ namespace Map {
         GoalList[35].Target = 36;
 
         /* Goal 36 - King Magridd ==> Act 7 */
-        GoalList[36].InsertElement(LAIR, NPC_SOLDIER_CASTLE);
-        GoalList[36].InsertElement(LAIR, NPC_KING_MAGRIDD); /*==> Will be automatically found when beating Demon Bird*/
+        GoalList[36].InsertElement(LAIR, NPC_KING_MAGRIDD);
         GoalList[36].Target = 37;
 
         /* Goal 37 - Dr Leo + Queen Magridd cutscene */
@@ -940,7 +939,7 @@ namespace Map {
         GoalList[71].InsertElement(LAIR, NPC_MAID_HERB);
         GoalList[71].Target = 72;
 
-        /* Goal 72 - Emblem H tile */
+        /* Goal 72 - Magridd Castle + Emblem H tile */
         GoalList[72].InsertElement(LAIR, NPC_SOLDIER_CASTLE);
         GoalList[72].Target = 73;
 

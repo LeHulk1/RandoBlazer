@@ -201,7 +201,7 @@ namespace ROMUpdate {
         0x2563A, /* Magridd King */ // DF F0
         0x264C4, /* Leo on the Airship deck (Mobile key) */ // DF F0
         0x26A17, /* Harp String tile */ // DF F0
-        0xF831D, /* North-eastern Mermaid (Herb) */ // 44 AA
+        0,       /* North-eastern Mermaid (Herb) */ // 44 AA
         0xF8BF8, /* Bubble Armor Mermaid */ // 44 AA
         0xF909A, /* Magic Flair Mermaid */ // 44 AA
         0xF9280, /* Mermaid Queen */ // 44 AA
@@ -983,7 +983,7 @@ namespace ROMUpdate {
         TEXT_WriteByte(0x11);
         TEXT_WriteByte(0x0C);
 
-        /* St. Elles herb mermaid's first question */
+        /* St. Elles herb mermaid */
         ROMFile.seekp(0xF8305, ios::beg);
 	TEXT_WriteItemByte(ITEM_MERMAID_HERB); /* change text condition */
         ROMFile.seekp(0xF831D, ios::beg);
@@ -995,8 +995,6 @@ namespace ROMUpdate {
         TEXT_WriteItemString(ITEM_MERMAID_HERB);
         TEXT_WriteString("? ");
         TEXT_WriteByte(0x0C); /* Question prompt */
-
-        /* Herb Mermaid of St. Elles */
         ROMFile.seekp(0xF8356, ios::beg);
         TEXT_WriteString("Here you go!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
@@ -1105,40 +1103,43 @@ namespace ROMUpdate {
         }
 
         /* Update text when NPC gives the item */
-        ROMFile.seekp(NPCItemTextAddressList[NPCItemIndex], ios::beg);
-        if (ItemIndex == ITEM_WATER_SHRINE_TILE ||
-            ItemIndex == ITEM_EMBLEM_H) {
-            /* Particular cases where we need shorter text */
-            TEXT_WriteByte(0x93); /* "There " */
-            TEXT_WriteByte(0xBA); /* "is " */
-            TEXT_WriteByte(0x97); /* "a " */
-            TEXT_WriteByte(0x0D); /* Carriage return */
-            TEXT_YellowStyle;
-            TEXT_WriteString(ItemName);
-            TEXT_EndStyle;
-            TEXT_WriteString(".");
-            TEXT_EndText(PickEndTextCode(NPCItemIndex));
-        }
-        else {
-            /* Normal case */
-            if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
-                ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
-                ItemIndex == ITEM_CRYSTAL_LUNE ||
-                ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
-                ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
-                ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
-                ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN ||
-                ItemIndex == ITEM_SOLDIER_PLATINUM_CARD ||
-                ItemIndex == ITEM_MERMAID_QUEEN) {
-                /* These texts have been moved from their original location */
-                TEXT_WriteByte(0x10);
+        if (NPCItemTextAddressList[NPCItemIndex] != 0) {
+
+            ROMFile.seekp(NPCItemTextAddressList[NPCItemIndex], ios::beg);
+            if (ItemIndex == ITEM_WATER_SHRINE_TILE ||
+                ItemIndex == ITEM_EMBLEM_H) {
+                /* Particular cases where we need shorter text */
+                TEXT_WriteByte(0x93); /* "There " */
+                TEXT_WriteByte(0xBA); /* "is " */
+                TEXT_WriteByte(0x97); /* "a " */
+                TEXT_WriteByte(0x0D); /* Carriage return */
+                TEXT_YellowStyle;
+                TEXT_WriteString(ItemName);
+                TEXT_EndStyle;
+                TEXT_WriteString(".");
+                TEXT_EndText(PickEndTextCode(NPCItemIndex));
             }
-            TEXT_HeroReceived;
-            TEXT_YellowStyle;
-            TEXT_WriteString(ItemName);
-            TEXT_EndStyle;
-            TEXT_WriteString(".");
-            TEXT_EndText(PickEndTextCode(NPCItemIndex));
+            else {
+                /* Normal case */
+                if (ItemIndex == ITEM_CRYSTAL_LOST_MARSH ||
+                    ItemIndex == ITEM_CRYSTAL_WATER_SHRINE ||
+                    ItemIndex == ITEM_CRYSTAL_LUNE ||
+                    ItemIndex == ITEM_CRYSTAL_MODEL_TOWN ||
+                    ItemIndex == ITEM_CRYSTAL_POWER_PLANT ||
+                    ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_BLESTER ||
+                    ItemIndex == ITEM_CRYSTAL_SEABED_NEAR_DUREAN ||
+                    ItemIndex == ITEM_SOLDIER_PLATINUM_CARD ||
+                    ItemIndex == ITEM_MERMAID_QUEEN) {
+                    /* These texts have been moved from their original location */
+                    TEXT_WriteByte(0x10);
+                }
+                TEXT_HeroReceived;
+                TEXT_YellowStyle;
+                TEXT_WriteString(ItemName);
+                TEXT_EndStyle;
+                TEXT_WriteString(".");
+                TEXT_EndText(PickEndTextCode(NPCItemIndex));
+            }
         }
 
         /* Update text when NPC doesn't give its item because the hero already has it */

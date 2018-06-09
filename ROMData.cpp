@@ -393,17 +393,8 @@ namespace ROMData {
 
         ROMFile.seekg (MONSTER_LAIR_DATA_ADDRESS, ios::beg);
 
-//        unsigned char Byte;
         for (int i=0; i<NUMBER_OF_LAIRS; i++) {
 
-            /* Ignore this data if it is an empty line                              ==> monster type = 0xFF
-               or if it is one of the game's 5 empty lairs (like in Lisa's dream)   ==> monster type = 0x00 */
-//            do {
-//                ROMFile.seekg(21, ios::cur);
-//                ROMFile.read ((char*)(&Byte), 1);
-//                ROMFile.seekg(10, ios::cur);
-//            } while (Byte == 0x00 || Byte == 0xFF);
-//            ROMFile.seekg(-22, ios::cur);
             ROMFile.seekg(10, ios::cur);
 
             /* Read the contents of this Monster Lair */
