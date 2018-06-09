@@ -21,7 +21,7 @@
 #define SPAWN_RATE_MIN 0x03
 #define SPAWN_RATE_MAX 0x20
 
-//#define DEBUG
+#define DEBUG
 #define DEBUG_NO_ENEMIES
 //#define DONT_RANDOMIZE
 
@@ -495,8 +495,7 @@ namespace Randomizer {
         vector<Goal>   GoalList(NUMBER_OF_GOALS);
 
         /* Get the map and calculate the goal weights */
-        //Map::InitMap(RegionList, GoalList);
-        Map::InitMap_v2(RegionList, GoalList);
+        Map::InitMap(RegionList, GoalList);
         Map::CalculateWeights(RegionList, GoalList, GOAL_TO_FIRST_REGION);
 
 #ifdef DEBUG
@@ -681,10 +680,8 @@ namespace Randomizer {
            We now need to place all the other elements (non-key items and NPCs). */
         vector<int> NonKeyNPCList;
         vector<int> NonKeyItemList;
-        //Map::GetNonKeyNPCList (NonKeyNPCList);
-        Map::GetNonKeyNPCList_v2 (NonKeyNPCList);
-        //Map::GetNonKeyItemList(NonKeyItemList);
-        Map::GetNonKeyItemList_v2(NonKeyItemList);
+        Map::GetNonKeyNPCList (NonKeyNPCList);
+        Map::GetNonKeyItemList(NonKeyItemList);
 
         /* Add the items/NPC locations which may not always be accessible,
            to make sure they still receive a non-key item/NPC. */

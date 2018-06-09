@@ -618,6 +618,15 @@ namespace ROMUpdate {
         TEXT_WriteString("Good job!");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
+        /* Lisa's dream */
+        ROMFile.seekp(0x1A522, ios::beg);
+        TEXT_WriteByte(0x3C); /* Opening quotation marks */
+        TEXT_WriteString("Lisa, you must\rhelp this man.");
+        TEXT_WriteByte(0x3E); /* Closing quotation marks */
+        TEXT_EndText(TEXT_ENDTYPE_88B9);
+        ROMFile.seekp(0x1A5AF, ios::beg);
+        TEXT_EndText(TEXT_ENDTYPE_88B9);
+
         /* Magician text 2 */
         ROMFile.seekp(0x1A914, ios::beg);
         TEXT_WriteString("Good luck and/or\rblame Everhate.");
@@ -890,6 +899,11 @@ namespace ROMUpdate {
         TEXT_WriteString("? ");
         TEXT_WriteByte(0x0C); /* Question prompt */
 
+        /* Dr. Leo - Hack so he doesn't disappear after beating Demon Bird */
+        ROMFile.seekp(0x25E73, ios::beg);
+        TEXT_WriteByte(0x75); /* Change address of this COP command */
+        TEXT_WriteByte(0xDE);
+
         /* Dr. Leo/Queen Magridd cutscene */
         ROMFile.seekp(0x26145, ios::beg);
         TEXT_WriteString("We have to defeat\rDeathtoll!");
@@ -949,6 +963,19 @@ namespace ROMUpdate {
         ROMFile.seekp(0x26CBF, ios::beg);
         TEXT_WriteString("I am sorry but\rI have orders.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
+
+        /* Airship - Hack so it still works after King Magridd has been revived */
+        int LairIndex;
+        ROMFile.seekp(0x26D82, ios::beg);
+        for (LairIndex=0; LairIndex<NUMBER_OF_LAIRS; LairIndex++) {
+            /* Find the index of the lair on the airship */
+            if (RandomizedLairList[LairIndex].PositionData[0] == 0x72 /* Airship map */) break;
+        }
+        TEXT_WriteByte(LairIndex % 0x100);
+        TEXT_WriteByte(LairIndex / 0x100);
+        ROMFile.seekp(0x26D88, ios::beg);
+        TEXT_WriteByte(LairIndex % 0x100);
+        TEXT_WriteByte(LairIndex / 0x100);
 
         /* Left Tower Crystal fairy */
         ROMFile.seekp(0x26DF3, ios::beg);
@@ -1159,7 +1186,7 @@ namespace ROMUpdate {
             /* If the NPC doesn't normally give EXP, let us turn the
                EXP/Nothing prize into a Medical Herb for now. */
             ItemID = RandomizedItemList[i].Contents;
-            if (NPCOriginallyGivesEXP(i) &&
+            if (!NPCOriginallyGivesEXP(i) &&
                 (ItemID == GEMS_EXP || ItemID == NOTHING)) {
                 RandomizedItemList[i].Contents = MEDICAL_HERB;
             }
