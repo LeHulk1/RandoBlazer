@@ -473,6 +473,218 @@ namespace ROMUpdate {
         "Don`t give up.\rYou got this!"
     };
 
+    static string ItemLocations[NUMBER_OF_ITEMS] =
+        {"Trial Room",
+         "Grass Valley\rsecret cave",
+         "Grass Valley\rsecret cave",
+         "Underground Castle",
+         "Underground Castle",
+         "Underground Castle",
+         "Underground Castle",
+         "Leo`s Paintings",
+         "Leo`s Paintings",
+         "Greenwood",
+         "Greenwood tunnels",
+         "Water Shrine",
+         "Water Shrine",
+         "Water Shrine",
+         "Water Shrine",
+         "Water Shrine",
+         "Fire Shrine",
+         "Fire Shrine",
+         "Fire Shrine",
+         "Fire Shrine",
+         "Fire Shrine",
+         "Light Shrine",
+         "St. Elles",
+         "St. Elles",
+         "Seabed secret cave",
+         "Seabed secret cave",
+         "Seabed secret cave",
+         "Seabed secret cave",
+         "Southerta",
+         "Rockbird",
+         "Rockbird",
+         "Durean",
+         "Durean",
+         "Ghost Ship",
+         "Northern Seabed",
+         "Mountain of Souls",
+         "Mountain of Souls",
+         "Mountain of Souls",
+         "Mountain of Souls",
+         "Mountain of Souls",
+         "Laynole",
+         "Laynole",
+         "Laynole",
+         "Leo`s Lab",
+         "Leo`s Lab\rPower Plant",
+         "Model Town 1",
+         "Model Town 1",
+         "Model Town 1",
+         "Model Town 2",
+         "Model Town 2",
+         "Magridd Castle\rBasement",
+         "Magridd Castle\rBasement",
+         "Magridd Castle\rBasement",
+         "Magridd Castle\rBasement",
+         "Magridd Castle\rBasement",
+         "Magridd Castle\rBasement",
+         "Magridd Castle\rRight Tower",
+         "Magridd Castle\rRight Tower",
+         "Magridd Castle\rRight Tower",
+         "Magridd Castle\rRight Tower",
+         "World of Evil",
+         "World of Evil",
+         "World of Evil",
+         "World of Evil",
+         "Dazzling Space",
+         "Dazzling Space",
+         "Tool Shop Owner",
+         "Emblem A tile",
+         "Goat Pen tile",
+         "Teddy",
+         "Sleeping Tulip",
+         "Grass Valley\rSecret hideout",
+         "Village Chief",
+         "Magician",
+         "Recovery Sword\rcrystal fairy",
+         "Grass Valley\rcrystal fairy",
+         "Underground Castle\rcrystal fairy",
+         "Red-Hot Mirror bird",
+         "Master`s Emblems\rcrystal fairy",
+         "Woodstin Trio",
+         "Greenwood`s Guardian",
+         "Turbo`s bones",
+         "Shield Bracelet mole",
+         "Psycho Sword\rsquirrel",
+         "Emblem C squirrel",
+         "Water Shrine\rsecret tile",
+         "Light Arrow\rcrystal fairy",
+         "Lost Marsh\rcrystal fairy",
+         "Water Shrine\rcrystal fairy",
+         "Fire Shrine\rcrystal fairy",
+         "Mountain King",
+         "Mushroom Shoes boy",
+         "Nome",
+         "Emblem E snail",
+         "Emblem F tile\rin Lune",
+         "Mountain of Souls\rcrystal fairy",
+         "Lune\rcrystal fairy",
+         "Locked room\rChest of Drawers",
+         "Locked room\rChest of Drawers",
+         "Leo`s Lab\rMedical Herb plant",
+         "Leo`s Cat",
+         "Actinidia Leaf\rplant",
+         "Leo`s Attic\rChest of Drawers",
+         "Marie",
+         "Spark Bomb Mouse",
+         "Leo`s Lab basement\rcrystal fairy",
+         "Model Town 1\rcrystal fairy",
+         "Power Plant\rcrystal fairy",
+         "Sleeping Soldier",
+         "Tile under\rQueen Magridd",
+         "Queen Magridd",
+         "Platinum Card\rSoldier",
+         "Magridd Castle\rMedical Herb Maid",
+         "Magridd Castle\rEmblem H tile",
+         "King Magridd",
+         "Dr.Leo",
+         "Magridd Castle\rHarp String tile",
+         "St. Elles\rMedical Herb Mermaid",
+         "Bubble Armor Mermaid",
+         "Magic Flare Mermaid",
+         "Mermaid Queen",
+         "Red-Hot Stick\rMermaid",
+         "Lue",
+         "Rockbird\rcrystal fairy",
+         "Northern Seabed\rcrystal fairy",
+         "Southern Seabed\rcrystal fairy"
+    };
+
+    static string GetRegionName(Lair &Lair) {
+        switch (Lair.PositionData[0]) {
+        case 0x05:
+        case 0x06:
+            return "Underground Castle";
+        case 0x07:
+        case 0x08:
+        case 0x09:
+        case 0x0B:
+        case 0x0C:
+            return "Leo's Paintings";
+        case 0x0D:
+            return "Trial Room";
+        case 0x19:
+            return "Lost Marshes";
+        case 0x1A:
+        case 0x1B:
+        case 0x1C:
+            return "Water Shrine";
+        case 0x1D:
+        case 0x1E:
+        case 0x1F:
+            return "Fire Shrine";
+        case 0x20:
+        case 0x21:
+        case 0x22:
+            return "Light Shrine";
+        case 0x2A:
+            return "Southern Seabed";
+        case 0x2E:
+            return "Southerta";
+        case 0x2F:
+            return "Rockbird";
+        case 0x30:
+            return "Durean";
+        case 0x31:
+            return "Blester";
+        case 0x32:
+            return "Ghost Ship";
+        case 0x34:
+            return "Northern Seabed";
+        case 0x3E:
+        case 0x3F:
+        case 0x45:
+            return "Mountain of Souls";
+        case 0x41:
+        case 0x42:
+        case 0x44:
+            return "Lune";
+        case 0x46:
+        case 0x47:
+            return "Laynole";
+        case 0x56:
+        case 0x57:
+            return "Leo`s Lab Basement";
+        case 0x58:
+        case 0x59:
+            return "Leo`s Lab Power Plant";
+        case 0x5B:
+            return "Model Town 1";
+        case 0x5C:
+            return "Model Town 2";
+        case 0x66:
+        case 0x67:
+        case 0x68:
+            return "Magridd Castle\rBasement";
+        case 0x6A:
+        case 0x6B:
+        case 0x6C:
+            return "Magridd Castle\rLeft Tower";
+        case 0x6D:
+        case 0x6E:
+        case 0x6F:
+        case 0x72:
+            return "Magridd Castle\rRight Tower";
+        default:
+            /* Should not happen */
+            return "";
+        }
+    };
+
+
+
 
     static int PickEndTextCode(int NPCItemIndex) {
         int EndTextCode = TEXT_ENDTYPE_44AA;
@@ -612,6 +824,54 @@ namespace ROMUpdate {
         ROMFile.seekp(0x1989A, ios::beg);
         TEXT_WriteByte(0x10);
         TEXT_WriteString("Hello...");
+
+        /* Gourmet Goat's clue */
+        /* First, decide which item the clue will be about */
+        int RandomInt = Random::RandomInteger(3);
+        int ClueItem, ItemIndex;
+        switch (RandomInt) {
+        case 0:
+            ClueItem = SOUL_BLADE;
+            break;
+        case 1:
+            ClueItem = SOUL_ARMOR;
+            break;
+        default:
+            ClueItem = PHOENIX;
+            break;
+        }
+        /* Now find where this item is */
+        for (ItemIndex=0; ItemIndex<NUMBER_OF_ITEMS; ItemIndex++) {
+            if (RandomizedItemList[ItemIndex].Contents == ClueItem) break;
+        }
+        /* Update text */
+        ROMFile.seekp(0x19D74, ios::beg);
+        TEXT_WriteString("If you give me food,\rI will tell you\rwhere ");
+        TEXT_YellowStyle;
+        TEXT_WriteString(ItemNameList[ClueItem].c_str());
+        TEXT_EndStyle;
+        TEXT_WriteString(" is!");
+        TEXT_EndText(TEXT_ENDTYPE_88B9);
+        ROMFile.seekp(0x19DCB, ios::beg);
+        TEXT_WriteString("You`ve got food!\rwill you give it\rto me?");
+        TEXT_WriteByte(0x0C); /* Question prompt */
+        ROMFile.seekp(0x19E0E, ios::beg);
+        TEXT_WriteByte(0x10); /* Start new textbox */
+        TEXT_YellowStyle;
+        TEXT_WriteString(ItemNameList[ClueItem].c_str());
+        TEXT_EndStyle;
+        TEXT_WriteString(" is\r");
+        if (ItemIndex < NUMBER_OF_CHESTS) {
+            TEXT_WriteString("in a chest in\r");
+        }
+        else {
+            TEXT_WriteString("held by\r");
+        }
+        TEXT_YellowStyle;
+        TEXT_WriteString(ItemLocations[ItemIndex].c_str());
+        TEXT_EndStyle;
+        TEXT_WriteString("!");
+        TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /* Village Chief */
         ROMFile.seekp(0x1A2C5, ios::beg);
@@ -982,6 +1242,12 @@ namespace ROMUpdate {
         TEXT_WriteString("I`ve got nothing\rfor you.");
         TEXT_WriteByte(0x11);
         TEXT_WriteByte(0x0C);
+
+        /* Airship Dock map arrangement hack:
+           add a tile to access the ship even if Dr. Leo is there */
+        ROMFile.seekp(0xD7E98, ios::beg);
+        TEXT_WriteByte(0x35); /* Replace a railing tile with a bridge tile */
+        TEXT_WriteByte(0xE5);
 
         /* St. Elles herb mermaid */
         ROMFile.seekp(0xF8305, ios::beg);
