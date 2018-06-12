@@ -91,7 +91,7 @@ namespace Map {
         RegionList[3].InsertGoal(5); /* Leo's Paintings Metal Enemies */
 
         /* Region 4 - Act 2 start, Lost Marshes + Water/Fire Shrines */
-        //RegionList[4].InsertElement(ITEM, ITEM_VILLAGE_CHIEF); Don't randomize Stones
+        RegionList[4].InsertElement(ITEM, ITEM_VILLAGE_CHIEF);
         RegionList[4].InsertElement(LAIR, NPC_BIRD);
         RegionList[4].InsertElement(LAIR, NPC_DOG);
         RegionList[4].InsertElement(LAIR, NPC_SQUIRREL_PSYCHO_SWORD);
@@ -167,7 +167,7 @@ namespace Map {
         RegionList[10].InsertElement(ITEM, 9);
 
         /* Region 11 - Act 3 start, Southerta */
-        //RegionList[11].InsertElement(ITEM, ITEM_GREENWOODS_GUARDIAN); Don't randomize Stones
+        RegionList[11].InsertElement(ITEM, ITEM_GREENWOODS_GUARDIAN);
         RegionList[11].InsertElement(LAIR, NPC_DOLPHIN2);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID4);
         RegionList[11].InsertElement(LAIR, NPC_MERMAID5);
@@ -188,7 +188,7 @@ namespace Map {
         RegionList[13].InsertGoal(16); /* Blester */
 
         /* Region 14 - Act 4 start, Mountain of Souls */
-        //RegionList[14].InsertElement(ITEM, ITEM_MERMAID_QUEEN); Don't randomize Stones
+        RegionList[14].InsertElement(ITEM, ITEM_MERMAID_QUEEN);
         RegionList[14].InsertElement(LAIR, NPC_GIRL);
         RegionList[14].InsertElement(LAIR, NPC_GRANDPA);
         RegionList[14].InsertElement(LAIR, NPC_MUSHROOM);
@@ -301,7 +301,7 @@ namespace Map {
         RegionList[25].InsertGoal(39); /* Last lair of Lune */
 
         /* Region 26 - Act 5 start, first lairs of Leo's Lab Basement */
-        //RegionList[26].InsertElement(ITEM, ITEM_NOME); Don't randomize Stones
+        RegionList[26].InsertElement(ITEM, ITEM_NOME);
         RegionList[26].InsertElement(LAIR, NPC_PLANT);
         RegionList[26].InsertElement(LAIR, NPC_CAT);
         RegionList[26].InsertElement(LAIR, NPC_GREAT_DOOR_ZANTETSU_SWORD);
@@ -363,7 +363,7 @@ namespace Map {
         RegionList[32].InsertElement(ITEM, ITEM_CRYSTAL_POWER_PLANT);
 
         /* Region 33 - Act 6 start, first lairs of Magridd Castle Basement */
-        //RegionList[33].InsertElement(ITEM, ITEM_MARIE); Don't randomize Stones
+        RegionList[33].InsertElement(ITEM, ITEM_MARIE);
         RegionList[33].InsertElement(LAIR, NPC_SOLDIER);
         RegionList[33].InsertElement(ITEM, 50);
         RegionList[33].InsertElement(ITEM, 51);
@@ -419,7 +419,7 @@ namespace Map {
         RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 37 - Act 7 start, World of Evil */
-        //RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD); Don't randomize Stones
+        RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD);
         RegionList[37].InsertElement(ITEM, 60);
         RegionList[37].InsertElement(ITEM, 61);
         RegionList[37].InsertElement(ITEM, CHEST_RED_HOT_BALL);
@@ -742,6 +742,12 @@ namespace Map {
 
         /* Goal 36 - King Magridd ==> Act 7 */
         GoalList[36].InsertElement(LAIR, NPC_KING_MAGRIDD);
+        GoalList[36].InsertElement(ITEM, ITEM_VILLAGE_CHIEF);
+        GoalList[36].InsertElement(ITEM, ITEM_GREENWOODS_GUARDIAN);
+        GoalList[36].InsertElement(ITEM, ITEM_MERMAID_QUEEN);
+        GoalList[36].InsertElement(ITEM, ITEM_NOME);
+        GoalList[36].InsertElement(ITEM, ITEM_MARIE);
+        GoalList[36].InsertElement(ITEM, ITEM_KING_MAGRIDD);
         GoalList[36].Target = 37;
 
         /* Goal 37 - Dr Leo + Queen Magridd cutscene */
@@ -1005,7 +1011,6 @@ namespace Map {
 
     void GetNonKeyNPCList(vector<int> &NonKeyNPCList) {
         NonKeyNPCList.push_back(NPC_TULIP);
-        //NonKeyNPCList.push_back(NPC_LISA); /* Adding Lisa here after removing Goal 4 */
         NonKeyNPCList.push_back(NPC_TULIP2);
         NonKeyNPCList.push_back(NPC_GOAT);
         NonKeyNPCList.push_back(NPC_TULIP3);

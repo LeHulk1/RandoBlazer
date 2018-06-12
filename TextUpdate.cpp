@@ -873,6 +873,10 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Village Chief */
+        ROMFile.seekp(0x1A0C0, ios::beg);
+        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
+        ROMFile.seekp(0x1A127, ios::beg);
+        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
         ROMFile.seekp(0x1A2C5, ios::beg);
         TEXT_WriteString("Good job!");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
