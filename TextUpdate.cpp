@@ -86,14 +86,16 @@
         TEXT_WriteByte(0xC5); \
         TEXT_WriteByte(0xEE); \
     break;                    \
-    case TEXT_ENDTYPE_12:     \
-        TEXT_WriteByte(0x12); \
-        TEXT_WriteByte(0x08); \
-        TEXT_WriteByte(0x08); \
-        TEXT_WriteByte(0x04); \
-        TEXT_WriteByte(0x0C); \
-        break;                \
     }                         \
+}
+
+#define TEXT_EndText12    \
+{                         \
+    TEXT_WriteByte(0x12); \
+    TEXT_WriteByte(0x08); \
+    TEXT_WriteByte(0x08); \
+    TEXT_WriteByte(0x04); \
+    TEXT_WriteByte(0x0C); \
 }
 
 #define TEXT_HeroFound    \
@@ -792,20 +794,22 @@ namespace ROMUpdate {
         ROMFile.seekp(0x4EF9, ios::beg);
         Text = Deathtoll1TextList[Random::RandomInteger(NB_DEATHTOLL_1_TEXTS)].c_str();
         TEXT_WriteString(Text);
-        TEXT_EndText(TEXT_ENDTYPE_12);
+        TEXT_EndText12;
         /* Text after first phase */
         ROMFile.seekp(0x4FB7, ios::beg);
         Text = Deathtoll2TextList[Random::RandomInteger(NB_DEATHTOLL_2_TEXTS)].c_str();
-        TEXT_EndText(TEXT_ENDTYPE_12);
+        TEXT_WriteString(Text);
+        TEXT_EndText12;
         /* Victory text */
         ROMFile.seekp(0x5388, ios::beg);
         TEXT_WriteByte(0x0B); /* Change text address */
         /* Note: there seems to be slightly different text here... diff between Any% and 100%??? */
-        ROMFile.seekp(0x53CC, ios::beg);
-        TEXT_EndText(TEXT_ENDTYPE_12);
+        ROMFile.seekp(0x53C7, ios::beg);
+        TEXT_EndText12;
         ROMFile.seekp(0x540C, ios::beg);
         Text = VictoryTextList[Random::RandomInteger(NB_VICTORY_TEXTS)].c_str();
-        TEXT_EndText(TEXT_ENDTYPE_12);
+        TEXT_WriteString(Text);
+        TEXT_EndText12;
         /* DBG!!! Put Deathtoll HP to 1 */ROMFile.seekp(0x997E, ios::beg);TEXT_WriteByte(0x01);
 
         /*** Master's text when hero dies */
