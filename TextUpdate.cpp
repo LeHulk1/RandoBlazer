@@ -12,6 +12,9 @@
 #define NB_NPC_TO_DISABLE_ADDRESSES 27
 #define NB_MASTER_INTRO_TEXTS 25
 #define NB_MASTER_DEATH_TEXTS 13
+#define NB_DEATHTOLL_1_TEXTS   8
+#define NB_DEATHTOLL_2_TEXTS   8
+#define NB_VICTORY_TEXTS      13
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
@@ -21,6 +24,7 @@
 #define TEXT_ENDTYPE_DFF0 5
 #define TEXT_ENDTYPE_44AA 6
 #define TEXT_ENDTYPE_C5EE 7
+#define TEXT_ENDTYPE_12   8
 
 
 
@@ -82,6 +86,13 @@
         TEXT_WriteByte(0xC5); \
         TEXT_WriteByte(0xEE); \
     break;                    \
+    case TEXT_ENDTYPE_12:     \
+        TEXT_WriteByte(0x12); \
+        TEXT_WriteByte(0x08); \
+        TEXT_WriteByte(0x08); \
+        TEXT_WriteByte(0x04); \
+        TEXT_WriteByte(0x0C); \
+        break;                \
     }                         \
 }
 
@@ -472,6 +483,44 @@ namespace ROMUpdate {
         "Don`t give up.\rYou got this!"
     };
 
+    static string Deathtoll1TextList[NB_DEATHTOLL_1_TEXTS] = {
+        "Peekaboo!",
+        "Guess who!",
+        "Your adventure\rends here.",
+        "Time for an\repic battle!",
+        "In case you haven`t\rguessed, I`m the\rfinal boss.",
+        "How did you make it\rhere? This seed was\rsupposed to be\rsuper trolly!",
+        "Surpriiiiise!",
+        "Incoming the game`s\rhardest fight."
+    };
+
+    static string Deathtoll2TextList[NB_DEATHTOLL_2_TEXTS] = {
+        "This is not even\rmy final form!",
+        "All right.\rNow this is\rserious business.",
+        "I hope you didn`t\rforget Phoenix!",
+        "Okay, time for an\ractually challenging\rbattle.",
+        "Time to die!",
+        "You didn`t think\rit was that easy,\rdid you?",
+        "Loading Deathtoll.exe\r   .......Complete!",
+        "Don`t tell me\ryou also got the\rSuper Bracelet!?"
+    };
+
+    static string VictoryTextList[NB_VICTORY_TEXTS] = {
+        "\r         G  G",
+        "Thank you Mario.\rBut our princess\ris in another castle!",
+        "Congratulations!",
+        "Woohoo!!\rYou made it!!!",
+        "Thanks a lot for\rplaying this\rrandomizer.",
+        "Hope you enjoyed\rthis seed!",
+        "A winner is you!",
+        "Dang, I really\rthought this seed was\rtoo trolly for you.",
+        "  ...and this is\rthe end of our story.",
+        "The last Metroid\ris in captivity.\rThe galaxy is\rat peace.",
+        "Well done!\rNow try Hard mode.\r\r   ...just kidding!",
+        "I`m sorry for\rthis seed...",
+        "Hi YouTube!"
+    };
+
     static string ItemLocations[NUMBER_OF_ITEMS] =
         {"Trial Room",
          "Grass Valley\rsecret cave",
@@ -738,6 +787,27 @@ namespace ROMUpdate {
             TEXT_WriteByte(0x6B); /* End code byte */
         }
 
+        /*** Deathtoll's text */
+        /* First text */
+        ROMFile.seekp(0x4EF9, ios::beg);
+        Text = Deathtoll1TextList[Random::RandomInteger(NB_DEATHTOLL_1_TEXTS)].c_str();
+        TEXT_WriteString(Text);
+        TEXT_EndText(TEXT_ENDTYPE_12);
+        /* Text after first phase */
+        ROMFile.seekp(0x4FB7, ios::beg);
+        Text = Deathtoll2TextList[Random::RandomInteger(NB_DEATHTOLL_2_TEXTS)].c_str();
+        TEXT_EndText(TEXT_ENDTYPE_12);
+        /* Victory text */
+        ROMFile.seekp(0x5388, ios::beg);
+        TEXT_WriteByte(0x0B); /* Change text address */
+        /* Note: there seems to be slightly different text here... diff between Any% and 100%??? */
+        ROMFile.seekp(0x53CC, ios::beg);
+        TEXT_EndText(TEXT_ENDTYPE_12);
+        ROMFile.seekp(0x540C, ios::beg);
+        Text = VictoryTextList[Random::RandomInteger(NB_VICTORY_TEXTS)].c_str();
+        TEXT_EndText(TEXT_ENDTYPE_12);
+        /* DBG!!! Put Deathtoll HP to 1 */ROMFile.seekp(0x997E, ios::beg);TEXT_WriteByte(0x01);
+
         /*** Master's text when hero dies */
         ROMFile.seekp(0x786B, ios::beg);
         Text = MasterDeathTextList[Random::RandomInteger(NB_MASTER_DEATH_TEXTS)].c_str();
@@ -874,12 +944,27 @@ namespace ROMUpdate {
 
         /*** Village Chief */
         ROMFile.seekp(0x1A0C0, ios::beg);
-        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
-        ROMFile.seekp(0x1A127, ios::beg);
-        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
-        ROMFile.seekp(0x1A2C5, ios::beg);
-        TEXT_WriteString("Good job!");
-        TEXT_EndText(TEXT_ENDTYPE_88B9);
+        TEXT_WriteByte(0x00); /* "Impossible" Item ID to make sure this condition is never fulfilled */
+//        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
+//        ROMFile.seekp(0x1A127, ios::beg);
+//        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
+
+        /* Hack to open up Act2 regardless of what item Village Chief gives */
+        ROMFile.seekp(0x1A123, ios::beg);
+        TEXT_WriteByte(0x33); /* Change pointer */
+        ROMFile.seekp(0x1A125, ios::beg);
+        Byte = RandomizedItemList[ITEM_VILLAGE_CHIEF].Contents; /* Get the item */
+        unsigned char VillageChiefBuffer[19] = {
+            0x02, 0x01, 0x91, 0xA1,         /* Text "Gives item" */
+            0x00, 0x5E,
+            0x02, 0x0A, Byte,               /* Actually give the item */
+            0x02, 0x09, 0x00, 0x9B, 0x6B,   /* Set flag: item has been given */
+            0x02, 0x01, 0x72, 0xA2, 0x6B};  /* Text when item is already given */
+        ROMFile.write((char*)(&VillageChiefBuffer), 19);
+
+//        ROMFile.seekp(0x1A2C5, ios::beg);
+//        TEXT_WriteString("Good job!");
+//        TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Lisa's dream */
         ROMFile.seekp(0x1A522, ios::beg);
@@ -1064,7 +1149,7 @@ namespace ROMUpdate {
             0x02, 0x10, 0x00, 0x07, 0x01, 0x70, 0x00, 0x50, 0x00, 0x6B};  /* Teleport player away from center tile */
         ROMFile.write((char*)(&MasterBuffer2), 14);
         TEXT_WriteByte(0x10); /* Open textbox */
-        TEXT_WriteString("Whoa there Bucko.\rAre you sure you`ve\rgot all 6 stones?");
+        TEXT_WriteString("Whoa there, Bucko.\rAre you sure you`ve\rgot all 6 stones?");
         TEXT_EndText(TEXT_ENDTYPE_C5EE);
 
         /*** Mountain King */

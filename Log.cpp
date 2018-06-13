@@ -53,7 +53,7 @@ namespace Log {
          NPC_DEER_MAGIC_BELL,
          NPC_BIRD_RED_HOT_MIRROR,
          NPC_GREENWOODS_GUARDIAN};
-    static int Act3NPCs[16] =
+    static int Act3NPCs[15] =
         {NPC_MERMAID_BUBBLE_ARMOR,
          NPC_MERMAID_PEARL,
          NPC_DOLPHIN_PEARL,
@@ -66,7 +66,6 @@ namespace Log {
          NPC_DOLPHIN_SECRET_CAVE,
          NPC_DOLPHIN2,
          NPC_MERMAID,
-         NPC_MERMAID_TEARS,
          NPC_MERMAID_MAGIC_FLARE,
          NPC_MERMAID_RED_HOT_STICK,
          NPC_MERMAID_QUEEN};
@@ -729,7 +728,7 @@ namespace Log {
         LogFile << endl;
 
         LogFile << "Act 3: St Elles" << endl;
-        for (NPCIndex = 0; NPCIndex < 16; NPCIndex++) {
+        for (NPCIndex = 0; NPCIndex < 15; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act3NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act3NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act3NPCs[NPCIndex]]) << endl;
