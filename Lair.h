@@ -131,7 +131,7 @@ public:
     unsigned char NbEnemies;                        /* 13 */
     unsigned char SpawnRate;                        /* 14 */
     unsigned char Enemy;                            /* 15 */
-    unsigned char UpsideDownFlag;                   /* 17 */
+    unsigned char Orientation;                      /* 17 */
 };
 
 

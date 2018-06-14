@@ -107,7 +107,6 @@ namespace Log {
         {NPC_SINGER_CONCERT_HALL,
          NPC_SOLDIER_PLATINUM_CARD,
          NPC_SOLDIER_LEFT_TOWER,
-         NPC_QUEEN_MAGRIDD,
          NPC_SOLDIER_RIGHT_TOWER,
          NPC_SOLDIER_CASTLE,
          NPC_SOLDIER_WITH_LEO,
@@ -115,6 +114,7 @@ namespace Log {
          NPC_DR_LEO,
          NPC_SOLDIER_ELEMENTAL_MAIL,
          NPC_MAID_HERB,
+         NPC_QUEEN_MAGRIDD,
          NPC_KING_MAGRIDD};
 
     static int LoggedItems[62] =
@@ -563,8 +563,6 @@ namespace Log {
             return "Soldier (has Platinum Card)";
         case NPC_SOLDIER_LEFT_TOWER:
             return "Soldier (guarding Left Tower)";
-        case NPC_QUEEN_MAGRIDD:
-            return "Queen Magridd (gives VIP Card)";
         case NPC_SOLDIER_RIGHT_TOWER:
             return "Soldier (guarding Right Tower)";
         case NPC_SOLDIER_CASTLE:
@@ -579,6 +577,8 @@ namespace Log {
             return "Sleeping Soldier (gives Elemental Mail)";
         case NPC_MAID_HERB:
             return "Maid (gives Medical Herbs)";
+        case NPC_QUEEN_MAGRIDD:
+            return "Queen Magridd (gives VIP Card)";
         case NPC_KING_MAGRIDD:
             return "King Magridd (leads to Act 7)";
         default:
@@ -744,7 +744,7 @@ namespace Log {
         LogFile << endl;
 
         LogFile << "Act 5: Leo's Lab" << endl;
-        for (NPCIndex = 0; NPCIndex < 17; NPCIndex++) {
+        for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act5NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act5NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act5NPCs[NPCIndex]]) << endl;

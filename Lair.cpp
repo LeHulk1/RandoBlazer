@@ -11,7 +11,7 @@ Lair::Lair() {
     Enemy           = NO_ENEMY;
     NbEnemies       = 0;
     SpawnRate       = 0;
-    UpsideDownFlag  = 0;
+    Orientation     = 0;
 }
 
 Lair::~Lair() {}
@@ -27,7 +27,7 @@ Lair& Lair::operator= (const Lair& OtherLair) {
         Enemy           = OtherLair.Enemy;
         NbEnemies       = OtherLair.NbEnemies;
         SpawnRate       = OtherLair.SpawnRate;
-        UpsideDownFlag  = OtherLair.UpsideDownFlag;
+        Orientation     = OtherLair.Orientation;
     }
     return *this;
 }

@@ -407,7 +407,7 @@ namespace ROMData {
             ROMFile.read((char*)(&(LairList[i].SpawnRate)), 1);
             ROMFile.read((char*)(&(LairList[i].Enemy)), 1);
             ROMFile.seekg(1, ios::cur);
-            ROMFile.read((char*)(&(LairList[i].UpsideDownFlag)), 1);
+            ROMFile.read((char*)(&(LairList[i].Orientation)), 1);
             ROMFile.seekg(8, ios::cur);
         }
     }

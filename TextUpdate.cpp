@@ -10,11 +10,11 @@
 #include <vector>
 
 #define NB_NPC_TO_DISABLE_ADDRESSES 27
-#define NB_MASTER_INTRO_TEXTS 25
+#define NB_MASTER_INTRO_TEXTS 26
 #define NB_MASTER_DEATH_TEXTS 13
-#define NB_DEATHTOLL_1_TEXTS   8
-#define NB_DEATHTOLL_2_TEXTS   8
-#define NB_VICTORY_TEXTS      13
+#define NB_DEATHTOLL_1_TEXTS  10
+#define NB_DEATHTOLL_2_TEXTS  10
+#define NB_VICTORY_TEXTS      18
 
 #define TEXT_ENDTYPE_52FA 0
 #define TEXT_ENDTYPE_88B9 1
@@ -466,7 +466,8 @@ namespace ROMUpdate {
         "Let`s go!\rYou can do it!",
         "My PB on this\rseed is 35:37.\rBlindfolded.",
         "Help me,\rObi-Wan Kenobi.\rYou`re my only hope.",
-        "Phoenix in hype cave.\rI`m calling it."
+        "Phoenix in hype cave.\rI`m calling it.",
+        "Any resemblance with\rActRaiser is purely\rcoincidental."
     };
 
     static string MasterDeathTextList[NB_MASTER_DEATH_TEXTS] = {
@@ -493,7 +494,9 @@ namespace ROMUpdate {
         "In case you haven`t\rguessed, I`m the\rfinal boss.",
         "How did you make it\rhere? This seed was\rsupposed to be\rsuper trolly!",
         "Surpriiiiise!",
-        "Incoming the game`s\rhardest fight."
+        "Incoming the game`s\rhardest fight.",
+        "So we meet again,\rMr. Bond.",
+        "I`ll put an end\rto your misery."
     };
 
     static string Deathtoll2TextList[NB_DEATHTOLL_2_TEXTS] = {
@@ -504,7 +507,9 @@ namespace ROMUpdate {
         "Time to die!",
         "You didn`t think\rit was that easy,\rdid you?",
         "Loading Deathtoll.exe\r   .......Complete!",
-        "Don`t tell me\ryou also got the\rSuper Bracelet!?"
+        "Don`t tell me\ryou also got the\rSuper Bracelet!?",
+        "And now behold...\rmy true power!",
+        "Dang, I hope my next\rphase is better..."
     };
 
     static string VictoryTextList[NB_VICTORY_TEXTS] = {
@@ -520,7 +525,12 @@ namespace ROMUpdate {
         "The last Metroid\ris in captivity.\rThe galaxy is\rat peace.",
         "Well done!\rNow try Hard mode.\r\r   ...just kidding!",
         "I`m sorry for\rthis seed...",
-        "Hi YouTube!"
+        "Hi YouTube!",
+        "This is the end.\rMy only friend,\rthe end.",
+        "You are a true hero!",
+        "Hyrule is saved!\r\r ...Wait, wrong game.",
+        "That`s all folks!",
+        "Well done!\rBut the next seed\rwon`t be that easy!"
     };
 
     static string ItemLocations[NUMBER_OF_ITEMS] =
@@ -810,7 +820,8 @@ namespace ROMUpdate {
         Text = VictoryTextList[Random::RandomInteger(NB_VICTORY_TEXTS)].c_str();
         TEXT_WriteString(Text);
         TEXT_EndText12;
-        /* DBG!!! Put Deathtoll HP to 1 */ROMFile.seekp(0x997E, ios::beg);TEXT_WriteByte(0x01);
+        /* DEBUG!!! Put Deathtoll's HP to 1 */
+//        ROMFile.seekp(0x997E, ios::beg);TEXT_WriteByte(0x01);
 
         /*** Master's text when hero dies */
         ROMFile.seekp(0x786B, ios::beg);
@@ -1335,11 +1346,20 @@ namespace ROMUpdate {
         TEXT_WriteString("? ");
         TEXT_WriteByte(0x0C); /* Question prompt */
 
-        /*** Soldier with Dr. Leo: clue to Leo's location */
+        /*** Soldier with Dr. Leo */
+        /* Clue to Leo's location */
         ROMFile.seekp(0x25BB4, ios::beg);
         TEXT_WriteString("Dr.Leo must be in\r");
         TEXT_YellowStyle;
         TEXT_WriteString(GetRegionName(RandomizedLairList[NPC_DR_LEO]).c_str());
+        TEXT_EndStyle;
+        TEXT_WriteString("!");
+        TEXT_EndText(TEXT_ENDTYPE_DFF0);
+        /* Clue to other soldier's location */
+        ROMFile.seekp(0x25BEC, ios::beg);
+        TEXT_WriteString("My friend is in\r");
+        TEXT_YellowStyle;
+        TEXT_WriteString(GetRegionName(RandomizedLairList[NPC_SOLDIER_WITH_LEO]).c_str());
         TEXT_EndStyle;
         TEXT_WriteString("!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);

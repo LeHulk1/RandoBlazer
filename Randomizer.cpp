@@ -22,7 +22,7 @@
 #define SPAWN_RATE_MAX 0x20
 
 //#define DEBUG
-#define DEBUG_NO_ENEMIES
+//#define DEBUG_NO_ENEMIES
 //#define DONT_RANDOMIZE
 
 
@@ -78,6 +78,23 @@ namespace Randomizer {
     static int WorldOfEvilEnemiesNoBrick[2] =
         {ACT7_DEMON, ACT7_FLY};
 
+    static unsigned char OrientationList[4] =
+        {0x00, 0x40, 0x80, 0xC0};
+
+    static bool CanRandomizeOrientation(int Act, unsigned char Enemy) {
+        return ( (Act == ACT_2 && Enemy == ACT2_WATER_DRAGON) ||
+                 (Act == ACT_4 && Enemy == ACT4_RAT) ||
+                 (Act == ACT_4 && Enemy == ACT4_SNOWBALL) ||
+                 (Act == ACT_5 && Enemy == ACT5_METAL_MOUSE) ||
+                 (Act == ACT_5 && Enemy == ACT5_ROBOT) ||
+                 (Act == ACT_5 && Enemy == ACT5_WORM) ||
+                 (Act == ACT_5 && Enemy == ACT5_TOWER) ||
+                 (Act == ACT_6 && Enemy == ACT6_SKULL) ||
+                 (Act == ACT_6 && Enemy == ACT6_SNAKE) ||
+                 (Act == ACT_6 && Enemy == ACT6_SKULL2) ||
+                 (Act == ACT_7 && Enemy == ACT7_BRICK) );
+    }
+
     void RandomizeLairEnemies(Lair &Lair) {
 
         /* Don't randomize enemies from 2-up-2-down lairs, because upside-down enemies can sometimes get away... */
@@ -91,7 +108,7 @@ namespace Randomizer {
         }
 
         int Enemy = Lair.Enemy;
-        int OriginalEnemy = Enemy;
+        //int OriginalEnemy = Enemy;
 
         switch (Lair.Act) {
         case ACT_1:
@@ -203,9 +220,14 @@ namespace Randomizer {
         /* Update enemy */
         Lair.Enemy = Enemy;
 
-        /* If the enemy has changed, reset the upside-down flag */
-        if (Enemy != OriginalEnemy) {
-            Lair.UpsideDownFlag = 0;
+        /* If the enemy has changed, reset its orientation flag */
+//        if (Enemy != OriginalEnemy) {
+//            Lair.Orientation = 0;
+//        }
+
+        /* Randomize orientation if possible */
+        if (CanRandomizeOrientation(Lair.Act, Enemy)) {
+            Lair.Orientation = OrientationList[RandomInteger(4)];
         }
     }
 
@@ -402,9 +424,14 @@ namespace Randomizer {
                 break;
             }
 
-            if (Enemy != RandomizedSpriteList[SpriteIndex].Enemy) {
-                /* Reset orientation if the enemy type has changed */
-                RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
+//            if (Enemy != RandomizedSpriteList[SpriteIndex].Enemy) {
+//                /* Reset orientation if the enemy type has changed */
+//                RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
+//            }
+
+            /* Randomize orientation if possible */
+            if (CanRandomizeOrientation(RandomizedSpriteList[SpriteIndex].Act, Enemy)) {
+                RandomizedSpriteList[SpriteIndex].Orientation = OrientationList[RandomInteger(4)] + 1;
             }
 
             RandomizedSpriteList[SpriteIndex].Enemy = Enemy;
@@ -581,25 +608,7 @@ namespace Randomizer {
                         if (AvailableRevivingLairs.size() > 0) {
 
                             /* Choose one of the available reviving Monster Lairs and assign this NPC to it */
-
                             RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-
-//                            if ( (*ElementIterator).Index == NPC_MERMAID_STATUE_ROCKBIRD   ||
-//                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_DUREAN     ||
-//                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_BLESTER    ||
-//                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_GHOST_SHIP ||
-//                                 (*ElementIterator).Index == NPC_MERMAID_QUEEN ) {
-//                                /* First Mermaid Statue problem fix: make sure these NPCs can only be found in Lairs from Act 3 or later */
-//                                while ( (AvailableRevivingLairs[RevivingLairIndex] < NPC_DOLPHIN) ||
-//                                        (AvailableRevivingLairs[RevivingLairIndex] == NPC_MERMAID_STATUE_ROCKBIRD) ) {
-//                                    RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-//                                }
-//#ifdef DEBUG
-//                                cout << "Mermaid special Lair : " << (*ElementIterator).Index << " <-- "
-//                                    << AvailableRevivingLairs[RevivingLairIndex] << endl;
-//#endif
-//                            }
-
                             RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
 
 #ifdef DEBUG

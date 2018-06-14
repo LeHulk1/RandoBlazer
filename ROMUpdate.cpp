@@ -87,7 +87,7 @@ namespace ROMUpdate {
             ROMFile.write((char*)(&RandomizedLairList[i].SpawnRate), 1);
             ROMFile.write((char*)(&RandomizedLairList[i].Enemy), 1);
             ROMFile.seekp(1, ios::cur);
-            ROMFile.write((char*)(&RandomizedLairList[i].UpsideDownFlag), 1);
+            ROMFile.write((char*)(&RandomizedLairList[i].Orientation), 1);
             ROMFile.seekp(8, ios::cur);
         }
     }
