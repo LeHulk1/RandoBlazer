@@ -23,6 +23,7 @@
 
 //#define DEBUG
 //#define DEBUG_NO_ENEMIES
+#define DEBUG_TWO_ENEMIES
 //#define DONT_RANDOMIZE
 
 
@@ -229,6 +230,9 @@ namespace Randomizer {
         if (CanRandomizeOrientation(Lair.Act, Enemy)) {
             Lair.Orientation = OrientationList[RandomInteger(4)];
         }
+        else {
+            Lair.Orientation = 0;
+        }
     }
 
 
@@ -307,6 +311,11 @@ namespace Randomizer {
                 Lair.NbEnemies = RandomIntegerRange(NB_ENEMIES_MULTISPAWN_MIN, NB_ENEMIES_MULTISPAWN_MAX);
             }
         }
+
+#ifdef DEBUG_TWO_ENEMIES
+        if (Lair.NbEnemies > 2) Lair.NbEnemies = 2;
+        return;
+#endif
     }
 
 
@@ -432,6 +441,9 @@ namespace Randomizer {
             /* Randomize orientation if possible */
             if (CanRandomizeOrientation(RandomizedSpriteList[SpriteIndex].Act, Enemy)) {
                 RandomizedSpriteList[SpriteIndex].Orientation = OrientationList[RandomInteger(4)] + 1;
+            }
+            else {
+                RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
             }
 
             RandomizedSpriteList[SpriteIndex].Enemy = Enemy;
