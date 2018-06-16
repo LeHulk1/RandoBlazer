@@ -161,6 +161,7 @@ int main ( int argc, char** argv ) {
         cout << "Randomization failed!\n";
         return 1;
     }
+    cout << "Randomization succeeded in " << RandomizationTry + 1 << " tries.\n";
 
     /* Randomize monster lair contents: enemy types, lair types, number of enemies and spawn rates */
     Randomizer::RandomizeLairContents(RandomizedLairList);

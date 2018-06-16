@@ -23,7 +23,7 @@
 
 //#define DEBUG
 //#define DEBUG_NO_ENEMIES
-#define DEBUG_TWO_ENEMIES
+//#define DEBUG_TWO_ENEMIES
 //#define DONT_RANDOMIZE
 
 
@@ -334,6 +334,12 @@ namespace Randomizer {
     void RandomizeLairContents(vector<Lair> &LairList) {
 
         for (int LairIndex = 0; LairIndex < NUMBER_OF_LAIRS; LairIndex++) {
+
+            if (LairList[LairIndex].Enemy == 0 ||
+                LairList[LairIndex].Enemy == 0xFF) {
+                /* Skip empty lairs / lairs in dreams */
+                continue;
+            }
 
             /* Change Enemy Type */
             RandomizeLairEnemies(LairList[LairIndex]);
