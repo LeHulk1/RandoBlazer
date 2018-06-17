@@ -294,7 +294,7 @@ namespace ROMUpdate {
         0x19253, /* Tool shop owner's son Teddy */
         0x1983B, /* A Pass */
         0x19914, /* Tile in child's secret cave */
-        0x1A137, /* Village Chief */
+        0x1A12D, /* Village Chief - address modified */
         0x1A7E4, /* Magician (start of the game) */
         0x1AB78, /* Recovery Sword crystal */
         0x1AC26, /* Grass Valley secret room crystal */
