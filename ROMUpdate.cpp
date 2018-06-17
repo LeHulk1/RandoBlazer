@@ -13,7 +13,6 @@
 
 namespace ROMUpdate {
 
-
     void ROMUpdateTextAndItems(vector<Lair> RandomizedLairList,
                                vector<Item> RandomizedItemList,
                                fstream &ROMFile,

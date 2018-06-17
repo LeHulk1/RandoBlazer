@@ -1,7 +1,7 @@
 #include "Map.h"
 
 
-#define WEIGHT_CAP  5
+#define WEIGHT_CAP  7
 
 
 Element::Element(int NewType, int NewIndex) {

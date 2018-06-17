@@ -20,7 +20,7 @@
 #define SEED_SIZE            10
 #define MAX_NUMBER_OF_TRIES  5
 
-#define DONT_CREATE_SEED_FILE
+//#define DONT_CREATE_SEED_FILE
 
 
 
