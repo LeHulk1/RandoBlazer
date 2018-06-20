@@ -1,7 +1,7 @@
 #include "Map.h"
 
 
-#define WEIGHT_CAP  7
+#define WEIGHT_CAP  8
 
 
 Element::Element(int NewType, int NewIndex) {
@@ -164,7 +164,7 @@ namespace Map {
         RegionList[8].InsertElement(ITEM, ITEM_CRYSTAL_FIRE_SHRINE);
 
         /* Region 9 - Monmo's Treasure */
-        //RegionList[9].InsertElement(CHEST, 10);  WARNING: this chest can sometimes be already opened, let's take it out for now
+        RegionList[9].InsertElement(ITEM, 10);
 
         /* Region 10 - Ice Armor chest */
         RegionList[10].InsertElement(ITEM, 9);
