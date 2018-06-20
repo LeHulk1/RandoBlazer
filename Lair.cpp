@@ -84,3 +84,8 @@ bool Lair::MustNotRandomizeLairPosition() {
              (PositionData[0] == 0x56 && PositionData[1] == 0x2D && PositionData[2] == 0x31) ||
              (PositionData[0] == 0x58 && PositionData[1] == 0x37 && PositionData[2] == 0x34) );
 }
+
+bool Lair::MustNotBeUpwardsLairPosition() {
+    /* This lair cannot have enemies oriented upwards */
+    return (PositionData[0] == 0x1B && PositionData[1] == 0x25 && PositionData[2] == 0x05);
+}

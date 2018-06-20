@@ -445,7 +445,7 @@ namespace ROMUpdate {
         "420 Soul blaze it!",
         "I`m calling\rSoul Blade in its\rvanilla location.",
         "Good luck!\rYou`ll need it!",
-        "Are we on\rSpeedgaming yet?",
+        "Are we on\rSpeedGaming yet?",
         "This run is\rZantetsu-less until\rZantetsu.",
         "It`s show time!",
         "Dancing grandmas\r    HYPE!!!!    ",
@@ -853,13 +853,15 @@ namespace ROMUpdate {
         sprintf(SeedChr, "%10lu", Seed);
         TEXT_WriteString(SeedChr);
 
-        /*** Correct Magic Flare typo + Greenwood/Actinidia leaves */
+        /*** Correct Magic Flare typo + Greenwood/Actinidia leaves + "received" typo */
         ROMFile.seekp(0x150EC, ios::beg);
         TEXT_WriteString("re");
         ROMFile.seekp(0x1514C, ios::beg);
         TEXT_WriteString("G.Leaf");
         ROMFile.seekp(0x151B2, ios::beg);
         TEXT_WriteString("A.Leaf");
+        ROMFile.seekp(0x1621E, ios::beg);
+        TEXT_WriteString("ei");
 
         /*** Old Woman */
         ROMFile.seekp(0x18121, ios::beg);
@@ -960,9 +962,6 @@ namespace ROMUpdate {
         /*** Village Chief */
         ROMFile.seekp(0x1A0C0, ios::beg);
         TEXT_WriteByte(0x00); /* "Impossible" Item ID to make sure this condition is never fulfilled */
-//        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
-//        ROMFile.seekp(0x1A127, ios::beg);
-//        TEXT_WriteItemByte(ITEM_VILLAGE_CHIEF); /* change text condition */
 
         /* Hack to open up Act2 regardless of what item Village Chief gives */
         ROMFile.seekp(0x1A123, ios::beg);
@@ -976,10 +975,6 @@ namespace ROMUpdate {
             0x02, 0x09, 0x00, 0x9B, 0x6B,   /* Set flag: item has been given */
             0x02, 0x01, 0x72, 0xA2, 0x6B};  /* Text when item is already given */
         ROMFile.write((char*)(&VillageChiefBuffer), 19);
-
-//        ROMFile.seekp(0x1A2C5, ios::beg);
-//        TEXT_WriteString("Good job!");
-//        TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Lisa's dream */
         ROMFile.seekp(0x1A522, ios::beg);

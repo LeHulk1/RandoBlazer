@@ -80,7 +80,10 @@ namespace Randomizer {
         {ACT7_DEMON, ACT7_FLY};
 
     static unsigned char OrientationList[4] =
-        {0x00, 0x40, 0x80, 0xC0};
+        {0x00,  /* down */
+         0x40,  /* left */
+         0x80,  /* right */
+         0xC0}; /* up */
 
     static bool CanRandomizeOrientation(int Act, unsigned char Enemy) {
         return ( (Act == ACT_2 && Enemy == ACT2_WATER_DRAGON) ||
@@ -221,14 +224,15 @@ namespace Randomizer {
         /* Update enemy */
         Lair.Enemy = Enemy;
 
-        /* If the enemy has changed, reset its orientation flag */
-//        if (Enemy != OriginalEnemy) {
-//            Lair.Orientation = 0;
-//        }
-
         /* Randomize orientation if possible */
         if (CanRandomizeOrientation(Lair.Act, Enemy)) {
             Lair.Orientation = OrientationList[RandomInteger(4)];
+            if (Lair.MustNotBeUpwardsLairPosition() && Lair.Orientation == 0xC0) {
+                /* Re-roll until it is not upwards */
+                do {
+                    Lair.Orientation = OrientationList[RandomInteger(4)];
+                } while (Lair.Orientation == 0xC0);
+            }
         }
         else {
             Lair.Orientation = 0;
@@ -438,11 +442,6 @@ namespace Randomizer {
                 /* Should not happen! */
                 break;
             }
-
-//            if (Enemy != RandomizedSpriteList[SpriteIndex].Enemy) {
-//                /* Reset orientation if the enemy type has changed */
-//                RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
-//            }
 
             /* Randomize orientation if possible */
             if (CanRandomizeOrientation(RandomizedSpriteList[SpriteIndex].Act, Enemy)) {
