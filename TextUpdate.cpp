@@ -846,7 +846,7 @@ namespace ROMUpdate {
         ROMFile.seekp(0x13B2B, ios::beg);
         TEXT_WriteString("RANDO HYPE");
         ROMFile.seekp(0x13B3C, ios::beg);
-        TEXT_WriteString("RandoBlazer v0.5   ");
+        TEXT_WriteString("RandoBlazer v0.5a  ");
         ROMFile.seekp(0x143B9, ios::beg);
         TEXT_WriteString("Seed ");
         char SeedChr[11] = {'\0'};
@@ -1037,9 +1037,18 @@ namespace ROMUpdate {
         TEXT_WriteString("Tadaaa!\rTry to guess where\rI go.");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
+        /*** Fix for Mole's Ribbon chest */
+        ROMFile.seekp(0x1D9B3, ios::beg);
+        TEXT_WriteByte(0x00);
+
         /*** Shield Bracelet mole - change text condition */
         ROMFile.seekp(0x1DC07, ios::beg);
         TEXT_WriteItemByte(ITEM_MOLE_SHIELD_BRACELET);
+
+        /*** Monmo */
+        ROMFile.seekp(0x1DE76, ios::beg);
+        TEXT_WriteString("It is so bright\rout here. Please lead\rme to my home!");
+        TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Psycho Sword squirrel's revival text */
         ROMFile.seekp(0x1E01C, ios::beg);
@@ -1198,6 +1207,15 @@ namespace ROMUpdate {
         TEXT_WriteItemString(ITEM_BOY_MUSHROOM_SHOES);
         TEXT_EndStyle;
         TEXT_WriteString("\rfor you!");
+        TEXT_EndText(TEXT_ENDTYPE_1EA5);
+
+        /*** Lune gatekeeper */
+        ROMFile.seekp(0x21859, ios::beg);
+        TEXT_WriteString("Hold on, tiger.\rWhere is your\r");
+        TEXT_YellowStyle;
+        TEXT_WriteString("Lucky Blade ");
+        TEXT_EndStyle;
+        TEXT_WriteString("???");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
 
         /*** Act 4 crystal fairies: change text pointers */
@@ -1448,6 +1466,44 @@ namespace ROMUpdate {
         TEXT_WriteByte(0x11);
         TEXT_WriteByte(0x0C);
 
+        /*** Magridd Castle basement Crystal fairy - Clue on a sword */
+        /* First, decide which sword the clue will be about */
+        RandomInt = Random::RandomInteger(3);
+        switch (RandomInt) {
+        case 0:
+            ClueItem = LUCKY_BLADE;
+            break;
+        case 1:
+            ClueItem = ZANTETSU_SWORD;
+            break;
+        default:
+            ClueItem = SPIRIT_SWORD;
+            break;
+        }
+        /* Now find where this sword is */
+        for (ItemIndex=0; ItemIndex<NUMBER_OF_ITEMS; ItemIndex++) {
+            if (RandomizedItemList[ItemIndex].Contents == ClueItem) break;
+        }
+        /* Update text */
+        ROMFile.seekp(0x26EB9, ios::beg);
+        TEXT_WriteByte(0x91); /* "The " */
+        TEXT_YellowStyle;
+        TEXT_WriteString(ItemNameList[ClueItem].c_str());
+        TEXT_EndStyle;
+        TEXT_WriteString(" is\r");
+        if (ItemIndex < NUMBER_OF_CHESTS) {
+            TEXT_WriteString("in a chest in\r");
+        }
+        else {
+            TEXT_WriteString("held by\r");
+        }
+        TEXT_YellowStyle;
+        TEXT_WriteString(ItemLocations[ItemIndex].c_str());
+        TEXT_EndStyle;
+        TEXT_WriteString("!");
+        TEXT_WriteByte(0x11);
+        TEXT_WriteByte(0x0C);
+
         /*** Airship Dock map arrangement hack:
            add a tile to access the ship even if Dr. Leo is there */
         ROMFile.seekp(0xD7E98, ios::beg);
@@ -1497,6 +1553,10 @@ namespace ROMUpdate {
         TEXT_EndStyle;
         TEXT_WriteString("?");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
+
+        /*** Fix for Mermaid Tears chest */
+        ROMFile.seekp(0xF8CA4, ios::beg);
+        TEXT_WriteByte(0x00);
 
         /*** Magic Flare mermaid - change text condition */
         ROMFile.seekp(0xF9087, ios::beg);
