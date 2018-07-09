@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
+#include <conio.h>
 
 
 #define ROM_FILE_NAME      "Soul Blazer (U) [!].smc"
@@ -137,6 +138,9 @@ int main ( int argc, char** argv ) {
     |*  Randomize!  *|
     \****************/
 
+    cout << endl;
+    cout << "Starting randomization.\n";
+
     /* Initialize the final lists of randomized lairs, chests and sprites */
     vector<Lair> RandomizedLairList;
     vector<Item> RandomizedItemList;
@@ -158,10 +162,13 @@ int main ( int argc, char** argv ) {
         }
     }
     if (!RandomizationStatus) {
-        cout << "Randomization failed!\n";
+        cout << " . . . Randomization failed!\n";
         return 1;
     }
-    cout << "Randomization succeeded in " << RandomizationTry + 1 << " tries.\n";
+    cout << " . . . Randomization succeeded in " << RandomizationTry + 1
+         << (RandomizationTry == 0 ? " try.\n" : " tries.\n");
+
+    cout << "Starting ROM modification.\n";
 
     /* Randomize monster lair contents: enemy types, lair types, number of enemies and spawn rates */
     Randomizer::RandomizeLairContents(RandomizedLairList);
@@ -177,11 +184,25 @@ int main ( int argc, char** argv ) {
                                      ROMFile,
                                      Seed);
 
+    /* Close the ROM file */
+    ROMFile.close();
+    ROMFile.clear();
+
+    cout << " . . . ROM modification complete.\n";
+
+    cout << "Starting Spoiler Log creation.\n";
+
     /* Generate the Spoiler Log */
     Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
-    /* Close the ROM file */
-    ROMFile.close();
+    cout << " . . . Spoiler Log created.\n";
+
+    /* Ask user to press any key to close the program */
+    cout << endl;
+    cout << "RandoBlazer execution was successful!\n"
+         << "Press any key to exit the program.\n";
+
+    _getch();
 
     return 0;
 }

@@ -446,7 +446,7 @@ namespace ROMData {
         for (int Act = ACT_1; Act < 7; ++Act) {
             for (int AddressIndex = 0; AddressIndex < 63; ++AddressIndex) {
                 if (SpriteDataAddressList[Act][AddressIndex] == 0) {
-                    continue;
+                    break;
                 }
                 SpriteList[SpriteIndex].Address = SpriteDataAddressList[Act][AddressIndex];
                 SpriteList[SpriteIndex].Act = Act;
