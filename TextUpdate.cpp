@@ -846,7 +846,7 @@ namespace ROMUpdate {
         ROMFile.seekp(0x13B2B, ios::beg);
         TEXT_WriteString("RANDO HYPE");
         ROMFile.seekp(0x13B3C, ios::beg);
-        TEXT_WriteString("RandoBlazer v0.5a  ");
+        TEXT_WriteString("RandoBlazer v0.5b  ");
         ROMFile.seekp(0x143B9, ios::beg);
         TEXT_WriteString("Seed ");
         char SeedChr[11] = {'\0'};

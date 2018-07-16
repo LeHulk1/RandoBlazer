@@ -553,7 +553,7 @@ namespace Map {
 
         /* Region 73 - Magridd Castle + Emblem H tile */
         RegionList[73].InsertElement(ITEM, ITEM_EMBLEM_H);
-        RegionList[76].InsertGoal(36); /* King Magridd ==> Act 7 */
+        RegionList[73].InsertGoal(36); /* King Magridd ==> Act 7 */
 
         /* Region 74 - Super Bracelet tile */
         RegionList[74].InsertElement(ITEM, ITEM_SUPER_BRACELET);
