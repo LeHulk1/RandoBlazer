@@ -23,6 +23,7 @@
 
 //#define DEBUG
 //#define DEBUG_NO_ENEMIES
+//#define DEBUG_TWO_ENEMIES
 //#define DONT_RANDOMIZE
 
 
@@ -78,6 +79,26 @@ namespace Randomizer {
     static int WorldOfEvilEnemiesNoBrick[2] =
         {ACT7_DEMON, ACT7_FLY};
 
+    static unsigned char OrientationList[4] =
+        {0x00,  /* down */
+         0x40,  /* left */
+         0x80,  /* right */
+         0xC0}; /* up */
+
+    static bool CanRandomizeOrientation(int Act, unsigned char Enemy) {
+        return ( (Act == ACT_2 && Enemy == ACT2_WATER_DRAGON) ||
+                 (Act == ACT_4 && Enemy == ACT4_RAT) ||
+                 (Act == ACT_4 && Enemy == ACT4_SNOWBALL) ||
+                 (Act == ACT_5 && Enemy == ACT5_METAL_MOUSE) ||
+                 (Act == ACT_5 && Enemy == ACT5_ROBOT) ||
+                 (Act == ACT_5 && Enemy == ACT5_WORM) ||
+                 (Act == ACT_5 && Enemy == ACT5_TOWER) ||
+                 (Act == ACT_6 && Enemy == ACT6_SKULL) ||
+                 (Act == ACT_6 && Enemy == ACT6_SNAKE) ||
+                 (Act == ACT_6 && Enemy == ACT6_SKULL2) ||
+                 (Act == ACT_7 && Enemy == ACT7_BRICK) );
+    }
+
     void RandomizeLairEnemies(Lair &Lair) {
 
         /* Don't randomize enemies from 2-up-2-down lairs, because upside-down enemies can sometimes get away... */
@@ -91,7 +112,7 @@ namespace Randomizer {
         }
 
         int Enemy = Lair.Enemy;
-        int OriginalEnemy = Enemy;
+        //int OriginalEnemy = Enemy;
 
         switch (Lair.Act) {
         case ACT_1:
@@ -203,9 +224,18 @@ namespace Randomizer {
         /* Update enemy */
         Lair.Enemy = Enemy;
 
-        /* If the enemy has changed, reset the upside-down flag */
-        if (Enemy != OriginalEnemy) {
-            Lair.UpsideDownFlag = 0;
+        /* Randomize orientation if possible */
+        if (CanRandomizeOrientation(Lair.Act, Enemy)) {
+            Lair.Orientation = OrientationList[RandomInteger(4)];
+            if (Lair.MustNotBeUpwardsLairPosition() && Lair.Orientation == 0xC0) {
+                /* Re-roll until it is not upwards */
+                do {
+                    Lair.Orientation = OrientationList[RandomInteger(4)];
+                } while (Lair.Orientation == 0xC0);
+            }
+        }
+        else {
+            Lair.Orientation = 0;
         }
     }
 
@@ -285,6 +315,11 @@ namespace Randomizer {
                 Lair.NbEnemies = RandomIntegerRange(NB_ENEMIES_MULTISPAWN_MIN, NB_ENEMIES_MULTISPAWN_MAX);
             }
         }
+
+#ifdef DEBUG_TWO_ENEMIES
+        if (Lair.NbEnemies > 2) Lair.NbEnemies = 2;
+        return;
+#endif
     }
 
 
@@ -303,6 +338,12 @@ namespace Randomizer {
     void RandomizeLairContents(vector<Lair> &LairList) {
 
         for (int LairIndex = 0; LairIndex < NUMBER_OF_LAIRS; LairIndex++) {
+
+            if (LairList[LairIndex].Enemy == 0 ||
+                LairList[LairIndex].Enemy == 0xFF) {
+                /* Skip empty lairs / lairs in dreams */
+                continue;
+            }
 
             /* Change Enemy Type */
             RandomizeLairEnemies(LairList[LairIndex]);
@@ -402,8 +443,11 @@ namespace Randomizer {
                 break;
             }
 
-            if (Enemy != RandomizedSpriteList[SpriteIndex].Enemy) {
-                /* Reset orientation if the enemy type has changed */
+            /* Randomize orientation if possible */
+            if (CanRandomizeOrientation(RandomizedSpriteList[SpriteIndex].Act, Enemy)) {
+                RandomizedSpriteList[SpriteIndex].Orientation = OrientationList[RandomInteger(4)] + 1;
+            }
+            else {
                 RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
             }
 
@@ -495,8 +539,7 @@ namespace Randomizer {
         vector<Goal>   GoalList(NUMBER_OF_GOALS);
 
         /* Get the map and calculate the goal weights */
-        //Map::InitMap(RegionList, GoalList);
-        Map::InitMap_v2(RegionList, GoalList);
+        Map::InitMap(RegionList, GoalList);
         Map::CalculateWeights(RegionList, GoalList, GOAL_TO_FIRST_REGION);
 
 #ifdef DEBUG
@@ -582,25 +625,7 @@ namespace Randomizer {
                         if (AvailableRevivingLairs.size() > 0) {
 
                             /* Choose one of the available reviving Monster Lairs and assign this NPC to it */
-
                             RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-
-                            if ( (*ElementIterator).Index == NPC_MERMAID_STATUE_ROCKBIRD   ||
-                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_DUREAN     ||
-                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_BLESTER    ||
-                                 (*ElementIterator).Index == NPC_MERMAID_STATUE_GHOST_SHIP ||
-                                 (*ElementIterator).Index == NPC_MERMAID_QUEEN ) {
-                                /* First Mermaid Statue problem fix: make sure these NPCs can only be found in Lairs from Act 3 or later */
-                                while ( (AvailableRevivingLairs[RevivingLairIndex] < NPC_DOLPHIN) ||
-                                        (AvailableRevivingLairs[RevivingLairIndex] == NPC_MERMAID_STATUE_ROCKBIRD) ) {
-                                    RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-                                }
-#ifdef DEBUG
-                                cout << "Mermaid special Lair : " << (*ElementIterator).Index << " <-- "
-                                    << AvailableRevivingLairs[RevivingLairIndex] << endl;
-#endif
-                            }
-
                             RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
 
 #ifdef DEBUG
@@ -681,20 +706,18 @@ namespace Randomizer {
            We now need to place all the other elements (non-key items and NPCs). */
         vector<int> NonKeyNPCList;
         vector<int> NonKeyItemList;
-        //Map::GetNonKeyNPCList (NonKeyNPCList);
-        Map::GetNonKeyNPCList_v2 (NonKeyNPCList);
-        //Map::GetNonKeyItemList(NonKeyItemList);
-        Map::GetNonKeyItemList_v2(NonKeyItemList);
+        Map::GetNonKeyNPCList (NonKeyNPCList);
+        Map::GetNonKeyItemList(NonKeyItemList);
 
         /* Add the items/NPC locations which may not always be accessible,
            to make sure they still receive a non-key item/NPC. */
-        AvailableItems.push_back(CHEST_LEOS_BRUSH);
+        //AvailableItems.push_back(CHEST_LEOS_BRUSH);
         AvailableItems.push_back(17);
-        AvailableItems.push_back(10);
+        //AvailableItems.push_back(10);
         //AvailableItems.push_back(22);
         AvailableItems.push_back(ITEM_QUEEN_MAGRIDD);
-        AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
-        AvailableRevivingLairs.push_back(NPC_OLD_MAN);
+        //AvailableItems.push_back(ITEM_SOLDIER_PLATINUM_CARD);
+        //AvailableRevivingLairs.push_back(NPC_OLD_MAN);
 
 #ifdef DEBUG
         cout << AvailableRevivingLairs.size() << " available Reviving Lairs, " << NonKeyNPCList.size() << " in NPC list.\n";

@@ -53,7 +53,7 @@ namespace Log {
          NPC_DEER_MAGIC_BELL,
          NPC_BIRD_RED_HOT_MIRROR,
          NPC_GREENWOODS_GUARDIAN};
-    static int Act3NPCs[16] =
+    static int Act3NPCs[15] =
         {NPC_MERMAID_BUBBLE_ARMOR,
          NPC_MERMAID_PEARL,
          NPC_DOLPHIN_PEARL,
@@ -66,7 +66,6 @@ namespace Log {
          NPC_DOLPHIN_SECRET_CAVE,
          NPC_DOLPHIN2,
          NPC_MERMAID,
-         NPC_MERMAID_TEARS,
          NPC_MERMAID_MAGIC_FLARE,
          NPC_MERMAID_RED_HOT_STICK,
          NPC_MERMAID_QUEEN};
@@ -85,7 +84,7 @@ namespace Log {
          NPC_DANCING_GRANDMA2,
          NPC_NOME,
          NPC_MOUNTAIN_KING};
-    static int Act5NPCs[17] =
+    static int Act5NPCs[18] =
         {NPC_GREAT_DOOR_ZANTETSU_SWORD,
          NPC_STEPS_UPSTAIRS,
          NPC_GREAT_DOOR_MODEL_TOWNS,
@@ -102,12 +101,12 @@ namespace Log {
          NPC_CAT_DOOR_KEY,
          NPC_GREAT_DOOR,
          NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR,
+         NPC_CHEST_OF_DRAWERS2,
          NPC_MARIE};
     static int Act6NPCs[12] =
         {NPC_SINGER_CONCERT_HALL,
          NPC_SOLDIER_PLATINUM_CARD,
          NPC_SOLDIER_LEFT_TOWER,
-         NPC_QUEEN_MAGRIDD,
          NPC_SOLDIER_RIGHT_TOWER,
          NPC_SOLDIER_CASTLE,
          NPC_SOLDIER_WITH_LEO,
@@ -115,6 +114,7 @@ namespace Log {
          NPC_DR_LEO,
          NPC_SOLDIER_ELEMENTAL_MAIL,
          NPC_MAID_HERB,
+         NPC_QUEEN_MAGRIDD,
          NPC_KING_MAGRIDD};
 
     static int LoggedItems[62] =
@@ -346,6 +346,7 @@ namespace Log {
          "Medical Herb plant in Leo's Lab main room",
          "Leo's Cat's item",
          "Actinidia Leaf plant's item",
+         "Inside Chest of Drawers in the attic",
          "Marie's item",
          "Spark Bomb Mouse's item (in mouse hole)",
          "Leo's Lab basement 2nd screen crystal fairy",
@@ -552,6 +553,8 @@ namespace Log {
             return "Locked Door to south-western room";
         case NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR:
             return "Chest of Drawers (gives Mystic Armor)";
+        case NPC_CHEST_OF_DRAWERS2:
+            return "Chest of Drawers (Herb storage)";
         case NPC_MARIE:
             return "Marie (leads to Act 6)";
         case NPC_SINGER_CONCERT_HALL:
@@ -560,8 +563,6 @@ namespace Log {
             return "Soldier (has Platinum Card)";
         case NPC_SOLDIER_LEFT_TOWER:
             return "Soldier (guarding Left Tower)";
-        case NPC_QUEEN_MAGRIDD:
-            return "Queen Magridd (gives VIP Card)";
         case NPC_SOLDIER_RIGHT_TOWER:
             return "Soldier (guarding Right Tower)";
         case NPC_SOLDIER_CASTLE:
@@ -576,6 +577,8 @@ namespace Log {
             return "Sleeping Soldier (gives Elemental Mail)";
         case NPC_MAID_HERB:
             return "Maid (gives Medical Herbs)";
+        case NPC_QUEEN_MAGRIDD:
+            return "Queen Magridd (gives VIP Card)";
         case NPC_KING_MAGRIDD:
             return "King Magridd (leads to Act 7)";
         default:
@@ -725,7 +728,7 @@ namespace Log {
         LogFile << endl;
 
         LogFile << "Act 3: St Elles" << endl;
-        for (NPCIndex = 0; NPCIndex < 16; NPCIndex++) {
+        for (NPCIndex = 0; NPCIndex < 15; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act3NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act3NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act3NPCs[NPCIndex]]) << endl;
@@ -741,7 +744,7 @@ namespace Log {
         LogFile << endl;
 
         LogFile << "Act 5: Leo's Lab" << endl;
-        for (NPCIndex = 0; NPCIndex < 17; NPCIndex++) {
+        for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act5NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act5NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act5NPCs[NPCIndex]]) << endl;

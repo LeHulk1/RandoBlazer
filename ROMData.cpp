@@ -281,6 +281,9 @@ namespace ROMData {
         ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Type     = TYPE_NPC;
         ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Contents = ACTINIDIA_LEAF;
 
+        ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Type     = TYPE_NPC;
+        ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Contents = MEDICAL_HERB;
+
         ItemList[ITEM_MARIE].Type     = TYPE_NPC;
         ItemList[ITEM_MARIE].Contents = PURPLE_STONE;
 
@@ -390,17 +393,9 @@ namespace ROMData {
 
         ROMFile.seekg (MONSTER_LAIR_DATA_ADDRESS, ios::beg);
 
-        unsigned char Byte;
         for (int i=0; i<NUMBER_OF_LAIRS; i++) {
 
-            /* Ignore this data if it is an empty line                              ==> monster type = 0xFF
-               or if it is one of the game's 5 empty lairs (like in Lisa's dream)   ==> monster type = 0x00 */
-            do {
-                ROMFile.seekg(21, ios::cur);
-                ROMFile.read ((char*)(&Byte), 1);
-                ROMFile.seekg(10, ios::cur);
-            } while (Byte == 0x00 || Byte == 0xFF);
-            ROMFile.seekg(-22, ios::cur);
+            ROMFile.seekg(10, ios::cur);
 
             /* Read the contents of this Monster Lair */
             ROMFile.read((char*)(&(LairList[i].Act)), 1);
@@ -412,7 +407,7 @@ namespace ROMData {
             ROMFile.read((char*)(&(LairList[i].SpawnRate)), 1);
             ROMFile.read((char*)(&(LairList[i].Enemy)), 1);
             ROMFile.seekg(1, ios::cur);
-            ROMFile.read((char*)(&(LairList[i].UpsideDownFlag)), 1);
+            ROMFile.read((char*)(&(LairList[i].Orientation)), 1);
             ROMFile.seekg(8, ios::cur);
         }
     }
@@ -451,7 +446,7 @@ namespace ROMData {
         for (int Act = ACT_1; Act < 7; ++Act) {
             for (int AddressIndex = 0; AddressIndex < 63; ++AddressIndex) {
                 if (SpriteDataAddressList[Act][AddressIndex] == 0) {
-                    continue;
+                    break;
                 }
                 SpriteList[SpriteIndex].Address = SpriteDataAddressList[Act][AddressIndex];
                 SpriteList[SpriteIndex].Act = Act;

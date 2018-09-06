@@ -124,6 +124,7 @@ public:
     bool MustBeMetalLairPosition(void);
     bool MustBeGhostLairPosition(void);
     bool MustNotRandomizeLairPosition(void);
+    bool MustNotBeUpwardsLairPosition(void);
 
     unsigned char Act;                              /* 0A */
     unsigned char PositionData[POSITION_DATA_SIZE]; /* from 0B to 0D */
@@ -131,7 +132,7 @@ public:
     unsigned char NbEnemies;                        /* 13 */
     unsigned char SpawnRate;                        /* 14 */
     unsigned char Enemy;                            /* 15 */
-    unsigned char UpsideDownFlag;                   /* 17 */
+    unsigned char Orientation;                      /* 17 */
 };
 
 

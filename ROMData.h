@@ -10,8 +10,8 @@
 
 
 #define NUMBER_OF_CHESTS  66
-#define NUMBER_OF_ITEMS   125
-#define NUMBER_OF_LAIRS   400
+#define NUMBER_OF_ITEMS   126
+#define NUMBER_OF_LAIRS   420
 #define NUMBER_OF_SPRITES 205
 
 #define CHEST_DATA_ADDRESS        0xAADE
