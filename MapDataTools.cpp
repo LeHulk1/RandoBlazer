@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 
 #define MAP_FILE_NAME  "MapToCompress.txt"
@@ -72,12 +73,36 @@ static int PositionMask[8] = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
 
 namespace MapDataTools {
 
+    static int ConvertHex(unsigned char x) {
+        switch(x) {
+        case '0': return 0x00;
+        case '1': return 0x01;
+        case '2': return 0x02;
+        case '3': return 0x03;
+        case '4': return 0x04;
+        case '5': return 0x05;
+        case '6': return 0x06;
+        case '7': return 0x07;
+        case '8': return 0x08;
+        case '9': return 0x09;
+        case 'a': return 0x0A;
+        case 'b': return 0x0B;
+        case 'c': return 0x0C;
+        case 'd': return 0x0D;
+        case 'e': return 0x0E;
+        case 'f': return 0x0F;
+        default: return 0x00;
+        }
+    }
+
+
+
     void Compress(void) {
 
 
         // Open the file.
         FILE *MapFile;
-        MapFile = fopen(MAP_FILE_NAME, "rb");
+        MapFile = fopen(MAP_FILE_NAME, "r");
         if (!MapFile) {
             printf("Error: File %s not found\n", MAP_FILE_NAME);
             exit(1);
@@ -94,12 +119,21 @@ namespace MapDataTools {
         // Read the bytes.
         byte tocomp[MAX_BYTES];
         int BufferSize = 0;
+        byte input1, input2;
         while (BufferSize < MAX_BYTES) {
-            byte input = fgetc(MapFile);
+            input1 = fgetc(MapFile);
+            if (input1 == '\n') {
+                /* ignore carriage return and line feed */
+                input1 = fgetc(MapFile);
+            }
+            input2 = fgetc(MapFile);
             if (feof(MapFile)) {break;}
-            tocomp[BufferSize + SEARCH_SIZE] = input;
-            WRITE_BYTE_IN_BINARY(input);
+            tocomp[BufferSize + SEARCH_SIZE] = ConvertHex(input1)*0x10 + ConvertHex(input2);
+            OutputFile << hex << setw(2) << setfill('0') << int(tocomp[BufferSize + SEARCH_SIZE]) << ' ';
             BufferSize++;
+
+            input1 = fgetc(MapFile); /* should be a blank */
+
         }
         fclose(MapFile);
 
@@ -214,7 +248,7 @@ namespace MapDataTools {
         OutputFile << endl;
         OutputFile << endl;
         for (i = 0; i < CurrentOutputByte + (CurrentOutputBit == 0 ? 0 : 1); i++) {
-            OutputFile << OutputBytes[i];
+            OutputFile << hex << setw(2) << setfill('0') << int(OutputBytes[i]) << ' ';
         }
 
         OutputFile << endl;
@@ -308,7 +342,7 @@ namespace MapDataTools {
           fgetc(ROMFile); fgetc(ROMFile); fgetc(ROMFile);
           for (i = 0; i < length; i++) {
             byte input = fgetc(ROMFile);
-            OutputFile << input;
+            OutputFile << hex << setw(2) << setfill('0') << int(input) << ' ';
           }
 
 
@@ -452,7 +486,7 @@ namespace MapDataTools {
         //            if (control_char_fix < 0x20) {
         //              control_char_fix += 0x20;
         //            }
-                    OutputFile << control_char_fix;
+                    OutputFile << hex << setw(2) << setfill('0') << int(control_char_fix) << ' ';
                     bytesout--;
                   }
                 }
