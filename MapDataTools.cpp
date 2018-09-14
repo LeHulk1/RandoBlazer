@@ -11,7 +11,7 @@
 
 
 #define MAP_FILE_NAME  "MapToCompress.txt"
-#define ROM_FILE_NAME  "Soul Blazer (U) [!].smc"
+#define ROM_FILE_NAME  "Soul Blazer (U) [!] - Dev.smc"
 
 #define SEARCH_LOG2  8
 #define SEARCH_SIZE  256
@@ -97,7 +97,8 @@ namespace MapDataTools {
 
 
 
-    void Compress(void) {
+    void Compress(bool MapMode) {
+
 
 
         // Open the file.
@@ -117,20 +118,27 @@ namespace MapDataTools {
 
 
         // Read the bytes.
+        byte InputBytes[MAX_BYTES];
         byte tocomp[MAX_BYTES];
         int BufferSize = 0;
+        int Lines = 1;
+        int Columns = 0;
+        bool IncreaseColumns = true;
         byte input1, input2;
         while (BufferSize < MAX_BYTES) {
             input1 = fgetc(MapFile);
             if (input1 == '\n') {
                 /* ignore carriage return and line feed */
                 input1 = fgetc(MapFile);
+                IncreaseColumns = false;
+                Lines++;
             }
             input2 = fgetc(MapFile);
             if (feof(MapFile)) {break;}
-            tocomp[BufferSize + SEARCH_SIZE] = ConvertHex(input1)*0x10 + ConvertHex(input2);
-            OutputFile << hex << setw(2) << setfill('0') << int(tocomp[BufferSize + SEARCH_SIZE]) << ' ';
+            InputBytes[BufferSize] = ConvertHex(input1)*0x10 + ConvertHex(input2);
+            OutputFile << hex << setw(2) << setfill('0') << int(InputBytes[BufferSize]) << ' ';
             BufferSize++;
+            if (IncreaseColumns) {Columns++;}
 
             input1 = fgetc(MapFile); /* should be a blank */
 
@@ -139,7 +147,44 @@ namespace MapDataTools {
 
         OutputFile << endl;
         OutputFile << endl;
+        OutputFile << "Lines / Columns: " << dec << Lines << " / " << Columns << ".";
+
+        OutputFile << endl;
+        OutputFile << endl;
         OutputFile << "Number of bytes: " << BufferSize << ".";
+
+        // Re-arrange the data.
+        int i, j;
+        if (MapMode) {
+            int screenI, screenJ;
+            int NbScreensColumns = Columns / 16;
+            int NbScreensLines = Lines / 16;
+            for (screenI = 0; screenI < NbScreensLines; screenI++) {
+                for (screenJ = 0; screenJ < NbScreensColumns; screenJ++) {
+                    for (i = 0; i < 16; i++) {
+                        for (j = 0; j < 16; j++) {
+                            tocomp[256*NbScreensColumns*screenI + 256*screenJ + 16*i + j + SEARCH_SIZE] = InputBytes[256*NbScreensColumns*screenI + 16*screenJ + 16*NbScreensColumns*i + j];
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            memcpy(&tocomp[SEARCH_SIZE], InputBytes, BufferSize*sizeof(byte));
+        }
+
+        OutputFile << endl;
+        OutputFile << endl;
+        OutputFile << endl;
+        OutputFile << "******************\n";
+        OutputFile << "* Arranged input *\n";
+        OutputFile << "******************\n";
+        OutputFile << endl;
+
+        for (i = 0; i < BufferSize; i++) {
+            OutputFile << hex << setw(2) << setfill('0') << int(tocomp[i+SEARCH_SIZE]) << ' ';
+        }
+
 
 
         OutputFile << endl;
@@ -152,7 +197,7 @@ namespace MapDataTools {
 
 
         int currentIndex = SEARCH_SIZE;
-        int i, j, bestIndex, bestLength, compareLimit, currentLength;
+        int bestIndex, bestLength, compareLimit, currentLength;
 
         // Prepare memory buffer: left-pad with with 0x20 values
         for (i = 0; i < SEARCH_SIZE; i++) {
@@ -253,7 +298,7 @@ namespace MapDataTools {
 
         OutputFile << endl;
         OutputFile << endl;
-        OutputFile << "Number of bytes : " << CurrentOutputByte + (CurrentOutputBit == 0 ? 0 : 1) << endl;
+        OutputFile << "Number of bytes : " << dec << CurrentOutputByte + (CurrentOutputBit == 0 ? 0 : 1) << endl;
 
 
         OutputFile.close();
@@ -266,7 +311,7 @@ namespace MapDataTools {
 
 
 
-    void Decompress(int MapDataAddress) {
+    void Decompress(int MapDataAddress, int length) {
 
                 /*
         Soul Blazer map decompressor.
@@ -279,10 +324,14 @@ namespace MapDataTools {
           // Variables
           int width;
           int height;
-          int length;
           int bytesout;
           int pos;
           int i, j, k, m;
+          bool MapMode = false;
+
+          if (length == 0) {
+            MapMode = true;
+          }
 
           // Open the file.
           FILE *ROMFile;
@@ -294,13 +343,16 @@ namespace MapDataTools {
 
           // Get to the proper location, and read the width, height and length.
           fseek(ROMFile, MapDataAddress, SEEK_SET);
-          width = fgetc(ROMFile);
-          height = fgetc(ROMFile);
-          length = fgetc(ROMFile);
-          length += (0x100 * fgetc(ROMFile));
-          if (length <= 0) {
-            printf("Error: According to that data, the length is %d.\n", length);
-            exit(1);
+
+          if (MapMode) {
+              width = fgetc(ROMFile);
+              height = fgetc(ROMFile);
+              length = fgetc(ROMFile);
+              length += (0x100 * fgetc(ROMFile));
+              if (length <= 0) {
+                printf("Error: According to that data, the length is %d.\n", length);
+                exit(1);
+              }
           }
 
           ofstream OutputFile("MapDecomp.txt");
@@ -339,7 +391,9 @@ namespace MapDataTools {
           OutputFile << endl;
 
           fseek(ROMFile, MapDataAddress, SEEK_SET);
-          fgetc(ROMFile); fgetc(ROMFile); fgetc(ROMFile);
+          if (MapMode) {
+            fgetc(ROMFile); fgetc(ROMFile); fgetc(ROMFile); fgetc(ROMFile);
+          }
           for (i = 0; i < length; i++) {
             byte input = fgetc(ROMFile);
             OutputFile << hex << setw(2) << setfill('0') << int(input) << ' ';
@@ -474,26 +528,35 @@ namespace MapDataTools {
           OutputFile << "*************\n";
           OutputFile << endl;
           byte control_char_fix;
-          while (bytesout > 0) {
-            for (i = 0; i < height; i++) {
-              for (j = 0; j < 16; j++) {
+          if (MapMode) {
+              while (bytesout > 0) {
+                for (i = 0; i < height; i++) {
+                  for (j = 0; j < 16; j++) {
 
-                // One line of the map: START
-                for (k = 0; k < width; k++) {
-                  for (m = 0; m < 16; m++) {
-                    control_char_fix = wram[(0x100 * width * i) + (0x10 * j) + (0x100 * k) + m];
-        //            control_char_fix &= 0x7F;
-        //            if (control_char_fix < 0x20) {
-        //              control_char_fix += 0x20;
-        //            }
-                    OutputFile << hex << setw(2) << setfill('0') << int(control_char_fix) << ' ';
-                    bytesout--;
+                    // One line of the map: START
+                    for (k = 0; k < width; k++) {
+                      for (m = 0; m < 16; m++) {
+                        control_char_fix = wram[(0x100 * width * i) + (0x10 * j) + (0x100 * k) + m];
+            //            control_char_fix &= 0x7F;
+            //            if (control_char_fix < 0x20) {
+            //              control_char_fix += 0x20;
+            //            }
+                        OutputFile << hex << setw(2) << setfill('0') << int(control_char_fix) << ' ';
+                        bytesout--;
+                      }
+                    }
+                    OutputFile << endl;
+                    // One line of the map: END
+
                   }
                 }
-                OutputFile << endl;
-                // One line of the map: END
-
               }
+          }
+          else {
+            i = 0;
+            while (bytesout > 0) {
+                OutputFile << hex << setw(2) << setfill('0') << int(wram[i]) << ' ';
+                bytesout--; i++;
             }
           }
 

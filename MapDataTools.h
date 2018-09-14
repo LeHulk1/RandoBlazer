@@ -3,8 +3,8 @@
 
 
 namespace MapDataTools {
-    void Compress(void);
-    void Decompress(int MapDataAddress);
+    void Compress(bool MapMode);
+    void Decompress(int MapDataAddress, int length);
 }
 
 #endif // __MAPDATATOOLS_H__

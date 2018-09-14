@@ -35,8 +35,8 @@ int main ( int argc, char** argv ) {
 
 
 
-    MapDataTools::Compress();
-    MapDataTools::Decompress(0xF1694);
+    MapDataTools::Compress(false);
+    MapDataTools::Decompress(0xE9DDD, 1251);
 
 
 
