@@ -28,6 +28,10 @@ The six Stones are required in order to progress to the World of Evil. However, 
 
 Finally, a lot of text has been edited in order to match the actual item NPCs now give you, but also to reduce the amount of text in most cutscenes. Most revival text has also been edited out. There is also a variety of texts for Master's text in the game introduction and on player's death.
 
+### Item/NPC Tracker
+
+You can use this tracker made by Netanonima: https://eggper.com/blazer_tracker/
+
 ### Planned improvements
 
  - Make an open mode where the player can travel to all regions right at the start (maybe not World of Evil though).
