@@ -1005,14 +1005,14 @@ namespace Map {
             }
         }
 
-        /* This goal's weight will be the maximum depth of the attached sub-tree + 1 */
         if (GoalID != GOAL_TO_FIRST_REGION) {
+            /* This goal's weight will be the maximum depth of the attached sub-tree + 1 */
             GoalList[GoalID].Weight = MaximumDepth + 1;
-        }
 
-        /* Cap the weight */
-        if (WEIGHT_CAP != 0 && GoalList[GoalID].Weight > WEIGHT_CAP) {
-            GoalList[GoalID].Weight = WEIGHT_CAP;
+            /* Cap the weight */
+            if (WEIGHT_CAP != 0 && GoalList[GoalID].Weight > WEIGHT_CAP) {
+                GoalList[GoalID].Weight = WEIGHT_CAP;
+            }
         }
     }
 
