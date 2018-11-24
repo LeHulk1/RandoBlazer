@@ -1,11 +1,18 @@
 #include "Randomizer.h"
-#include "ROMData.h"
+
+#include "Log.h"
 #include "Random.h"
+#include "ROMData.h"
+#include "ROMUpdate.h"
 
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
+#include <cstdio>
 
+#define HEADER_OFFSET        0x200
+#define SEED_SIZE            10
+#define MAX_NUMBER_OF_TRIES  5
 
 #define ONE_BY_ONE_WEIGHT       4
 #define MULTISPAWN_WEIGHT      15
@@ -788,5 +795,152 @@ namespace Randomizer {
 
         /* We shouldn't end up here */
         return 0;
+    }
+
+    ROMStatus CheckFile(const std::string& Filename) {
+        /* Check that the ROM file is there, make the fstream instance */
+        fstream ROMFile(Filename, ios::in | ios::out | ios::binary | ios::ate);
+        if (!ROMFile.is_open()) {
+            cout << "ROM file \"" << Filename << "\" is not found!\n";
+            return UNKNOWN;
+        }
+
+        /* Check if this is the headered or the un-headered ROM */
+        ROMStatus OriginalROMStatus = CheckOriginalROM(ROMFile);
+        if (OriginalROMStatus == UNKNOWN) {
+            cout << "File \"" << Filename << "\" is not a known original Soul Blazer (U) ROM!\n";
+            return UNKNOWN;
+        }
+
+        cout << "ROM is valid and " << (OriginalROMStatus == UNHEADERED ? "un-" : "") << "headered.\n";
+
+        return OriginalROMStatus;
+    }
+
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed) {
+        /****************************\
+        |*  Check the original ROM  *|
+        \****************************/
+        ROMStatus OriginalROMStatus = Randomizer::CheckFile(InFile);
+        if (OriginalROMStatus == UNKNOWN) {
+            return false;
+        }
+
+        Random::RandomInit(seed);
+        cout << "Seed " << seed << "\n";
+
+        /***************************************************\
+        |*  Delete old modified ROM / backup original ROM  *|
+        \***************************************************/
+
+        /* If a modified ROM exists, delete it first */
+        int RemoveResult = ::remove(OutFile.c_str());
+        if (RemoveResult == 0) {
+            cout << "Previous randomized ROM detected and removed.\n";
+        }
+
+        /* Back up the original ROM */
+        ifstream ROMFileOriginal(InFile, ios::binary);
+        ofstream ROMFileCopy    (OutFile,     ios::binary);
+
+        ROMFileOriginal.seekg(0, ios::end);
+        long ROMFileSize = ROMFileOriginal.tellg();
+        if (OriginalROMStatus == HEADERED) {
+            /* For headered ROM, ignore the first 512 bytes */
+            ROMFileSize -= HEADER_OFFSET;
+        }
+
+        if(ROMFileOriginal.is_open() && ROMFileCopy.is_open()) {
+            unsigned char *DataBuffer = new unsigned char[ROMFileSize];
+            if (OriginalROMStatus == HEADERED) {
+                /* For headered ROM, ignore the first 512 bytes */
+                ROMFileOriginal.seekg(HEADER_OFFSET, ios::beg);
+            }
+            else {
+                ROMFileOriginal.seekg(0, ios::beg);
+            }
+            ROMFileOriginal.read((char*)DataBuffer, ROMFileSize);
+            ROMFileCopy.write((char*)DataBuffer, ROMFileSize);
+            delete[] DataBuffer;
+        }
+        else if(!ROMFileCopy.is_open())	{
+            cout << "Failure backing up the ROM!\n";
+            return false;
+        }
+        else if(!ROMFileOriginal.is_open())	{
+            cout << "Failure opening the original ROM for copying!\n";
+            return false;
+        }
+
+        ROMFileOriginal.close();
+        ROMFileCopy.close();
+        ROMFileOriginal.clear();
+        ROMFileCopy.clear();
+
+
+        /****************\
+        |*  Randomize!  *|
+        \****************/
+
+        cout << endl;
+        cout << "Starting randomization.\n";
+
+        /* Initialize the final lists of randomized lairs, chests and sprites */
+        vector<Lair> RandomizedLairList;
+        vector<Item> RandomizedItemList;
+        vector<Sprite> RandomizedSpriteList;
+
+        /* Open ROM to be modified */
+        fstream ROMFile(OutFile, ios::in | ios::out | ios::binary | ios::ate);
+
+        /* Call the main algorithm to randomize the progression through the game:
+        ==> randomize item locations and revived NPCs */
+        int RandomizationTry;
+        bool RandomizationStatus = false;
+        for (RandomizationTry = 0; RandomizationTry < MAX_NUMBER_OF_TRIES; RandomizationTry++) {
+            RandomizationStatus = Randomizer::RandomizeProgression(RandomizedLairList,
+                                                                RandomizedItemList,
+                                                                ROMFile);
+            if (RandomizationStatus) {
+                break;
+            }
+        }
+        if (!RandomizationStatus) {
+            cout << " . . . Randomization failed!\n";
+            return false;
+        }
+        cout << " . . . Randomization succeeded in " << RandomizationTry + 1
+            << (RandomizationTry == 0 ? " try.\n" : " tries.\n");
+
+        cout << "Starting ROM modification.\n";
+
+        /* Randomize monster lair contents: enemy types, lair types, number of enemies and spawn rates */
+        Randomizer::RandomizeLairContents(RandomizedLairList);
+
+        /* Randomize static enemies in maps */
+        Randomizer::RandomizeMapSprites(RandomizedSpriteList, ROMFile);
+
+        /* Modify the ROM with the randomized lists */
+        ROMUpdate::ROMUpdateLairs(RandomizedLairList, ROMFile);
+        ROMUpdate::ROMUpdateMapSprites(RandomizedSpriteList, ROMFile);
+        ROMUpdate::ROMUpdateTextAndItems(RandomizedLairList,
+                                        RandomizedItemList,
+                                        ROMFile,
+                                        seed);
+
+        /* Close the ROM file */
+        ROMFile.close();
+        ROMFile.clear();
+
+        cout << " . . . ROM modification complete.\n";
+
+        cout << "Starting Spoiler Log creation.\n";
+
+        /* Generate the Spoiler Log */
+        Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+
+        cout << " . . . Spoiler Log created.\n";
+
+        return true;
     }
 }

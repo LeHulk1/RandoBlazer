@@ -697,72 +697,72 @@ namespace Log {
     void CreateSpoilerLog(vector<Lair>  &RandomizedLairList,
                           vector<Item>  &RandomizedItemList) {
 
-        ofstream LogFile(SPOILER_LOG_FILE_NAME);
+        ofstream LogFile(SPOILER_LOG_FILE_NAME, ios::binary);
         int      NPCIndex, ItemIndex, LoggedItemIndex;
 
-        LogFile << endl;
-        LogFile << "     /=============================\\" << endl;
-        LogFile << "     |   RandoBlazer Spoiler Log   |"  << endl;
-        LogFile << "     \\=============================/" << endl;
-        LogFile << endl;
-        LogFile << endl;
+        LogFile << "\r\n";
+        LogFile << "     /=============================\\" << "\r\n";
+        LogFile << "     |   RandoBlazer Spoiler Log   |"  << "\r\n";
+        LogFile << "     \\=============================/" << "\r\n";
+        LogFile << "\r\n";
+        LogFile << "\r\n";
 
 
-        LogFile << "  ----- KEY NPCs -----" << endl;
-        LogFile << endl;
+        LogFile << "  ----- KEY NPCs -----" << "\r\n";
+        LogFile << "\r\n";
 
-        LogFile << "Act 1: Grass Valley" << endl;
+        LogFile << "Act 1: Grass Valley" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 16; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act1NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act1NPCs[NPCIndex]])
-                    << " - " << GetAreaName(RandomizedLairList[Act1NPCs[NPCIndex]]) << endl;
+                    << " - " << GetAreaName(RandomizedLairList[Act1NPCs[NPCIndex]]) << "\r\n";
         }
-        LogFile << endl;
+        LogFile << "\r\n";
 
-        LogFile << "Act 2: Greenwood" << endl;
+        LogFile << "Act 2: Greenwood" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act2NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act2NPCs[NPCIndex]])
-                    << " - " << GetAreaName(RandomizedLairList[Act2NPCs[NPCIndex]]) << endl;
+                    << " - " << GetAreaName(RandomizedLairList[Act2NPCs[NPCIndex]]) << "\r\n";
         }
-        LogFile << endl;
+        LogFile << "\r\n";
 
-        LogFile << "Act 3: St Elles" << endl;
+        LogFile << "Act 3: St Elles" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 15; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act3NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act3NPCs[NPCIndex]])
-                    << " - " << GetAreaName(RandomizedLairList[Act3NPCs[NPCIndex]]) << endl;
+                    << " - " << GetAreaName(RandomizedLairList[Act3NPCs[NPCIndex]]) << "\r\n";
         }
-        LogFile << endl;
+        LogFile << "\r\n";
 
-        LogFile << "Act 4: Mountain of Souls" << endl;
+        LogFile << "Act 4: Mountain of Souls" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 14; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act4NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act4NPCs[NPCIndex]])
-                    << " - " << GetAreaName(RandomizedLairList[Act4NPCs[NPCIndex]]) << endl;
+                    << " - " << GetAreaName(RandomizedLairList[Act4NPCs[NPCIndex]]) << "\r\n";
         }
-        LogFile << endl;
+        LogFile << "\r\n";
 
-        LogFile << "Act 5: Leo's Lab" << endl;
+        LogFile << "Act 5: Leo's Lab" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act5NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act5NPCs[NPCIndex]])
-                    << " - " << GetAreaName(RandomizedLairList[Act5NPCs[NPCIndex]]) << endl;
+                    << " - " << GetAreaName(RandomizedLairList[Act5NPCs[NPCIndex]]) << "\r\n";
         }
-        LogFile << endl;
+        LogFile << "\r\n";
 
-        LogFile << "Act 6: Magridd Castle" << endl;
+        LogFile << "Act 6: Magridd Castle" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 12; NPCIndex++) {
             LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act6NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act6NPCs[NPCIndex]])
-                    << " - " << GetAreaName(RandomizedLairList[Act6NPCs[NPCIndex]]) << endl;
+                    << " - " << GetAreaName(RandomizedLairList[Act6NPCs[NPCIndex]]) << "\r\n";
         }
-        LogFile << endl;
-        LogFile << endl;
+        LogFile << "\r\n";
+        LogFile << "\r\n";
 
 
-        LogFile << "  ----- EQUIPMENT / KEY ITEMS -----" << endl;
-        LogFile << endl;
+        LogFile << "  ----- EQUIPMENT / KEY ITEMS -----" << "\r\n";
+        LogFile << "\r\n";
 
         for (LoggedItemIndex = 0; LoggedItemIndex < 62; LoggedItemIndex++) {
             for (ItemIndex = 0; ItemIndex < NUMBER_OF_ITEMS; ItemIndex++) {
@@ -773,7 +773,7 @@ namespace Log {
             }
 
             LogFile << setw(ITEM_NAME_SIZE) << left << LoggedItemNames[LoggedItemIndex]
-                    << "  ----->  " << ItemLocations[ItemIndex] << endl;
+                    << "  ----->  " << ItemLocations[ItemIndex] << "\r\n";
         }
 
         LogFile.close();
