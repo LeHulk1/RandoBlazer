@@ -10,10 +10,7 @@ typedef enum {
     HEADERED
 } ROMStatus;
 
-
-using namespace std;
-
-ROMStatus CheckOriginalROM(fstream &ROMFile);
+ROMStatus CheckOriginalROM(std::fstream &ROMFile);
 
 
 #endif // __ROMCHECK_H__

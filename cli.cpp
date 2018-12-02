@@ -6,8 +6,6 @@
 #define ROM_FILE_NAME      "Soul Blazer (U) [!].smc"
 #define MOD_ROM_FILE_NAME  "Soul Blazer Randomized.smc"
 
-using namespace std;
-
 int main (int argc, char** argv ) {
     const char *in_file = ROM_FILE_NAME;
     unsigned int seed;

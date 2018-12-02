@@ -436,9 +436,6 @@ enum {
     NPC_KING_MAGRIDD                  = 405,
 };
 
-
-using namespace std;
-
 class Element {
 public:
     Element(int NewType, int NewIndex);
@@ -453,8 +450,8 @@ public:
     ~Region();
     void InsertElement(int Type, int Index);
     void InsertGoal(int Index);
-    list<Element> Contents;
-    list<int> NextGoals;
+    std::list<Element> Contents;
+    std::list<int> NextGoals;
 };
 
 class Goal {
@@ -462,20 +459,20 @@ public:
     Goal();
     ~Goal();
     void InsertElement(int Type, int Index);
-    list<Element> Requirements;
+    std::list<Element> Requirements;
     int Target;
     int Weight;
 };
 
 
 namespace Map {
-    void InitMap(vector<Region> &RegionList, vector<Goal> &GoalList);
-    void InitMap_v2(vector<Region> &RegionList, vector<Goal> &GoalList);
-    void CalculateWeights(vector<Region> &RegionList, vector<Goal> &GoalList, int GoalIndex);
-    void GetNonKeyNPCList(vector<int> &NonKeyNPCList);
-    void GetNonKeyNPCList_v2(vector<int> &NonKeyNPCList);
-    void GetNonKeyItemList(vector<int> &NonKeyChestList);
-    void GetNonKeyItemList_v2(vector<int> &NonKeyChestList);
+    void InitMap(std::vector<Region> &RegionList, std::vector<Goal> &GoalList);
+    void InitMap_v2(std::vector<Region> &RegionList, std::vector<Goal> &GoalList);
+    void CalculateWeights(std::vector<Region> &RegionList, std::vector<Goal> &GoalList, int GoalIndex);
+    void GetNonKeyNPCList(std::vector<int> &NonKeyNPCList);
+    void GetNonKeyNPCList_v2(std::vector<int> &NonKeyNPCList);
+    void GetNonKeyItemList(std::vector<int> &NonKeyChestList);
+    void GetNonKeyItemList_v2(std::vector<int> &NonKeyChestList);
 }
 
 #endif // __MAP_H__

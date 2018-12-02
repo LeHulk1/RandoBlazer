@@ -35,7 +35,7 @@
 
 namespace ROMData {
 
-    void GetOriginalItemData(vector<Item> &ItemList) {
+    void GetOriginalItemData(std::vector<Item> &ItemList) {
 
         /***** CHESTS *****/
 
@@ -389,26 +389,26 @@ namespace ROMData {
     }
 
 
-    void GetOriginalLairData (vector<Lair> &LairList, fstream &ROMFile) {
+    void GetOriginalLairData (std::vector<Lair> &LairList, std::fstream &ROMFile) {
 
-        ROMFile.seekg (MONSTER_LAIR_DATA_ADDRESS, ios::beg);
+        ROMFile.seekg (MONSTER_LAIR_DATA_ADDRESS, std::ios::beg);
 
         for (int i=0; i<NUMBER_OF_LAIRS; i++) {
 
-            ROMFile.seekg(10, ios::cur);
+            ROMFile.seekg(10, std::ios::cur);
 
             /* Read the contents of this Monster Lair */
             ROMFile.read((char*)(&(LairList[i].Act)), 1);
             ROMFile.read((char*)(&(LairList[i].PositionData[0])), POSITION_DATA_SIZE);
-            ROMFile.seekg(2, ios::cur);
+            ROMFile.seekg(2, std::ios::cur);
             ROMFile.read((char*)(&(LairList[i].Type[0])), LAIR_TYPE_SIZE);
-            ROMFile.seekg(1, ios::cur);
+            ROMFile.seekg(1, std::ios::cur);
             ROMFile.read((char*)(&(LairList[i].NbEnemies)), 1);
             ROMFile.read((char*)(&(LairList[i].SpawnRate)), 1);
             ROMFile.read((char*)(&(LairList[i].Enemy)), 1);
-            ROMFile.seekg(1, ios::cur);
+            ROMFile.seekg(1, std::ios::cur);
             ROMFile.read((char*)(&(LairList[i].Orientation)), 1);
-            ROMFile.seekg(8, ios::cur);
+            ROMFile.seekg(8, std::ios::cur);
         }
     }
 
@@ -440,7 +440,7 @@ namespace ROMData {
          0xA993, 0xA997, 0xA99B, 0xA99F, 0xA9A3, 0xA9A7}
     };
 
-    void GetOriginalMapSpriteData (vector<Sprite> &SpriteList, fstream &ROMFile) {
+    void GetOriginalMapSpriteData (std::vector<Sprite> &SpriteList, std::fstream &ROMFile) {
 
         int SpriteIndex = 0;
         for (int Act = ACT_1; Act < 7; ++Act) {
@@ -451,13 +451,35 @@ namespace ROMData {
                 SpriteList[SpriteIndex].Address = SpriteDataAddressList[Act][AddressIndex];
                 SpriteList[SpriteIndex].Act = Act;
 
-                ROMFile.seekg(SpriteDataAddressList[Act][AddressIndex], ios::beg);
+                ROMFile.seekg(SpriteDataAddressList[Act][AddressIndex], std::ios::beg);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].x)), 1);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].y)), 1);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].Orientation)), 1);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].Enemy)), 1);
                 SpriteIndex++;
             }
+        }
+    }
+
+    bool NPCOriginallyGivesEXP(int NPCIndex) {
+        switch (NPCIndex) {
+        case ITEM_CRYSTAL_GRASS_VALLEY:
+        case ITEM_CRYSTAL_UNDERGROUND_CASTLE:
+        case ITEM_CRYSTAL_LOST_MARSH:
+        case ITEM_CRYSTAL_WATER_SHRINE:
+        case ITEM_CRYSTAL_FIRE_SHRINE:
+        case ITEM_CRYSTAL_MOUNTAIN_OF_SOULS:
+        case ITEM_CRYSTAL_LUNE:
+        case ITEM_CRYSTAL_LEOS_LAB_BASEMENT:
+        case ITEM_CRYSTAL_MODEL_TOWN:
+        case ITEM_CRYSTAL_POWER_PLANT:
+        case ITEM_CRYSTAL_ROCKBIRD:
+        case ITEM_CRYSTAL_SEABED_NEAR_BLESTER:
+        case ITEM_CRYSTAL_SEABED_NEAR_DUREAN:
+            return true;
+            break;
+        default:
+            return false;
         }
     }
 }

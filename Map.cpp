@@ -37,7 +37,7 @@ void Goal::InsertElement(int Type, int Index) {
 
 namespace Map {
 
-    void InitMap(vector<Region> &RegionList, vector<Goal> &GoalList) {
+    void InitMap(std::vector<Region> &RegionList, std::vector<Goal> &GoalList) {
 
         /******** REGIONS ********/
 
@@ -978,7 +978,7 @@ namespace Map {
     }
 
 
-    void CalculateWeights(vector<Region> &RegionList, vector<Goal> &GoalList, int GoalID) {
+    void CalculateWeights(std::vector<Region> &RegionList, std::vector<Goal> &GoalList, int GoalID) {
 
         int TargetRegionIndex = (GoalID == GOAL_TO_FIRST_REGION ? 0 : GoalList[GoalID].Target);
 
@@ -990,14 +990,9 @@ namespace Map {
             return;
         }
 
-        int CurrentSubGoalID;
         int MaximumDepth = 1;
-        list<int>::const_iterator GoalIterator;
-        for (GoalIterator = RegionList[TargetRegionIndex].NextGoals.begin();
-             GoalIterator != RegionList[TargetRegionIndex].NextGoals.end();
-             ++GoalIterator) {
-            CurrentSubGoalID = *GoalIterator;
-
+        std::list<int>::const_iterator GoalIterator;
+        for (const auto& CurrentSubGoalID : RegionList[TargetRegionIndex].NextGoals) {
             /* Calculate weights of all sub-goals, and keep the maximum depth found */
             CalculateWeights(RegionList, GoalList, CurrentSubGoalID);
             if (GoalList[CurrentSubGoalID].Weight > MaximumDepth) {
@@ -1017,7 +1012,7 @@ namespace Map {
     }
 
 
-    void GetNonKeyNPCList(vector<int> &NonKeyNPCList) {
+    void GetNonKeyNPCList(std::vector<int> &NonKeyNPCList) {
         NonKeyNPCList.push_back(NPC_TULIP);
         NonKeyNPCList.push_back(NPC_TULIP2);
         NonKeyNPCList.push_back(NPC_GOAT);
@@ -1097,7 +1092,7 @@ namespace Map {
     }
 
 
-    void GetNonKeyItemList(vector<int> &NonKeyChestList) {
+    void GetNonKeyItemList(std::vector<int> &NonKeyChestList) {
         NonKeyChestList.push_back(1);
         NonKeyChestList.push_back(2);
         NonKeyChestList.push_back(3);

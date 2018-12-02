@@ -12,9 +12,6 @@
 #define NPC_NAME_SIZE         45
 #define ITEM_NAME_SIZE        20
 
-
-using namespace std;
-
 namespace Log {
 
     static int Act1NPCs[16] =
@@ -180,7 +177,7 @@ namespace Log {
          PURPLE_STONE,
          BLACK_STONE,
          MAGIC_BELL};
-    static string LoggedItemNames[62] =
+    static std::string LoggedItemNames[62] =
         {"Sword of Life",
          "Psycho Sword",
          "Critical Sword",
@@ -243,7 +240,7 @@ namespace Log {
          "Purple Stone",
          "Black Stone",
          "Magic Bell"};
-    static string ItemLocations[NUMBER_OF_ITEMS] =
+    static std::string ItemLocations[NUMBER_OF_ITEMS] =
         {"Trial Room at the start",
          "Grass Valley secret cave (left chest)",
          "Grass Valley secret cave (right chest)",
@@ -371,7 +368,7 @@ namespace Log {
          "Seabed crystal fairy (near Blester entrance)",
          "Seabed crystal fairy (near Durean entrance)"};
 
-    int GetAreaNumber(Lair &Lair) {
+    int GetAreaNumber(const Lair &Lair) {
         switch (Lair.Act) {
         case 0x00:
             return 1;
@@ -391,7 +388,7 @@ namespace Log {
         }
     }
 
-    string GetKeyNPCName(int NPC_ID) {
+    std::string GetKeyNPCName(int NPC_ID) {
         switch (NPC_ID) {
         case NPC_BRIDGE_GUARD:
             return "Bridge Guard";
@@ -587,7 +584,7 @@ namespace Log {
         }
     }
 
-    string GetAreaName(Lair &Lair) {
+    std::string GetAreaName(const Lair &Lair) {
         switch (Lair.PositionData[0]) {
         case 0x05:
             return "Underground Castle 1st screen";
@@ -694,10 +691,10 @@ namespace Log {
     }
 
 
-    void CreateSpoilerLog(vector<Lair>  &RandomizedLairList,
-                          vector<Item>  &RandomizedItemList) {
+    void CreateSpoilerLog(const std::vector<Lair>  &RandomizedLairList,
+                          const std::vector<Item>  &RandomizedItemList) {
 
-        ofstream LogFile(SPOILER_LOG_FILE_NAME, ios::binary);
+        std::ofstream LogFile(SPOILER_LOG_FILE_NAME, std::ios::binary);
         int      NPCIndex, ItemIndex, LoggedItemIndex;
 
         LogFile << "\r\n";
@@ -713,7 +710,7 @@ namespace Log {
 
         LogFile << "Act 1: Grass Valley" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 16; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act1NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act1NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act1NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act1NPCs[NPCIndex]]) << "\r\n";
         }
@@ -721,7 +718,7 @@ namespace Log {
 
         LogFile << "Act 2: Greenwood" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act2NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act2NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act2NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act2NPCs[NPCIndex]]) << "\r\n";
         }
@@ -729,7 +726,7 @@ namespace Log {
 
         LogFile << "Act 3: St Elles" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 15; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act3NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act3NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act3NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act3NPCs[NPCIndex]]) << "\r\n";
         }
@@ -737,7 +734,7 @@ namespace Log {
 
         LogFile << "Act 4: Mountain of Souls" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 14; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act4NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act4NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act4NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act4NPCs[NPCIndex]]) << "\r\n";
         }
@@ -745,7 +742,7 @@ namespace Log {
 
         LogFile << "Act 5: Leo's Lab" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act5NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act5NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act5NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act5NPCs[NPCIndex]]) << "\r\n";
         }
@@ -753,7 +750,7 @@ namespace Log {
 
         LogFile << "Act 6: Magridd Castle" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 12; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act6NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act6NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act6NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act6NPCs[NPCIndex]]) << "\r\n";
         }
@@ -772,7 +769,7 @@ namespace Log {
                 }
             }
 
-            LogFile << setw(ITEM_NAME_SIZE) << left << LoggedItemNames[LoggedItemIndex]
+            LogFile << std::setw(ITEM_NAME_SIZE) << std::left << LoggedItemNames[LoggedItemIndex]
                     << "  ----->  " << ItemLocations[ItemIndex] << "\r\n";
         }
 

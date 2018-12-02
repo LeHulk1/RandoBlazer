@@ -3,8 +3,6 @@
 #include <random>
 #include <boost/random/uniform_int_distribution.hpp>
 
-using namespace std;
-
 static std::mt19937 gen;
 
 namespace Random {

@@ -11,9 +11,6 @@
 #include <fstream>
 #include <vector>
 
-
-using namespace std;
-
 namespace Randomizer {
     ROMStatus CheckFile(const std::string& Filename);
     bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed);
@@ -22,24 +19,24 @@ namespace Randomizer {
     void RandomizeLairType(Lair &Lair);
     void RandomizeLairNbEnemies(Lair &Lair);
     void RandomizeLairSpawnRate(Lair &Lair);
-    void RandomizeLairContents(vector<Lair> &LairList);
-    void RandomizeMapSprites(vector<Sprite> &RandomizedSpriteList, fstream &ROMFile);
+    void RandomizeLairContents(std::vector<Lair> &LairList);
+    void RandomizeMapSprites(std::vector<Sprite> &RandomizedSpriteList, std::fstream &ROMFile);
 
-    void ExploreRegion(vector<Region>  &RegionList,
-                       vector<Goal>    &GoalList,
-                       vector<int>     &AvailableRevivingLairs,
-                       vector<int>     &AvailableItems,
-                       vector<int>     &AvailableGoals,
+    void ExploreRegion(std::vector<Region>  &RegionList,
+                       std::vector<Goal>    &GoalList,
+                       std::vector<int>     &AvailableRevivingLairs,
+                       std::vector<int>     &AvailableItems,
+                       std::vector<int>     &AvailableGoals,
                        bool             RevivedNPCs[],
                        bool             CollectedKeyItems[],
                        int              RegionIndex);
 
-    bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
-                              vector<Item>  &RandomizedItemList,
-                              fstream       &ROMFile);
+    bool RandomizeProgression(std::vector<Lair>  &RandomizedLairList,
+                              std::vector<Item>  &RandomizedItemList,
+                              std::fstream       &ROMFile);
 
-    int WeightedGoalChoice(vector<Goal>  &GoalList,
-                           vector<int>   &AvailableGoals);
+    int WeightedGoalChoice(std::vector<Goal>  &GoalList,
+                           std::vector<int>   &AvailableGoals);
 }
 
 #endif // __RANDOMIZER_H__
