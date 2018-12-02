@@ -991,7 +991,6 @@ namespace Map {
         }
 
         int MaximumDepth = 1;
-        std::list<int>::const_iterator GoalIterator;
         for (const auto& CurrentSubGoalID : RegionList[TargetRegionIndex].NextGoals) {
             /* Calculate weights of all sub-goals, and keep the maximum depth found */
             CalculateWeights(RegionList, GoalList, CurrentSubGoalID);

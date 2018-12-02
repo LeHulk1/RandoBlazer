@@ -1,7 +1,6 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include <list>
 #include <vector>
 
 
@@ -450,8 +449,8 @@ public:
     ~Region();
     void InsertElement(int Type, int Index);
     void InsertGoal(int Index);
-    std::list<Element> Contents;
-    std::list<int> NextGoals;
+    std::vector<Element> Contents;
+    std::vector<int> NextGoals;
 };
 
 class Goal {
@@ -459,7 +458,7 @@ public:
     Goal();
     ~Goal();
     void InsertElement(int Type, int Index);
-    std::list<Element> Requirements;
+    std::vector<Element> Requirements;
     int Target;
     int Weight;
 };
