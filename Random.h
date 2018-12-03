@@ -3,9 +3,11 @@
 
 
 namespace Random {
-    long RandomInit(long Seed);
-    int  RandomInteger(int Range);
-    int  RandomIntegerRange(int LowerBound, int UpperBound);
+    int RandomInit(unsigned int Seed);
+    // Return [0, Range)
+    int RandomInteger(int Range);
+    // Returns [LB, UB]
+    int RandomIntegerRange(int LowerBound, int UpperBound);
 }
 
 #endif // __RANDOM_H__

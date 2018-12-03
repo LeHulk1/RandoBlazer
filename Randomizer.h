@@ -6,6 +6,7 @@
 #include "Lair.h"
 #include "Map.h"
 #include "Sprite.h"
+#include "ROMCheck.h"
 
 #include <fstream>
 #include <vector>
@@ -14,6 +15,9 @@
 using namespace std;
 
 namespace Randomizer {
+    ROMStatus CheckFile(const std::string& Filename);
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed);
+
     void RandomizeLairEnemies(Lair &Lair);
     void RandomizeLairType(Lair &Lair);
     void RandomizeLairNbEnemies(Lair &Lair);

@@ -1,33 +1,33 @@
 #include "Random.h"
 
-#include <stdlib.h>
-#include <time.h>
-#include <iostream>
+#include <random>
+#include <boost/random/uniform_int_distribution.hpp>
 
 using namespace std;
 
+static std::mt19937 gen;
+
 namespace Random {
 
-    long RandomInit(long Seed) {
-        if (Seed == 0) {
-            /* No seed, then use timestamp as seed */
-            Seed = time(NULL);
-            srand(Seed);
+    int RandomInit(unsigned int seed) {
+        if (seed == 0) {
+            std::random_device rd;
+            seed = rd();
+            gen.seed(seed); 
         }
         else {
-            /* Seed provided: use it */
-            srand(Seed);
+            gen.seed(seed);
         }
-        return Seed;
+        return seed;
     }
 
     int RandomInteger(int Range) {
-        /* Return an integer between 0 and Range-1 */
-        return rand() % Range;
+        return RandomIntegerRange(0, Range - 1);
     }
 
     int RandomIntegerRange(int LowerBound, int UpperBound) {
-        /* Return an integer between LowerBound and UpperBound */
-        return (rand() % (UpperBound - LowerBound + 1)) + LowerBound;
+        static boost::random::uniform_int_distribution<int> dis;
+
+        return dis(gen, boost::random::uniform_int_distribution<int>::param_type{LowerBound, UpperBound});
     }
 }
