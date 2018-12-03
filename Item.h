@@ -4,7 +4,7 @@
 #define TYPE_CHEST  0
 #define TYPE_NPC    1
 
-typedef enum {
+enum class ItemID {
     NOTHING         = 0x00,
     SWORD_OF_LIFE   = 0x01,
     PSYCHO_SWORD    = 0x02,
@@ -71,7 +71,7 @@ typedef enum {
     BLACK_STONE     = 0x3F,
     MAGIC_BELL      = 0x40,
     GEMS_EXP        = 0xFF,
-} ItemIndex;
+};
 
 class Item {
 public:
@@ -80,7 +80,7 @@ public:
 
     Item& operator= (const Item& OtherItem);
     int Type;
-    ItemIndex Contents;
+    ItemID Contents;
     int GemsExp;
 };
 

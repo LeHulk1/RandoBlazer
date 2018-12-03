@@ -38,14 +38,14 @@
 
 #define TEXT_WriteString(_String_) {ROMFile.write(_String_, strlen(_String_));}
 
-#define TEXT_WriteItemString(_ItemIndex_) {                                              \
-    if (RandomizedItemList[_ItemIndex_].Contents == GEMS_EXP) {TEXT_WriteString("EXP");} \
-    else {TEXT_WriteString(ItemNameList[RandomizedItemList[_ItemIndex_].Contents]);}     \
+#define TEXT_WriteItemString(_ItemID_) {                                              \
+    if (RandomizedItemList[_ItemID_].Contents == ItemID::GEMS_EXP) {TEXT_WriteString("EXP");} \
+    else {TEXT_WriteString(ItemNameList[(size_t)RandomizedItemList[_ItemID_].Contents]);}     \
 }
 
-#define TEXT_WriteItemByte(_ItemIndex_) {                                        \
-    Byte = RandomizedItemList[_ItemIndex_].Contents;                             \
-    if (Byte != GEMS_EXP && Byte != NOTHING) {ROMFile.write((char*)(&Byte), 1);} \
+#define TEXT_WriteItemByte(_ItemID_) {                                        \
+    ItemID Byte = RandomizedItemList[_ItemID_].Contents;                             \
+    if (Byte != ItemID::GEMS_EXP && Byte != ItemID::NOTHING) {ROMFile.write((char*)(&Byte), 1);} \
 }
 
 
@@ -723,21 +723,21 @@ namespace ROMUpdate {
 
 
 
-    static int PickEndTextCode(int NPCItemIndex) {
+    static int PickEndTextCode(int NPCItemID) {
         int EndTextCode = TEXT_ENDTYPE_44AA;
-        if (NPCItemIndex <= 10) {
+        if (NPCItemID <= 10) {
             EndTextCode = TEXT_ENDTYPE_88B9;
         }
-        else if (NPCItemIndex <= 23) {
+        else if (NPCItemID <= 23) {
             EndTextCode = TEXT_ENDTYPE_46EC;
         }
-        else if (NPCItemIndex <= 30) {
+        else if (NPCItemID <= 30) {
             EndTextCode = TEXT_ENDTYPE_1EA5;
         }
-        else if (NPCItemIndex <= 41) {
+        else if (NPCItemID <= 41) {
             EndTextCode = TEXT_ENDTYPE_A3BF;
         }
-        else if (NPCItemIndex <= 50) {
+        else if (NPCItemID <= 50) {
             EndTextCode = TEXT_ENDTYPE_DFF0;
         }
         return EndTextCode;
@@ -891,16 +891,17 @@ namespace ROMUpdate {
         /*** Gourmet Goat's clue */
         /* First, decide which item the clue will be about */
         int RandomInt = Random::RandomInteger(3);
-        int ClueItem, ItemIndex;
+        ItemID ClueItem;
+        int ItemIndex;
         switch (RandomInt) {
         case 0:
-            ClueItem = SOUL_BLADE;
+            ClueItem = ItemID::SOUL_BLADE;
             break;
         case 1:
-            ClueItem = SOUL_ARMOR;
+            ClueItem = ItemID::SOUL_ARMOR;
             break;
         default:
-            ClueItem = PHOENIX;
+            ClueItem = ItemID::PHOENIX;
             break;
         }
         /* Now find where this item is */
@@ -911,7 +912,7 @@ namespace ROMUpdate {
         ROMFile.seekp(0x19D74, std::ios::beg);
         TEXT_WriteString("If you give me food,\rI will tell you\rwhere ");
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemNameList[ClueItem]);
+        TEXT_WriteString(ItemNameList[(size_t)ClueItem]);
         TEXT_EndStyle;
         TEXT_WriteString(" is!");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
@@ -921,7 +922,7 @@ namespace ROMUpdate {
         ROMFile.seekp(0x19E0E, std::ios::beg);
         TEXT_WriteByte(0x10); /* Start new textbox */
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemNameList[ClueItem]);
+        TEXT_WriteString(ItemNameList[(size_t)ClueItem]);
         TEXT_EndStyle;
         TEXT_WriteString(" is\r");
         if (ItemIndex < NUMBER_OF_CHESTS) {
@@ -944,7 +945,7 @@ namespace ROMUpdate {
         ROMFile.seekp(0x1A123, std::ios::beg);
         TEXT_WriteByte(0x33); /* Change pointer */
         ROMFile.seekp(0x1A125, std::ios::beg);
-        Byte = RandomizedItemList[ITEM_VILLAGE_CHIEF].Contents; /* Get the item */
+        Byte = (unsigned char)RandomizedItemList[ITEM_VILLAGE_CHIEF].Contents; /* Get the item */
         unsigned char VillageChiefBuffer[19] = {
             0x02, 0x01, 0x91, 0xA1,         /* Text "Gives item" */
             0x00, 0x5E,
@@ -1282,7 +1283,7 @@ namespace ROMUpdate {
 
         /*** Platinum Card Soldier - Hack so his item is not permanently missable */
         ROMFile.seekp(0x24BE3, std::ios::beg);
-        Byte = RandomizedItemList[ITEM_SOLDIER_PLATINUM_CARD].Contents; /* Get the item */
+        Byte = (unsigned char)RandomizedItemList[ITEM_SOLDIER_PLATINUM_CARD].Contents; /* Get the item */
         unsigned char PlatCardSoldierBuffer[92] = {
             0x02, 0x17, 0x1A, 0xCC,
             0x02, 0x18, Byte, 0xF2, 0xCB,                         /* If you don't have the item, jump */
@@ -1443,13 +1444,13 @@ namespace ROMUpdate {
         RandomInt = Random::RandomInteger(3);
         switch (RandomInt) {
         case 0:
-            ClueItem = LUCKY_BLADE;
+            ClueItem = ItemID::LUCKY_BLADE;
             break;
         case 1:
-            ClueItem = ZANTETSU_SWORD;
+            ClueItem = ItemID::ZANTETSU_SWORD;
             break;
         default:
-            ClueItem = SPIRIT_SWORD;
+            ClueItem = ItemID::SPIRIT_SWORD;
             break;
         }
         /* Now find where this sword is */
@@ -1460,7 +1461,7 @@ namespace ROMUpdate {
         ROMFile.seekp(0x26EB9, std::ios::beg);
         TEXT_WriteByte(0x91); /* "The " */
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemNameList[ClueItem]);
+        TEXT_WriteString(ItemNameList[(size_t)ClueItem]);
         TEXT_EndStyle;
         TEXT_WriteString(" is\r");
         if (ItemIndex < NUMBER_OF_CHESTS) {
@@ -1590,15 +1591,15 @@ namespace ROMUpdate {
     }
 
 
-    void NPCItemTextUpdate(int ItemIndex, int ItemID, std::fstream &ROMFile) {
+    void NPCItemTextUpdate(int ItemIndex, ItemID itemID, std::fstream &ROMFile) {
 
         unsigned int Byte;
         const char* ItemName;
         int NPCItemIndex = ItemIndex - NUMBER_OF_CHESTS;
 
         /* Get the item name */
-        if (ItemID != GEMS_EXP) {
-            ItemName = ItemNameList[ItemID];
+        if (itemID != ItemID::GEMS_EXP) {
+            ItemName = ItemNameList[(size_t)itemID];
         }
         else {
             ItemName = "EXP";
@@ -1678,8 +1679,6 @@ namespace ROMUpdate {
                            const std::vector<Item>& RandomizedItemList,
                            std::fstream &ROMFile,
                            long Seed) {
-
-        unsigned char ItemID;
         unsigned char GemsExpValue[2];
         unsigned char Byte;
         int GemsExp_TensAndUnits;
@@ -1691,9 +1690,9 @@ namespace ROMUpdate {
         /* Fill NPC items */
         for (int i=NUMBER_OF_CHESTS; i<NUMBER_OF_ITEMS; i++) {
             ItemAddress = NPCItemAddressList[i-NUMBER_OF_CHESTS];
-            ItemID = RandomizedItemList[i].Contents;
+            ItemID itemID = RandomizedItemList[i].Contents;
 
-            if (ItemID == GEMS_EXP || ItemID == NOTHING) {
+            if (itemID == ItemID::GEMS_EXP || itemID == ItemID::NOTHING) {
 
                 if (ROMData::NPCOriginallyGivesEXP(i)) {
                     ROMFile.seekp (ItemAddress, std::ios::beg);
@@ -1706,8 +1705,8 @@ namespace ROMUpdate {
                     /* If the NPC doesn't normally give EXP, let us turn the
                        prize into a Medical Herb for now. */
                     ROMFile.seekp (ItemAddress, std::ios::beg);
-                    ItemID = MEDICAL_HERB;
-                    ROMFile.write((char*)(&ItemID), 1);
+                    itemID = ItemID::MEDICAL_HERB;
+                    ROMFile.write((char*)(&itemID), 1);
                 }
             }
             else {
@@ -1717,7 +1716,7 @@ namespace ROMUpdate {
                        we need to do some tweaking to make it give an item. */
                     ROMFile.seekp (ItemAddress-1, std::ios::beg);
                     TEXT_WriteByte(0x0A);
-                    ROMFile.write((char*)(&ItemID), 1);
+                    ROMFile.write((char*)(&itemID), 1);
 
                     if (i == ITEM_CRYSTAL_FIRE_SHRINE) {
                         /* This one is really weird, the textbox sometimes glitches out */
@@ -1729,12 +1728,12 @@ namespace ROMUpdate {
                 }
                 else {
                     ROMFile.seekp (ItemAddress, std::ios::beg);
-                    ROMFile.write((char*)(&ItemID), 1);
+                    ROMFile.write((char*)(&itemID), 1);
                 }
             }
 
             /* Update the NPC's text accordingly */
-            NPCItemTextUpdate(i, ItemID, ROMFile);
+            NPCItemTextUpdate(i, itemID, ROMFile);
         }
 
     }

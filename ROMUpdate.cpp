@@ -17,8 +17,6 @@ namespace ROMUpdate {
                                const std::vector<Item>& RandomizedItemList,
                                std::fstream &ROMFile,
                                long Seed) {
-
-        unsigned char ItemID;
         unsigned char GemsExpValue[2];
         unsigned char Byte;
         int GemsExp_TensAndUnits;
@@ -36,7 +34,7 @@ namespace ROMUpdate {
             ROMFile.seekp (3, std::ios::cur);
 
             /* Update the contents */
-            ItemID = RandomizedItemList[i].Contents;
+            ItemID ItemID = RandomizedItemList[i].Contents;
             ROMFile.write((char*)(&ItemID), 1);
             GemsExp_TensAndUnits = RandomizedItemList[i].GemsExp % 100;
             GemsExpValue[0] = ConvertToHex(GemsExp_TensAndUnits);

@@ -549,7 +549,7 @@ namespace Randomizer {
         bool RevivedNPCs      [NUMBER_OF_LAIRS] = {false};
         bool CollectedKeyItems[NUMBER_OF_ITEMS] = {false};
 
-        int GoalIndex, RevivingLairIndex, ItemIndex, NewRegionIndex;
+        int GoalIndex, RevivingLairIndex, ItemID, NewRegionIndex;
         bool MountainKingItemRandomized = false;
 
         /* Initialize the randomized lists to the original lair and item lists */
@@ -640,23 +640,23 @@ namespace Randomizer {
                         if (AvailableItems.size() > 0) {
 
                             /* Choose one of the available item locations and assign this item to it */
-                            ItemIndex = Random::RandomInteger(AvailableItems.size());
-                            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[Requirement.Index];
+                            ItemID = Random::RandomInteger(AvailableItems.size());
+                            RandomizedItemList[AvailableItems[ItemID]] = OriginalItemList[Requirement.Index];
 
 #ifdef DEBUG
-                            std::cout << "Item: " << AvailableItems[ItemIndex] << " <-- " << Requirement.Index << endl;
+                            std::cout << "Item: " << AvailableItems[ItemID] << " <-- " << Requirement.Index << endl;
 #endif
 
                             /* This Key Item has been collected */
                             CollectedKeyItems[Requirement.Index] = true;
 
                             /* If this was Mountain King's item, remember it */
-                            if (AvailableItems[ItemIndex] == ITEM_MOUNTAIN_KING) {
+                            if (AvailableItems[ItemID] == ITEM_MOUNTAIN_KING) {
                                 MountainKingItemRandomized = true;
                             }
 
                             /* This Item is no longer available */
-                            AvailableItems.erase(AvailableItems.begin() + ItemIndex);
+                            AvailableItems.erase(AvailableItems.begin() + ItemID);
                         }
                         else {
                             /* FAILURE! */
@@ -713,15 +713,15 @@ namespace Randomizer {
 
         /* Make sure Mountain King receives an item different from a Medical Herb, a Strange Bottle, Gems/EXP or nothing */
         if (MountainKingItemRandomized == false) {
-            ItemIndex = Random::RandomInteger(NonKeyItemList.size());
-            while (OriginalItemList[NonKeyItemList[ItemIndex]].Contents == MEDICAL_HERB ||
-                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == STRANGE_BOTTLE ||
-                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == GEMS_EXP ||
-                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == NOTHING) {
-                ItemIndex = Random::RandomInteger(NonKeyItemList.size());
+            ItemID = Random::RandomInteger(NonKeyItemList.size());
+            while (OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::MEDICAL_HERB ||
+                   OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::STRANGE_BOTTLE ||
+                   OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::GEMS_EXP ||
+                   OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::NOTHING) {
+                ItemID = Random::RandomInteger(NonKeyItemList.size());
             }
-            RandomizedItemList[ITEM_MOUNTAIN_KING] = OriginalItemList[NonKeyItemList[ItemIndex]];
-            NonKeyItemList.erase(NonKeyItemList.begin() + ItemIndex);
+            RandomizedItemList[ITEM_MOUNTAIN_KING] = OriginalItemList[NonKeyItemList[ItemID]];
+            NonKeyItemList.erase(NonKeyItemList.begin() + ItemID);
         }
 
         /* Shuffle these lists */
@@ -734,16 +734,16 @@ namespace Randomizer {
         }
 
         int Offset = 0;
-        for (ItemIndex = 0; ItemIndex < (int)AvailableItems.size(); ItemIndex++) {
+        for (ItemID = 0; ItemID < (int)AvailableItems.size(); ItemID++) {
 
             /* Mountain King's Item has already been assigned */
-            if (AvailableItems[ItemIndex] == ITEM_MOUNTAIN_KING) {
+            if (AvailableItems[ItemID] == ITEM_MOUNTAIN_KING) {
                 Offset = 1;
                 continue;
             }
 
             /* Fill this item and remove it from the list */
-            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[NonKeyItemList[ItemIndex-Offset]];
+            RandomizedItemList[AvailableItems[ItemID]] = OriginalItemList[NonKeyItemList[ItemID-Offset]];
         }
 
         for (int i=NUMBER_OF_CHESTS; i<NUMBER_OF_ITEMS; i++) {
@@ -751,8 +751,8 @@ namespace Randomizer {
                EXP/Nothing prize into a Medical Herb for now. */
             auto ItemID = RandomizedItemList[i].Contents;
             if (!ROMData::NPCOriginallyGivesEXP(i) &&
-                (ItemID == GEMS_EXP || ItemID == NOTHING)) {
-                RandomizedItemList[i].Contents = MEDICAL_HERB;
+                (ItemID == ItemID::GEMS_EXP || ItemID == ItemID::NOTHING)) {
+                RandomizedItemList[i].Contents = ItemID::MEDICAL_HERB;
             }
         }
 

@@ -9,8 +9,8 @@
 
 namespace Log {
     int GetAreaNumber(const Lair &Lair);
-    std::string GetKeyNPCName(int NPC_ID);
-    std::string GetAreaName(const Lair &Lair);
+    const char* GetKeyNPCName(int NPC_ID);
+    const char* GetAreaName(const Lair &Lair);
 
     void CreateSpoilerLog(const std::vector<Lair> &RandomizedLairList,
                           const std::vector<Item> &RandomizedChestList);
