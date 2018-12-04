@@ -35,52 +35,52 @@
 
 namespace Randomizer {
 
-    static int UndergroundCastleEnemies[6] =
-        {ACT1_GOBLIN, ACT1_IMP, ACT1_FLY, ACT1_PLANT, ACT1_SLIME, ACT1_TORCH};
-    static int LeosPaintingsEnemies[4] =
-        {ACT1_ARMOR, ACT1_BIRD, ACT1_TORCH2, ACT1_BLOCK};
-    static int WaterShrineEnemies[5] =
-        {ACT2_WATER_DRAGON, ACT2_MUDMAN, ACT2_BUSH, ACT2_STATUE, ACT2_FLOWER};
-    static int FireLightShrineEnemies[5] =
-        {ACT2_FIRE_SPIRIT, ACT2_GHOST, ACT2_LIZARDMAN, ACT2_TP_LIZARDMAN, ACT2_FIREMAN};
-    static int FireLightShrineEnemiesNoFireSpirit[4] =
-        {ACT2_GHOST, ACT2_LIZARDMAN, ACT2_TP_LIZARDMAN, ACT2_FIREMAN};
-    static int SeabedEnemies[5] =
-        {ACT3_URCHIN, ACT3_JELLYFISH, ACT3_CRAB, ACT3_RAY, ACT3_SEAHORSE};
-    static int IslandsEnemies[5] =
-        {ACT3_PALM_TREE, ACT3_ROCK, ACT3_FISH, ACT3_GORILLA, ACT3_EAGLE};
-    static int IslandsEnemiesNoFish[4] =
-        {ACT3_PALM_TREE, ACT3_ROCK, ACT3_GORILLA, ACT3_EAGLE};
-    static int MountainEnemies[5] =
-        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT, ACT4_SNOWBALL};
-    static int MountainEnemiesNoSnowball[4] =
-        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT};
-    static int LaynoleLuneEnemies[6] =
-        {ACT4_PURPLE_WIZARD, ACT4_RED_WIZARD, ACT4_ICE_HEAD, ACT4_ICE_BLOCK, ACT4_CIRCLING_BAT, ACT4_SLIME};
-    static int LaynoleLuneEnemiesNoIceBlock[5] =
-        {ACT4_PURPLE_WIZARD, ACT4_RED_WIZARD, ACT4_ICE_HEAD, ACT4_CIRCLING_BAT, ACT4_SLIME};
-    static int LeosBasementEnemies[5] =
-        {ACT5_METAL_MOUSE, ACT5_BULLDOZER, ACT5_HELICOPTER, ACT5_WORM, ACT5_ROBOT};
-    static int LeosBasementEnemiesMetalOnly[3] =
-        {ACT5_METAL_MOUSE, ACT5_BULLDOZER, ACT5_HELICOPTER};
-    static int LeosBasementEnemiesNoMetal[2] =
-        {ACT5_WORM, ACT5_ROBOT};
-    static int ModelTownsEnemies[5] =
-        {ACT5_MINI_KNIGHT, ACT5_MINI_ARCHER, ACT5_MINI_HORSEMAN, ACT5_CATAPULT, ACT5_TOWER};
-    static int CastleBasementEnemies[4] =
-        {ACT6_ORB, ACT6_GHOST, ACT6_SNAKE, ACT6_SKELETON};
-    static int CastleBasementEnemiesNoGhost[3] =
-        {ACT6_ORB, ACT6_SNAKE, ACT6_SKELETON};
-    static int CastleBasementEnemiesFull[6] =
-        {ACT6_SKULL, ACT6_ORB, ACT6_GHOST, ACT6_SNAKE, ACT6_FIRE, ACT6_SKELETON};
-    static int CastleTowersEnemies[5] =
-        {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
-    static int CastleTowersEnemiesFull[7] =
-        {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_FIRE2, ACT6_SKULL2, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
-    static int WorldOfEvilEnemies[3] =
-        {ACT7_DEMON, ACT7_FLY, ACT7_BRICK};
-    static int WorldOfEvilEnemiesNoBrick[2] =
-        {ACT7_DEMON, ACT7_FLY};
+    static EnemyType UndergroundCastleEnemies[6] =
+        {EnemyType::ACT1_GOBLIN, EnemyType::ACT1_IMP, EnemyType::ACT1_FLY, EnemyType::ACT1_PLANT, EnemyType::ACT1_SLIME, EnemyType::ACT1_TORCH};
+    static EnemyType LeosPaintingsEnemies[4] =
+        {EnemyType::ACT1_ARMOR, EnemyType::ACT1_BIRD, EnemyType::ACT1_TORCH2, EnemyType::ACT1_BLOCK};
+    static EnemyType WaterShrineEnemies[5] =
+        {EnemyType::ACT2_WATER_DRAGON, EnemyType::ACT2_MUDMAN, EnemyType::ACT2_BUSH, EnemyType::ACT2_STATUE, EnemyType::ACT2_FLOWER};
+    static EnemyType FireLightShrineEnemies[5] =
+        {EnemyType::ACT2_FIRE_SPIRIT, EnemyType::ACT2_GHOST, EnemyType::ACT2_LIZARDMAN, EnemyType::ACT2_TP_LIZARDMAN, EnemyType::ACT2_FIREMAN};
+    static EnemyType FireLightShrineEnemiesNoFireSpirit[4] =
+        {EnemyType::ACT2_GHOST, EnemyType::ACT2_LIZARDMAN, EnemyType::ACT2_TP_LIZARDMAN, EnemyType::ACT2_FIREMAN};
+    static EnemyType SeabedEnemies[5] =
+        {EnemyType::ACT3_URCHIN, EnemyType::ACT3_JELLYFISH, EnemyType::ACT3_CRAB, EnemyType::ACT3_RAY, EnemyType::ACT3_SEAHORSE};
+    static EnemyType IslandsEnemies[5] =
+        {EnemyType::ACT3_PALM_TREE, EnemyType::ACT3_ROCK, EnemyType::ACT3_FISH, EnemyType::ACT3_GORILLA, EnemyType::ACT3_EAGLE};
+    static EnemyType IslandsEnemiesNoFish[4] =
+        {EnemyType::ACT3_PALM_TREE, EnemyType::ACT3_ROCK, EnemyType::ACT3_GORILLA, EnemyType::ACT3_EAGLE};
+    static EnemyType MountainEnemies[5] =
+        {EnemyType::ACT4_RAT, EnemyType::ACT4_MOOSE, EnemyType::ACT4_YETI, EnemyType::ACT4_BAT, EnemyType::ACT4_SNOWBALL};
+    static EnemyType MountainEnemiesNoSnowball[4] =
+        {EnemyType::ACT4_RAT, EnemyType::ACT4_MOOSE, EnemyType::ACT4_YETI, EnemyType::ACT4_BAT};
+    static EnemyType LaynoleLuneEnemies[6] =
+        {EnemyType::ACT4_PURPLE_WIZARD, EnemyType::ACT4_RED_WIZARD, EnemyType::ACT4_ICE_HEAD, EnemyType::ACT4_ICE_BLOCK, EnemyType::ACT4_CIRCLING_BAT, EnemyType::ACT4_SLIME};
+    static EnemyType LaynoleLuneEnemiesNoIceBlock[5] =
+        {EnemyType::ACT4_PURPLE_WIZARD, EnemyType::ACT4_RED_WIZARD, EnemyType::ACT4_ICE_HEAD, EnemyType::ACT4_CIRCLING_BAT, EnemyType::ACT4_SLIME};
+    static EnemyType LeosBasementEnemies[5] =
+        {EnemyType::ACT5_METAL_MOUSE, EnemyType::ACT5_BULLDOZER, EnemyType::ACT5_HELICOPTER, EnemyType::ACT5_WORM, EnemyType::ACT5_ROBOT};
+    static EnemyType LeosBasementEnemiesMetalOnly[3] =
+        {EnemyType::ACT5_METAL_MOUSE, EnemyType::ACT5_BULLDOZER, EnemyType::ACT5_HELICOPTER};
+    static EnemyType LeosBasementEnemiesNoMetal[2] =
+        {EnemyType::ACT5_WORM, EnemyType::ACT5_ROBOT};
+    static EnemyType ModelTownsEnemies[5] =
+        {EnemyType::ACT5_MINI_KNIGHT, EnemyType::ACT5_MINI_ARCHER, EnemyType::ACT5_MINI_HORSEMAN, EnemyType::ACT5_CATAPULT, EnemyType::ACT5_TOWER};
+    static EnemyType CastleBasementEnemies[4] =
+        {EnemyType::ACT6_ORB, EnemyType::ACT6_GHOST, EnemyType::ACT6_SNAKE, EnemyType::ACT6_SKELETON};
+    static EnemyType CastleBasementEnemiesNoGhost[3] =
+        {EnemyType::ACT6_ORB, EnemyType::ACT6_SNAKE, EnemyType::ACT6_SKELETON};
+    static EnemyType CastleBasementEnemiesFull[6] =
+        {EnemyType::ACT6_SKULL, EnemyType::ACT6_ORB, EnemyType::ACT6_GHOST, EnemyType::ACT6_SNAKE, EnemyType::ACT6_FIRE, EnemyType::ACT6_SKELETON};
+    static EnemyType CastleTowersEnemies[5] =
+        {EnemyType::ACT6_PURPLE_KNIGHT, EnemyType::ACT6_RED_KNIGHT, EnemyType::ACT6_MIMIC, EnemyType::ACT6_DOLL, EnemyType::ACT6_CHESS_KNIGHT};
+    static EnemyType CastleTowersEnemiesFull[7] =
+        {EnemyType::ACT6_PURPLE_KNIGHT, EnemyType::ACT6_RED_KNIGHT, EnemyType::ACT6_FIRE2, EnemyType::ACT6_SKULL2, EnemyType::ACT6_MIMIC, EnemyType::ACT6_DOLL, EnemyType::ACT6_CHESS_KNIGHT};
+    static EnemyType WorldOfEvilEnemies[3] =
+        {EnemyType::ACT7_DEMON, EnemyType::ACT7_FLY, EnemyType::ACT7_BRICK};
+    static EnemyType WorldOfEvilEnemiesNoBrick[2] =
+        {EnemyType::ACT7_DEMON, EnemyType::ACT7_FLY};
 
     static unsigned char OrientationList[4] =
         {0x00,  /* down */
@@ -88,24 +88,24 @@ namespace Randomizer {
          0x80,  /* right */
          0xC0}; /* up */
 
-    static bool CanRandomizeOrientation(int Act, unsigned char Enemy) {
-        return ( (Act == ACT_2 && Enemy == ACT2_WATER_DRAGON) ||
-                 (Act == ACT_4 && Enemy == ACT4_RAT) ||
-                 (Act == ACT_4 && Enemy == ACT4_SNOWBALL) ||
-                 (Act == ACT_5 && Enemy == ACT5_METAL_MOUSE) ||
-                 (Act == ACT_5 && Enemy == ACT5_ROBOT) ||
-                 (Act == ACT_5 && Enemy == ACT5_WORM) ||
-                 (Act == ACT_5 && Enemy == ACT5_TOWER) ||
-                 (Act == ACT_6 && Enemy == ACT6_SKULL) ||
-                 (Act == ACT_6 && Enemy == ACT6_SNAKE) ||
-                 (Act == ACT_6 && Enemy == ACT6_SKULL2) ||
-                 (Act == ACT_7 && Enemy == ACT7_BRICK) );
+    static bool CanRandomizeOrientation(ActID Act, EnemyType Enemy) {
+        return ( (Act == ActID::ACT_2 && Enemy == EnemyType::ACT2_WATER_DRAGON) ||
+                 (Act == ActID::ACT_4 && Enemy == EnemyType::ACT4_RAT) ||
+                 (Act == ActID::ACT_4 && Enemy == EnemyType::ACT4_SNOWBALL) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_METAL_MOUSE) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_ROBOT) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_WORM) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_TOWER) ||
+                 (Act == ActID::ACT_6 && Enemy == EnemyType::ACT6_SKULL) ||
+                 (Act == ActID::ACT_6 && Enemy == EnemyType::ACT6_SNAKE) ||
+                 (Act == ActID::ACT_6 && Enemy == EnemyType::ACT6_SKULL2) ||
+                 (Act == ActID::ACT_7 && Enemy == EnemyType::ACT7_BRICK) );
     }
 
     void RandomizeLairEnemies(Lair &Lair) {
 
         /* Don't randomize enemies from 2-up-2-down lairs, because upside-down enemies can sometimes get away... */
-        if (Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
+        if (Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
             return;
         }
 
@@ -114,14 +114,14 @@ namespace Randomizer {
             return;
         }
 
-        int Enemy = Lair.Enemy;
+        EnemyType Enemy = Lair.Enemy;
         //int OriginalEnemy = Enemy;
 
         switch (Lair.Act) {
-        case ACT_1:
-            if (Enemy != ACT1_SPIKEY &&
-                Enemy != SOLID_ARM) {
-                if (Enemy < ACT1_ARMOR) {
+        case ActID::ACT_1:
+            if (Enemy != EnemyType::ACT1_SPIKEY &&
+                Enemy != EnemyType::SOLID_ARM) {
+                if (Enemy < EnemyType::ACT1_ARMOR) {
                     /* Lair is in Underground Castle */
                     Enemy = UndergroundCastleEnemies[Random::RandomInteger(6)];
                 }
@@ -131,11 +131,11 @@ namespace Randomizer {
                 }
             }
             break;
-        case ACT_2:
-            if (Enemy != ACT2_SCORPION &&
-                Enemy != ACT2_FIRE_SPIRIT &&
-                Enemy != ELEMENTAL_STATUE) {
-                if (Enemy < ACT2_FIRE_SPIRIT) {
+        case ActID::ACT_2:
+            if (Enemy != EnemyType::ACT2_SCORPION &&
+                Enemy != EnemyType::ACT2_FIRE_SPIRIT &&
+                Enemy != EnemyType::ELEMENTAL_STATUE) {
+                if (Enemy < EnemyType::ACT2_FIRE_SPIRIT) {
                     /* Lair is in Lost Marsh or Water Shrine */
                     Enemy = WaterShrineEnemies[Random::RandomInteger(5)];
                 }
@@ -145,10 +145,10 @@ namespace Randomizer {
                 }
             }
             break;
-        case ACT_3:
-            if (Enemy != ACT3_METAL_GORILLA &&
-                Enemy != FLOATING_SKULL) {
-                if (Enemy < ACT3_PALM_TREE) {
+        case ActID::ACT_3:
+            if (Enemy != EnemyType::ACT3_METAL_GORILLA &&
+                Enemy != EnemyType::FLOATING_SKULL) {
+                if (Enemy < EnemyType::ACT3_PALM_TREE) {
                     /* Lair is in Seabed */
                     Enemy = SeabedEnemies[Random::RandomInteger(5)];
                 }
@@ -163,9 +163,9 @@ namespace Randomizer {
                 }
             }
             break;
-        case ACT_4:
-            if (Enemy != POSEIDON) {
-                if (Enemy < ACT4_PURPLE_WIZARD) {
+        case ActID::ACT_4:
+            if (Enemy != EnemyType::POSEIDON) {
+                if (Enemy < EnemyType::ACT4_PURPLE_WIZARD) {
                     /* Lair is in Mountain of Souls */
                     Enemy = MountainEnemiesNoSnowball[Random::RandomInteger(4)];
                 }
@@ -175,9 +175,9 @@ namespace Randomizer {
                 }
             }
             break;
-        case ACT_5:
-            if (Enemy != TIN_DOLL) {
-                if (Enemy < ACT5_MINI_KNIGHT) {
+        case ActID::ACT_5:
+            if (Enemy != EnemyType::TIN_DOLL) {
+                if (Enemy < EnemyType::ACT5_MINI_KNIGHT) {
                     /* Lair is in Leo's Lab Basement or Power Plant */
                     if (Lair.NoMetalLairPosition()) {
                         Enemy = LeosBasementEnemiesNoMetal[Random::RandomInteger(2)];
@@ -195,15 +195,15 @@ namespace Randomizer {
                 }
             }
             break;
-        case ACT_6:
-            if (Enemy != DEMON_BIRD) {
-                if (Enemy < ACT6_PURPLE_KNIGHT) {
+        case ActID::ACT_6:
+            if (Enemy != EnemyType::DEMON_BIRD) {
+                if (Enemy < EnemyType::ACT6_PURPLE_KNIGHT) {
                     /* Lair is in Magridd Castle Basement */
                     if (Lair.NoGhostLairPosition()) {
                         Enemy = CastleBasementEnemiesNoGhost[Random::RandomInteger(3)];
                     }
                     else if (Lair.MustBeGhostLairPosition()) {
-                        Enemy = ACT6_GHOST;
+                        Enemy = EnemyType::ACT6_GHOST;
                     }
                     else {
                         Enemy = CastleBasementEnemies[Random::RandomInteger(4)];
@@ -215,7 +215,7 @@ namespace Randomizer {
                 }
             }
             break;
-        case ACT_7:
+        case ActID::ACT_7:
             /* Lair is in World of Evil */
             Enemy = WorldOfEvilEnemiesNoBrick[Random::RandomInteger(2)];
             break;
@@ -245,37 +245,31 @@ namespace Randomizer {
 
     void RandomizeLairType(Lair &Lair) {
 
-        if (Lair.Type[0] == LAIR_ONE_BY_ONE ||
-            Lair.Type[0] == LAIR_MULTISPAWN ||
-            Lair.Type[0] == LAIR_ONE_BY_ONE_PROX) {
+        if (Lair.Type == LairType::LAIR_ONE_BY_ONE ||
+            Lair.Type == LairType::LAIR_MULTISPAWN ||
+            Lair.Type == LairType::LAIR_ONE_BY_ONE_PROX) {
             int RandomValue = Random::RandomInteger(ONE_BY_ONE_WEIGHT + MULTISPAWN_WEIGHT + ONE_BY_ONE_PROX_WEIGHT);
             if (RandomValue < ONE_BY_ONE_WEIGHT) {
-                Lair.Type[0] = LAIR_ONE_BY_ONE;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE;
             }
             else if (RandomValue < ONE_BY_ONE_WEIGHT + MULTISPAWN_WEIGHT) {
-                Lair.Type[0] = LAIR_MULTISPAWN;
-                Lair.Type[1] = LAIR_MULTISPAWN_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_MULTISPAWN;
             }
             else {
-                Lair.Type[0] = LAIR_ONE_BY_ONE_PROX;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_PROX_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE_PROX;
             }
         }
-        else if (Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
+        else if (Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
             int RandomValue = Random::RandomInteger(4);
             switch (RandomValue) {
             case 0:
-                Lair.Type[0] = LAIR_ONE_BY_ONE;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE;
                 break;
             case 1:
-                Lair.Type[0] = LAIR_MULTISPAWN;
-                Lair.Type[1] = LAIR_MULTISPAWN_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_MULTISPAWN;
                 break;
             case 2:
-                Lair.Type[0] = LAIR_ONE_BY_ONE_PROX;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_PROX_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE_PROX;
                 break;
             case 3:
                 /* Don't change */
@@ -306,11 +300,11 @@ namespace Randomizer {
         }
 #endif
 
-        if (Lair.Type[0] == LAIR_ONE_BY_ONE || Lair.Type[0] == LAIR_ONE_BY_ONE_PROX) {
+        if (Lair.Type == LairType::LAIR_ONE_BY_ONE || Lair.Type == LairType::LAIR_ONE_BY_ONE_PROX) {
             Lair.NbEnemies = Random::RandomIntegerRange(NB_ENEMIES_ONE_BY_ONE_MIN, NB_ENEMIES_ONE_BY_ONE_MAX);
         }
-        else if (Lair.Type[0] == LAIR_MULTISPAWN || Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
-            if (Lair.Enemy == ACT6_MIMIC) {
+        else if (Lair.Type == LairType::LAIR_MULTISPAWN || Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
+            if (Lair.Enemy == EnemyType::ACT6_MIMIC) {
                 /* Don't spawn too many for those enemies */
                 Lair.NbEnemies = Random::RandomIntegerRange(NB_ENEMIES_MULTISPAWN_REDUCED_MIN, NB_ENEMIES_MULTISPAWN_REDUCED_MAX);
             }
@@ -327,12 +321,12 @@ namespace Randomizer {
 
 
     void RandomizeLairSpawnRate(Lair &Lair) {
-        if (Lair.Type[0] == LAIR_MULTISPAWN || Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
+        if (Lair.Type == LairType::LAIR_MULTISPAWN || Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
             Lair.SpawnRate = Random::RandomIntegerRange(SPAWN_RATE_MIN, SPAWN_RATE_MAX);
         }
 
         /* Reset Spawn Rate for One-by-One Lairs */
-        if (Lair.Type[0] == LAIR_ONE_BY_ONE || Lair.Type[0] == LAIR_ONE_BY_ONE_PROX) {
+        if (Lair.Type == LairType::LAIR_ONE_BY_ONE || Lair.Type == LairType::LAIR_ONE_BY_ONE_PROX) {
             Lair.SpawnRate = 0;
         }
     }
@@ -342,8 +336,8 @@ namespace Randomizer {
 
         for (int LairIndex = 0; LairIndex < NUMBER_OF_LAIRS; LairIndex++) {
 
-            if (LairList[LairIndex].Enemy == 0 ||
-                LairList[LairIndex].Enemy == 0xFF) {
+            if (LairList[LairIndex].Enemy == EnemyType::NO_ENEMY ||
+                LairList[LairIndex].Enemy == EnemyType::DREAM_NO_ENEMY) {
                 /* Skip empty lairs / lairs in dreams */
                 continue;
             }
@@ -371,14 +365,14 @@ namespace Randomizer {
         ROMData::GetOriginalMapSpriteData(OriginalSpriteList, ROMFile);
         RandomizedSpriteList = OriginalSpriteList;
 
-        unsigned char Enemy;
+        EnemyType Enemy;
         for (int SpriteIndex = 0; SpriteIndex < NUMBER_OF_SPRITES; ++SpriteIndex) {
 
             Enemy = RandomizedSpriteList[SpriteIndex].Enemy;
 
             switch (RandomizedSpriteList[SpriteIndex].Act) {
-            case ACT_1:
-                if (Enemy < ACT1_ARMOR) {
+            case ActID::ACT_1:
+                if (Enemy < EnemyType::ACT1_ARMOR) {
                     /* Sprite is in Underground Castle */
                     Enemy = UndergroundCastleEnemies[Random::RandomInteger(6)];
                 }
@@ -387,8 +381,8 @@ namespace Randomizer {
                     Enemy = LeosPaintingsEnemies[Random::RandomInteger(4)];
                 }
                 break;
-            case ACT_2:
-                if (Enemy < ACT2_FIRE_SPIRIT) {
+            case ActID::ACT_2:
+                if (Enemy < EnemyType::ACT2_FIRE_SPIRIT) {
                     /* Sprite is in Lost Marsh or Water Shrine */
                     Enemy = WaterShrineEnemies[Random::RandomInteger(5)];
                 }
@@ -397,8 +391,8 @@ namespace Randomizer {
                     Enemy = FireLightShrineEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_3:
-                if (Enemy < ACT3_PALM_TREE) {
+            case ActID::ACT_3:
+                if (Enemy < EnemyType::ACT3_PALM_TREE) {
                     /* Sprite is in Seabed */
                     Enemy = SeabedEnemies[Random::RandomInteger(5)];
                 }
@@ -407,8 +401,8 @@ namespace Randomizer {
                     Enemy = IslandsEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_4:
-                if (Enemy < ACT4_PURPLE_WIZARD) {
+            case ActID::ACT_4:
+                if (Enemy < EnemyType::ACT4_PURPLE_WIZARD) {
                     /* Sprite is in Mountain of Souls */
                     Enemy = MountainEnemies[Random::RandomInteger(5)];
                 }
@@ -417,8 +411,8 @@ namespace Randomizer {
                     Enemy = LaynoleLuneEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_5:
-                if (Enemy < ACT5_MINI_KNIGHT) {
+            case ActID::ACT_5:
+                if (Enemy < EnemyType::ACT5_MINI_KNIGHT) {
                     /* Sprite is in Leo's Lab Basement or Power Plant */
                     Enemy = LeosBasementEnemies[Random::RandomInteger(5)];
                 }
@@ -427,8 +421,8 @@ namespace Randomizer {
                     Enemy = ModelTownsEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_6:
-                if (Enemy < ACT6_PURPLE_KNIGHT) {
+            case ActID::ACT_6:
+                if (Enemy < EnemyType::ACT6_PURPLE_KNIGHT) {
                     /* Sprite is in Magridd Castle Basement */
                     Enemy = CastleBasementEnemiesFull[Random::RandomInteger(6)];
                 }
@@ -437,7 +431,7 @@ namespace Randomizer {
                     Enemy = CastleTowersEnemiesFull[Random::RandomInteger(7)];
                 }
                 break;
-            case ACT_7:
+            case ActID::ACT_7:
                 /* Sprite is in World of Evil */
                 Enemy = WorldOfEvilEnemies[Random::RandomInteger(3)];
                 break;
@@ -477,7 +471,7 @@ namespace Randomizer {
 
             /* Explore the targeted region: store all the new available reviving lairs and items... */
             for (const auto& Content : RegionList[RegionIndex].Contents) {
-                if (Content.Type == LAIR) {
+                if (Content.Type == GoalType::LAIR) {
                     AvailableRevivingLairs.push_back(Content.Index);
                 }
                 else {
@@ -496,8 +490,8 @@ namespace Randomizer {
 
                 /* Read the contents of this goal */
                 for (const auto& Requirement : GoalList[AvailableGoals[GoalIndex]].Requirements) {
-                    if ( (Requirement.Type == LAIR && RevivedNPCs[Requirement.Index]       == false) ||
-                         (Requirement.Type == ITEM && CollectedKeyItems[Requirement.Index] == false) ) {
+                    if ( (Requirement.Type == GoalType::LAIR && RevivedNPCs[Requirement.Index]       == false) ||
+                         (Requirement.Type == GoalType::ITEM && CollectedKeyItems[Requirement.Index] == false) ) {
                         /* This goal is not met yet, check the next one */
                         GoalFulfilled = false;
                         break;
@@ -604,7 +598,7 @@ namespace Randomizer {
 
             /* Read the contents of the goal */
             for (const auto &Requirement : GoalList[AvailableGoals[GoalIndex]].Requirements) {
-                if (Requirement.Type == LAIR) {
+                if (Requirement.Type == GoalType::LAIR) {
 
                     /* If this NPC is already revived, skip this requirement */
                     if (RevivedNPCs[Requirement.Index] == false) {

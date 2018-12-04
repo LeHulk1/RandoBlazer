@@ -401,7 +401,10 @@ namespace ROMData {
             ROMFile.read((char*)(&(LairList[i].Act)), 1);
             ROMFile.read((char*)(&(LairList[i].PositionData[0])), POSITION_DATA_SIZE);
             ROMFile.seekg(2, std::ios::cur);
-            ROMFile.read((char*)(&(LairList[i].Type[0])), LAIR_TYPE_SIZE);
+            unsigned char b1, b2;
+            ROMFile.read((char*)&b1, 1);
+            ROMFile.read((char*)&b2, 1);
+            LairList[i].Type = static_cast<LairType>((b1 << 8) | b2);
             ROMFile.seekg(1, std::ios::cur);
             ROMFile.read((char*)(&(LairList[i].NbEnemies)), 1);
             ROMFile.read((char*)(&(LairList[i].SpawnRate)), 1);
@@ -443,13 +446,13 @@ namespace ROMData {
     void GetOriginalMapSpriteData (std::vector<Sprite> &SpriteList, std::fstream &ROMFile) {
 
         int SpriteIndex = 0;
-        for (int Act = ACT_1; Act < 7; ++Act) {
+        for (int Act = (int)ActID::ACT_1; Act < (int)ActID::ACT_MAX; ++Act) {
             for (int AddressIndex = 0; AddressIndex < 63; ++AddressIndex) {
                 if (SpriteDataAddressList[Act][AddressIndex] == 0) {
                     break;
                 }
                 SpriteList[SpriteIndex].Address = SpriteDataAddressList[Act][AddressIndex];
-                SpriteList[SpriteIndex].Act = Act;
+                SpriteList[SpriteIndex].Act = (ActID)Act;
 
                 ROMFile.seekg(SpriteDataAddressList[Act][AddressIndex], std::ios::beg);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].x)), 1);

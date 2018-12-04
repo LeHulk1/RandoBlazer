@@ -371,17 +371,17 @@ namespace Log {
 
     int GetAreaNumber(const Lair &Lair) {
         switch (Lair.Act) {
-        case 0x00:
+	case ActID::ACT_1:
             return 1;
-        case 0x01:
+	case ActID::ACT_2:
             return 2;
-        case 0x02:
+	case ActID::ACT_3:
             return 3;
-        case 0x03:
+	case ActID::ACT_4:
             return 4;
-        case 0x04:
+	case ActID::ACT_5:
             return 5;
-        case 0x05:
+	case ActID::ACT_6:
             return 6;
         default:
             /* Should not happen */

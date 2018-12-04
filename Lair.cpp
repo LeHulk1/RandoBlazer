@@ -2,13 +2,12 @@
 
 
 Lair::Lair() {
-    Act             = ACT_1;
+    Act             = ActID::ACT_1;
     PositionData[0] = 0;
     PositionData[1] = 0;
     PositionData[2] = 0;
-    Type[0]         = LAIR_ONE_BY_ONE;
-    Type[1]         = 0;
-    Enemy           = NO_ENEMY;
+    Type            = LairType::LAIR_ONE_BY_ONE;
+    Enemy           = EnemyType::NO_ENEMY;
     NbEnemies       = 0;
     SpawnRate       = 0;
     Orientation     = 0;
@@ -22,8 +21,7 @@ Lair& Lair::operator= (const Lair& OtherLair) {
         PositionData[0] = OtherLair.PositionData[0];
         PositionData[1] = OtherLair.PositionData[1];
         PositionData[2] = OtherLair.PositionData[2];
-        Type[0]         = OtherLair.Type[0];
-        Type[1]         = OtherLair.Type[1];
+        Type            = OtherLair.Type;
         Enemy           = OtherLair.Enemy;
         NbEnemies       = OtherLair.NbEnemies;
         SpawnRate       = OtherLair.SpawnRate;

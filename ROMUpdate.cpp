@@ -78,7 +78,11 @@ namespace ROMUpdate {
             ROMFile.write((char*)(&RandomizedLairList[i].Act), 1);
             ROMFile.write((char*)(&(RandomizedLairList[i].PositionData[0])), POSITION_DATA_SIZE);
             ROMFile.seekp(2, std::ios::cur);
-            ROMFile.write((char*)(&(RandomizedLairList[i].Type[0])), LAIR_TYPE_SIZE);
+            unsigned char lairType[2] = {
+                static_cast<unsigned char>((static_cast<unsigned int>(RandomizedLairList[i].Type) >> 8) & 0xFF),
+                static_cast<unsigned char>(static_cast<unsigned int>(RandomizedLairList[i].Type) & 0xFF)
+            };
+            ROMFile.write((char*)&lairType, sizeof(lairType));
             ROMFile.seekp(1, std::ios::cur);
             ROMFile.write((char*)(&RandomizedLairList[i].NbEnemies), 1);
             ROMFile.write((char*)(&RandomizedLairList[i].SpawnRate), 1);

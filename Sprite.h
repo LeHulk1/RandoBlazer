@@ -8,11 +8,11 @@ public:
     ~Sprite();
 
     int Address;
-    int Act;
+    ActID Act;
     unsigned char x;
     unsigned char y;
     unsigned char Orientation;
-    unsigned char Enemy; /* Enemy type */
+    EnemyType Enemy;
 };
 
 #endif // __SPRITE_H__
