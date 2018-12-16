@@ -4,7 +4,7 @@
 #define TYPE_CHEST  0
 #define TYPE_NPC    1
 
-enum class ItemID {
+enum class ItemID : unsigned char {
     NOTHING         = 0x00,
     SWORD_OF_LIFE   = 0x01,
     PSYCHO_SWORD    = 0x02,
