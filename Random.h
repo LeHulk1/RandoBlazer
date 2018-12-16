@@ -17,7 +17,7 @@ namespace Random {
         auto last = c.end();
         auto n = last - first;
         for (auto i = n-1; i > 0; --i) {
-            std::swap(first[i], first[RandomIntegerRange(0, i)]);
+            std::swap(first[i], first[RandomIntegerRange(0, static_cast<int>(i))]);
         }
     }
 }
