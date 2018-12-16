@@ -1,0 +1,10 @@
+function(check_seed seed sha256)
+  execute_process(COMMAND $ENV{EXE} $ENV{ROM} ${seed})
+  file(SHA256 "Soul Blazer Randomized.smc" outsha256)
+  if(NOT "${sha256}" STREQUAL "${outsha256}")
+    message(FATAL_ERROR "Seed ${seed} expected sha256 ${sha256} but got ${outsha256}")
+  endif()
+endfunction()
+
+message(STATUS "Running tests with exe $ENV{EXE} rom $ENV{ROM}")
+check_seed(1337 ec242475666b43069ea620d7997bc2af0bbb9d71bdf23f280d6f8b6ee650e493)

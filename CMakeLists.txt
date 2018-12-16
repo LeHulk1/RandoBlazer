@@ -65,3 +65,16 @@ else()
     OUTPUT_NAME randoblazer
   )
 endif()
+
+if (ROM)
+  message(STATUS "ROM found at: ${ROM}")
+  enable_testing()
+
+  add_test(
+    NAME portability_check
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/run-test.cmake "-DEXE=$<TARGET_FILE:randoblazer_cli>" "-DROM=${ROM}"
+  )
+  set_tests_properties(portability_check PROPERTIES
+    ENVIRONMENT "EXE=$<TARGET_FILE:randoblazer_cli>;ROM=${ROM}"
+  )
+endif()
