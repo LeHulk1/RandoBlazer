@@ -17,10 +17,7 @@ namespace ROMUpdate {
                                const std::vector<Item>& RandomizedItemList,
                                std::fstream &ROMFile,
                                long Seed) {
-        unsigned char GemsExpValue[2];
         unsigned char Byte;
-        int GemsExp_TensAndUnits;
-
 
         /*************************/
         /* Update Chest contents */
@@ -29,17 +26,15 @@ namespace ROMUpdate {
         ROMFile.seekp (CHEST_DATA_ADDRESS, std::ios::beg);
         bool DoubledChestDone = false;
         for (int i=0; i<NUMBER_OF_CHESTS; i++) {
-
             /* Put the cursor on the contents data for this chest */
             ROMFile.seekp (3, std::ios::cur);
 
             /* Update the contents */
             ItemID ItemID = RandomizedItemList[i].Contents;
-            ROMFile.write((char*)(&ItemID), 1);
-            GemsExp_TensAndUnits = RandomizedItemList[i].GemsExp % 100;
-            GemsExpValue[0] = ConvertToHex(GemsExp_TensAndUnits);
-            GemsExpValue[1] = ConvertToHex((RandomizedItemList[i].GemsExp - GemsExp_TensAndUnits) / 100);
-            ROMFile.write((char*)(&GemsExpValue[0]), 2);
+            //ROMFile.write((char*)(&ItemID), 1);
+            ROMFile.put((char)ItemID);
+            ROMFile.put(ConvertToHex(RandomizedItemList[i].GemsExp % 100));
+            ROMFile.put(ConvertToHex(RandomizedItemList[i].GemsExp / 100));
 
             /* Chest at index 22 is doubled, so we have to double its replacing one */
             if (i==22 && DoubledChestDone==false) {
@@ -48,7 +43,8 @@ namespace ROMUpdate {
             }
 
             /* Skip over FF bytes */
-            ROMFile.seekg (0, std::ios::cur);
+            /* Synchronize read position with write position */
+            ROMFile.seekg (ROMFile.tellp(), std::ios::beg);
             do {
                 ROMFile.read ((char*)(&Byte), 1);
             }

@@ -747,8 +747,7 @@ namespace ROMUpdate {
     int ConvertToHex(int Dec) {
         /* Converts a decimal integer into its hex "equivalent"
            This is useful where the ROM stores the data as decimal values (like gems in chests). */
-        int Tens = Dec / 10;
-        return (Tens*16) + (Dec - (Tens*10));
+        return (((Dec / 10) << 4) + (Dec % 10)) & 0xFF;
     }
 
 
