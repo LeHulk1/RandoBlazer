@@ -719,8 +719,8 @@ namespace Randomizer {
         }
 
         /* Shuffle these lists */
-        random_shuffle(NonKeyNPCList.begin(),  NonKeyNPCList.end(),  Random::RandomInteger);
-        random_shuffle(NonKeyItemList.begin(), NonKeyItemList.end(), Random::RandomInteger);
+        Random::Shuffle(NonKeyNPCList);
+        Random::Shuffle(NonKeyItemList);
 
         for (RevivingLairIndex = 0; RevivingLairIndex < (int)AvailableRevivingLairs.size(); RevivingLairIndex++) {
             /* Fill this lair and remove it from the list */
