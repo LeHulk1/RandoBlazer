@@ -12,14 +12,14 @@ endif()
 
 include(FetchContent)
 FetchContent_Declare(
-  Boost
+  Boost-CMake
   GIT_REPOSITORY https://github.com/Orphis/boost-cmake.git
 )
 
-FetchContent_GetProperties(Boost)
-if(NOT Boost_POPULATED)
-  FetchContent_Populate(Boost)
-  add_subdirectory(${boost_SOURCE_DIR} ${boost_BINARY_DIR} EXCLUDE_FROM_ALL)
+FetchContent_GetProperties(Boost-CMake)
+if(NOT boost-cmake_POPULATED)
+  FetchContent_Populate(Boost-CMake)
+  add_subdirectory(${boost-cmake_SOURCE_DIR} ${boost-cmake_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
 add_library(randoblazerlib STATIC
