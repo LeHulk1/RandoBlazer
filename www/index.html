@@ -17,9 +17,9 @@
         crossorigin="anonymous"></script>
     <style>
         .cover-container {
-                max-width: 42em;
-            }
-        </style>
+            max-width: 42em;
+        }
+    </style>
 </head>
 
 <body class="text-center">
@@ -92,8 +92,7 @@
 
         function checkExistingROM() {
             if (FS.readdir('/data').includes('Soul Blazer.smc')) {
-                let result = ccall("check_file",
-                    "number", ["string"], ["/data/Soul Blazer.smc"]);
+                let result = Module.CheckFile("/data/Soul Blazer.smc");
                 let alert_box = document.querySelector('#alert_box');
                 if (result == 0) {
                     rompicker_file.classList.add('is-invalid');
@@ -146,10 +145,8 @@
 
         document.getElementById('randomize_button').onclick = () => {
             let seed = document.getElementById('random_seed_input').valueAsNumber;
-            if (isNaN(seed) || seed == 0) {
-                let array = new Uint32Array(1);
-                window.crypto.getRandomValues(array);
-                seed = array[0];
+            if (isNaN(seed)) {
+                seed = 0;
             }
             let options = [];
             let race_input = document.getElementById('race_input');
@@ -162,29 +159,26 @@
                 document.getElementById('copy_link').classList.remove('d-none');
             }
 
-            let result = ccall("randomize",
-                'number',
-                ['string', 'string', 'number', 'string'],
-                ["/data/Soul Blazer.smc", "/out.smc", seed, options.join(',')]);
+            let result = Module.Randomize("/data/Soul Blazer.smc", "/out.smc", seed, options.join(','));
 
-            if (result) {
+            if (result.length > 0) {
                 let blob = new Blob([FS.readFile('/out.smc')], { type: 'application/octet-stream' });
                 let url = URL.createObjectURL(blob);
                 let a = document.getElementById('download_link');
-                a.download = "Soul Blazer Randomizer - " + seed + ".smc";
+                a.download = "Soul Blazer Randomizer - " + result + ".smc";
                 a.href = url;
-
+                
                 if (!race_input.checked) {
                     blob = new Blob([FS.readFile('/SpoilerLog.txt')], { type: 'application/octet-stream' });
                     url = URL.createObjectURL(blob);
                     a = document.getElementById('download_spoiler_link');
-                    a.download = "Soul Blazer Randomizer - " + seed + " Spoiler.txt";
+                    a.download = "Soul Blazer Randomizer - " + result + " Spoiler.txt";
                     a.href = url;
 
                     b = document.getElementById('copy_link');
                     b.onclick = () => {
                         const el = document.createElement('textarea');
-                        el.value = [location.protocol, '//', location.host, location.pathname, '?seed=', seed].join('');
+                        el.value = [location.protocol, '//', location.host, location.pathname, '?seed=', result].join('');
                         el.setAttribute('readonly', '');
                         el.style.position = 'absolute';
                         el.style.left = '-9999px';

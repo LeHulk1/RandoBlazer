@@ -52,7 +52,8 @@ if(CMAKE_SYSTEM_NAME MATCHES "Emscripten")
   add_executable(randoblazer_emscripten
     Emscripten.cpp
   )
-  target_link_libraries(randoblazer_emscripten PRIVATE randoblazerlib)
+  target_compile_options(randoblazer_emscripten PRIVATE --bind)
+  target_link_libraries(randoblazer_emscripten PRIVATE randoblazerlib --bind)
   set_target_properties(randoblazer_emscripten PROPERTIES
     OUTPUT_NAME randoblazer
   )

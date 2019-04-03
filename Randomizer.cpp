@@ -803,7 +803,7 @@ namespace Randomizer {
         return OriginalROMStatus;
     }
 
-    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options) {
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options, std::string* seedName) {
         /****************************\
         |*  Check the original ROM  *|
         \****************************/
@@ -833,6 +833,10 @@ namespace Randomizer {
             }
             seedText = "Race ";
             seedText += std::string(buffer, 5);
+        }
+
+        if (seedName) {
+            *seedName = seedText;
         }
 
         std::cout << "Seed " << seedText << "\n";

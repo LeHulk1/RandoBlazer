@@ -20,7 +20,7 @@ namespace Randomizer {
     };
 
     ROMStatus CheckFile(const std::string& Filename);
-    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options);
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options, std::string* seed_name = 0);
 
     void RandomizeLairEnemies(Lair &Lair);
     void RandomizeLairType(Lair &Lair);
