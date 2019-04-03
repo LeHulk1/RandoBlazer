@@ -9,11 +9,18 @@
 #include "ROMCheck.h"
 
 #include <fstream>
+#include <string>
 #include <vector>
 
 namespace Randomizer {
+    struct Options {
+	Options() {}
+	Options(const std::string& options_string);
+        bool race = false;
+    };
+
     ROMStatus CheckFile(const std::string& Filename);
-    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed);
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options);
 
     void RandomizeLairEnemies(Lair &Lair);
     void RandomizeLairType(Lair &Lair);

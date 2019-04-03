@@ -754,7 +754,7 @@ namespace ROMUpdate {
     void GeneralTextUpdate(const std::vector<Lair>& RandomizedLairList,
                            const std::vector<Item>& RandomizedItemList,
                            std::fstream &ROMFile,
-                           long Seed) {
+                           const std::string& Seed) {
 
         unsigned char Byte;
         const char* Text;
@@ -825,9 +825,8 @@ namespace ROMUpdate {
         TEXT_WriteString("RandoBlazer v0.5c  ");
         ROMFile.seekp(0x143B9, std::ios::beg);
         TEXT_WriteString("Seed ");
-        char SeedChr[11] = {'\0'};
-        sprintf(SeedChr, "%10lu", Seed);
-        TEXT_WriteString(SeedChr);
+	ROMFile.write(Seed.c_str(), 10);
+        //TEXT_WriteString(Seed.c_str());
 
         /*** Correct Magic Flare typo + Greenwood/Actinidia leaves + "received" typo */
         ROMFile.seekp(0x150EC, std::ios::beg);
@@ -1677,7 +1676,7 @@ namespace ROMUpdate {
     void NPCTextUpdateMain(const std::vector<Lair>& RandomizedLairList,
                            const std::vector<Item>& RandomizedItemList,
                            std::fstream &ROMFile,
-                           long Seed) {
+                           const std::string& Seed) {
         unsigned char GemsExpValue[2];
         unsigned char Byte;
         int GemsExp_TensAndUnits;

@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <iostream>
 #include <cstdio>
+#include <boost/algorithm/string.hpp>
+#include <boost/uuid/detail/sha1.hpp>
 
 #define HEADER_OFFSET        0x200
 #define SEED_SIZE            10
@@ -801,7 +803,7 @@ namespace Randomizer {
         return OriginalROMStatus;
     }
 
-    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed) {
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options) {
         /****************************\
         |*  Check the original ROM  *|
         \****************************/
@@ -810,8 +812,30 @@ namespace Randomizer {
             return false;
         }
 
-        Random::RandomInit(seed);
-        std::cout << "Seed " << seed << "\n";
+        if (options.race) {
+            std::cout << "Race mode enabled, randomizing seed number.\n";
+            seed = 0;
+        }
+
+        seed = Random::RandomInit(seed);
+        std::string seedText = std::to_string(seed);
+
+        if (options.race) {
+            seedText += std::to_string(Random::RandomInteger(INT32_MAX));
+            // Get top 10 characters of SHA1 hash
+            boost::uuids::detail::sha1 sha1;
+            sha1.process_bytes(seedText.data(), seedText.size());
+            unsigned hash[5] = {0};
+            sha1.get_digest(hash);
+            char buffer[41] = {0};
+            for (int i = 0; i < 5; i++) {
+                std::sprintf(buffer + (i << 3), "%08x", hash[i]);
+            }
+            seedText = "Race ";
+            seedText += std::string(buffer, 5);
+        }
+
+        std::cout << "Seed " << seedText << "\n";
 
         /***************************************************\
         |*  Delete old modified ROM / backup original ROM  *|
@@ -847,11 +871,11 @@ namespace Randomizer {
             ROMFileCopy.write((char*)DataBuffer, ROMFileSize);
             delete[] DataBuffer;
         }
-        else if(!ROMFileCopy.is_open())	{
+        else if(!ROMFileCopy.is_open())        {
             std::cout << "Failure backing up the ROM!\n";
             return false;
         }
-        else if(!ROMFileOriginal.is_open())	{
+        else if(!ROMFileOriginal.is_open())        {
             std::cout << "Failure opening the original ROM for copying!\n";
             return false;
         }
@@ -910,7 +934,7 @@ namespace Randomizer {
         ROMUpdate::ROMUpdateTextAndItems(RandomizedLairList,
                                         RandomizedItemList,
                                         ROMFile,
-                                        seed);
+                                        seedText);
 
         /* Close the ROM file */
         ROMFile.close();
@@ -918,13 +942,28 @@ namespace Randomizer {
 
         std::cout << " . . . ROM modification complete.\n";
 
-        std::cout << "Starting Spoiler Log creation.\n";
+        if (!options.race) {
+            std::cout << "Starting Spoiler Log creation.\n";
 
-        /* Generate the Spoiler Log */
-        Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+            /* Generate the Spoiler Log */
+            Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
-        std::cout << " . . . Spoiler Log created.\n";
+            std::cout << " . . . Spoiler Log created.\n";
+        }
 
         return true;
+    }
+
+    Options::Options(const std::string& options_string) {
+        std::vector<std::string> options_list;
+        boost::algorithm::split(options_list, options_string, boost::is_any_of(","));
+
+        for (const auto &option : options_list) {
+            if (option == "race") {
+                race = true;
+            } else {
+                std::cout << "Unknown option: " << option << "\n";
+            }
+        }
     }
 }

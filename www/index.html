@@ -17,9 +17,9 @@
         crossorigin="anonymous"></script>
     <style>
         .cover-container {
-	        max-width: 42em;
-	    }
-	</style>
+                max-width: 42em;
+            }
+        </style>
 </head>
 
 <body class="text-center">
@@ -45,8 +45,13 @@
                 <div class="form-group row">
                     <label for="random_seed_input" class="col-sm-6 col-form-label">Seed number (0 for random)</label>
                     <div class="col-sm-6">
-                        <input type="number" class="form-control" id="random_seed_input" type="number" min="0" max="4294967295"
-                            value="0" required>
+                        <input type="number" class="form-control" id="random_seed_input" min="0" max="4294967295" value="0" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="race_input" class="col-sm-6 col-form-label">Race mode (no spoiler log)</label>
+                    <div class="col-sm-6">
+                        <input type="checkbox" class="form-control" id="race_input" value="race">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary" id="randomize_button" disabled>Randomize!</button>
@@ -146,10 +151,21 @@
                 window.crypto.getRandomValues(array);
                 seed = array[0];
             }
+            let options = [];
+            let race_input = document.getElementById('race_input');
+            if (race_input.checked) {
+                options.push(race_input.value);
+                document.getElementById('download_spoiler_link').classList.add('d-none');
+                document.getElementById('copy_link').classList.add('d-none');
+            } else {
+                document.getElementById('download_spoiler_link').classList.remove('d-none');
+                document.getElementById('copy_link').classList.remove('d-none');
+            }
+
             let result = ccall("randomize",
                 'number',
-                ['string', 'string', 'number'],
-                ["/data/Soul Blazer.smc", "/out.smc", seed]);
+                ['string', 'string', 'number', 'string'],
+                ["/data/Soul Blazer.smc", "/out.smc", seed, options.join(',')]);
 
             if (result) {
                 let blob = new Blob([FS.readFile('/out.smc')], { type: 'application/octet-stream' });
@@ -158,30 +174,32 @@
                 a.download = "Soul Blazer Randomizer - " + seed + ".smc";
                 a.href = url;
 
-                blob = new Blob([FS.readFile('/SpoilerLog.txt')], { type: 'application/octet-stream' });
-                url = URL.createObjectURL(blob);
-                a = document.getElementById('download_spoiler_link');
-                a.download = "Soul Blazer Randomizer - " + seed + " Spoiler.txt";
-                a.href = url;
+                if (!race_input.checked) {
+                    blob = new Blob([FS.readFile('/SpoilerLog.txt')], { type: 'application/octet-stream' });
+                    url = URL.createObjectURL(blob);
+                    a = document.getElementById('download_spoiler_link');
+                    a.download = "Soul Blazer Randomizer - " + seed + " Spoiler.txt";
+                    a.href = url;
 
-                b = document.getElementById('copy_link');
-                b.onclick = () => {
-                    const el = document.createElement('textarea');
-                    el.value = [location.protocol, '//', location.host, location.pathname, '?seed=', seed].join('');
-                    el.setAttribute('readonly', '');
-                    el.style.position = 'absolute';
-                    el.style.left = '-9999px';
-                    document.body.appendChild(el);
-                    const selected =
-                        document.getSelection().rangeCount > 0
-                            ? document.getSelection().getRangeAt(0)
-                            : false;
-                    el.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(el);
-                    if (selected) {
-                        document.getSelection().removeAllRanges();
-                        document.getSelection().addRange(selected);
+                    b = document.getElementById('copy_link');
+                    b.onclick = () => {
+                        const el = document.createElement('textarea');
+                        el.value = [location.protocol, '//', location.host, location.pathname, '?seed=', seed].join('');
+                        el.setAttribute('readonly', '');
+                        el.style.position = 'absolute';
+                        el.style.left = '-9999px';
+                        document.body.appendChild(el);
+                        const selected =
+                            document.getSelection().rangeCount > 0
+                                ? document.getSelection().getRangeAt(0)
+                                : false;
+                        el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                        if (selected) {
+                            document.getSelection().removeAllRanges();
+                            document.getSelection().addRange(selected);
+                        }
                     }
                 }
 

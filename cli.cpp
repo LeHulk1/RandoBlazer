@@ -17,5 +17,7 @@ int main (int argc, char** argv ) {
     } else {
         seed = Random::RandomInit(0);
     }
-	return Randomizer::Randomize(in_file, MOD_ROM_FILE_NAME, seed) ? 0 : 1;
+
+    Randomizer::Options options;
+    return Randomizer::Randomize(in_file, MOD_ROM_FILE_NAME, seed, options) ? 0 : 1;
 }

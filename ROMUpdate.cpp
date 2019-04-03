@@ -16,7 +16,7 @@ namespace ROMUpdate {
     void ROMUpdateTextAndItems(const std::vector<Lair>& RandomizedLairList,
                                const std::vector<Item>& RandomizedItemList,
                                std::fstream &ROMFile,
-                               long Seed) {
+                               const std::string& Seed) {
         unsigned char Byte;
 
         /*************************/
