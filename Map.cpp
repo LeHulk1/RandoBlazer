@@ -419,7 +419,7 @@ namespace Map {
         RegionList[36].InsertElement(GoalType::ITEM, 58);
         RegionList[36].InsertElement(GoalType::ITEM, 59);
         RegionList[36].InsertGoal(37); /* Dr Leo + Queen Magridd cutscene */
-        RegionList[38].InsertGoal(75); /* Demon Bird */
+        RegionList[36].InsertGoal(75); /* Demon Bird */
 
         /* Region 37 - Act 7 start, World of Evil */
         RegionList[37].InsertElement(GoalType::ITEM, ITEM_KING_MAGRIDD);
@@ -428,10 +428,10 @@ namespace Map {
         RegionList[37].InsertElement(GoalType::ITEM, CHEST_RED_HOT_BALL);
         RegionList[37].InsertElement(GoalType::ITEM, CHEST_SOUL_ARMOR);
         RegionList[37].InsertGoal(38); /* Soul Armor */
-        RegionList[37].InsertGoal(73); /* Super Bracelet tile */
 
         /* Region 38 - Dr Leo + Queen Magridd cutscene */
         RegionList[38].InsertElement(GoalType::ITEM, ITEM_DR_LEO);
+		RegionList[38].InsertGoal(73); /* Super Bracelet tile */
 
         /* Region 39 - Dazzling Space */
         RegionList[39].InsertElement(GoalType::ITEM, CHEST_SOUL_BLADE);
