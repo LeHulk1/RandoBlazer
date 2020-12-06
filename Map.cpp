@@ -431,7 +431,7 @@ namespace Map {
 
         /* Region 38 - Dr Leo + Queen Magridd cutscene */
         RegionList[38].InsertElement(GoalType::ITEM, ITEM_DR_LEO);
-		RegionList[38].InsertGoal(73); /* Super Bracelet tile */
+        RegionList[38].InsertGoal(73); /* Super Bracelet tile */
 
         /* Region 39 - Dazzling Space */
         RegionList[39].InsertElement(GoalType::ITEM, CHEST_SOUL_BLADE);
