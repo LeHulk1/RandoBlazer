@@ -17,13 +17,12 @@
 #define CHEST_DATA_ADDRESS        0xAADE
 #define MONSTER_LAIR_DATA_ADDRESS 0xBA0D
 
-
-using namespace std;
-
 namespace ROMData {
-    void GetOriginalItemData(vector<Item> &ItemList);
-    void GetOriginalLairData(vector<Lair> &LairList, fstream &ROMFile);
-    void GetOriginalMapSpriteData (vector<Sprite> &SpriteList, fstream &ROMFile);
+    void GetOriginalItemData(std::vector<Item> &ItemList);
+    void GetOriginalLairData(std::vector<Lair> &LairList, std::fstream &ROMFile);
+    void GetOriginalMapSpriteData (std::vector<Sprite> &SpriteList, std::fstream &ROMFile);
+
+    bool NPCOriginallyGivesEXP(int NPCIndex);
 }
 
 

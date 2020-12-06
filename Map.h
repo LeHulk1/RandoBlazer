@@ -1,20 +1,19 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include <list>
 #include <vector>
-
-
-#define LAIR 0
-#define ITEM 1
 
 #define NUMBER_OF_REGIONS   79
 #define NUMBER_OF_GOALS     78
 
 #define GOAL_TO_FIRST_REGION 255
 
+enum class GoalType {
+    LAIR,
+    ITEM,
+};
 
-enum {
+enum LocationID {
     CHEST_SWORD_OF_LIFE                = 0,
     CHEST_DREAM_ROD                    = 5,
     CHEST_LEOS_BRUSH                   = 6,
@@ -264,7 +263,7 @@ enum {
 //};
 
 
-enum {
+enum NPCID {
     NPC_OLD_WOMAN                     = 2,
     NPC_TOOL_SHOP_OWNER               = 6,
     NPC_TULIP                         = 7,
@@ -436,14 +435,11 @@ enum {
     NPC_KING_MAGRIDD                  = 405,
 };
 
-
-using namespace std;
-
 class Element {
 public:
-    Element(int NewType, int NewIndex);
+    Element(GoalType NewType, int NewIndex);
     ~Element();
-    int Type;
+    GoalType Type;
     int Index;
 };
 
@@ -451,31 +447,31 @@ class Region {
 public:
     Region();
     ~Region();
-    void InsertElement(int Type, int Index);
+    void InsertElement(GoalType Type, int Index);
     void InsertGoal(int Index);
-    list<Element> Contents;
-    list<int> NextGoals;
+    std::vector<Element> Contents;
+    std::vector<int> NextGoals;
 };
 
 class Goal {
 public:
     Goal();
     ~Goal();
-    void InsertElement(int Type, int Index);
-    list<Element> Requirements;
+    void InsertElement(GoalType Type, int Index);
+    std::vector<Element> Requirements;
     int Target;
     int Weight;
 };
 
 
 namespace Map {
-    void InitMap(vector<Region> &RegionList, vector<Goal> &GoalList);
-    void InitMap_v2(vector<Region> &RegionList, vector<Goal> &GoalList);
-    void CalculateWeights(vector<Region> &RegionList, vector<Goal> &GoalList, int GoalIndex);
-    void GetNonKeyNPCList(vector<int> &NonKeyNPCList);
-    void GetNonKeyNPCList_v2(vector<int> &NonKeyNPCList);
-    void GetNonKeyItemList(vector<int> &NonKeyChestList);
-    void GetNonKeyItemList_v2(vector<int> &NonKeyChestList);
+    void InitMap(std::vector<Region> &RegionList, std::vector<Goal> &GoalList);
+    void InitMap_v2(std::vector<Region> &RegionList, std::vector<Goal> &GoalList);
+    void CalculateWeights(std::vector<Region> &RegionList, std::vector<Goal> &GoalList, int GoalIndex);
+    void GetNonKeyNPCList(std::vector<int> &NonKeyNPCList);
+    void GetNonKeyNPCList_v2(std::vector<int> &NonKeyNPCList);
+    void GetNonKeyItemList(std::vector<int> &NonKeyChestList);
+    void GetNonKeyItemList_v2(std::vector<int> &NonKeyChestList);
 }
 
 #endif // __MAP_H__

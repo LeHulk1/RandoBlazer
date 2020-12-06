@@ -8,17 +8,14 @@
 #include <fstream>
 #include <vector>
 
-
-using namespace std;
-
 namespace ROMUpdate {
     bool NPCOriginallyGivesEXP(int NPCIndex);
-    void ROMUpdateTextAndItems(vector<Lair> RandomizedLairList,
-                               vector<Item> RandomizedItemList,
-                               fstream &ROMFile,
-                               long Seed);
-    void ROMUpdateLairs(vector<Lair> RandomizedLairList, fstream &ROMFile);
-    void ROMUpdateMapSprites(vector<Sprite> RandomizedSpriteList, fstream &ROMFile);
+    void ROMUpdateTextAndItems(const std::vector<Lair>& RandomizedLairList,
+                               const std::vector<Item>& RandomizedItemList,
+                               std::fstream &ROMFile,
+                               const std::string& Seed);
+    void ROMUpdateLairs(const std::vector<Lair>& RandomizedLairList, std::fstream &ROMFile);
+    void ROMUpdateMapSprites(const std::vector<Sprite>& RandomizedSpriteList, std::fstream &ROMFile);
 }
 
 #endif // __ROMUPDATE_H__

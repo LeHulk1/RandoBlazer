@@ -1,10 +1,9 @@
 #include "ROMCheck.h"
 
-
-ROMStatus CheckOriginalROM(fstream &ROMFile) {
+ROMStatus CheckOriginalROM(std::fstream &ROMFile) {
 
     unsigned char FileStartSample[5];
-    ROMFile.seekg(0, ios::beg);
+    ROMFile.seekg(0, std::ios::beg);
     ROMFile.read((char*)(&(FileStartSample[0])), 1);
     ROMFile.read((char*)(&(FileStartSample[1])), 1);
     ROMFile.read((char*)(&(FileStartSample[2])), 1);

@@ -35,380 +35,383 @@
 
 namespace ROMData {
 
-    void GetOriginalItemData(vector<Item> &ItemList) {
+    void GetOriginalItemData(std::vector<Item> &ItemList) {
 
         /***** CHESTS *****/
 
-        ItemList[0].Contents  = SWORD_OF_LIFE;
+        ItemList[0].Contents  = ItemID::SWORD_OF_LIFE;
 
-        ItemList[1].Contents  = IRON_ARMOR;
+        ItemList[1].Contents  = ItemID::IRON_ARMOR;
 
-        ItemList[2].Contents  = GEMS_EXP;
+        ItemList[2].Contents  = ItemID::GEMS_EXP;
         ItemList[2].GemsExp   = 50;
 
-        ItemList[3].Contents  = GEMS_EXP;
+        ItemList[3].Contents  = ItemID::GEMS_EXP;
         ItemList[3].GemsExp   = 12;
 
-        ItemList[4].Contents  = MEDICAL_HERB;
+        ItemList[4].Contents  = ItemID::MEDICAL_HERB;
 
-        ItemList[5].Contents  = DREAM_ROD;
+        ItemList[5].Contents  = ItemID::DREAM_ROD;
 
-        ItemList[6].Contents  = LEOS_BRUSH;
+        ItemList[6].Contents  = ItemID::LEOS_BRUSH;
 
-        ItemList[7].Contents  = MEDICAL_HERB;
+        ItemList[7].Contents  = ItemID::MEDICAL_HERB;
 
-        ItemList[8].Contents  = TORNADO;
+        ItemList[8].Contents  = ItemID::TORNADO;
 
-        ItemList[9].Contents  = ICE_ARMOR;
+        ItemList[9].Contents  = ItemID::ICE_ARMOR;
 
-        ItemList[10].Contents = MOLES_RIBBON;
+        ItemList[10].Contents = ItemID::MOLES_RIBBON;
 
-        ItemList[11].Contents = GEMS_EXP;
+        ItemList[11].Contents = ItemID::GEMS_EXP;
         ItemList[11].GemsExp  = 50;
 
-        ItemList[12].Contents = GEMS_EXP;
+        ItemList[12].Contents = ItemID::GEMS_EXP;
         ItemList[12].GemsExp  = 150;
 
-        ItemList[13].Contents = MEDICAL_HERB;
+        ItemList[13].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[14].Contents = DELICIOUS_SEEDS;
+        ItemList[14].Contents = ItemID::DELICIOUS_SEEDS;
 
-        ItemList[15].Contents = GEMS_EXP;
+        ItemList[15].Contents = ItemID::GEMS_EXP;
         ItemList[15].GemsExp  = 50;
 
-        ItemList[16].Contents = MEDICAL_HERB;
+        ItemList[16].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[17].Contents = NOTHING;
+        ItemList[17].Contents = ItemID::NOTHING;
 
-        ItemList[18].Contents = STRANGE_BOTTLE;
+        ItemList[18].Contents = ItemID::STRANGE_BOTTLE;
 
-        ItemList[19].Contents = GEMS_EXP;
+        ItemList[19].Contents = ItemID::GEMS_EXP;
         ItemList[19].GemsExp  = 100;
 
-        ItemList[20].Contents = GEMS_EXP;
+        ItemList[20].Contents = ItemID::GEMS_EXP;
         ItemList[20].GemsExp  = 60;
 
-        ItemList[21].Contents = FLAME_PILLAR;
+        ItemList[21].Contents = ItemID::FLAME_PILLAR;
 
-        ItemList[22].Contents = MERMAIDS_TEARS;
+        ItemList[22].Contents = ItemID::MERMAIDS_TEARS;
 
-        ItemList[23].Contents = BIG_PEARL;
+        ItemList[23].Contents = ItemID::BIG_PEARL;
 
-        ItemList[24].Contents = EMBLEM_D;
+        ItemList[24].Contents = ItemID::EMBLEM_D;
 
-        ItemList[25].Contents = GEMS_EXP;
+        ItemList[25].Contents = ItemID::GEMS_EXP;
         ItemList[25].GemsExp  = 80;
 
-        ItemList[26].Contents = MEDICAL_HERB;
+        ItemList[26].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[27].Contents = NOTHING;
+        ItemList[27].Contents = ItemID::NOTHING;
 
-        ItemList[28].Contents = MEDICAL_HERB;
+        ItemList[28].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[29].Contents = MEDICAL_HERB;
+        ItemList[29].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[30].Contents = GEMS_EXP;
+        ItemList[30].Contents = ItemID::GEMS_EXP;
         ItemList[30].GemsExp  = 60;
 
-        ItemList[31].Contents = CRITICAL_SWORD;
+        ItemList[31].Contents = ItemID::CRITICAL_SWORD;
 
-        ItemList[32].Contents = STRANGE_BOTTLE;
+        ItemList[32].Contents = ItemID::STRANGE_BOTTLE;
 
-        ItemList[33].Contents = GEMS_EXP;
+        ItemList[33].Contents = ItemID::GEMS_EXP;
         ItemList[33].GemsExp  = 1;
 
-        ItemList[34].Contents = POWER_BRACELET;
+        ItemList[34].Contents = ItemID::POWER_BRACELET;
 
-        ItemList[35].Contents = GEMS_EXP;
+        ItemList[35].Contents = ItemID::GEMS_EXP;
         ItemList[35].GemsExp  = 40;
 
-        ItemList[36].Contents = MAGIC_ARMOR;
+        ItemList[36].Contents = ItemID::MAGIC_ARMOR;
 
-        ItemList[37].Contents = NOTHING;
+        ItemList[37].Contents = ItemID::NOTHING;
 
-        ItemList[38].Contents = MEDICAL_HERB;
+        ItemList[38].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[39].Contents = GEMS_EXP;
+        ItemList[39].Contents = ItemID::GEMS_EXP;
         ItemList[39].GemsExp  = 50;
 
-        ItemList[40].Contents = LUCKY_BLADE;
+        ItemList[40].Contents = ItemID::LUCKY_BLADE;
 
-        ItemList[41].Contents = STRANGE_BOTTLE;
+        ItemList[41].Contents = ItemID::STRANGE_BOTTLE;
 
-        ItemList[42].Contents = ROTATOR;
+        ItemList[42].Contents = ItemID::ROTATOR;
 
-        ItemList[43].Contents = ZANTETSU_SWORD;
+        ItemList[43].Contents = ItemID::ZANTETSU_SWORD;
 
-        ItemList[44].Contents = LIGHT_ARMOR;
+        ItemList[44].Contents = ItemID::LIGHT_ARMOR;
 
-        ItemList[45].Contents = GEMS_EXP;
+        ItemList[45].Contents = ItemID::GEMS_EXP;
         ItemList[45].GemsExp  = 50;
 
-        ItemList[46].Contents = MEDICAL_HERB;
+        ItemList[46].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[47].Contents = GEMS_EXP;
+        ItemList[47].Contents = ItemID::GEMS_EXP;
         ItemList[47].GemsExp  = 80;
 
-        ItemList[48].Contents = STRANGE_BOTTLE;
+        ItemList[48].Contents = ItemID::STRANGE_BOTTLE;
 
-        ItemList[49].Contents = MEDICAL_HERB;
+        ItemList[49].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[50].Contents = GEMS_EXP;
+        ItemList[50].Contents = ItemID::GEMS_EXP;
         ItemList[50].GemsExp  = 80;
 
-        ItemList[51].Contents = SPIRIT_SWORD;
+        ItemList[51].Contents = ItemID::SPIRIT_SWORD;
 
-        ItemList[52].Contents = STRANGE_BOTTLE;
+        ItemList[52].Contents = ItemID::STRANGE_BOTTLE;
 
-        ItemList[53].Contents = MEDICAL_HERB;
+        ItemList[53].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[54].Contents = GEMS_EXP;
+        ItemList[54].Contents = ItemID::GEMS_EXP;
         ItemList[54].GemsExp  = 100;
 
-        ItemList[55].Contents = EMBLEM_B;
+        ItemList[55].Contents = ItemID::EMBLEM_B;
 
-        ItemList[56].Contents = GEMS_EXP;
+        ItemList[56].Contents = ItemID::GEMS_EXP;
         ItemList[56].GemsExp  = 80;
 
-        ItemList[57].Contents = GEMS_EXP;
+        ItemList[57].Contents = ItemID::GEMS_EXP;
         ItemList[57].GemsExp  = 80;
 
-        ItemList[58].Contents = GEMS_EXP;
+        ItemList[58].Contents = ItemID::GEMS_EXP;
         ItemList[58].GemsExp  = 100;
 
-        ItemList[59].Contents = MEDICAL_HERB;
+        ItemList[59].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[60].Contents = MEDICAL_HERB;
+        ItemList[60].Contents = ItemID::MEDICAL_HERB;
 
-        ItemList[61].Contents = GEMS_EXP;
+        ItemList[61].Contents = ItemID::GEMS_EXP;
         ItemList[61].GemsExp  = 200;
 
-        ItemList[62].Contents = RED_HOT_BALL;
+        ItemList[62].Contents = ItemID::RED_HOT_BALL;
 
-        ItemList[63].Contents = SOUL_ARMOR;
+        ItemList[63].Contents = ItemID::SOUL_ARMOR;
 
-        ItemList[64].Contents = SOUL_BLADE;
+        ItemList[64].Contents = ItemID::SOUL_BLADE;
 
-        ItemList[65].Contents = GEMS_EXP;
+        ItemList[65].Contents = ItemID::GEMS_EXP;
         ItemList[65].GemsExp  = 100;
 
         /***** NPCs *****/
 
         ItemList[ITEM_TOOL_SHOP_OWNER].Type     = TYPE_NPC;
-        ItemList[ITEM_TOOL_SHOP_OWNER].Contents = MEDICAL_HERB;
+        ItemList[ITEM_TOOL_SHOP_OWNER].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_EMBLEM_A].Type     = TYPE_NPC;
-        ItemList[ITEM_EMBLEM_A].Contents = EMBLEM_A;
+        ItemList[ITEM_EMBLEM_A].Contents = ItemID::EMBLEM_A;
 
         ItemList[ITEM_GOAT_PEN].Type     = TYPE_NPC;
-        ItemList[ITEM_GOAT_PEN].Contents = MEDICAL_HERB;
+        ItemList[ITEM_GOAT_PEN].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_TEDDY].Type     = TYPE_NPC;
-        ItemList[ITEM_TEDDY].Contents = GOATS_FOOD;
+        ItemList[ITEM_TEDDY].Contents = ItemID::GOATS_FOOD;
 
         ItemList[ITEM_PASS].Type     = TYPE_NPC;
-        ItemList[ITEM_PASS].Contents = PASS;
+        ItemList[ITEM_PASS].Contents = ItemID::PASS;
 
         ItemList[ITEM_SECRET_CAVE_TILE].Type     = TYPE_NPC;
-        ItemList[ITEM_SECRET_CAVE_TILE].Contents = STRANGE_BOTTLE;
+        ItemList[ITEM_SECRET_CAVE_TILE].Contents = ItemID::STRANGE_BOTTLE;
 
         ItemList[ITEM_VILLAGE_CHIEF].Type     = TYPE_NPC;
-        ItemList[ITEM_VILLAGE_CHIEF].Contents = BROWN_STONE;
+        ItemList[ITEM_VILLAGE_CHIEF].Contents = ItemID::BROWN_STONE;
 
         ItemList[ITEM_MAGICIAN].Type     = TYPE_NPC;
-        ItemList[ITEM_MAGICIAN].Contents = FLAME_BALL;
+        ItemList[ITEM_MAGICIAN].Contents = ItemID::FLAME_BALL;
 
         ItemList[ITEM_CRYSTAL_RECOVERY_SWORD].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_RECOVERY_SWORD].Contents = RECOVERY_SWORD;
+        ItemList[ITEM_CRYSTAL_RECOVERY_SWORD].Contents = ItemID::RECOVERY_SWORD;
 
         ItemList[ITEM_BIRD_RED_HOT_MIRROR].Type     = TYPE_NPC;
-        ItemList[ITEM_BIRD_RED_HOT_MIRROR].Contents = RED_HOT_MIRROR;
+        ItemList[ITEM_BIRD_RED_HOT_MIRROR].Contents = ItemID::RED_HOT_MIRROR;
 
         ItemList[ITEM_CRYSTAL_MAGIC_BELL].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_MAGIC_BELL].Contents = MAGIC_BELL;
+        ItemList[ITEM_CRYSTAL_MAGIC_BELL].Contents = ItemID::MAGIC_BELL;
 
         ItemList[ITEM_WOODSTIN_TRIO].Type     = TYPE_NPC;
-        ItemList[ITEM_WOODSTIN_TRIO].Contents = MEDICAL_HERB;
+        ItemList[ITEM_WOODSTIN_TRIO].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_GREENWOODS_GUARDIAN].Type     = TYPE_NPC;
-        ItemList[ITEM_GREENWOODS_GUARDIAN].Contents = GREEN_STONE;
+        ItemList[ITEM_GREENWOODS_GUARDIAN].Contents = ItemID::GREEN_STONE;
 
         ItemList[ITEM_GREENWOOD_LEAVES].Type     = TYPE_NPC;
-        ItemList[ITEM_GREENWOOD_LEAVES].Contents = GREENWOOD_LEAF;
+        ItemList[ITEM_GREENWOOD_LEAVES].Contents = ItemID::GREENWOOD_LEAF;
 
         ItemList[ITEM_MOLE_SHIELD_BRACELET].Type     = TYPE_NPC;
-        ItemList[ITEM_MOLE_SHIELD_BRACELET].Contents = SHIELD_BRACELET;
+        ItemList[ITEM_MOLE_SHIELD_BRACELET].Contents = ItemID::SHIELD_BRACELET;
 
         ItemList[ITEM_SQUIRREL_PSYCHO_SWORD].Type     = TYPE_NPC;
-        ItemList[ITEM_SQUIRREL_PSYCHO_SWORD].Contents = PSYCHO_SWORD;
+        ItemList[ITEM_SQUIRREL_PSYCHO_SWORD].Contents = ItemID::PSYCHO_SWORD;
 
         ItemList[ITEM_SQUIRREL_EMBLEM_C].Type     = TYPE_NPC;
-        ItemList[ITEM_SQUIRREL_EMBLEM_C].Contents = EMBLEM_C;
+        ItemList[ITEM_SQUIRREL_EMBLEM_C].Contents = ItemID::EMBLEM_C;
 
         ItemList[ITEM_WATER_SHRINE_TILE].Type     = TYPE_NPC;
-        ItemList[ITEM_WATER_SHRINE_TILE].Contents = STRANGE_BOTTLE;
+        ItemList[ITEM_WATER_SHRINE_TILE].Contents = ItemID::STRANGE_BOTTLE;
 
         ItemList[ITEM_CRYSTAL_LIGHT_ARROW].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LIGHT_ARROW].Contents = LIGHT_ARROW;
+        ItemList[ITEM_CRYSTAL_LIGHT_ARROW].Contents = ItemID::LIGHT_ARROW;
 
         ItemList[ITEM_MOUNTAIN_KING].Type     = TYPE_NPC;
-        ItemList[ITEM_MOUNTAIN_KING].Contents = PHOENIX;
+        ItemList[ITEM_MOUNTAIN_KING].Contents = ItemID::PHOENIX;
 
         ItemList[ITEM_BOY_MUSHROOM_SHOES].Type     = TYPE_NPC;
-        ItemList[ITEM_BOY_MUSHROOM_SHOES].Contents = MUSHROOM_SHOES;
+        ItemList[ITEM_BOY_MUSHROOM_SHOES].Contents = ItemID::MUSHROOM_SHOES;
 
         ItemList[ITEM_NOME].Type     = TYPE_NPC;
-        ItemList[ITEM_NOME].Contents = SILVER_STONE;
+        ItemList[ITEM_NOME].Contents = ItemID::SILVER_STONE;
 
         ItemList[ITEM_SNAIL_EMBLEM_E].Type     = TYPE_NPC;
-        ItemList[ITEM_SNAIL_EMBLEM_E].Contents = EMBLEM_E;
+        ItemList[ITEM_SNAIL_EMBLEM_E].Contents = ItemID::EMBLEM_E;
 
         ItemList[ITEM_EMBLEM_F].Type     = TYPE_NPC;
-        ItemList[ITEM_EMBLEM_F].Contents = EMBLEM_F;
+        ItemList[ITEM_EMBLEM_F].Contents = ItemID::EMBLEM_F;
 
         ItemList[ITEM_EMBLEM_G].Type     = TYPE_NPC;
-        ItemList[ITEM_EMBLEM_G].Contents = EMBLEM_G;
+        ItemList[ITEM_EMBLEM_G].Contents = ItemID::EMBLEM_G;
 
         ItemList[ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR].Type     = TYPE_NPC;
-        ItemList[ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR].Contents = MYSTIC_ARMOR;
+        ItemList[ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR].Contents = ItemID::MYSTIC_ARMOR;
 
         ItemList[ITEM_PLANT_HERB].Type     = TYPE_NPC;
-        ItemList[ITEM_PLANT_HERB].Contents = MEDICAL_HERB;
+        ItemList[ITEM_PLANT_HERB].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_CAT_DOOR_KEY].Type     = TYPE_NPC;
-        ItemList[ITEM_CAT_DOOR_KEY].Contents = DOOR_KEY;
+        ItemList[ITEM_CAT_DOOR_KEY].Contents = ItemID::DOOR_KEY;
 
         ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Type     = TYPE_NPC;
-        ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Contents = ACTINIDIA_LEAF;
+        ItemList[ITEM_PLANT_ACTINIDIA_LEAVES].Contents = ItemID::ACTINIDIA_LEAF;
 
         ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Type     = TYPE_NPC;
-        ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Contents = MEDICAL_HERB;
+        ItemList[ITEM_CHEST_OF_DRAWERS_HERB].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_MARIE].Type     = TYPE_NPC;
-        ItemList[ITEM_MARIE].Contents = PURPLE_STONE;
+        ItemList[ITEM_MARIE].Contents = ItemID::PURPLE_STONE;
 
         ItemList[ITEM_MOUSE_SPARK_BOMB].Type     = TYPE_NPC;
-        ItemList[ITEM_MOUSE_SPARK_BOMB].Contents = SPARK_BOMB;
+        ItemList[ITEM_MOUSE_SPARK_BOMB].Contents = ItemID::SPARK_BOMB;
 
         ItemList[ITEM_SOLDIER_ELEMENTAL_MAIL].Type     = TYPE_NPC;
-        ItemList[ITEM_SOLDIER_ELEMENTAL_MAIL].Contents = ELEMENTAL_MAIL;
+        ItemList[ITEM_SOLDIER_ELEMENTAL_MAIL].Contents = ItemID::ELEMENTAL_MAIL;
 
         ItemList[ITEM_SUPER_BRACELET].Type     = TYPE_NPC;
-        ItemList[ITEM_SUPER_BRACELET].Contents = SUPER_BRACELET;
+        ItemList[ITEM_SUPER_BRACELET].Contents = ItemID::SUPER_BRACELET;
 
         ItemList[ITEM_QUEEN_MAGRIDD].Type     = TYPE_NPC;
-        ItemList[ITEM_QUEEN_MAGRIDD].Contents = VIP_CARD;
+        ItemList[ITEM_QUEEN_MAGRIDD].Contents = ItemID::VIP_CARD;
 
         ItemList[ITEM_SOLDIER_PLATINUM_CARD].Type     = TYPE_NPC;
-        ItemList[ITEM_SOLDIER_PLATINUM_CARD].Contents = PLATINUM_CARD;
+        ItemList[ITEM_SOLDIER_PLATINUM_CARD].Contents = ItemID::PLATINUM_CARD;
 
         ItemList[ITEM_MAID_HERB].Type     = TYPE_NPC;
-        ItemList[ITEM_MAID_HERB].Contents = MEDICAL_HERB;
+        ItemList[ITEM_MAID_HERB].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_EMBLEM_H].Type     = TYPE_NPC;
-        ItemList[ITEM_EMBLEM_H].Contents = EMBLEM_H;
+        ItemList[ITEM_EMBLEM_H].Contents = ItemID::EMBLEM_H;
 
         ItemList[ITEM_KING_MAGRIDD].Type     = TYPE_NPC;
-        ItemList[ITEM_KING_MAGRIDD].Contents = BLACK_STONE;
+        ItemList[ITEM_KING_MAGRIDD].Contents = ItemID::BLACK_STONE;
 
         ItemList[ITEM_DR_LEO].Type     = TYPE_NPC;
-        ItemList[ITEM_DR_LEO].Contents = MOBILE_KEY;
+        ItemList[ITEM_DR_LEO].Contents = ItemID::MOBILE_KEY;
 
         ItemList[ITEM_HARP_STRING].Type     = TYPE_NPC;
-        ItemList[ITEM_HARP_STRING].Contents = HARP_STRING;
+        ItemList[ITEM_HARP_STRING].Contents = ItemID::HARP_STRING;
 
         ItemList[ITEM_MERMAID_HERB].Type     = TYPE_NPC;
-        ItemList[ITEM_MERMAID_HERB].Contents = MEDICAL_HERB;
+        ItemList[ITEM_MERMAID_HERB].Contents = ItemID::MEDICAL_HERB;
 
         ItemList[ITEM_MERMAID_BUBBLE_ARMOR].Type     = TYPE_NPC;
-        ItemList[ITEM_MERMAID_BUBBLE_ARMOR].Contents = BUBBLE_ARMOR;
+        ItemList[ITEM_MERMAID_BUBBLE_ARMOR].Contents = ItemID::BUBBLE_ARMOR;
 
         ItemList[ITEM_MERMAID_MAGIC_FLARE].Type     = TYPE_NPC;
-        ItemList[ITEM_MERMAID_MAGIC_FLARE].Contents = MAGIC_FLARE;
+        ItemList[ITEM_MERMAID_MAGIC_FLARE].Contents = ItemID::MAGIC_FLARE;
 
         ItemList[ITEM_MERMAID_QUEEN].Type     = TYPE_NPC;
-        ItemList[ITEM_MERMAID_QUEEN].Contents = BLUE_STONE;
+        ItemList[ITEM_MERMAID_QUEEN].Contents = ItemID::BLUE_STONE;
 
         ItemList[ITEM_MERMAID_RED_HOT_STICK].Type     = TYPE_NPC;
-        ItemList[ITEM_MERMAID_RED_HOT_STICK].Contents = RED_HOT_STICK;
+        ItemList[ITEM_MERMAID_RED_HOT_STICK].Contents = ItemID::RED_HOT_STICK;
 
         ItemList[ITEM_LUE].Type     = TYPE_NPC;
-        ItemList[ITEM_LUE].Contents = THUNDER_RING;
+        ItemList[ITEM_LUE].Contents = ItemID::THUNDER_RING;
 
         ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_GRASS_VALLEY].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_GRASS_VALLEY].GemsExp  = 80;
 
         ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_UNDERGROUND_CASTLE].GemsExp  = 30;
 
         ItemList[ITEM_CRYSTAL_LOST_MARSH].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LOST_MARSH].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_LOST_MARSH].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_LOST_MARSH].GemsExp  = 150;
 
         ItemList[ITEM_CRYSTAL_WATER_SHRINE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_WATER_SHRINE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_WATER_SHRINE].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_WATER_SHRINE].GemsExp  = 180;
 
         ItemList[ITEM_CRYSTAL_FIRE_SHRINE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_FIRE_SHRINE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_FIRE_SHRINE].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_FIRE_SHRINE].GemsExp  = 1;
 
         ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_MOUNTAIN_OF_SOULS].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_LUNE].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LUNE].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_LUNE].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_LUNE].GemsExp  = 400;
 
         ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_LEOS_LAB_BASEMENT].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_MODEL_TOWN].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_MODEL_TOWN].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_MODEL_TOWN].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_MODEL_TOWN].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_POWER_PLANT].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_POWER_PLANT].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_POWER_PLANT].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_POWER_PLANT].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_ROCKBIRD].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_ROCKBIRD].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_ROCKBIRD].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_ROCKBIRD].GemsExp  = 200;
 
         ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_SEABED_NEAR_BLESTER].GemsExp  = 300;
 
         ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Type     = TYPE_NPC;
-        ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Contents = GEMS_EXP;
+        ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].Contents = ItemID::GEMS_EXP;
         ItemList[ITEM_CRYSTAL_SEABED_NEAR_DUREAN].GemsExp  = 250;
     }
 
 
-    void GetOriginalLairData (vector<Lair> &LairList, fstream &ROMFile) {
+    void GetOriginalLairData (std::vector<Lair> &LairList, std::fstream &ROMFile) {
 
-        ROMFile.seekg (MONSTER_LAIR_DATA_ADDRESS, ios::beg);
+        ROMFile.seekg (MONSTER_LAIR_DATA_ADDRESS, std::ios::beg);
 
         for (int i=0; i<NUMBER_OF_LAIRS; i++) {
 
-            ROMFile.seekg(10, ios::cur);
+            ROMFile.seekg(10, std::ios::cur);
 
             /* Read the contents of this Monster Lair */
             ROMFile.read((char*)(&(LairList[i].Act)), 1);
             ROMFile.read((char*)(&(LairList[i].PositionData[0])), POSITION_DATA_SIZE);
-            ROMFile.seekg(2, ios::cur);
-            ROMFile.read((char*)(&(LairList[i].Type[0])), LAIR_TYPE_SIZE);
-            ROMFile.seekg(1, ios::cur);
+            ROMFile.seekg(2, std::ios::cur);
+            unsigned char b1, b2;
+            ROMFile.read((char*)&b1, 1);
+            ROMFile.read((char*)&b2, 1);
+            LairList[i].Type = static_cast<LairType>((b1 << 8) | b2);
+            ROMFile.seekg(1, std::ios::cur);
             ROMFile.read((char*)(&(LairList[i].NbEnemies)), 1);
             ROMFile.read((char*)(&(LairList[i].SpawnRate)), 1);
             ROMFile.read((char*)(&(LairList[i].Enemy)), 1);
-            ROMFile.seekg(1, ios::cur);
+            ROMFile.seekg(1, std::ios::cur);
             ROMFile.read((char*)(&(LairList[i].Orientation)), 1);
-            ROMFile.seekg(8, ios::cur);
+            ROMFile.seekg(8, std::ios::cur);
         }
     }
 
@@ -440,24 +443,46 @@ namespace ROMData {
          0xA993, 0xA997, 0xA99B, 0xA99F, 0xA9A3, 0xA9A7}
     };
 
-    void GetOriginalMapSpriteData (vector<Sprite> &SpriteList, fstream &ROMFile) {
+    void GetOriginalMapSpriteData (std::vector<Sprite> &SpriteList, std::fstream &ROMFile) {
 
         int SpriteIndex = 0;
-        for (int Act = ACT_1; Act < 7; ++Act) {
+        for (int Act = (int)ActID::ACT_1; Act < (int)ActID::ACT_MAX; ++Act) {
             for (int AddressIndex = 0; AddressIndex < 63; ++AddressIndex) {
                 if (SpriteDataAddressList[Act][AddressIndex] == 0) {
                     break;
                 }
                 SpriteList[SpriteIndex].Address = SpriteDataAddressList[Act][AddressIndex];
-                SpriteList[SpriteIndex].Act = Act;
+                SpriteList[SpriteIndex].Act = (ActID)Act;
 
-                ROMFile.seekg(SpriteDataAddressList[Act][AddressIndex], ios::beg);
+                ROMFile.seekg(SpriteDataAddressList[Act][AddressIndex], std::ios::beg);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].x)), 1);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].y)), 1);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].Orientation)), 1);
                 ROMFile.read((char*)(&(SpriteList[SpriteIndex].Enemy)), 1);
                 SpriteIndex++;
             }
+        }
+    }
+
+    bool NPCOriginallyGivesEXP(int NPCIndex) {
+        switch (NPCIndex) {
+        case ITEM_CRYSTAL_GRASS_VALLEY:
+        case ITEM_CRYSTAL_UNDERGROUND_CASTLE:
+        case ITEM_CRYSTAL_LOST_MARSH:
+        case ITEM_CRYSTAL_WATER_SHRINE:
+        case ITEM_CRYSTAL_FIRE_SHRINE:
+        case ITEM_CRYSTAL_MOUNTAIN_OF_SOULS:
+        case ITEM_CRYSTAL_LUNE:
+        case ITEM_CRYSTAL_LEOS_LAB_BASEMENT:
+        case ITEM_CRYSTAL_MODEL_TOWN:
+        case ITEM_CRYSTAL_POWER_PLANT:
+        case ITEM_CRYSTAL_ROCKBIRD:
+        case ITEM_CRYSTAL_SEABED_NEAR_BLESTER:
+        case ITEM_CRYSTAL_SEABED_NEAR_DUREAN:
+            return true;
+            break;
+        default:
+            return false;
         }
     }
 }

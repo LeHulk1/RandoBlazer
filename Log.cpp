@@ -12,9 +12,6 @@
 #define NPC_NAME_SIZE         45
 #define ITEM_NAME_SIZE        20
 
-
-using namespace std;
-
 namespace Log {
 
     static int Act1NPCs[16] =
@@ -117,70 +114,71 @@ namespace Log {
          NPC_QUEEN_MAGRIDD,
          NPC_KING_MAGRIDD};
 
-    static int LoggedItems[62] =
-        {SWORD_OF_LIFE,
-         PSYCHO_SWORD,
-         CRITICAL_SWORD,
-         LUCKY_BLADE,
-         ZANTETSU_SWORD,
-         SPIRIT_SWORD,
-         RECOVERY_SWORD,
-         SOUL_BLADE,
-         IRON_ARMOR,
-         ICE_ARMOR,
-         BUBBLE_ARMOR,
-         MAGIC_ARMOR,
-         MYSTIC_ARMOR,
-         LIGHT_ARMOR,
-         ELEMENTAL_MAIL,
-         SOUL_ARMOR,
-         FLAME_BALL,
-         LIGHT_ARROW,
-         MAGIC_FLARE,
-         ROTATOR,
-         SPARK_BOMB,
-         FLAME_PILLAR,
-         TORNADO,
-         PHOENIX,
-         GOATS_FOOD,
-         HARP_STRING,
-         PASS,
-         DREAM_ROD,
-         LEOS_BRUSH,
-         GREENWOOD_LEAF,
-         MOLES_RIBBON,
-         BIG_PEARL,
-         MERMAIDS_TEARS,
-         MUSHROOM_SHOES,
-         MOBILE_KEY,
-         THUNDER_RING,
-         DELICIOUS_SEEDS,
-         ACTINIDIA_LEAF,
-         DOOR_KEY,
-         PLATINUM_CARD,
-         VIP_CARD,
-         EMBLEM_A,
-         EMBLEM_B,
-         EMBLEM_C,
-         EMBLEM_D,
-         EMBLEM_E,
-         EMBLEM_F,
-         EMBLEM_G,
-         EMBLEM_H,
-         RED_HOT_MIRROR,
-         RED_HOT_BALL,
-         RED_HOT_STICK,
-         POWER_BRACELET,
-         SHIELD_BRACELET,
-         SUPER_BRACELET,
-         BROWN_STONE,
-         GREEN_STONE,
-         BLUE_STONE,
-         SILVER_STONE,
-         PURPLE_STONE,
-         BLACK_STONE,
-         MAGIC_BELL};
-    static string LoggedItemNames[62] =
+    static ItemID LoggedItems[62] = {
+        ItemID::SWORD_OF_LIFE,
+        ItemID::PSYCHO_SWORD,
+        ItemID::CRITICAL_SWORD,
+        ItemID::LUCKY_BLADE,
+        ItemID::ZANTETSU_SWORD,
+        ItemID::SPIRIT_SWORD,
+        ItemID::RECOVERY_SWORD,
+        ItemID::SOUL_BLADE,
+        ItemID::IRON_ARMOR,
+        ItemID::ICE_ARMOR,
+        ItemID::BUBBLE_ARMOR,
+        ItemID::MAGIC_ARMOR,
+        ItemID::MYSTIC_ARMOR,
+        ItemID::LIGHT_ARMOR,
+        ItemID::ELEMENTAL_MAIL,
+        ItemID::SOUL_ARMOR,
+        ItemID::FLAME_BALL,
+        ItemID::LIGHT_ARROW,
+        ItemID::MAGIC_FLARE,
+        ItemID::ROTATOR,
+        ItemID::SPARK_BOMB,
+        ItemID::FLAME_PILLAR,
+        ItemID::TORNADO,
+        ItemID::PHOENIX,
+        ItemID::GOATS_FOOD,
+        ItemID::HARP_STRING,
+        ItemID::PASS,
+        ItemID::DREAM_ROD,
+        ItemID::LEOS_BRUSH,
+        ItemID::GREENWOOD_LEAF,
+        ItemID::MOLES_RIBBON,
+        ItemID::BIG_PEARL,
+        ItemID::MERMAIDS_TEARS,
+        ItemID::MUSHROOM_SHOES,
+        ItemID::MOBILE_KEY,
+        ItemID::THUNDER_RING,
+        ItemID::DELICIOUS_SEEDS,
+        ItemID::ACTINIDIA_LEAF,
+        ItemID::DOOR_KEY,
+        ItemID::PLATINUM_CARD,
+        ItemID::VIP_CARD,
+        ItemID::EMBLEM_A,
+        ItemID::EMBLEM_B,
+        ItemID::EMBLEM_C,
+        ItemID::EMBLEM_D,
+        ItemID::EMBLEM_E,
+        ItemID::EMBLEM_F,
+        ItemID::EMBLEM_G,
+        ItemID::EMBLEM_H,
+        ItemID::RED_HOT_MIRROR,
+        ItemID::RED_HOT_BALL,
+        ItemID::RED_HOT_STICK,
+        ItemID::POWER_BRACELET,
+        ItemID::SHIELD_BRACELET,
+        ItemID::SUPER_BRACELET,
+        ItemID::BROWN_STONE,
+        ItemID::GREEN_STONE,
+        ItemID::BLUE_STONE,
+        ItemID::SILVER_STONE,
+        ItemID::PURPLE_STONE,
+        ItemID::BLACK_STONE,
+        ItemID::MAGIC_BELL
+    };
+    static const char* LoggedItemNames[62] =
         {"Sword of Life",
          "Psycho Sword",
          "Critical Sword",
@@ -243,7 +241,7 @@ namespace Log {
          "Purple Stone",
          "Black Stone",
          "Magic Bell"};
-    static string ItemLocations[NUMBER_OF_ITEMS] =
+    static const char* ItemLocations[NUMBER_OF_ITEMS] =
         {"Trial Room at the start",
          "Grass Valley secret cave (left chest)",
          "Grass Valley secret cave (right chest)",
@@ -371,19 +369,19 @@ namespace Log {
          "Seabed crystal fairy (near Blester entrance)",
          "Seabed crystal fairy (near Durean entrance)"};
 
-    int GetAreaNumber(Lair &Lair) {
+    int GetAreaNumber(const Lair &Lair) {
         switch (Lair.Act) {
-        case 0x00:
+	case ActID::ACT_1:
             return 1;
-        case 0x01:
+	case ActID::ACT_2:
             return 2;
-        case 0x02:
+	case ActID::ACT_3:
             return 3;
-        case 0x03:
+	case ActID::ACT_4:
             return 4;
-        case 0x04:
+	case ActID::ACT_5:
             return 5;
-        case 0x05:
+	case ActID::ACT_6:
             return 6;
         default:
             /* Should not happen */
@@ -391,7 +389,7 @@ namespace Log {
         }
     }
 
-    string GetKeyNPCName(int NPC_ID) {
+    const char* GetKeyNPCName(int NPC_ID) {
         switch (NPC_ID) {
         case NPC_BRIDGE_GUARD:
             return "Bridge Guard";
@@ -587,7 +585,7 @@ namespace Log {
         }
     }
 
-    string GetAreaName(Lair &Lair) {
+    const char* GetAreaName(const Lair &Lair) {
         switch (Lair.PositionData[0]) {
         case 0x05:
             return "Underground Castle 1st screen";
@@ -694,11 +692,11 @@ namespace Log {
     }
 
 
-    void CreateSpoilerLog(vector<Lair>  &RandomizedLairList,
-                          vector<Item>  &RandomizedItemList) {
+    void CreateSpoilerLog(const std::vector<Lair>  &RandomizedLairList,
+                          const std::vector<Item>  &RandomizedItemList) {
 
-        ofstream LogFile(SPOILER_LOG_FILE_NAME, ios::binary);
-        int      NPCIndex, ItemIndex, LoggedItemIndex;
+        std::ofstream LogFile(SPOILER_LOG_FILE_NAME, std::ios::binary);
+        int      NPCIndex, ItemID, LoggedItemID;
 
         LogFile << "\r\n";
         LogFile << "     /=============================\\" << "\r\n";
@@ -713,7 +711,7 @@ namespace Log {
 
         LogFile << "Act 1: Grass Valley" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 16; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act1NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act1NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act1NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act1NPCs[NPCIndex]]) << "\r\n";
         }
@@ -721,7 +719,7 @@ namespace Log {
 
         LogFile << "Act 2: Greenwood" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act2NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act2NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act2NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act2NPCs[NPCIndex]]) << "\r\n";
         }
@@ -729,7 +727,7 @@ namespace Log {
 
         LogFile << "Act 3: St Elles" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 15; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act3NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act3NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act3NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act3NPCs[NPCIndex]]) << "\r\n";
         }
@@ -737,7 +735,7 @@ namespace Log {
 
         LogFile << "Act 4: Mountain of Souls" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 14; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act4NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act4NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act4NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act4NPCs[NPCIndex]]) << "\r\n";
         }
@@ -745,7 +743,7 @@ namespace Log {
 
         LogFile << "Act 5: Leo's Lab" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 18; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act5NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act5NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act5NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act5NPCs[NPCIndex]]) << "\r\n";
         }
@@ -753,7 +751,7 @@ namespace Log {
 
         LogFile << "Act 6: Magridd Castle" << "\r\n";
         for (NPCIndex = 0; NPCIndex < 12; NPCIndex++) {
-            LogFile << setw(NPC_NAME_SIZE) << left << GetKeyNPCName(Act6NPCs[NPCIndex])
+            LogFile << std::setw(NPC_NAME_SIZE) << std::left << GetKeyNPCName(Act6NPCs[NPCIndex])
                     << "  ----->  Act " << GetAreaNumber(RandomizedLairList[Act6NPCs[NPCIndex]])
                     << " - " << GetAreaName(RandomizedLairList[Act6NPCs[NPCIndex]]) << "\r\n";
         }
@@ -764,16 +762,16 @@ namespace Log {
         LogFile << "  ----- EQUIPMENT / KEY ITEMS -----" << "\r\n";
         LogFile << "\r\n";
 
-        for (LoggedItemIndex = 0; LoggedItemIndex < 62; LoggedItemIndex++) {
-            for (ItemIndex = 0; ItemIndex < NUMBER_OF_ITEMS; ItemIndex++) {
+        for (LoggedItemID = 0; LoggedItemID < 62; LoggedItemID++) {
+            for (ItemID = 0; ItemID < NUMBER_OF_ITEMS; ItemID++) {
                 /* This search method is very inefficient but who cares */
-                if (RandomizedItemList[ItemIndex].Contents == LoggedItems[LoggedItemIndex]) {
+                if (RandomizedItemList[ItemID].Contents == LoggedItems[LoggedItemID]) {
                     break;
                 }
             }
 
-            LogFile << setw(ITEM_NAME_SIZE) << left << LoggedItemNames[LoggedItemIndex]
-                    << "  ----->  " << ItemLocations[ItemIndex] << "\r\n";
+            LogFile << std::setw(ITEM_NAME_SIZE) << std::left << LoggedItemNames[LoggedItemID]
+                    << "  ----->  " << ItemLocations[ItemID] << "\r\n";
         }
 
         LogFile.close();

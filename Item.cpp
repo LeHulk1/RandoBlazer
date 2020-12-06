@@ -2,7 +2,7 @@
 
 Item::Item() {
     Type     = TYPE_CHEST;
-    Contents = NOTHING;
+    Contents = ItemID::NOTHING;
     GemsExp  = 0;
 }
 

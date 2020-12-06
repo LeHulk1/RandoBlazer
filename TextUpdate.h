@@ -4,20 +4,17 @@
 #include <fstream>
 #include <vector>
 
-
-using namespace std;
-
 namespace ROMUpdate {
     int ConvertToHex(int Dec);
-    void NPCTextUpdateMain(vector<Lair> RandomizedLairList,
-                           vector<Item> RandomizedItemList,
-                           fstream &ROMFile,
-                           long Seed);
-    void GeneralTextUpdate(vector<Lair> RandomizedLairList,
-                           vector<Item> RandomizedItemList,
-                           fstream &ROMFile,
-                           long Seed);
-    void NPCItemTextUpdate(int ItemIndex, int ItemID, fstream &ROMFile);
+    void NPCTextUpdateMain(const std::vector<Lair>& RandomizedLairList,
+                           const std::vector<Item>& RandomizedItemList,
+                           std::fstream &ROMFile,
+                           const std::string& Seed);
+    void GeneralTextUpdate(const std::vector<Lair>& RandomizedLairList,
+                           const std::vector<Item>& RandomizedItemList,
+                           std::fstream &ROMFile,
+                           const std::string& Seed);
+    void NPCItemTextUpdate(int ItemIndex, int ItemID, std::fstream &ROMFile);
 }
 
 #endif // __TEXTUPDATE_H__

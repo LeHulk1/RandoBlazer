@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>RandoBlazer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.js" integrity="sha256-ZDnV5ioDQTmNUS/DRqjxGHJaqhE17KYy8OSxTGRfnZs="
+        crossorigin="anonymous"></script>
+    <style>
+        .cover-container {
+            max-width: 42em;
+        }
+    </style>
+</head>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">RandoBlazer</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="https://github.com/Orphis/RandoBlazer" target="_blank">Github</a>
+            </nav>
+        </div>
+        <div class="inner cover">
+            <h1 class="cover-heading">Soul Blazer Randomizer</h1>
+            <p class="lead">Version 0.5c + Patches</p>
+            <div>
+                <div class="form-group">
+                    <div id="rompicker_div" class="custom-file">
+                        <input type="file" class="custom-file-input" id="rompicker_file">
+                        <label class="custom-file-label" for="customFile">"Soul Blazer (U).smc" ROM</label>
+                        <div class="invalid-feedback">Invalid ROM :(</div>
+                        <div class="valid-feedback">ROM loaded!</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="random_seed_input" class="col-sm-6 col-form-label">Seed number (0 for random)</label>
+                    <div class="col-sm-6">
+                        <input type="number" class="form-control" id="random_seed_input" min="0" max="4294967295" value="0" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="race_input" class="col-sm-6 col-form-label">Race mode (no spoiler log)</label>
+                    <div class="col-sm-6">
+                        <input type="checkbox" class="form-control" id="race_input" value="race">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="randomize_button" disabled>Randomize!</button>
+                <div id="download_div" class="d-none">
+                    <a id="download_link"><button type="button" class="btn btn-success">Download ROM</button></a>
+                    <a id="download_spoiler_link"><button type="button" class="btn btn-info">Download Spoiler Log</button></a>
+                    <button id="copy_link" type="button" class="btn btn-info">Copy Shareable Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p id="output" />
+    <script>
+        urlParams = new URLSearchParams(location.search);
+        if (urlParams.has('seed')) {
+            document.getElementById('random_seed_input').value = urlParams.get('seed');
+        }
+
+        BrowserFS.install(window);
+        BrowserFS.configure({
+            fs: "LocalStorage"
+        }, function (e) {
+            if (e) {
+                // An error happened!
+                throw e;
+            }
+            // Otherwise, BrowserFS is ready-to-use!
+        });
+        function setupBFS() {
+            // Grab the BrowserFS Emscripten FS plugin.
+            var BFS = new BrowserFS.EmscriptenFS();
+            // Create the folder that we'll turn into a mount point.
+            FS.createFolder(FS.root, 'data', true, true);
+            // Mount BFS's root folder into the '/data' folder.
+            FS.mount(BFS, { root: '/' }, '/data');
+        }
+
+        function checkExistingROM() {
+            if (FS.readdir('/data').includes('Soul Blazer.smc')) {
+                let result = Module.CheckFile("/data/Soul Blazer.smc");
+                let alert_box = document.querySelector('#alert_box');
+                if (result == 0) {
+                    rompicker_file.classList.add('is-invalid');
+                    rompicker_file.classList.remove('is-valid');
+                    randomize_button.disabled = true;
+                } else {
+                    rompicker_file.classList.remove('is-invalid');
+                    rompicker_file.classList.add('is-valid');
+                    randomize_button.disabled = false;
+                }
+            }
+        }
+
+        var Module = {
+            preRun: [
+                setupBFS,
+            ],
+            postRun: [
+                checkExistingROM,
+            ],
+            print: (function () {
+                var element = document.getElementById('output');
+                return function (text) {
+                    element.innerHTML += text + "<br>";
+                };
+            })(),
+            printErr: function (text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                if (0) {
+                    dump(text + '\n');
+                }
+            },
+            canvas: (function () {
+                var canvas = document.getElementById('canvas');
+                return canvas;
+            })()
+        };
+
+        document.getElementById('rompicker_file').onchange = e => {
+            let file = document.getElementById('rompicker_file').files[0];
+            console.log("Picked " + file.name + " of " + file.size + " bytes");
+
+            let fileReader = new FileReader();
+            fileReader.onload = (event) => {
+                FS.writeFile('/data/Soul Blazer.smc', Buffer.from(event.target.result));
+                checkExistingROM();
+            };
+            fileReader.readAsArrayBuffer(file.slice());
+        }
+
+        document.getElementById('randomize_button').onclick = () => {
+            let seed = document.getElementById('random_seed_input').valueAsNumber;
+            if (isNaN(seed)) {
+                seed = 0;
+            }
+            let options = [];
+            let race_input = document.getElementById('race_input');
+            if (race_input.checked) {
+                options.push(race_input.value);
+                document.getElementById('download_spoiler_link').classList.add('d-none');
+                document.getElementById('copy_link').classList.add('d-none');
+            } else {
+                document.getElementById('download_spoiler_link').classList.remove('d-none');
+                document.getElementById('copy_link').classList.remove('d-none');
+            }
+
+            let result = Module.Randomize("/data/Soul Blazer.smc", "/out.smc", seed, options.join(','));
+
+            if (result.length > 0) {
+                let blob = new Blob([FS.readFile('/out.smc')], { type: 'application/octet-stream' });
+                let url = URL.createObjectURL(blob);
+                let a = document.getElementById('download_link');
+                a.download = "Soul Blazer Randomizer - " + result + ".smc";
+                a.href = url;
+                
+                if (!race_input.checked) {
+                    blob = new Blob([FS.readFile('/SpoilerLog.txt')], { type: 'application/octet-stream' });
+                    url = URL.createObjectURL(blob);
+                    a = document.getElementById('download_spoiler_link');
+                    a.download = "Soul Blazer Randomizer - " + result + " Spoiler.txt";
+                    a.href = url;
+
+                    b = document.getElementById('copy_link');
+                    b.onclick = () => {
+                        const el = document.createElement('textarea');
+                        el.value = [location.protocol, '//', location.host, location.pathname, '?seed=', result].join('');
+                        el.setAttribute('readonly', '');
+                        el.style.position = 'absolute';
+                        el.style.left = '-9999px';
+                        document.body.appendChild(el);
+                        const selected =
+                            document.getSelection().rangeCount > 0
+                                ? document.getSelection().getRangeAt(0)
+                                : false;
+                        el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                        if (selected) {
+                            document.getSelection().removeAllRanges();
+                            document.getSelection().addRange(selected);
+                        }
+                    }
+                }
+
+                document.getElementById('download_div').classList.remove('d-none');
+                document.getElementById('download_div').classList.add('d-inline');
+            } else {
+                document.getElementById('download_div').classList.add('d-none');
+                document.getElementById('download_div').classList.remove('d-inline');
+            }
+        }
+    </script>
+    <script src="randoblazer.js"></script>
+</body>
+
+</html>

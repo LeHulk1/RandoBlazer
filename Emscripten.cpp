@@ -1,16 +1,20 @@
 #include "Randomizer.h"
 
-#include <emscripten.h>
+#include <emscripten/bind.h>
 
-extern "C" {
+namespace RandoblazerExport {
+    int CheckFile(const std::string& in_file) { return Randomizer::CheckFile(in_file); }
+    std::string Randomize(const std::string& in_file, const std::string& out_file, unsigned int seed, const std::string& options_string) {
+        std::string seedName;
+        bool result = Randomizer::Randomize(in_file, out_file, seed, Randomizer::Options(options_string), &seedName);
 
-int EMSCRIPTEN_KEEPALIVE check_file(const char* in_file) {
-    return Randomizer::CheckFile(in_file);
+        return result ? seedName : "";
+    }
 }
 
+using namespace emscripten;
 
-int EMSCRIPTEN_KEEPALIVE randomize(const char* in_file, const char* out_file, unsigned int seed) {
-    return Randomizer::Randomize(in_file, out_file, seed);
-}
-
+EMSCRIPTEN_BINDINGS(randoblazer) {
+    function("CheckFile", &RandoblazerExport::CheckFile);
+    function("Randomize", &RandoblazerExport::Randomize);
 }

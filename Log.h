@@ -7,16 +7,13 @@
 #include <string>
 #include <vector>
 
-
-using namespace std;
-
 namespace Log {
-    int GetAreaNumber(Lair &Lair);
-    string GetKeyNPCName(int NPC_ID);
-    string GetAreaName(Lair &Lair);
+    int GetAreaNumber(const Lair &Lair);
+    const char* GetKeyNPCName(int NPC_ID);
+    const char* GetAreaName(const Lair &Lair);
 
-    void CreateSpoilerLog(vector<Lair> &RandomizedLairList,
-                          vector<Item> &RandomizedChestList);
+    void CreateSpoilerLog(const std::vector<Lair> &RandomizedLairList,
+                          const std::vector<Item> &RandomizedChestList);
 }
 
 #endif // __LOG_H__

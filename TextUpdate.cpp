@@ -38,14 +38,14 @@
 
 #define TEXT_WriteString(_String_) {ROMFile.write(_String_, strlen(_String_));}
 
-#define TEXT_WriteItemString(_ItemIndex_) {                                              \
-    if (RandomizedItemList[_ItemIndex_].Contents == GEMS_EXP) {TEXT_WriteString("EXP");} \
-    else {TEXT_WriteString(ItemNameList[RandomizedItemList[_ItemIndex_].Contents].c_str());}     \
+#define TEXT_WriteItemString(_ItemID_) {                                              \
+    if (RandomizedItemList[_ItemID_].Contents == ItemID::GEMS_EXP) {TEXT_WriteString("EXP");} \
+    else {TEXT_WriteString(ItemNameList[(size_t)RandomizedItemList[_ItemID_].Contents]);}     \
 }
 
-#define TEXT_WriteItemByte(_ItemIndex_) {                                        \
-    Byte = RandomizedItemList[_ItemIndex_].Contents;                             \
-    if (Byte != GEMS_EXP && Byte != NOTHING) {ROMFile.write((char*)(&Byte), 1);} \
+#define TEXT_WriteItemByte(_ItemID_) {                                        \
+    ItemID Byte = RandomizedItemList[_ItemID_].Contents;                             \
+    if (Byte != ItemID::GEMS_EXP && Byte != ItemID::NOTHING) {ROMFile.write((char*)(&Byte), 1);} \
 }
 
 
@@ -350,30 +350,7 @@ namespace ROMUpdate {
         0xFA4EB, /* Seabed crystal near Durean */
     };
 
-    bool NPCOriginallyGivesEXP(int NPCIndex) {
-        switch (NPCIndex) {
-        case ITEM_CRYSTAL_GRASS_VALLEY:
-        case ITEM_CRYSTAL_UNDERGROUND_CASTLE:
-        case ITEM_CRYSTAL_LOST_MARSH:
-        case ITEM_CRYSTAL_WATER_SHRINE:
-        case ITEM_CRYSTAL_FIRE_SHRINE:
-        case ITEM_CRYSTAL_MOUNTAIN_OF_SOULS:
-        case ITEM_CRYSTAL_LUNE:
-        case ITEM_CRYSTAL_LEOS_LAB_BASEMENT:
-        case ITEM_CRYSTAL_MODEL_TOWN:
-        case ITEM_CRYSTAL_POWER_PLANT:
-        case ITEM_CRYSTAL_ROCKBIRD:
-        case ITEM_CRYSTAL_SEABED_NEAR_BLESTER:
-        case ITEM_CRYSTAL_SEABED_NEAR_DUREAN:
-            return true;
-            break;
-        default:
-            return false;
-        }
-    }
-
-
-    static string ItemNameList[65] = {
+    static const char* ItemNameList[65] = {
         "Nothing",
         "Sword of Life",
         "Psycho Sword",
@@ -441,7 +418,7 @@ namespace ROMUpdate {
         "Magic Bell"
     };
 
-    static string MasterIntroTextList[NB_MASTER_INTRO_TEXTS] = {
+    static const char* MasterIntroTextList[NB_MASTER_INTRO_TEXTS] = {
         "420 Soul blaze it!",
         "I`m calling\rSoul Blade in its\rvanilla location.",
         "Good luck!\rYou`ll need it!",
@@ -470,7 +447,7 @@ namespace ROMUpdate {
         "Any resemblance with\rActRaiser is purely\rcoincidental."
     };
 
-    static string MasterDeathTextList[NB_MASTER_DEATH_TEXTS] = {
+    static const char* MasterDeathTextList[NB_MASTER_DEATH_TEXTS] = {
         "Ouch! Tough luck :/",
         "Better luck next time!",
         "Don`t be patient.\rThis is a speedrun\rafter all.",
@@ -486,7 +463,7 @@ namespace ROMUpdate {
         "Don`t give up.\rYou got this!"
     };
 
-    static string Deathtoll1TextList[NB_DEATHTOLL_1_TEXTS] = {
+    static const char* Deathtoll1TextList[NB_DEATHTOLL_1_TEXTS] = {
         "Peekaboo!",
         "Guess who!",
         "Your adventure\rends here.",
@@ -499,7 +476,7 @@ namespace ROMUpdate {
         "I`ll put an end\rto your misery."
     };
 
-    static string Deathtoll2TextList[NB_DEATHTOLL_2_TEXTS] = {
+    static const char* Deathtoll2TextList[NB_DEATHTOLL_2_TEXTS] = {
         "This is not even\rmy final form!",
         "All right.\rNow this is\rserious business.",
         "I hope you didn`t\rforget Phoenix!",
@@ -512,7 +489,7 @@ namespace ROMUpdate {
         "Dang, I hope my next\rphase is better..."
     };
 
-    static string VictoryTextList[NB_VICTORY_TEXTS] = {
+    static const char* VictoryTextList[NB_VICTORY_TEXTS] = {
         "\r         G  G",
         "Thank you Mario.\rBut our princess\ris in another castle!",
         "Congratulations!",
@@ -533,7 +510,7 @@ namespace ROMUpdate {
         "Well done!\rBut the next seed\rwon`t be that easy!"
     };
 
-    static string ItemLocations[NUMBER_OF_ITEMS] =
+    static const char* ItemLocations[NUMBER_OF_ITEMS] =
         {"Trial Room",
          "Grass Valley\rsecret cave",
          "Grass Valley\rsecret cave",
@@ -662,7 +639,7 @@ namespace ROMUpdate {
          "Southern Seabed\rcrystal fairy"
     };
 
-    static string GetRegionName(Lair &Lair) {
+    static const char* GetRegionName(const Lair &Lair) {
         switch (Lair.PositionData[0]) {
         case 0x05:
         case 0x06:
@@ -746,21 +723,21 @@ namespace ROMUpdate {
 
 
 
-    static int PickEndTextCode(int NPCItemIndex) {
+    static int PickEndTextCode(int NPCItemID) {
         int EndTextCode = TEXT_ENDTYPE_44AA;
-        if (NPCItemIndex <= 10) {
+        if (NPCItemID <= 10) {
             EndTextCode = TEXT_ENDTYPE_88B9;
         }
-        else if (NPCItemIndex <= 23) {
+        else if (NPCItemID <= 23) {
             EndTextCode = TEXT_ENDTYPE_46EC;
         }
-        else if (NPCItemIndex <= 30) {
+        else if (NPCItemID <= 30) {
             EndTextCode = TEXT_ENDTYPE_1EA5;
         }
-        else if (NPCItemIndex <= 41) {
+        else if (NPCItemID <= 41) {
             EndTextCode = TEXT_ENDTYPE_A3BF;
         }
-        else if (NPCItemIndex <= 50) {
+        else if (NPCItemID <= 50) {
             EndTextCode = TEXT_ENDTYPE_DFF0;
         }
         return EndTextCode;
@@ -770,22 +747,21 @@ namespace ROMUpdate {
     int ConvertToHex(int Dec) {
         /* Converts a decimal integer into its hex "equivalent"
            This is useful where the ROM stores the data as decimal values (like gems in chests). */
-        int Tens = Dec / 10;
-        return (Tens*16) + (Dec - (Tens*10));
+        return (((Dec / 10) << 4) + (Dec % 10)) & 0xFF;
     }
 
 
-    void GeneralTextUpdate(vector<Lair> RandomizedLairList,
-                           vector<Item> RandomizedItemList,
-                           fstream &ROMFile,
-                           long Seed) {
+    void GeneralTextUpdate(const std::vector<Lair>& RandomizedLairList,
+                           const std::vector<Item>& RandomizedItemList,
+                           std::fstream &ROMFile,
+                           const std::string& Seed) {
 
         unsigned char Byte;
         const char* Text;
 
         /*** NPC actions to disable (mostly to remove NPC revival text) */
         for (int i=0; i<NB_NPC_TO_DISABLE_ADDRESSES; ++i) {
-            ROMFile.seekp(NPCToDisableAddressList[i], ios::beg);
+            ROMFile.seekp(NPCToDisableAddressList[i], std::ios::beg);
 
             /* For leader NPCs, keep the 02 37 code to heal the hero */
             if (i == 5  || /* Village Chief */
@@ -801,100 +777,99 @@ namespace ROMUpdate {
 
         /*** Deathtoll's text */
         /* First text */
-        ROMFile.seekp(0x4EF9, ios::beg);
-        Text = Deathtoll1TextList[Random::RandomInteger(NB_DEATHTOLL_1_TEXTS)].c_str();
+        ROMFile.seekp(0x4EF9, std::ios::beg);
+        Text = Deathtoll1TextList[Random::RandomInteger(NB_DEATHTOLL_1_TEXTS)];
         TEXT_WriteString(Text);
         TEXT_EndText12;
         /* Text after first phase */
-        ROMFile.seekp(0x4FB7, ios::beg);
-        Text = Deathtoll2TextList[Random::RandomInteger(NB_DEATHTOLL_2_TEXTS)].c_str();
+        ROMFile.seekp(0x4FB7, std::ios::beg);
+        Text = Deathtoll2TextList[Random::RandomInteger(NB_DEATHTOLL_2_TEXTS)];
         TEXT_WriteString(Text);
         TEXT_EndText12;
         /* Victory text */
-        ROMFile.seekp(0x5388, ios::beg);
+        ROMFile.seekp(0x5388, std::ios::beg);
         TEXT_WriteByte(0x0B); /* Change text address */
         /* Note: there seems to be slightly different text here... diff between Any% and 100%??? */
-        ROMFile.seekp(0x53C7, ios::beg);
+        ROMFile.seekp(0x53C7, std::ios::beg);
         TEXT_EndText12;
-        ROMFile.seekp(0x540C, ios::beg);
-        Text = VictoryTextList[Random::RandomInteger(NB_VICTORY_TEXTS)].c_str();
+        ROMFile.seekp(0x540C, std::ios::beg);
+        Text = VictoryTextList[Random::RandomInteger(NB_VICTORY_TEXTS)];
         TEXT_WriteString(Text);
         TEXT_EndText12;
         /* DEBUG!!! Put Deathtoll's HP to 1 */
-//        ROMFile.seekp(0x997E, ios::beg);TEXT_WriteByte(0x01);
+//        ROMFile.seekp(0x997E, std::ios::beg);TEXT_WriteByte(0x01);
 
         /*** Master's text when hero dies */
-        ROMFile.seekp(0x786B, ios::beg);
-        Text = MasterDeathTextList[Random::RandomInteger(NB_MASTER_DEATH_TEXTS)].c_str();
+        ROMFile.seekp(0x786B, std::ios::beg);
+        Text = MasterDeathTextList[Random::RandomInteger(NB_MASTER_DEATH_TEXTS)];
         TEXT_WriteString(Text);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
         /*** Master's text after Brown Stone */
-        ROMFile.seekp(0x78BC, ios::beg);
+        ROMFile.seekp(0x78BC, std::ios::beg);
         TEXT_WriteString("One down,\rfive to go!");
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
         /*** Master's first text */
-        ROMFile.seekp(0x7999, ios::beg);
-        Text = MasterIntroTextList[Random::RandomInteger(NB_MASTER_INTRO_TEXTS)].c_str();
+        ROMFile.seekp(0x7999, std::ios::beg);
+        Text = MasterIntroTextList[Random::RandomInteger(NB_MASTER_INTRO_TEXTS)];
         TEXT_WriteString(Text);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
-        ROMFile.seekp(0x7A07, ios::beg);
+        ROMFile.seekp(0x7A07, std::ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_52FA);
 
         /*** Title + file selection screens */
-        ROMFile.seekp(0x13B2B, ios::beg);
+        ROMFile.seekp(0x13B2B, std::ios::beg);
         TEXT_WriteString("RANDO HYPE");
-        ROMFile.seekp(0x13B3C, ios::beg);
+        ROMFile.seekp(0x13B3C, std::ios::beg);
         TEXT_WriteString("RandoBlazer v0.5c  ");
-        ROMFile.seekp(0x143B9, ios::beg);
+        ROMFile.seekp(0x143B9, std::ios::beg);
         TEXT_WriteString("Seed ");
-        char SeedChr[11] = {'\0'};
-        sprintf(SeedChr, "%10lu", Seed);
-        TEXT_WriteString(SeedChr);
+	ROMFile.write(Seed.c_str(), 10);
+        //TEXT_WriteString(Seed.c_str());
 
         /*** Correct Magic Flare typo + Greenwood/Actinidia leaves + "received" typo */
-        ROMFile.seekp(0x150EC, ios::beg);
+        ROMFile.seekp(0x150EC, std::ios::beg);
         TEXT_WriteString("re");
-        ROMFile.seekp(0x1514C, ios::beg);
+        ROMFile.seekp(0x1514C, std::ios::beg);
         TEXT_WriteString("G.Leaf");
-        ROMFile.seekp(0x151B2, ios::beg);
+        ROMFile.seekp(0x151B2, std::ios::beg);
         TEXT_WriteString("A.Leaf");
-        ROMFile.seekp(0x1621E, ios::beg);
+        ROMFile.seekp(0x1621E, std::ios::beg);
         TEXT_WriteString("ei");
 
         /*** Old Woman */
-        ROMFile.seekp(0x18121, ios::beg);
+        ROMFile.seekp(0x18121, std::ios::beg);
         TEXT_WriteByte(0x3C); /* Move her to a different location around Lisa's bed */
         TEXT_WriteByte(0x20);
 
         /*** Tool shop owner - change text condition */
-        ROMFile.seekp(0x1839B, ios::beg);
+        ROMFile.seekp(0x1839B, std::ios::beg);
         TEXT_WriteItemByte(ITEM_TOOL_SHOP_OWNER);
 
         /*** Bridge guard */
-        ROMFile.seekp(0x18644, ios::beg);
+        ROMFile.seekp(0x18644, std::ios::beg);
         TEXT_WriteString("Please pass.");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Water mill keeper */
-        ROMFile.seekp(0x1877C, ios::beg);
+        ROMFile.seekp(0x1877C, std::ios::beg);
         TEXT_WriteString("Could you please\rturn this wheel?");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
-        ROMFile.seekp(0x188B9, ios::beg);
+        ROMFile.seekp(0x188B9, std::ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Lisa - Hack so her dream is always accessible */
-        ROMFile.seekp(0x18A6F, ios::beg);
+        ROMFile.seekp(0x18A6F, std::ios::beg);
         TEXT_WriteByte(0x00); /* Require to not have a non-existing item */
-        ROMFile.seekp(0x18A7D, ios::beg);
+        ROMFile.seekp(0x18A7D, std::ios::beg);
         TEXT_WriteByte(0x7F); /* Change pointer when Village Chief is revived */
         TEXT_WriteByte(0x8A);
 
         /*** Tool shop owner's son Teddy */
-        ROMFile.seekp(0x1922E, ios::beg);
+        ROMFile.seekp(0x1922E, std::ios::beg);
         TEXT_WriteItemByte(ITEM_TEDDY); /* change text condition */
-        ROMFile.seekp(0x19256, ios::beg);
+        ROMFile.seekp(0x19256, std::ios::beg);
         TEXT_WriteString("Fancy ");
         TEXT_WriteByte(0x97); /* "a " */
         TEXT_WriteByte(0x0D); /* Carriage return */
@@ -905,25 +880,26 @@ namespace ROMUpdate {
         TEXT_WriteByte(0x0C); /* Question prompt */
 
         /*** Sleeping tulip (move this text to make room for the Pass tile text) */
-        ROMFile.seekp(0x1984E, ios::beg);
+        ROMFile.seekp(0x1984E, std::ios::beg);
         TEXT_WriteByte(0x9A); /* Change text pointer */
-        ROMFile.seekp(0x1989A, ios::beg);
+        ROMFile.seekp(0x1989A, std::ios::beg);
         TEXT_WriteByte(0x10);
         TEXT_WriteString("Hello...");
 
         /*** Gourmet Goat's clue */
         /* First, decide which item the clue will be about */
         int RandomInt = Random::RandomInteger(3);
-        int ClueItem, ItemIndex;
+        ItemID ClueItem;
+        int ItemIndex;
         switch (RandomInt) {
         case 0:
-            ClueItem = SOUL_BLADE;
+            ClueItem = ItemID::SOUL_BLADE;
             break;
         case 1:
-            ClueItem = SOUL_ARMOR;
+            ClueItem = ItemID::SOUL_ARMOR;
             break;
         default:
-            ClueItem = PHOENIX;
+            ClueItem = ItemID::PHOENIX;
             break;
         }
         /* Now find where this item is */
@@ -931,20 +907,20 @@ namespace ROMUpdate {
             if (RandomizedItemList[ItemIndex].Contents == ClueItem) break;
         }
         /* Update text */
-        ROMFile.seekp(0x19D74, ios::beg);
+        ROMFile.seekp(0x19D74, std::ios::beg);
         TEXT_WriteString("If you give me food,\rI will tell you\rwhere ");
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemNameList[ClueItem].c_str());
+        TEXT_WriteString(ItemNameList[(size_t)ClueItem]);
         TEXT_EndStyle;
         TEXT_WriteString(" is!");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
-        ROMFile.seekp(0x19DCB, ios::beg);
+        ROMFile.seekp(0x19DCB, std::ios::beg);
         TEXT_WriteString("You`ve got food!\rwill you give it\rto me?");
         TEXT_WriteByte(0x0C); /* Question prompt */
-        ROMFile.seekp(0x19E0E, ios::beg);
+        ROMFile.seekp(0x19E0E, std::ios::beg);
         TEXT_WriteByte(0x10); /* Start new textbox */
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemNameList[ClueItem].c_str());
+        TEXT_WriteString(ItemNameList[(size_t)ClueItem]);
         TEXT_EndStyle;
         TEXT_WriteString(" is\r");
         if (ItemIndex < NUMBER_OF_CHESTS) {
@@ -954,20 +930,20 @@ namespace ROMUpdate {
             TEXT_WriteString("held by\r");
         }
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemLocations[ItemIndex].c_str());
+        TEXT_WriteString(ItemLocations[ItemIndex]);
         TEXT_EndStyle;
         TEXT_WriteString("!");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Village Chief */
-        ROMFile.seekp(0x1A0C0, ios::beg);
+        ROMFile.seekp(0x1A0C0, std::ios::beg);
         TEXT_WriteByte(0x00); /* "Impossible" Item ID to make sure this condition is never fulfilled */
 
         /* Hack to open up Act2 regardless of what item Village Chief gives */
-        ROMFile.seekp(0x1A123, ios::beg);
+        ROMFile.seekp(0x1A123, std::ios::beg);
         TEXT_WriteByte(0x33); /* Change pointer */
-        ROMFile.seekp(0x1A125, ios::beg);
-        Byte = RandomizedItemList[ITEM_VILLAGE_CHIEF].Contents; /* Get the item */
+        ROMFile.seekp(0x1A125, std::ios::beg);
+        Byte = (unsigned char)RandomizedItemList[ITEM_VILLAGE_CHIEF].Contents; /* Get the item */
         unsigned char VillageChiefBuffer[19] = {
             0x02, 0x01, 0x91, 0xA1,         /* Text "Gives item" */
             0x00, 0x5E,
@@ -977,39 +953,39 @@ namespace ROMUpdate {
         ROMFile.write((char*)(&VillageChiefBuffer), 19);
 
         /*** Lisa's dream */
-        ROMFile.seekp(0x1A522, ios::beg);
+        ROMFile.seekp(0x1A522, std::ios::beg);
         TEXT_WriteByte(0x3C); /* Opening quotation marks */
         TEXT_WriteString("Lisa, you must\rhelp this man.");
         TEXT_WriteByte(0x3E); /* Closing quotation marks */
         TEXT_EndText(TEXT_ENDTYPE_88B9);
-        ROMFile.seekp(0x1A5AF, ios::beg);
+        ROMFile.seekp(0x1A5AF, std::ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Magician text 2 */
-        ROMFile.seekp(0x1A914, ios::beg);
+        ROMFile.seekp(0x1A914, std::ios::beg);
         TEXT_WriteString("Good luck and/or\rblame Everhate.");
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Revival of first Underground Castle Crystal Fairy */
-        ROMFile.seekp(0x1AC5B, ios::beg);
+        ROMFile.seekp(0x1AC5B, std::ios::beg);
         TEXT_WriteByte(0x00);
 
         /*** Underground Castle east part Crystal fairy */
-        ROMFile.seekp(0x1AE14, ios::beg);
+        ROMFile.seekp(0x1AE14, std::ios::beg);
         TEXT_WriteString("I`ve got nothing\rfor you.");
         TEXT_WriteByte(0x11);
         TEXT_WriteByte(0x0C);
 
         /*** Red-Hot Mirror bird - change text condition */
-        ROMFile.seekp(0x1BE3D, ios::beg);
+        ROMFile.seekp(0x1BE3D, std::ios::beg);
         TEXT_WriteItemByte(ITEM_BIRD_RED_HOT_MIRROR);
-        ROMFile.seekp(0x1BE44, ios::beg);
+        ROMFile.seekp(0x1BE44, std::ios::beg);
         TEXT_WriteItemByte(ITEM_BIRD_RED_HOT_MIRROR);
 
         /*** Magic Bell crystal fairy's text */
-        ROMFile.seekp(0x1C0C6, ios::beg);
+        ROMFile.seekp(0x1C0C6, std::ios::beg);
         TEXT_WriteItemByte(ITEM_CRYSTAL_MAGIC_BELL); /* change text condition */
-        ROMFile.seekp(0x1C11E, ios::beg);
+        ROMFile.seekp(0x1C11E, std::ios::beg);
         TEXT_WriteString("If you bring me all 8\rMaster`s Emblems,\rI will give you a\r");
         TEXT_YellowStyle;
         TEXT_WriteItemString(ITEM_CRYSTAL_MAGIC_BELL);
@@ -1018,37 +994,37 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Woodstin Trio */
-        ROMFile.seekp(0x1D135, ios::beg);
+        ROMFile.seekp(0x1D135, std::ios::beg);
         TEXT_WriteString("Let`s start the show!\rThe prize is a\r");
         TEXT_YellowStyle;
         TEXT_WriteItemString(ITEM_WOODSTIN_TRIO);
         TEXT_EndStyle;
         TEXT_WriteString(".");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
-        ROMFile.seekp(0x1D175, ios::beg);
+        ROMFile.seekp(0x1D175, std::ios::beg);
         TEXT_WriteString("Show time!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
-        ROMFile.seekp(0x1D1E6, ios::beg);
+        ROMFile.seekp(0x1D1E6, std::ios::beg);
         TEXT_WriteString("Tadaaa!\rTry to guess where\rI go.");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Fix for Mole's Ribbon chest */
-        ROMFile.seekp(0x1D9B3, ios::beg);
+        ROMFile.seekp(0x1D9B3, std::ios::beg);
         TEXT_WriteByte(0x00);
 
         /*** Shield Bracelet mole - change text condition */
-        ROMFile.seekp(0x1DC07, ios::beg);
+        ROMFile.seekp(0x1DC07, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MOLE_SHIELD_BRACELET);
 
         /*** Monmo */
-        ROMFile.seekp(0x1DE76, ios::beg);
+        ROMFile.seekp(0x1DE76, std::ios::beg);
         TEXT_WriteString("It is so bright\rout here. Please lead\rme to my home!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Psycho Sword squirrel's revival text */
-        ROMFile.seekp(0x1E01C, ios::beg);
+        ROMFile.seekp(0x1E01C, std::ios::beg);
         TEXT_WriteItemByte(ITEM_SQUIRREL_PSYCHO_SWORD); /* change text condition */
-        ROMFile.seekp(0x1E14D, ios::beg);
+        ROMFile.seekp(0x1E14D, std::ios::beg);
         TEXT_WriteString("I will exchange this\r");
         TEXT_YellowStyle;
         TEXT_WriteItemString(ITEM_SQUIRREL_PSYCHO_SWORD);
@@ -1057,33 +1033,33 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_88B9);
 
         /*** Turbo's text in sleeping bird's dream */
-        ROMFile.seekp(0x1E344, ios::beg);
+        ROMFile.seekp(0x1E344, std::ios::beg);
         TEXT_WriteString("Peace, guys.");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Lost Marsh raft */
-        ROMFile.seekp(0x1E68E, ios::beg);
+        ROMFile.seekp(0x1E68E, std::ios::beg);
         TEXT_WriteString("You`re missing the\rGreenwood Leaves!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
-        ROMFile.seekp(0x1E713, ios::beg);
+        ROMFile.seekp(0x1E713, std::ios::beg);
         TEXT_WriteString("Get on!");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Sleeping stump */
-        ROMFile.seekp(0x1E427, ios::beg);
+        ROMFile.seekp(0x1E427, std::ios::beg);
         TEXT_WriteString("I believe I can\rflyyyyy...");
         TEXT_EndText(TEXT_ENDTYPE_46EC);
 
         /*** Act 2 crystal fairies: change text pointers */
-        ROMFile.seekp(0x1E4DF, ios::beg); /* Lost Marsh crystal */
+        ROMFile.seekp(0x1E4DF, std::ios::beg); /* Lost Marsh crystal */
         TEXT_WriteByte(0x60);
         TEXT_WriteByte(0xE3);
-        ROMFile.seekp(0x1E533, ios::beg); /* Water Shrine crystal */
+        ROMFile.seekp(0x1E533, std::ios::beg); /* Water Shrine crystal */
         TEXT_WriteByte(0xC0);
         TEXT_WriteByte(0xE6);
 
         /*** Master's text after World of Evil is opened */
-        ROMFile.seekp(0x1EC55, ios::beg); /* Hack to make all 6 stones required */
+        ROMFile.seekp(0x1EC55, std::ios::beg); /* Hack to make all 6 stones required */
         unsigned char MasterBuffer[220] = {
             0x02, 0x07, 0x02, 0x9F, 0x05, 0xED,                   /* Test flag: are we in the ending sequence? */
             0x02, 0x07, 0x05, 0x9F, 0xC6, 0xEC,                   /* Test flag: go to another flag test later */
@@ -1172,31 +1148,31 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_C5EE);
 
         /*** Mountain King */
-        ROMFile.seekp(0x203C1, ios::beg);
+        ROMFile.seekp(0x203C1, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MOUNTAIN_KING); /* change text conditions */
-        ROMFile.seekp(0x204DF, ios::beg);
+        ROMFile.seekp(0x204DF, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MOUNTAIN_KING);
-        ROMFile.seekp(0x2058A, ios::beg);
+        ROMFile.seekp(0x2058A, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MOUNTAIN_KING);
-        ROMFile.seekp(0x20635, ios::beg);
+        ROMFile.seekp(0x20635, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MOUNTAIN_KING);
-        ROMFile.seekp(0x20742, ios::beg);
+        ROMFile.seekp(0x20742, std::ios::beg);
         TEXT_WriteString("Did you find the\rthree Red-Hot items?");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
-        ROMFile.seekp(0x20905, ios::beg);
+        ROMFile.seekp(0x20905, std::ios::beg);
         TEXT_WriteString("- DANCING GRANDMAS! -");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
-        ROMFile.seekp(0x2092B, ios::beg);
+        ROMFile.seekp(0x2092B, std::ios::beg);
         TEXT_WriteString("Final boss time!");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
-        ROMFile.seekp(0x209F3, ios::beg);
+        ROMFile.seekp(0x209F3, std::ios::beg);
         TEXT_WriteString("Good luck!");
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
 
         /*** Mushroom Shoes boy's revival text */
-        ROMFile.seekp(0x20D53, ios::beg);
+        ROMFile.seekp(0x20D53, std::ios::beg);
         TEXT_WriteItemByte(ITEM_BOY_MUSHROOM_SHOES); /* change text condition */
-        ROMFile.seekp(0x20D74, ios::beg);
+        ROMFile.seekp(0x20D74, std::ios::beg);
         TEXT_WriteString("I have a nice\r");
         TEXT_YellowStyle;
         TEXT_WriteItemString(ITEM_BOY_MUSHROOM_SHOES);
@@ -1205,7 +1181,7 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
 
         /*** Lune gatekeeper */
-        ROMFile.seekp(0x21859, ios::beg);
+        ROMFile.seekp(0x21859, std::ios::beg);
         TEXT_WriteString("Hold on, tiger.\rWhere is your\r");
         TEXT_YellowStyle;
         TEXT_WriteString("Lucky Blade ");
@@ -1214,26 +1190,26 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_1EA5);
 
         /*** Act 4 crystal fairies: change text pointers */
-        ROMFile.seekp(0x21F45, ios::beg); /* Lune crystal */
+        ROMFile.seekp(0x21F45, std::ios::beg); /* Lune crystal */
         TEXT_WriteByte(0x00);
         TEXT_WriteByte(0x91);
 
         /*** Mouse (mouse hole entrance) */
-        ROMFile.seekp(0x22751, ios::beg);
+        ROMFile.seekp(0x22751, std::ios::beg);
         TEXT_WriteString("Thanks!\rPlease come in!");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
         /*** Chest of drawers (Mystic Armor) */
-        ROMFile.seekp(0x22A6B, ios::beg);
+        ROMFile.seekp(0x22A6B, std::ios::beg);
         TEXT_WriteItemByte(ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR); /* change text condition */
-        ROMFile.seekp(0x22A9E, ios::beg);
+        ROMFile.seekp(0x22A9E, std::ios::beg);
         TEXT_WriteString("Hope you like it!");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
         /*** Leo's Lab herb plant's first question */
-        ROMFile.seekp(0x22BB1, ios::beg);
+        ROMFile.seekp(0x22BB1, std::ios::beg);
         TEXT_WriteItemByte(ITEM_PLANT_HERB); /* change text condition */
-        ROMFile.seekp(0x22BC9, ios::beg);
+        ROMFile.seekp(0x22BC9, std::ios::beg);
         TEXT_WriteString("Fancy ");
         TEXT_WriteByte(0x97); /* "a " */
         TEXT_WriteByte(0x0D); /* Carriage return */
@@ -1242,47 +1218,47 @@ namespace ROMUpdate {
         TEXT_WriteByte(0x0C); /* Question prompt */
 
         /*** Actinidia plant - change text condition */
-        ROMFile.seekp(0x2319B, ios::beg);
+        ROMFile.seekp(0x2319B, std::ios::beg);
         TEXT_WriteItemByte(ITEM_PLANT_ACTINIDIA_LEAVES);
 
         /*** Chest of drawers - Hack to turn it into a simple NPC giving an item */
-        ROMFile.seekp(0x23301, ios::beg);
+        ROMFile.seekp(0x23301, std::ios::beg);
         TEXT_WriteItemByte(ITEM_CHEST_OF_DRAWERS_HERB); /* change text condition */
-        ROMFile.seekp(0x232CE, ios::beg);
+        ROMFile.seekp(0x232CE, std::ios::beg);
         TEXT_WriteByte(0x08); /* Invert flag check */
-        ROMFile.seekp(0x23312, ios::beg);
+        ROMFile.seekp(0x23312, std::ios::beg);
         TEXT_WriteByte(0x6B); /* Prevent setting the flag */
 
         /*** Spark Bomb mouse - change text condition */
-        ROMFile.seekp(0x238E6, ios::beg);
+        ROMFile.seekp(0x238E6, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MOUSE_SPARK_BOMB);
 
         /*** Leo's Lab entrance door */
-        ROMFile.seekp(0x23A7B, ios::beg);
+        ROMFile.seekp(0x23A7B, std::ios::beg);
         TEXT_WriteString("Welcome!");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
         /*** Leo's cat's dream */
-        ROMFile.seekp(0x23B89, ios::beg);
+        ROMFile.seekp(0x23B89, std::ios::beg);
         TEXT_WriteString("We can`t let him make\ra deal with Deathtoll!");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
-        ROMFile.seekp(0x23C90, ios::beg);
+        ROMFile.seekp(0x23C90, std::ios::beg);
         TEXT_WriteString("Do it for Lisa.");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
-        ROMFile.seekp(0x23D14, ios::beg);
+        ROMFile.seekp(0x23D14, std::ios::beg);
         TEXT_WriteString("Oh Master, please\rforgive me.");
         TEXT_EndText(TEXT_ENDTYPE_A3BF);
 
         /*** Act 5 crystal fairies: change text pointers */
-        ROMFile.seekp(0x23E4A, ios::beg); /* Model Town 1 crystal */
+        ROMFile.seekp(0x23E4A, std::ios::beg); /* Model Town 1 crystal */
         TEXT_WriteByte(0xC0);
         TEXT_WriteByte(0xBB);
-        ROMFile.seekp(0x23E7A, ios::beg); /* Power Plant crystal */
+        ROMFile.seekp(0x23E7A, std::ios::beg); /* Power Plant crystal */
         TEXT_WriteByte(0x00);
         TEXT_WriteByte(0xBC);
 
         /*** Soldier text: tells what item the sleeping soldier has */
-        ROMFile.seekp(0x24119, ios::beg);
+        ROMFile.seekp(0x24119, std::ios::beg);
         TEXT_WriteString("I know a sleeping\rsoldier who has a\r");
         TEXT_YellowStyle;
         TEXT_WriteItemString(ITEM_SOLDIER_ELEMENTAL_MAIL);
@@ -1291,21 +1267,21 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /*** Singer's text */
-        ROMFile.seekp(0x24677, ios::beg);
+        ROMFile.seekp(0x24677, std::ios::beg);
         TEXT_WriteString("Let`s jam it!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /*** Super Bracelet tile - change text condition */
-        ROMFile.seekp(0x24983, ios::beg);
+        ROMFile.seekp(0x24983, std::ios::beg);
         TEXT_WriteItemByte(ITEM_SUPER_BRACELET);
 
         /*** Queen Magridd's item - change text condition */
-        ROMFile.seekp(0x249A1, ios::beg);
+        ROMFile.seekp(0x249A1, std::ios::beg);
         TEXT_WriteItemByte(ITEM_QUEEN_MAGRIDD);
 
         /*** Platinum Card Soldier - Hack so his item is not permanently missable */
-        ROMFile.seekp(0x24BE3, ios::beg);
-        Byte = RandomizedItemList[ITEM_SOLDIER_PLATINUM_CARD].Contents; /* Get the item */
+        ROMFile.seekp(0x24BE3, std::ios::beg);
+        Byte = (unsigned char)RandomizedItemList[ITEM_SOLDIER_PLATINUM_CARD].Contents; /* Get the item */
         unsigned char PlatCardSoldierBuffer[92] = {
             0x02, 0x17, 0x1A, 0xCC,
             0x02, 0x18, Byte, 0xF2, 0xCB,                         /* If you don't have the item, jump */
@@ -1334,7 +1310,7 @@ namespace ROMUpdate {
             0x02, 0x86, 0x6B};
         ROMFile.write((char*)(&PlatCardSoldierBuffer), 92);
 
-        ROMFile.seekp(0x24C3F, ios::beg);
+        ROMFile.seekp(0x24C3F, std::ios::beg);
         TEXT_WriteByte(0x10); /* Start textbox */
         TEXT_WriteByte(0x93); /* "There " */
         TEXT_WriteByte(0xBA); /* "is " */
@@ -1347,9 +1323,9 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /*** Magridd Castle herb maid's first question */
-        ROMFile.seekp(0x24E83, ios::beg);
+        ROMFile.seekp(0x24E83, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MAID_HERB); /* change text condition */
-        ROMFile.seekp(0x24E9E, ios::beg);
+        ROMFile.seekp(0x24E9E, std::ios::beg);
         TEXT_WriteString("Would ");
         TEXT_WriteByte(0xFE); /* "you " */
         TEXT_WriteByte(0xBE); /* "like " */
@@ -1361,102 +1337,102 @@ namespace ROMUpdate {
 
         /*** Soldier with Dr. Leo */
         /* Clue to Leo's location */
-        ROMFile.seekp(0x25BB4, ios::beg);
+        ROMFile.seekp(0x25BB4, std::ios::beg);
         TEXT_WriteString("Dr.Leo must be in\r");
         TEXT_YellowStyle;
-        TEXT_WriteString(GetRegionName(RandomizedLairList[NPC_DR_LEO]).c_str());
+        TEXT_WriteString(GetRegionName(RandomizedLairList[NPC_DR_LEO]));
         TEXT_EndStyle;
         TEXT_WriteString("!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
         /* Clue to other soldier's location */
-        ROMFile.seekp(0x25BEC, ios::beg);
+        ROMFile.seekp(0x25BEC, std::ios::beg);
         TEXT_WriteString("My friend is in\r");
         TEXT_YellowStyle;
-        TEXT_WriteString(GetRegionName(RandomizedLairList[NPC_SOLDIER_WITH_LEO]).c_str());
+        TEXT_WriteString(GetRegionName(RandomizedLairList[NPC_SOLDIER_WITH_LEO]));
         TEXT_EndStyle;
         TEXT_WriteString("!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /*** Dr. Leo - Hack so he doesn't disappear after beating Demon Bird */
-        ROMFile.seekp(0x25E73, ios::beg);
+        ROMFile.seekp(0x25E73, std::ios::beg);
         TEXT_WriteByte(0x75); /* Change address of this COP command */
         TEXT_WriteByte(0xDE);
 
         /*** Dr. Leo/Queen Magridd cutscene */
-        ROMFile.seekp(0x26145, ios::beg);
+        ROMFile.seekp(0x26145, std::ios::beg);
         TEXT_WriteString("We have to defeat\rDeathtoll!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x25C7F, ios::beg);
+        ROMFile.seekp(0x25C7F, std::ios::beg);
         TEXT_WriteString("We`re ready to roll!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x25D4E, ios::beg);
+        ROMFile.seekp(0x25D4E, std::ios::beg);
         TEXT_WriteString("Queen Magridd!");
         TEXT_WriteByte(0x11); /* Input prompt */
         TEXT_WriteByte(0x10); /* New textbox */
         TEXT_WriteString("Muahahahaaa!!!\rKill this loser.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x26241, ios::beg);
+        ROMFile.seekp(0x26241, std::ios::beg);
         TEXT_WriteByte(0x95); /* "You " */
         TEXT_WriteByte(0x98); /* "are " */
         TEXT_WriteString("worse than\revil!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x2626E, ios::beg);
+        ROMFile.seekp(0x2626E, std::ios::beg);
         TEXT_WriteString("Wait, there`s more!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x262BA, ios::beg);
+        ROMFile.seekp(0x262BA, std::ios::beg);
         TEXT_WriteString("Daddy!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x262EE, ios::beg);
+        ROMFile.seekp(0x262EE, std::ios::beg);
         TEXT_WriteString("Dr.Leo, will you\rcooperate now?");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x26383, ios::beg);
+        ROMFile.seekp(0x26383, std::ios::beg);
         TEXT_WriteString("All right. But please\rlet her go.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x26459, ios::beg);
+        ROMFile.seekp(0x26459, std::ios::beg);
         TEXT_WriteString("Deal.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x264EC, ios::beg);
+        ROMFile.seekp(0x264EC, std::ios::beg);
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x2650A, ios::beg);
+        ROMFile.seekp(0x2650A, std::ios::beg);
         TEXT_WriteString("This is it.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x26773, ios::beg);
+        ROMFile.seekp(0x26773, std::ios::beg);
         TEXT_WriteString("Thanks for everything\ryou are doing for us.\rAre you a real human\rbeing like me?");
         TEXT_WriteByte(0x0C); /* Question prompt */
-        ROMFile.seekp(0x26874, ios::beg);
+        ROMFile.seekp(0x26874, std::ios::beg);
         TEXT_WriteString("I see.........\rPlease leave while my\rback is turned.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /*** Sleeping Soldier's dream */
-        ROMFile.seekp(0x26AA7, ios::beg);
+        ROMFile.seekp(0x26AA7, std::ios::beg);
         TEXT_WriteString("My inventions should\rmake people happy,\rbut they are being\rused for evil.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x26C9E, ios::beg);
+        ROMFile.seekp(0x26C9E, std::ios::beg);
         TEXT_WriteByte(0x91); /* "The " */
         TEXT_WriteByte(0xF6); /* "world " */
         TEXT_WriteByte(0xF1); /* "will " */
         TEXT_WriteByte(0xA1); /* "be " */
         TEXT_WriteString("\rdestroyed!");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
-        ROMFile.seekp(0x26CBF, ios::beg);
+        ROMFile.seekp(0x26CBF, std::ios::beg);
         TEXT_WriteString("I am sorry but\rI have orders.");
         TEXT_EndText(TEXT_ENDTYPE_DFF0);
 
         /*** Airship - Hack so it still works after King Magridd has been revived */
         int LairIndex;
-        ROMFile.seekp(0x26D82, ios::beg);
+        ROMFile.seekp(0x26D82, std::ios::beg);
         for (LairIndex=0; LairIndex<NUMBER_OF_LAIRS; LairIndex++) {
             /* Find the index of the lair on the airship */
             if (RandomizedLairList[LairIndex].PositionData[0] == 0x72 /* Airship map */) break;
         }
         TEXT_WriteByte(LairIndex % 0x100);
         TEXT_WriteByte(LairIndex / 0x100);
-        ROMFile.seekp(0x26D88, ios::beg);
+        ROMFile.seekp(0x26D88, std::ios::beg);
         TEXT_WriteByte(LairIndex % 0x100);
         TEXT_WriteByte(LairIndex / 0x100);
 
         /*** Left Tower Crystal fairy */
-        ROMFile.seekp(0x26DF3, ios::beg);
+        ROMFile.seekp(0x26DF3, std::ios::beg);
         TEXT_WriteString("I`ve got nothing\rfor you.");
         TEXT_WriteByte(0x11);
         TEXT_WriteByte(0x0C);
@@ -1466,13 +1442,13 @@ namespace ROMUpdate {
         RandomInt = Random::RandomInteger(3);
         switch (RandomInt) {
         case 0:
-            ClueItem = LUCKY_BLADE;
+            ClueItem = ItemID::LUCKY_BLADE;
             break;
         case 1:
-            ClueItem = ZANTETSU_SWORD;
+            ClueItem = ItemID::ZANTETSU_SWORD;
             break;
         default:
-            ClueItem = SPIRIT_SWORD;
+            ClueItem = ItemID::SPIRIT_SWORD;
             break;
         }
         /* Now find where this sword is */
@@ -1480,10 +1456,10 @@ namespace ROMUpdate {
             if (RandomizedItemList[ItemIndex].Contents == ClueItem) break;
         }
         /* Update text */
-        ROMFile.seekp(0x26EB9, ios::beg);
+        ROMFile.seekp(0x26EB9, std::ios::beg);
         TEXT_WriteByte(0x91); /* "The " */
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemNameList[ClueItem].c_str());
+        TEXT_WriteString(ItemNameList[(size_t)ClueItem]);
         TEXT_EndStyle;
         TEXT_WriteString(" is\r");
         if (ItemIndex < NUMBER_OF_CHESTS) {
@@ -1493,7 +1469,7 @@ namespace ROMUpdate {
             TEXT_WriteString("held by\r");
         }
         TEXT_YellowStyle;
-        TEXT_WriteString(ItemLocations[ItemIndex].c_str());
+        TEXT_WriteString(ItemLocations[ItemIndex]);
         TEXT_EndStyle;
         TEXT_WriteString("!");
         TEXT_WriteByte(0x11);
@@ -1501,14 +1477,14 @@ namespace ROMUpdate {
 
         /*** Airship Dock map arrangement hack:
            add a tile to access the ship even if Dr. Leo is there */
-        ROMFile.seekp(0xD7E98, ios::beg);
+        ROMFile.seekp(0xD7E98, std::ios::beg);
         TEXT_WriteByte(0x35); /* Replace a railing tile with a bridge tile */
         TEXT_WriteByte(0xE5);
 
         /*** St. Elles herb mermaid */
-        ROMFile.seekp(0xF8305, ios::beg);
+        ROMFile.seekp(0xF8305, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MERMAID_HERB); /* change text condition */
-        ROMFile.seekp(0xF831D, ios::beg);
+        ROMFile.seekp(0xF831D, std::ios::beg);
         TEXT_WriteString("Would ");
         TEXT_WriteByte(0xFE); /* "you " */
         TEXT_WriteByte(0xBE); /* "like " */
@@ -1517,31 +1493,31 @@ namespace ROMUpdate {
         TEXT_WriteItemString(ITEM_MERMAID_HERB);
         TEXT_WriteString("? ");
         TEXT_WriteByte(0x0C); /* Question prompt */
-        ROMFile.seekp(0xF8356, ios::beg);
+        ROMFile.seekp(0xF8356, std::ios::beg);
         TEXT_WriteString("Here you go!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
 
         /*** Mermaid statues */
-        ROMFile.seekp(0xF8801, ios::beg);
+        ROMFile.seekp(0xF8801, std::ios::beg);
         TEXT_WriteString("Blester is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
-        ROMFile.seekp(0xF8AD6, ios::beg);
+        ROMFile.seekp(0xF8AD6, std::ios::beg);
         TEXT_WriteString("Rockbird is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
-        ROMFile.seekp(0xF8EF1, ios::beg);
+        ROMFile.seekp(0xF8EF1, std::ios::beg);
         TEXT_WriteString("Durean is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
-        ROMFile.seekp(0xF9674, ios::beg);
+        ROMFile.seekp(0xF9674, std::ios::beg);
         TEXT_WriteString("Ghost Ship is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
-        ROMFile.seekp(0xFA029, ios::beg);
+        ROMFile.seekp(0xFA029, std::ios::beg);
         TEXT_WriteByte(0x31); /* Change pointer to open Southerta even if other statues are present */
-        ROMFile.seekp(0xFA040, ios::beg);
+        ROMFile.seekp(0xFA040, std::ios::beg);
         TEXT_WriteString("Southerta is open!");
         TEXT_EndText(TEXT_ENDTYPE_44AA);
 
         /*** Bubble Armor mermaid's revival text */
-        ROMFile.seekp(0xF8BBD, ios::beg);
+        ROMFile.seekp(0xF8BBD, std::ios::beg);
         TEXT_WriteString("Does anyone want my\r");
         TEXT_YellowStyle;
         TEXT_WriteItemString(ITEM_MERMAID_BUBBLE_ARMOR);
@@ -1550,19 +1526,19 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_44AA);
 
         /*** Fix for Mermaid Tears chest */
-        ROMFile.seekp(0xF8CA4, ios::beg);
+        ROMFile.seekp(0xF8CA4, std::ios::beg);
         TEXT_WriteByte(0x00);
 
         /*** Magic Flare mermaid - change text condition */
-        ROMFile.seekp(0xF9087, ios::beg);
+        ROMFile.seekp(0xF9087, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MERMAID_MAGIC_FLARE);
 
         /*** Mermaid Queen - Hack to open Southerta in case the initial Mermaid Statue disappeared */
-        ROMFile.seekp(0xF9219, ios::beg);
+        ROMFile.seekp(0xF9219, std::ios::beg);
         TEXT_WriteByte(0x2F); /* Change pointer */
-        ROMFile.seekp(0xF921D, ios::beg);
+        ROMFile.seekp(0xF921D, std::ios::beg);
         TEXT_WriteByte(0x80); /* Change text pointer */
-        ROMFile.seekp(0xF9228, ios::beg);
+        ROMFile.seekp(0xF9228, std::ios::beg);
         unsigned char MermaidQueenBuffer[57] = {
             0x02, 0x08, 0x02, 0x85, 0x58, 0x92, 0x6B, /* If Southerta isn't open, jump to F9258 */
             0x02, 0x01, 0x8C, 0x93, 0x6B,             /* Point to chunk of weird empty text before "Queen!", not sure what this does */
@@ -1583,45 +1559,45 @@ namespace ROMUpdate {
         TEXT_EndText(TEXT_ENDTYPE_44AA);
 
         /*** Red-Hot Stick mermaid - change text conditions */
-        ROMFile.seekp(0xF985A, ios::beg);
+        ROMFile.seekp(0xF985A, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MERMAID_RED_HOT_STICK);
-        ROMFile.seekp(0xF9861, ios::beg);
+        ROMFile.seekp(0xF9861, std::ios::beg);
         TEXT_WriteItemByte(ITEM_MERMAID_RED_HOT_STICK);
 
         /*** Lue - change text conditions */
-        ROMFile.seekp(0xF9BB7, ios::beg);
+        ROMFile.seekp(0xF9BB7, std::ios::beg);
         TEXT_WriteItemByte(ITEM_LUE);
         /* Modify text conditions for Mermaid guarding Lue's prison entrance */
-        ROMFile.seekp(0xF98FE, ios::beg);
+        ROMFile.seekp(0xF98FE, std::ios::beg);
         TEXT_WriteItemByte(ITEM_LUE);
-        ROMFile.seekp(0xF99D3, ios::beg);
+        ROMFile.seekp(0xF99D3, std::ios::beg);
         TEXT_WriteItemByte(ITEM_LUE);
 
         /*** Act 3 crystal fairies: change text pointers */
-        ROMFile.seekp(0xFA4B7, ios::beg); /* Seabed crystal near Blester */
+        ROMFile.seekp(0xFA4B7, std::ios::beg); /* Seabed crystal near Blester */
         TEXT_WriteByte(0x40);
         TEXT_WriteByte(0x9C);
-        ROMFile.seekp(0xFA4E7, ios::beg); /* Seabed crystal near Durean */
+        ROMFile.seekp(0xFA4E7, std::ios::beg); /* Seabed crystal near Durean */
         TEXT_WriteByte(0x60);
         TEXT_WriteByte(0xA0);
 
         /*** Blester Crystal fairy */
-        ROMFile.seekp(0xFA517, ios::beg);
+        ROMFile.seekp(0xFA517, std::ios::beg);
         TEXT_WriteString("I`ve got nothing\rfor you.");
         TEXT_WriteByte(0x11);
         TEXT_WriteByte(0x0C);
     }
 
 
-    void NPCItemTextUpdate(int ItemIndex, int ItemID, fstream &ROMFile) {
+    void NPCItemTextUpdate(int ItemIndex, ItemID itemID, std::fstream &ROMFile) {
 
         unsigned int Byte;
         const char* ItemName;
         int NPCItemIndex = ItemIndex - NUMBER_OF_CHESTS;
 
         /* Get the item name */
-        if (ItemID != GEMS_EXP) {
-            ItemName = ItemNameList[ItemID].c_str();
+        if (itemID != ItemID::GEMS_EXP) {
+            ItemName = ItemNameList[(size_t)itemID];
         }
         else {
             ItemName = "EXP";
@@ -1630,7 +1606,7 @@ namespace ROMUpdate {
         /* Update text when NPC gives the item */
         if (NPCItemTextAddressList[NPCItemIndex] != 0) {
 
-            ROMFile.seekp(NPCItemTextAddressList[NPCItemIndex], ios::beg);
+            ROMFile.seekp(NPCItemTextAddressList[NPCItemIndex], std::ios::beg);
             if (ItemIndex == ITEM_WATER_SHRINE_TILE ||
                 ItemIndex == ITEM_EMBLEM_H) {
                 /* Particular cases where we need shorter text */
@@ -1670,7 +1646,7 @@ namespace ROMUpdate {
         /* Update text when NPC doesn't give its item because the hero already has it */
         if (NPCAlreadyHaveItemTextAddressList[NPCItemIndex] != 0) {
 
-            ROMFile.seekp(NPCAlreadyHaveItemTextAddressList[NPCItemIndex], ios::beg);
+            ROMFile.seekp(NPCAlreadyHaveItemTextAddressList[NPCItemIndex], std::ios::beg);
             if (ItemIndex == ITEM_BIRD_RED_HOT_MIRROR ||
                 ItemIndex == ITEM_SQUIRREL_PSYCHO_SWORD ||
                 ItemIndex == ITEM_SQUIRREL_EMBLEM_C ||
@@ -1697,26 +1673,14 @@ namespace ROMUpdate {
     }
 
 
-    void NPCTextUpdateMain(vector<Lair> RandomizedLairList,
-                           vector<Item> RandomizedItemList,
-                           fstream &ROMFile,
-                           long Seed) {
-
-        unsigned char ItemID;
+    void NPCTextUpdateMain(const std::vector<Lair>& RandomizedLairList,
+                           const std::vector<Item>& RandomizedItemList,
+                           std::fstream &ROMFile,
+                           const std::string& Seed) {
         unsigned char GemsExpValue[2];
         unsigned char Byte;
         int GemsExp_TensAndUnits;
         int ItemAddress;
-
-        for (int i=NUMBER_OF_CHESTS; i<NUMBER_OF_ITEMS; i++) {
-            /* If the NPC doesn't normally give EXP, let us turn the
-               EXP/Nothing prize into a Medical Herb for now. */
-            ItemID = RandomizedItemList[i].Contents;
-            if (!NPCOriginallyGivesEXP(i) &&
-                (ItemID == GEMS_EXP || ItemID == NOTHING)) {
-                RandomizedItemList[i].Contents = MEDICAL_HERB;
-            }
-        }
 
         /* General text updates and some specific Item NPC text */
         GeneralTextUpdate(RandomizedLairList, RandomizedItemList, ROMFile, Seed);
@@ -1724,12 +1688,12 @@ namespace ROMUpdate {
         /* Fill NPC items */
         for (int i=NUMBER_OF_CHESTS; i<NUMBER_OF_ITEMS; i++) {
             ItemAddress = NPCItemAddressList[i-NUMBER_OF_CHESTS];
-            ItemID = RandomizedItemList[i].Contents;
+            ItemID itemID = RandomizedItemList[i].Contents;
 
-            if (ItemID == GEMS_EXP || ItemID == NOTHING) {
+            if (itemID == ItemID::GEMS_EXP || itemID == ItemID::NOTHING) {
 
-                if (NPCOriginallyGivesEXP(i)) {
-                    ROMFile.seekp (ItemAddress, ios::beg);
+                if (ROMData::NPCOriginallyGivesEXP(i)) {
+                    ROMFile.seekp (ItemAddress, std::ios::beg);
                     GemsExp_TensAndUnits = RandomizedItemList[i].GemsExp % 100;
                     GemsExpValue[0] = ConvertToHex(GemsExp_TensAndUnits);
                     GemsExpValue[1] = ConvertToHex((RandomizedItemList[i].GemsExp - GemsExp_TensAndUnits) / 100);
@@ -1738,19 +1702,19 @@ namespace ROMUpdate {
                 else {
                     /* If the NPC doesn't normally give EXP, let us turn the
                        prize into a Medical Herb for now. */
-                    ROMFile.seekp (ItemAddress, ios::beg);
-                    ItemID = MEDICAL_HERB;
-                    ROMFile.write((char*)(&ItemID), 1);
+                    ROMFile.seekp (ItemAddress, std::ios::beg);
+                    itemID = ItemID::MEDICAL_HERB;
+                    ROMFile.write((char*)(&itemID), 1);
                 }
             }
             else {
 
-                if (NPCOriginallyGivesEXP(i)) {
+                if (ROMData::NPCOriginallyGivesEXP(i)) {
                     /* If the NPC is a crystal fairy which normally gives EXP,
                        we need to do some tweaking to make it give an item. */
-                    ROMFile.seekp (ItemAddress-1, ios::beg);
+                    ROMFile.seekp (ItemAddress-1, std::ios::beg);
                     TEXT_WriteByte(0x0A);
-                    ROMFile.write((char*)(&ItemID), 1);
+                    ROMFile.write((char*)(&itemID), 1);
 
                     if (i == ITEM_CRYSTAL_FIRE_SHRINE) {
                         /* This one is really weird, the textbox sometimes glitches out */
@@ -1761,13 +1725,13 @@ namespace ROMUpdate {
                     }
                 }
                 else {
-                    ROMFile.seekp (ItemAddress, ios::beg);
-                    ROMFile.write((char*)(&ItemID), 1);
+                    ROMFile.seekp (ItemAddress, std::ios::beg);
+                    ROMFile.write((char*)(&itemID), 1);
                 }
             }
 
             /* Update the NPC's text accordingly */
-            NPCItemTextUpdate(i, ItemID, ROMFile);
+            NPCItemTextUpdate(i, itemID, ROMFile);
         }
 
     }

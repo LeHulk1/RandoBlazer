@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <iostream>
 #include <cstdio>
+#include <boost/algorithm/string.hpp>
+#include <boost/uuid/detail/sha1.hpp>
 
 #define HEADER_OFFSET        0x200
 #define SEED_SIZE            10
@@ -33,58 +35,54 @@
 //#define DEBUG_TWO_ENEMIES
 //#define DONT_RANDOMIZE
 
-
-using namespace std;
-using namespace Random;
-
 namespace Randomizer {
 
-    static int UndergroundCastleEnemies[6] =
-        {ACT1_GOBLIN, ACT1_IMP, ACT1_FLY, ACT1_PLANT, ACT1_SLIME, ACT1_TORCH};
-    static int LeosPaintingsEnemies[4] =
-        {ACT1_ARMOR, ACT1_BIRD, ACT1_TORCH2, ACT1_BLOCK};
-    static int WaterShrineEnemies[5] =
-        {ACT2_WATER_DRAGON, ACT2_MUDMAN, ACT2_BUSH, ACT2_STATUE, ACT2_FLOWER};
-    static int FireLightShrineEnemies[5] =
-        {ACT2_FIRE_SPIRIT, ACT2_GHOST, ACT2_LIZARDMAN, ACT2_TP_LIZARDMAN, ACT2_FIREMAN};
-    static int FireLightShrineEnemiesNoFireSpirit[4] =
-        {ACT2_GHOST, ACT2_LIZARDMAN, ACT2_TP_LIZARDMAN, ACT2_FIREMAN};
-    static int SeabedEnemies[5] =
-        {ACT3_URCHIN, ACT3_JELLYFISH, ACT3_CRAB, ACT3_RAY, ACT3_SEAHORSE};
-    static int IslandsEnemies[5] =
-        {ACT3_PALM_TREE, ACT3_ROCK, ACT3_FISH, ACT3_GORILLA, ACT3_EAGLE};
-    static int IslandsEnemiesNoFish[4] =
-        {ACT3_PALM_TREE, ACT3_ROCK, ACT3_GORILLA, ACT3_EAGLE};
-    static int MountainEnemies[5] =
-        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT, ACT4_SNOWBALL};
-    static int MountainEnemiesNoSnowball[4] =
-        {ACT4_RAT, ACT4_MOOSE, ACT4_YETI, ACT4_BAT};
-    static int LaynoleLuneEnemies[6] =
-        {ACT4_PURPLE_WIZARD, ACT4_RED_WIZARD, ACT4_ICE_HEAD, ACT4_ICE_BLOCK, ACT4_CIRCLING_BAT, ACT4_SLIME};
-    static int LaynoleLuneEnemiesNoIceBlock[5] =
-        {ACT4_PURPLE_WIZARD, ACT4_RED_WIZARD, ACT4_ICE_HEAD, ACT4_CIRCLING_BAT, ACT4_SLIME};
-    static int LeosBasementEnemies[5] =
-        {ACT5_METAL_MOUSE, ACT5_BULLDOZER, ACT5_HELICOPTER, ACT5_WORM, ACT5_ROBOT};
-    static int LeosBasementEnemiesMetalOnly[3] =
-        {ACT5_METAL_MOUSE, ACT5_BULLDOZER, ACT5_HELICOPTER};
-    static int LeosBasementEnemiesNoMetal[2] =
-        {ACT5_WORM, ACT5_ROBOT};
-    static int ModelTownsEnemies[5] =
-        {ACT5_MINI_KNIGHT, ACT5_MINI_ARCHER, ACT5_MINI_HORSEMAN, ACT5_CATAPULT, ACT5_TOWER};
-    static int CastleBasementEnemies[4] =
-        {ACT6_ORB, ACT6_GHOST, ACT6_SNAKE, ACT6_SKELETON};
-    static int CastleBasementEnemiesNoGhost[3] =
-        {ACT6_ORB, ACT6_SNAKE, ACT6_SKELETON};
-    static int CastleBasementEnemiesFull[6] =
-        {ACT6_SKULL, ACT6_ORB, ACT6_GHOST, ACT6_SNAKE, ACT6_FIRE, ACT6_SKELETON};
-    static int CastleTowersEnemies[5] =
-        {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
-    static int CastleTowersEnemiesFull[7] =
-        {ACT6_PURPLE_KNIGHT, ACT6_RED_KNIGHT, ACT6_FIRE2, ACT6_SKULL2, ACT6_MIMIC, ACT6_DOLL, ACT6_CHESS_KNIGHT};
-    static int WorldOfEvilEnemies[3] =
-        {ACT7_DEMON, ACT7_FLY, ACT7_BRICK};
-    static int WorldOfEvilEnemiesNoBrick[2] =
-        {ACT7_DEMON, ACT7_FLY};
+    static EnemyType UndergroundCastleEnemies[6] =
+        {EnemyType::ACT1_GOBLIN, EnemyType::ACT1_IMP, EnemyType::ACT1_FLY, EnemyType::ACT1_PLANT, EnemyType::ACT1_SLIME, EnemyType::ACT1_TORCH};
+    static EnemyType LeosPaintingsEnemies[4] =
+        {EnemyType::ACT1_ARMOR, EnemyType::ACT1_BIRD, EnemyType::ACT1_TORCH2, EnemyType::ACT1_BLOCK};
+    static EnemyType WaterShrineEnemies[5] =
+        {EnemyType::ACT2_WATER_DRAGON, EnemyType::ACT2_MUDMAN, EnemyType::ACT2_BUSH, EnemyType::ACT2_STATUE, EnemyType::ACT2_FLOWER};
+    static EnemyType FireLightShrineEnemies[5] =
+        {EnemyType::ACT2_FIRE_SPIRIT, EnemyType::ACT2_GHOST, EnemyType::ACT2_LIZARDMAN, EnemyType::ACT2_TP_LIZARDMAN, EnemyType::ACT2_FIREMAN};
+    static EnemyType FireLightShrineEnemiesNoFireSpirit[4] =
+        {EnemyType::ACT2_GHOST, EnemyType::ACT2_LIZARDMAN, EnemyType::ACT2_TP_LIZARDMAN, EnemyType::ACT2_FIREMAN};
+    static EnemyType SeabedEnemies[5] =
+        {EnemyType::ACT3_URCHIN, EnemyType::ACT3_JELLYFISH, EnemyType::ACT3_CRAB, EnemyType::ACT3_RAY, EnemyType::ACT3_SEAHORSE};
+    static EnemyType IslandsEnemies[5] =
+        {EnemyType::ACT3_PALM_TREE, EnemyType::ACT3_ROCK, EnemyType::ACT3_FISH, EnemyType::ACT3_GORILLA, EnemyType::ACT3_EAGLE};
+    static EnemyType IslandsEnemiesNoFish[4] =
+        {EnemyType::ACT3_PALM_TREE, EnemyType::ACT3_ROCK, EnemyType::ACT3_GORILLA, EnemyType::ACT3_EAGLE};
+    static EnemyType MountainEnemies[5] =
+        {EnemyType::ACT4_RAT, EnemyType::ACT4_MOOSE, EnemyType::ACT4_YETI, EnemyType::ACT4_BAT, EnemyType::ACT4_SNOWBALL};
+    static EnemyType MountainEnemiesNoSnowball[4] =
+        {EnemyType::ACT4_RAT, EnemyType::ACT4_MOOSE, EnemyType::ACT4_YETI, EnemyType::ACT4_BAT};
+    static EnemyType LaynoleLuneEnemies[6] =
+        {EnemyType::ACT4_PURPLE_WIZARD, EnemyType::ACT4_RED_WIZARD, EnemyType::ACT4_ICE_HEAD, EnemyType::ACT4_ICE_BLOCK, EnemyType::ACT4_CIRCLING_BAT, EnemyType::ACT4_SLIME};
+    static EnemyType LaynoleLuneEnemiesNoIceBlock[5] =
+        {EnemyType::ACT4_PURPLE_WIZARD, EnemyType::ACT4_RED_WIZARD, EnemyType::ACT4_ICE_HEAD, EnemyType::ACT4_CIRCLING_BAT, EnemyType::ACT4_SLIME};
+    static EnemyType LeosBasementEnemies[5] =
+        {EnemyType::ACT5_METAL_MOUSE, EnemyType::ACT5_BULLDOZER, EnemyType::ACT5_HELICOPTER, EnemyType::ACT5_WORM, EnemyType::ACT5_ROBOT};
+    static EnemyType LeosBasementEnemiesMetalOnly[3] =
+        {EnemyType::ACT5_METAL_MOUSE, EnemyType::ACT5_BULLDOZER, EnemyType::ACT5_HELICOPTER};
+    static EnemyType LeosBasementEnemiesNoMetal[2] =
+        {EnemyType::ACT5_WORM, EnemyType::ACT5_ROBOT};
+    static EnemyType ModelTownsEnemies[5] =
+        {EnemyType::ACT5_MINI_KNIGHT, EnemyType::ACT5_MINI_ARCHER, EnemyType::ACT5_MINI_HORSEMAN, EnemyType::ACT5_CATAPULT, EnemyType::ACT5_TOWER};
+    static EnemyType CastleBasementEnemies[4] =
+        {EnemyType::ACT6_ORB, EnemyType::ACT6_GHOST, EnemyType::ACT6_SNAKE, EnemyType::ACT6_SKELETON};
+    static EnemyType CastleBasementEnemiesNoGhost[3] =
+        {EnemyType::ACT6_ORB, EnemyType::ACT6_SNAKE, EnemyType::ACT6_SKELETON};
+    static EnemyType CastleBasementEnemiesFull[6] =
+        {EnemyType::ACT6_SKULL, EnemyType::ACT6_ORB, EnemyType::ACT6_GHOST, EnemyType::ACT6_SNAKE, EnemyType::ACT6_FIRE, EnemyType::ACT6_SKELETON};
+    static EnemyType CastleTowersEnemies[5] =
+        {EnemyType::ACT6_PURPLE_KNIGHT, EnemyType::ACT6_RED_KNIGHT, EnemyType::ACT6_MIMIC, EnemyType::ACT6_DOLL, EnemyType::ACT6_CHESS_KNIGHT};
+    static EnemyType CastleTowersEnemiesFull[7] =
+        {EnemyType::ACT6_PURPLE_KNIGHT, EnemyType::ACT6_RED_KNIGHT, EnemyType::ACT6_FIRE2, EnemyType::ACT6_SKULL2, EnemyType::ACT6_MIMIC, EnemyType::ACT6_DOLL, EnemyType::ACT6_CHESS_KNIGHT};
+    static EnemyType WorldOfEvilEnemies[3] =
+        {EnemyType::ACT7_DEMON, EnemyType::ACT7_FLY, EnemyType::ACT7_BRICK};
+    static EnemyType WorldOfEvilEnemiesNoBrick[2] =
+        {EnemyType::ACT7_DEMON, EnemyType::ACT7_FLY};
 
     static unsigned char OrientationList[4] =
         {0x00,  /* down */
@@ -92,24 +90,24 @@ namespace Randomizer {
          0x80,  /* right */
          0xC0}; /* up */
 
-    static bool CanRandomizeOrientation(int Act, unsigned char Enemy) {
-        return ( (Act == ACT_2 && Enemy == ACT2_WATER_DRAGON) ||
-                 (Act == ACT_4 && Enemy == ACT4_RAT) ||
-                 (Act == ACT_4 && Enemy == ACT4_SNOWBALL) ||
-                 (Act == ACT_5 && Enemy == ACT5_METAL_MOUSE) ||
-                 (Act == ACT_5 && Enemy == ACT5_ROBOT) ||
-                 (Act == ACT_5 && Enemy == ACT5_WORM) ||
-                 (Act == ACT_5 && Enemy == ACT5_TOWER) ||
-                 (Act == ACT_6 && Enemy == ACT6_SKULL) ||
-                 (Act == ACT_6 && Enemy == ACT6_SNAKE) ||
-                 (Act == ACT_6 && Enemy == ACT6_SKULL2) ||
-                 (Act == ACT_7 && Enemy == ACT7_BRICK) );
+    static bool CanRandomizeOrientation(ActID Act, EnemyType Enemy) {
+        return ( (Act == ActID::ACT_2 && Enemy == EnemyType::ACT2_WATER_DRAGON) ||
+                 (Act == ActID::ACT_4 && Enemy == EnemyType::ACT4_RAT) ||
+                 (Act == ActID::ACT_4 && Enemy == EnemyType::ACT4_SNOWBALL) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_METAL_MOUSE) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_ROBOT) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_WORM) ||
+                 (Act == ActID::ACT_5 && Enemy == EnemyType::ACT5_TOWER) ||
+                 (Act == ActID::ACT_6 && Enemy == EnemyType::ACT6_SKULL) ||
+                 (Act == ActID::ACT_6 && Enemy == EnemyType::ACT6_SNAKE) ||
+                 (Act == ActID::ACT_6 && Enemy == EnemyType::ACT6_SKULL2) ||
+                 (Act == ActID::ACT_7 && Enemy == EnemyType::ACT7_BRICK) );
     }
 
     void RandomizeLairEnemies(Lair &Lair) {
 
         /* Don't randomize enemies from 2-up-2-down lairs, because upside-down enemies can sometimes get away... */
-        if (Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
+        if (Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
             return;
         }
 
@@ -118,110 +116,110 @@ namespace Randomizer {
             return;
         }
 
-        int Enemy = Lair.Enemy;
+        EnemyType Enemy = Lair.Enemy;
         //int OriginalEnemy = Enemy;
 
         switch (Lair.Act) {
-        case ACT_1:
-            if (Enemy != ACT1_SPIKEY &&
-                Enemy != SOLID_ARM) {
-                if (Enemy < ACT1_ARMOR) {
+        case ActID::ACT_1:
+            if (Enemy != EnemyType::ACT1_SPIKEY &&
+                Enemy != EnemyType::SOLID_ARM) {
+                if (Enemy < EnemyType::ACT1_ARMOR) {
                     /* Lair is in Underground Castle */
-                    Enemy = UndergroundCastleEnemies[RandomInteger(6)];
+                    Enemy = UndergroundCastleEnemies[Random::RandomInteger(6)];
                 }
                 else {
                     /* Lair is in Leo's Paintings */
-                    Enemy = LeosPaintingsEnemies[RandomInteger(4)];
+                    Enemy = LeosPaintingsEnemies[Random::RandomInteger(4)];
                 }
             }
             break;
-        case ACT_2:
-            if (Enemy != ACT2_SCORPION &&
-                Enemy != ACT2_FIRE_SPIRIT &&
-                Enemy != ELEMENTAL_STATUE) {
-                if (Enemy < ACT2_FIRE_SPIRIT) {
+        case ActID::ACT_2:
+            if (Enemy != EnemyType::ACT2_SCORPION &&
+                Enemy != EnemyType::ACT2_FIRE_SPIRIT &&
+                Enemy != EnemyType::ELEMENTAL_STATUE) {
+                if (Enemy < EnemyType::ACT2_FIRE_SPIRIT) {
                     /* Lair is in Lost Marsh or Water Shrine */
-                    Enemy = WaterShrineEnemies[RandomInteger(5)];
+                    Enemy = WaterShrineEnemies[Random::RandomInteger(5)];
                 }
                 else {
                     /* Lair is in Fire Shrine or Light Shrine */
-                    Enemy = FireLightShrineEnemiesNoFireSpirit[RandomInteger(4)];
+                    Enemy = FireLightShrineEnemiesNoFireSpirit[Random::RandomInteger(4)];
                 }
             }
             break;
-        case ACT_3:
-            if (Enemy != ACT3_METAL_GORILLA &&
-                Enemy != FLOATING_SKULL) {
-                if (Enemy < ACT3_PALM_TREE) {
+        case ActID::ACT_3:
+            if (Enemy != EnemyType::ACT3_METAL_GORILLA &&
+                Enemy != EnemyType::FLOATING_SKULL) {
+                if (Enemy < EnemyType::ACT3_PALM_TREE) {
                     /* Lair is in Seabed */
-                    Enemy = SeabedEnemies[RandomInteger(5)];
+                    Enemy = SeabedEnemies[Random::RandomInteger(5)];
                 }
                 else {
                     /* Lair is in Islands */
                     if (Lair.NoFishLairPosition()) {
-                        Enemy = IslandsEnemiesNoFish[RandomInteger(4)];
+                        Enemy = IslandsEnemiesNoFish[Random::RandomInteger(4)];
                     }
                     else {
-                        Enemy = IslandsEnemies[RandomInteger(5)];
+                        Enemy = IslandsEnemies[Random::RandomInteger(5)];
                     }
                 }
             }
             break;
-        case ACT_4:
-            if (Enemy != POSEIDON) {
-                if (Enemy < ACT4_PURPLE_WIZARD) {
+        case ActID::ACT_4:
+            if (Enemy != EnemyType::POSEIDON) {
+                if (Enemy < EnemyType::ACT4_PURPLE_WIZARD) {
                     /* Lair is in Mountain of Souls */
-                    Enemy = MountainEnemiesNoSnowball[RandomInteger(4)];
+                    Enemy = MountainEnemiesNoSnowball[Random::RandomInteger(4)];
                 }
                 else {
                     /* Lair is in Laynole or Lune */
-                    Enemy = LaynoleLuneEnemiesNoIceBlock[RandomInteger(5)];
+                    Enemy = LaynoleLuneEnemiesNoIceBlock[Random::RandomInteger(5)];
                 }
             }
             break;
-        case ACT_5:
-            if (Enemy != TIN_DOLL) {
-                if (Enemy < ACT5_MINI_KNIGHT) {
+        case ActID::ACT_5:
+            if (Enemy != EnemyType::TIN_DOLL) {
+                if (Enemy < EnemyType::ACT5_MINI_KNIGHT) {
                     /* Lair is in Leo's Lab Basement or Power Plant */
                     if (Lair.NoMetalLairPosition()) {
-                        Enemy = LeosBasementEnemiesNoMetal[RandomInteger(2)];
+                        Enemy = LeosBasementEnemiesNoMetal[Random::RandomInteger(2)];
                     }
                     else if (Lair.MustBeMetalLairPosition()) {
-                        Enemy = LeosBasementEnemiesMetalOnly[RandomInteger(3)];
+                        Enemy = LeosBasementEnemiesMetalOnly[Random::RandomInteger(3)];
                     }
                     else {
-                        Enemy = LeosBasementEnemies[RandomInteger(5)];
+                        Enemy = LeosBasementEnemies[Random::RandomInteger(5)];
                     }
                 }
                 else {
                     /* Lair is in one of the Model Towns */
-                    Enemy = ModelTownsEnemies[RandomInteger(5)];
+                    Enemy = ModelTownsEnemies[Random::RandomInteger(5)];
                 }
             }
             break;
-        case ACT_6:
-            if (Enemy != DEMON_BIRD) {
-                if (Enemy < ACT6_PURPLE_KNIGHT) {
+        case ActID::ACT_6:
+            if (Enemy != EnemyType::DEMON_BIRD) {
+                if (Enemy < EnemyType::ACT6_PURPLE_KNIGHT) {
                     /* Lair is in Magridd Castle Basement */
                     if (Lair.NoGhostLairPosition()) {
-                        Enemy = CastleBasementEnemiesNoGhost[RandomInteger(3)];
+                        Enemy = CastleBasementEnemiesNoGhost[Random::RandomInteger(3)];
                     }
                     else if (Lair.MustBeGhostLairPosition()) {
-                        Enemy = ACT6_GHOST;
+                        Enemy = EnemyType::ACT6_GHOST;
                     }
                     else {
-                        Enemy = CastleBasementEnemies[RandomInteger(4)];
+                        Enemy = CastleBasementEnemies[Random::RandomInteger(4)];
                     }
                 }
                 else {
                     /* Lair is in one of the Magridd Castle Towers */
-                    Enemy = CastleTowersEnemies[RandomInteger(5)];
+                    Enemy = CastleTowersEnemies[Random::RandomInteger(5)];
                 }
             }
             break;
-        case ACT_7:
+        case ActID::ACT_7:
             /* Lair is in World of Evil */
-            Enemy = WorldOfEvilEnemiesNoBrick[RandomInteger(2)];
+            Enemy = WorldOfEvilEnemiesNoBrick[Random::RandomInteger(2)];
             break;
         default:
             /* Should not happen! */
@@ -233,11 +231,11 @@ namespace Randomizer {
 
         /* Randomize orientation if possible */
         if (CanRandomizeOrientation(Lair.Act, Enemy)) {
-            Lair.Orientation = OrientationList[RandomInteger(4)];
+            Lair.Orientation = OrientationList[Random::RandomInteger(4)];
             if (Lair.MustNotBeUpwardsLairPosition() && Lair.Orientation == 0xC0) {
                 /* Re-roll until it is not upwards */
                 do {
-                    Lair.Orientation = OrientationList[RandomInteger(4)];
+                    Lair.Orientation = OrientationList[Random::RandomInteger(4)];
                 } while (Lair.Orientation == 0xC0);
             }
         }
@@ -249,37 +247,31 @@ namespace Randomizer {
 
     void RandomizeLairType(Lair &Lair) {
 
-        if (Lair.Type[0] == LAIR_ONE_BY_ONE ||
-            Lair.Type[0] == LAIR_MULTISPAWN ||
-            Lair.Type[0] == LAIR_ONE_BY_ONE_PROX) {
-            int RandomValue = RandomInteger(ONE_BY_ONE_WEIGHT + MULTISPAWN_WEIGHT + ONE_BY_ONE_PROX_WEIGHT);
+        if (Lair.Type == LairType::LAIR_ONE_BY_ONE ||
+            Lair.Type == LairType::LAIR_MULTISPAWN ||
+            Lair.Type == LairType::LAIR_ONE_BY_ONE_PROX) {
+            int RandomValue = Random::RandomInteger(ONE_BY_ONE_WEIGHT + MULTISPAWN_WEIGHT + ONE_BY_ONE_PROX_WEIGHT);
             if (RandomValue < ONE_BY_ONE_WEIGHT) {
-                Lair.Type[0] = LAIR_ONE_BY_ONE;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE;
             }
             else if (RandomValue < ONE_BY_ONE_WEIGHT + MULTISPAWN_WEIGHT) {
-                Lair.Type[0] = LAIR_MULTISPAWN;
-                Lair.Type[1] = LAIR_MULTISPAWN_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_MULTISPAWN;
             }
             else {
-                Lair.Type[0] = LAIR_ONE_BY_ONE_PROX;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_PROX_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE_PROX;
             }
         }
-        else if (Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
-            int RandomValue = RandomInteger(4);
+        else if (Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
+            int RandomValue = Random::RandomInteger(4);
             switch (RandomValue) {
             case 0:
-                Lair.Type[0] = LAIR_ONE_BY_ONE;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE;
                 break;
             case 1:
-                Lair.Type[0] = LAIR_MULTISPAWN;
-                Lair.Type[1] = LAIR_MULTISPAWN_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_MULTISPAWN;
                 break;
             case 2:
-                Lair.Type[0] = LAIR_ONE_BY_ONE_PROX;
-                Lair.Type[1] = LAIR_ONE_BY_ONE_PROX_SECOND_BYTE;
+                Lair.Type = LairType::LAIR_ONE_BY_ONE_PROX;
                 break;
             case 3:
                 /* Don't change */
@@ -310,16 +302,16 @@ namespace Randomizer {
         }
 #endif
 
-        if (Lair.Type[0] == LAIR_ONE_BY_ONE || Lair.Type[0] == LAIR_ONE_BY_ONE_PROX) {
-            Lair.NbEnemies = RandomIntegerRange(NB_ENEMIES_ONE_BY_ONE_MIN, NB_ENEMIES_ONE_BY_ONE_MAX);
+        if (Lair.Type == LairType::LAIR_ONE_BY_ONE || Lair.Type == LairType::LAIR_ONE_BY_ONE_PROX) {
+            Lair.NbEnemies = Random::RandomIntegerRange(NB_ENEMIES_ONE_BY_ONE_MIN, NB_ENEMIES_ONE_BY_ONE_MAX);
         }
-        else if (Lair.Type[0] == LAIR_MULTISPAWN || Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
-            if (Lair.Enemy == ACT6_MIMIC) {
+        else if (Lair.Type == LairType::LAIR_MULTISPAWN || Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
+            if (Lair.Enemy == EnemyType::ACT6_MIMIC) {
                 /* Don't spawn too many for those enemies */
-                Lair.NbEnemies = RandomIntegerRange(NB_ENEMIES_MULTISPAWN_REDUCED_MIN, NB_ENEMIES_MULTISPAWN_REDUCED_MAX);
+                Lair.NbEnemies = Random::RandomIntegerRange(NB_ENEMIES_MULTISPAWN_REDUCED_MIN, NB_ENEMIES_MULTISPAWN_REDUCED_MAX);
             }
             else {
-                Lair.NbEnemies = RandomIntegerRange(NB_ENEMIES_MULTISPAWN_MIN, NB_ENEMIES_MULTISPAWN_MAX);
+                Lair.NbEnemies = Random::RandomIntegerRange(NB_ENEMIES_MULTISPAWN_MIN, NB_ENEMIES_MULTISPAWN_MAX);
             }
         }
 
@@ -331,23 +323,23 @@ namespace Randomizer {
 
 
     void RandomizeLairSpawnRate(Lair &Lair) {
-        if (Lair.Type[0] == LAIR_MULTISPAWN || Lair.Type[0] == LAIR_TWO_UP_TWO_DOWN) {
-            Lair.SpawnRate = RandomIntegerRange(SPAWN_RATE_MIN, SPAWN_RATE_MAX);
+        if (Lair.Type == LairType::LAIR_MULTISPAWN || Lair.Type == LairType::LAIR_TWO_UP_TWO_DOWN) {
+            Lair.SpawnRate = Random::RandomIntegerRange(SPAWN_RATE_MIN, SPAWN_RATE_MAX);
         }
 
         /* Reset Spawn Rate for One-by-One Lairs */
-        if (Lair.Type[0] == LAIR_ONE_BY_ONE || Lair.Type[0] == LAIR_ONE_BY_ONE_PROX) {
+        if (Lair.Type == LairType::LAIR_ONE_BY_ONE || Lair.Type == LairType::LAIR_ONE_BY_ONE_PROX) {
             Lair.SpawnRate = 0;
         }
     }
 
 
-    void RandomizeLairContents(vector<Lair> &LairList) {
+    void RandomizeLairContents(std::vector<Lair> &LairList) {
 
         for (int LairIndex = 0; LairIndex < NUMBER_OF_LAIRS; LairIndex++) {
 
-            if (LairList[LairIndex].Enemy == 0 ||
-                LairList[LairIndex].Enemy == 0xFF) {
+            if (LairList[LairIndex].Enemy == EnemyType::NO_ENEMY ||
+                LairList[LairIndex].Enemy == EnemyType::DREAM_NO_ENEMY) {
                 /* Skip empty lairs / lairs in dreams */
                 continue;
             }
@@ -368,82 +360,82 @@ namespace Randomizer {
 
 
 
-    void RandomizeMapSprites(vector<Sprite> &RandomizedSpriteList, fstream &ROMFile) {
+    void RandomizeMapSprites(std::vector<Sprite> &RandomizedSpriteList, std::fstream &ROMFile) {
 
         /* Initialize the list */
-        vector<Sprite> OriginalSpriteList(NUMBER_OF_SPRITES);
+        std::vector<Sprite> OriginalSpriteList(NUMBER_OF_SPRITES);
         ROMData::GetOriginalMapSpriteData(OriginalSpriteList, ROMFile);
         RandomizedSpriteList = OriginalSpriteList;
 
-        unsigned char Enemy;
+        EnemyType Enemy;
         for (int SpriteIndex = 0; SpriteIndex < NUMBER_OF_SPRITES; ++SpriteIndex) {
 
             Enemy = RandomizedSpriteList[SpriteIndex].Enemy;
 
             switch (RandomizedSpriteList[SpriteIndex].Act) {
-            case ACT_1:
-                if (Enemy < ACT1_ARMOR) {
+            case ActID::ACT_1:
+                if (Enemy < EnemyType::ACT1_ARMOR) {
                     /* Sprite is in Underground Castle */
-                    Enemy = UndergroundCastleEnemies[RandomInteger(6)];
+                    Enemy = UndergroundCastleEnemies[Random::RandomInteger(6)];
                 }
                 else {
                     /* Sprite is in Leo's Paintings */
-                    Enemy = LeosPaintingsEnemies[RandomInteger(4)];
+                    Enemy = LeosPaintingsEnemies[Random::RandomInteger(4)];
                 }
                 break;
-            case ACT_2:
-                if (Enemy < ACT2_FIRE_SPIRIT) {
+            case ActID::ACT_2:
+                if (Enemy < EnemyType::ACT2_FIRE_SPIRIT) {
                     /* Sprite is in Lost Marsh or Water Shrine */
-                    Enemy = WaterShrineEnemies[RandomInteger(5)];
+                    Enemy = WaterShrineEnemies[Random::RandomInteger(5)];
                 }
                 else {
                     /* Sprite is in Fire Shrine or Light Shrine */
-                    Enemy = FireLightShrineEnemies[RandomInteger(5)];
+                    Enemy = FireLightShrineEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_3:
-                if (Enemy < ACT3_PALM_TREE) {
+            case ActID::ACT_3:
+                if (Enemy < EnemyType::ACT3_PALM_TREE) {
                     /* Sprite is in Seabed */
-                    Enemy = SeabedEnemies[RandomInteger(5)];
+                    Enemy = SeabedEnemies[Random::RandomInteger(5)];
                 }
                 else {
                     /* Sprite is in Islands */
-                    Enemy = IslandsEnemies[RandomInteger(5)];
+                    Enemy = IslandsEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_4:
-                if (Enemy < ACT4_PURPLE_WIZARD) {
+            case ActID::ACT_4:
+                if (Enemy < EnemyType::ACT4_PURPLE_WIZARD) {
                     /* Sprite is in Mountain of Souls */
-                    Enemy = MountainEnemies[RandomInteger(5)];
+                    Enemy = MountainEnemies[Random::RandomInteger(5)];
                 }
                 else {
                     /* Sprite is in Laynole or Lune */
-                    Enemy = LaynoleLuneEnemies[RandomInteger(5)];
+                    Enemy = LaynoleLuneEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_5:
-                if (Enemy < ACT5_MINI_KNIGHT) {
+            case ActID::ACT_5:
+                if (Enemy < EnemyType::ACT5_MINI_KNIGHT) {
                     /* Sprite is in Leo's Lab Basement or Power Plant */
-                    Enemy = LeosBasementEnemies[RandomInteger(5)];
+                    Enemy = LeosBasementEnemies[Random::RandomInteger(5)];
                 }
                 else {
                     /* Sprite is in one of the Model Towns */
-                    Enemy = ModelTownsEnemies[RandomInteger(5)];
+                    Enemy = ModelTownsEnemies[Random::RandomInteger(5)];
                 }
                 break;
-            case ACT_6:
-                if (Enemy < ACT6_PURPLE_KNIGHT) {
+            case ActID::ACT_6:
+                if (Enemy < EnemyType::ACT6_PURPLE_KNIGHT) {
                     /* Sprite is in Magridd Castle Basement */
-                    Enemy = CastleBasementEnemiesFull[RandomInteger(6)];
+                    Enemy = CastleBasementEnemiesFull[Random::RandomInteger(6)];
                 }
                 else {
                     /* Sprite is in one of the Magridd Castle Towers */
-                    Enemy = CastleTowersEnemiesFull[RandomInteger(7)];
+                    Enemy = CastleTowersEnemiesFull[Random::RandomInteger(7)];
                 }
                 break;
-            case ACT_7:
+            case ActID::ACT_7:
                 /* Sprite is in World of Evil */
-                Enemy = WorldOfEvilEnemies[RandomInteger(3)];
+                Enemy = WorldOfEvilEnemies[Random::RandomInteger(3)];
                 break;
             default:
                 /* Should not happen! */
@@ -452,7 +444,7 @@ namespace Randomizer {
 
             /* Randomize orientation if possible */
             if (CanRandomizeOrientation(RandomizedSpriteList[SpriteIndex].Act, Enemy)) {
-                RandomizedSpriteList[SpriteIndex].Orientation = OrientationList[RandomInteger(4)] + 1;
+                RandomizedSpriteList[SpriteIndex].Orientation = OrientationList[Random::RandomInteger(4)] + 1;
             }
             else {
                 RandomizedSpriteList[SpriteIndex].Orientation = 0x01;
@@ -464,17 +456,14 @@ namespace Randomizer {
 
 
 
-    void ExploreRegion(vector<Region> &RegionList,
-                       vector<Goal>   &GoalList,
-                       vector<int>    &AvailableRevivingLairs,
-                       vector<int>    &AvailableItems,
-                       vector<int>    &AvailableGoals,
+    void ExploreRegion(std::vector<Region> &RegionList,
+                       std::vector<Goal>   &GoalList,
+                       std::vector<int>    &AvailableRevivingLairs,
+                       std::vector<int>    &AvailableItems,
+                       std::vector<int>    &AvailableGoals,
                        bool            RevivedNPCs[],
                        bool            CollectedKeyItems[],
                        int             RegionIndex) {
-
-        list<Element>::const_iterator ElementIterator;
-        list<int>::const_iterator GoalIterator;
         int GoalIndex;
         bool KeepExploring, GoalFulfilled;
 
@@ -483,23 +472,18 @@ namespace Randomizer {
             KeepExploring = false;
 
             /* Explore the targeted region: store all the new available reviving lairs and items... */
-            for (ElementIterator = RegionList[RegionIndex].Contents.begin();
-                 ElementIterator != RegionList[RegionIndex].Contents.end();
-                 ++ElementIterator) {
-                if ((*ElementIterator).Type == LAIR) {
-                    AvailableRevivingLairs.push_back((*ElementIterator).Index);
+            for (const auto& Content : RegionList[RegionIndex].Contents) {
+                if (Content.Type == GoalType::LAIR) {
+                    AvailableRevivingLairs.push_back(Content.Index);
                 }
                 else {
-                    AvailableItems.push_back((*ElementIterator).Index);
+                    AvailableItems.push_back(Content.Index);
                 }
             }
 
             /* ...and store all new available goals */
-            for (GoalIterator = RegionList[RegionIndex].NextGoals.begin();
-                 GoalIterator != RegionList[RegionIndex].NextGoals.end();
-                 ++GoalIterator) {
-                AvailableGoals.push_back(*GoalIterator);
-            }
+            AvailableGoals.insert(AvailableGoals.end(), RegionList[RegionIndex].NextGoals.begin(),
+                                  RegionList[RegionIndex].NextGoals.end());
 
             /* Check the available goals, maybe some of them are already fulfilled */
             for (GoalIndex = 0; GoalIndex < (int)AvailableGoals.size(); GoalIndex++) {
@@ -507,12 +491,9 @@ namespace Randomizer {
                 GoalFulfilled = true;
 
                 /* Read the contents of this goal */
-                for (ElementIterator = GoalList[AvailableGoals[GoalIndex]].Requirements.begin();
-                     ElementIterator != GoalList[AvailableGoals[GoalIndex]].Requirements.end();
-                     ++ElementIterator) {
-
-                    if ( ((*ElementIterator).Type == LAIR && RevivedNPCs[(*ElementIterator).Index]       == false) ||
-                         ((*ElementIterator).Type == ITEM && CollectedKeyItems[(*ElementIterator).Index] == false) ) {
+                for (const auto& Requirement : GoalList[AvailableGoals[GoalIndex]].Requirements) {
+                    if ( (Requirement.Type == GoalType::LAIR && RevivedNPCs[Requirement.Index]       == false) ||
+                         (Requirement.Type == GoalType::ITEM && CollectedKeyItems[Requirement.Index] == false) ) {
                         /* This goal is not met yet, check the next one */
                         GoalFulfilled = false;
                         break;
@@ -532,41 +513,39 @@ namespace Randomizer {
     }
 
 
-    bool RandomizeProgression(vector<Lair>  &RandomizedLairList,
-                              vector<Item>  &RandomizedItemList,
-                              fstream       &ROMFile) {
+    bool RandomizeProgression(std::vector<Lair>  &RandomizedLairList,
+                              std::vector<Item>  &RandomizedItemList,
+                              std::fstream       &ROMFile) {
 
         /* Get the original Lair and Item data */
-        vector<Lair> OriginalLairList(NUMBER_OF_LAIRS);
-        vector<Item> OriginalItemList(NUMBER_OF_ITEMS);
+        std::vector<Lair> OriginalLairList(NUMBER_OF_LAIRS);
+        std::vector<Item> OriginalItemList(NUMBER_OF_ITEMS);
         ROMData::GetOriginalLairData(OriginalLairList, ROMFile);
         ROMData::GetOriginalItemData(OriginalItemList);
 
-        vector<Region> RegionList(NUMBER_OF_REGIONS);
-        vector<Goal>   GoalList(NUMBER_OF_GOALS);
+        std::vector<Region> RegionList(NUMBER_OF_REGIONS);
+        std::vector<Goal>   GoalList(NUMBER_OF_GOALS);
 
         /* Get the map and calculate the goal weights */
         Map::InitMap(RegionList, GoalList);
         Map::CalculateWeights(RegionList, GoalList, GOAL_TO_FIRST_REGION);
 
 #ifdef DEBUG
-        cout << endl;
+        std::cout << endl;
         for (int GoalIdx = 0; GoalIdx < NUMBER_OF_GOALS; ++GoalIdx) {
-            cout << "Weight for Goal #" << GoalIdx << " -> " << GoalList[GoalIdx].Weight << endl;
+            std::cout << "Weight for Goal #" << GoalIdx << " -> " << GoalList[GoalIdx].Weight << endl;
         }
-        cout << endl;
+        std::cout << endl;
 #endif
 
-        vector<int> AvailableRevivingLairs;
-        vector<int> AvailableItems;
-        vector<int> AvailableGoals;
-        vector<int> VillageChiefPossibleLairs;
+        std::vector<int> AvailableRevivingLairs;
+        std::vector<int> AvailableItems;
+        std::vector<int> AvailableGoals;
+        std::vector<int> VillageChiefPossibleLairs;
         bool RevivedNPCs      [NUMBER_OF_LAIRS] = {false};
         bool CollectedKeyItems[NUMBER_OF_ITEMS] = {false};
-        list<Element>::const_iterator ElementIterator;
-        list<int>::const_iterator GoalIterator;
 
-        int GoalIndex, RevivingLairIndex, ItemIndex, NewRegionIndex;
+        int GoalIndex, RevivingLairIndex, ItemID, NewRegionIndex;
         bool MountainKingItemRandomized = false;
 
         /* Initialize the randomized lists to the original lair and item lists */
@@ -595,52 +574,49 @@ namespace Randomizer {
         while (AvailableGoals.size() > 0) {
 
             /* Pick a goal */
-            //GoalIndex = RandomInteger(AvailableGoals.size());
+            //GoalIndex = Random::RandomInteger(AvailableGoals.size());
             GoalIndex = WeightedGoalChoice(GoalList, AvailableGoals);
 
 #ifdef DEBUG
-            cout << "Available goals: ";
+            std::cout << "Available goals: ";
             for (unsigned int i=0; i<AvailableGoals.size(); ++i) {
-                cout << AvailableGoals[i] << " ";
+                std::cout << AvailableGoals[i] << " ";
             }
-            cout << endl;
-            cout << endl;
-            cout << "Available Lairs: ";
+            std::cout << endl;
+            std::cout << endl;
+            std::cout << "Available Lairs: ";
             for (unsigned int i=0; i<AvailableRevivingLairs.size(); ++i) {
-                cout << AvailableRevivingLairs[i] << " ";
+                std::cout << AvailableRevivingLairs[i] << " ";
             }
-            cout << endl;
-            cout << "Available Items: ";
+            std::cout << endl;
+            std::cout << "Available Items: ";
             for (unsigned int i=0; i<AvailableItems.size(); ++i) {
-                cout << AvailableItems[i] << " ";
+                std::cout << AvailableItems[i] << " ";
             }
-            cout << endl;
-            cout << endl;
-            cout << "Picked goal " << AvailableGoals[GoalIndex] << ".\n";
+            std::cout << endl;
+            std::cout << endl;
+            std::cout << "Picked goal " << AvailableGoals[GoalIndex] << ".\n";
 #endif
 
             /* Read the contents of the goal */
-            for (ElementIterator = GoalList[AvailableGoals[GoalIndex]].Requirements.begin();
-                 ElementIterator != GoalList[AvailableGoals[GoalIndex]].Requirements.end();
-                 ++ElementIterator) {
-
-                if ((*ElementIterator).Type == LAIR) {
+            for (const auto &Requirement : GoalList[AvailableGoals[GoalIndex]].Requirements) {
+                if (Requirement.Type == GoalType::LAIR) {
 
                     /* If this NPC is already revived, skip this requirement */
-                    if (RevivedNPCs[(*ElementIterator).Index] == false) {
+                    if (RevivedNPCs[Requirement.Index] == false) {
 
                         if (AvailableRevivingLairs.size() > 0) {
 
                             /* Choose one of the available reviving Monster Lairs and assign this NPC to it */
-                            RevivingLairIndex = RandomInteger(AvailableRevivingLairs.size());
-                            RandomizedLairList[(*ElementIterator).Index] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
+                            RevivingLairIndex = Random::RandomInteger(AvailableRevivingLairs.size());
+                            RandomizedLairList[Requirement.Index] = OriginalLairList[AvailableRevivingLairs[RevivingLairIndex]];
 
 #ifdef DEBUG
-                            cout << "Lair : " << (*ElementIterator).Index << " <-- " << AvailableRevivingLairs[RevivingLairIndex] << endl;
+                            std::cout << "Lair : " << Requirement.Index << " <-- " << AvailableRevivingLairs[RevivingLairIndex] << endl;
 #endif
 
                             /* This NPC has been revived */
-                            RevivedNPCs[(*ElementIterator).Index] = true;
+                            RevivedNPCs[Requirement.Index] = true;
 
                             /* This Lair is no longer available */
                             AvailableRevivingLairs.erase(AvailableRevivingLairs.begin() + RevivingLairIndex);
@@ -655,28 +631,28 @@ namespace Randomizer {
                 else {
 
                     /* If this Key Item is already collected, skip this requirement */
-                    if (CollectedKeyItems[(*ElementIterator).Index] == false) {
+                    if (CollectedKeyItems[Requirement.Index] == false) {
 
                         if (AvailableItems.size() > 0) {
 
                             /* Choose one of the available item locations and assign this item to it */
-                            ItemIndex = RandomInteger(AvailableItems.size());
-                            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[(*ElementIterator).Index];
+                            ItemID = Random::RandomInteger(AvailableItems.size());
+                            RandomizedItemList[AvailableItems[ItemID]] = OriginalItemList[Requirement.Index];
 
 #ifdef DEBUG
-                            cout << "Item: " << AvailableItems[ItemIndex] << " <-- " << (*ElementIterator).Index << endl;
+                            std::cout << "Item: " << AvailableItems[ItemID] << " <-- " << Requirement.Index << endl;
 #endif
 
                             /* This Key Item has been collected */
-                            CollectedKeyItems[(*ElementIterator).Index] = true;
+                            CollectedKeyItems[Requirement.Index] = true;
 
                             /* If this was Mountain King's item, remember it */
-                            if (AvailableItems[ItemIndex] == ITEM_MOUNTAIN_KING) {
+                            if (AvailableItems[ItemID] == ITEM_MOUNTAIN_KING) {
                                 MountainKingItemRandomized = true;
                             }
 
                             /* This Item is no longer available */
-                            AvailableItems.erase(AvailableItems.begin() + ItemIndex);
+                            AvailableItems.erase(AvailableItems.begin() + ItemID);
                         }
                         else {
                             /* FAILURE! */
@@ -711,8 +687,8 @@ namespace Randomizer {
 
         /* At this stage, all key chest items and NPC have been placed.
            We now need to place all the other elements (non-key items and NPCs). */
-        vector<int> NonKeyNPCList;
-        vector<int> NonKeyItemList;
+        std::vector<int> NonKeyNPCList;
+        std::vector<int> NonKeyItemList;
         Map::GetNonKeyNPCList (NonKeyNPCList);
         Map::GetNonKeyItemList(NonKeyItemList);
 
@@ -727,26 +703,26 @@ namespace Randomizer {
         //AvailableRevivingLairs.push_back(NPC_OLD_MAN);
 
 #ifdef DEBUG
-        cout << AvailableRevivingLairs.size() << " available Reviving Lairs, " << NonKeyNPCList.size() << " in NPC list.\n";
-        cout << AvailableItems.size() << " available Items, " << NonKeyItemList.size() << " in Item list.\n";
+        std::cout << AvailableRevivingLairs.size() << " available Reviving Lairs, " << NonKeyNPCList.size() << " in NPC list.\n";
+        std::cout << AvailableItems.size() << " available Items, " << NonKeyItemList.size() << " in Item list.\n";
 #endif
 
         /* Make sure Mountain King receives an item different from a Medical Herb, a Strange Bottle, Gems/EXP or nothing */
         if (MountainKingItemRandomized == false) {
-            ItemIndex = RandomInteger(NonKeyItemList.size());
-            while (OriginalItemList[NonKeyItemList[ItemIndex]].Contents == MEDICAL_HERB ||
-                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == STRANGE_BOTTLE ||
-                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == GEMS_EXP ||
-                   OriginalItemList[NonKeyItemList[ItemIndex]].Contents == NOTHING) {
-                ItemIndex = RandomInteger(NonKeyItemList.size());
+            ItemID = Random::RandomInteger(NonKeyItemList.size());
+            while (OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::MEDICAL_HERB ||
+                   OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::STRANGE_BOTTLE ||
+                   OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::GEMS_EXP ||
+                   OriginalItemList[NonKeyItemList[ItemID]].Contents == ItemID::NOTHING) {
+                ItemID = Random::RandomInteger(NonKeyItemList.size());
             }
-            RandomizedItemList[ITEM_MOUNTAIN_KING] = OriginalItemList[NonKeyItemList[ItemIndex]];
-            NonKeyItemList.erase(NonKeyItemList.begin() + ItemIndex);
+            RandomizedItemList[ITEM_MOUNTAIN_KING] = OriginalItemList[NonKeyItemList[ItemID]];
+            NonKeyItemList.erase(NonKeyItemList.begin() + ItemID);
         }
 
         /* Shuffle these lists */
-        random_shuffle(NonKeyNPCList.begin(),  NonKeyNPCList.end(),  RandomInteger);
-        random_shuffle(NonKeyItemList.begin(), NonKeyItemList.end(), RandomInteger);
+        Random::Shuffle(NonKeyNPCList);
+        Random::Shuffle(NonKeyItemList);
 
         for (RevivingLairIndex = 0; RevivingLairIndex < (int)AvailableRevivingLairs.size(); RevivingLairIndex++) {
             /* Fill this lair and remove it from the list */
@@ -754,16 +730,26 @@ namespace Randomizer {
         }
 
         int Offset = 0;
-        for (ItemIndex = 0; ItemIndex < (int)AvailableItems.size(); ItemIndex++) {
+        for (ItemID = 0; ItemID < (int)AvailableItems.size(); ItemID++) {
 
             /* Mountain King's Item has already been assigned */
-            if (AvailableItems[ItemIndex] == ITEM_MOUNTAIN_KING) {
+            if (AvailableItems[ItemID] == ITEM_MOUNTAIN_KING) {
                 Offset = 1;
                 continue;
             }
 
             /* Fill this item and remove it from the list */
-            RandomizedItemList[AvailableItems[ItemIndex]] = OriginalItemList[NonKeyItemList[ItemIndex-Offset]];
+            RandomizedItemList[AvailableItems[ItemID]] = OriginalItemList[NonKeyItemList[ItemID-Offset]];
+        }
+
+        for (int i=NUMBER_OF_CHESTS; i<NUMBER_OF_ITEMS; i++) {
+            /* If the NPC doesn't normally give EXP, let us turn the
+               EXP/Nothing prize into a Medical Herb for now. */
+            auto ItemID = RandomizedItemList[i].Contents;
+            if (!ROMData::NPCOriginallyGivesEXP(i) &&
+                (ItemID == ItemID::GEMS_EXP || ItemID == ItemID::NOTHING)) {
+                RandomizedItemList[i].Contents = ItemID::MEDICAL_HERB;
+            }
         }
 
         /* Randomization successful! */
@@ -771,8 +757,8 @@ namespace Randomizer {
     }
 
 
-    int WeightedGoalChoice(vector<Goal>  &GoalList,
-                           vector<int>   &AvailableGoals) {
+    int WeightedGoalChoice(std::vector<Goal>  &GoalList,
+                           std::vector<int>   &AvailableGoals) {
 
         int SumOfWeights = 0;
         unsigned int GoalIndex;
@@ -783,7 +769,7 @@ namespace Randomizer {
         }
 
         /* Pick a number and determine which Goal it corresponds to */
-        int RandomNumber = RandomInteger(SumOfWeights);
+        int RandomNumber = Random::RandomInteger(SumOfWeights);
         for (GoalIndex = 0; GoalIndex < AvailableGoals.size(); ++GoalIndex) {
             if (RandomNumber < GoalList[AvailableGoals[GoalIndex]].Weight) {
                 return GoalIndex;
@@ -799,25 +785,25 @@ namespace Randomizer {
 
     ROMStatus CheckFile(const std::string& Filename) {
         /* Check that the ROM file is there, make the fstream instance */
-        fstream ROMFile(Filename, ios::in | ios::out | ios::binary | ios::ate);
+        std::fstream ROMFile(Filename, std::ios::in | std::ios::out | std::ios::binary | std::ios::ate);
         if (!ROMFile.is_open()) {
-            cout << "ROM file \"" << Filename << "\" is not found!\n";
+            std::cout << "ROM file \"" << Filename << "\" is not found!\n";
             return UNKNOWN;
         }
 
         /* Check if this is the headered or the un-headered ROM */
         ROMStatus OriginalROMStatus = CheckOriginalROM(ROMFile);
         if (OriginalROMStatus == UNKNOWN) {
-            cout << "File \"" << Filename << "\" is not a known original Soul Blazer (U) ROM!\n";
+            std::cout << "File \"" << Filename << "\" is not a known original Soul Blazer (U) ROM!\n";
             return UNKNOWN;
         }
 
-        cout << "ROM is valid and " << (OriginalROMStatus == UNHEADERED ? "un-" : "") << "headered.\n";
+        std::cout << "ROM is valid and " << (OriginalROMStatus == UNHEADERED ? "un-" : "") << "headered.\n";
 
         return OriginalROMStatus;
     }
 
-    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed) {
+    bool Randomize(const std::string& InFile, const std::string& OutFile, unsigned int seed, const Options& options, std::string* seedName) {
         /****************************\
         |*  Check the original ROM  *|
         \****************************/
@@ -826,8 +812,34 @@ namespace Randomizer {
             return false;
         }
 
-        Random::RandomInit(seed);
-        cout << "Seed " << seed << "\n";
+        if (options.race) {
+            std::cout << "Race mode enabled, randomizing seed number.\n";
+            seed = 0;
+        }
+
+        seed = Random::RandomInit(seed);
+        std::string seedText = std::to_string(seed);
+
+        if (options.race) {
+            seedText += std::to_string(Random::RandomInteger(INT32_MAX));
+            // Get top 10 characters of SHA1 hash
+            boost::uuids::detail::sha1 sha1;
+            sha1.process_bytes(seedText.data(), seedText.size());
+            unsigned hash[5] = {0};
+            sha1.get_digest(hash);
+            char buffer[41] = {0};
+            for (int i = 0; i < 5; i++) {
+                std::sprintf(buffer + (i << 3), "%08x", hash[i]);
+            }
+            seedText = "Race ";
+            seedText += std::string(buffer, 5);
+        }
+
+        if (seedName) {
+            *seedName = seedText;
+        }
+
+        std::cout << "Seed " << seedText << "\n";
 
         /***************************************************\
         |*  Delete old modified ROM / backup original ROM  *|
@@ -836,14 +848,14 @@ namespace Randomizer {
         /* If a modified ROM exists, delete it first */
         int RemoveResult = ::remove(OutFile.c_str());
         if (RemoveResult == 0) {
-            cout << "Previous randomized ROM detected and removed.\n";
+            std::cout << "Previous randomized ROM detected and removed.\n";
         }
 
         /* Back up the original ROM */
-        ifstream ROMFileOriginal(InFile, ios::binary);
-        ofstream ROMFileCopy    (OutFile,     ios::binary);
+        std::ifstream ROMFileOriginal(InFile, std::ios::binary);
+        std::ofstream ROMFileCopy    (OutFile,     std::ios::binary);
 
-        ROMFileOriginal.seekg(0, ios::end);
+        ROMFileOriginal.seekg(0, std::ios::end);
         long ROMFileSize = ROMFileOriginal.tellg();
         if (OriginalROMStatus == HEADERED) {
             /* For headered ROM, ignore the first 512 bytes */
@@ -854,21 +866,21 @@ namespace Randomizer {
             unsigned char *DataBuffer = new unsigned char[ROMFileSize];
             if (OriginalROMStatus == HEADERED) {
                 /* For headered ROM, ignore the first 512 bytes */
-                ROMFileOriginal.seekg(HEADER_OFFSET, ios::beg);
+                ROMFileOriginal.seekg(HEADER_OFFSET, std::ios::beg);
             }
             else {
-                ROMFileOriginal.seekg(0, ios::beg);
+                ROMFileOriginal.seekg(0, std::ios::beg);
             }
             ROMFileOriginal.read((char*)DataBuffer, ROMFileSize);
             ROMFileCopy.write((char*)DataBuffer, ROMFileSize);
             delete[] DataBuffer;
         }
-        else if(!ROMFileCopy.is_open())	{
-            cout << "Failure backing up the ROM!\n";
+        else if(!ROMFileCopy.is_open())        {
+            std::cout << "Failure backing up the ROM!\n";
             return false;
         }
-        else if(!ROMFileOriginal.is_open())	{
-            cout << "Failure opening the original ROM for copying!\n";
+        else if(!ROMFileOriginal.is_open())        {
+            std::cout << "Failure opening the original ROM for copying!\n";
             return false;
         }
 
@@ -882,16 +894,16 @@ namespace Randomizer {
         |*  Randomize!  *|
         \****************/
 
-        cout << endl;
-        cout << "Starting randomization.\n";
+        std::cout << std::endl;
+        std::cout << "Starting randomization.\n";
 
         /* Initialize the final lists of randomized lairs, chests and sprites */
-        vector<Lair> RandomizedLairList;
-        vector<Item> RandomizedItemList;
-        vector<Sprite> RandomizedSpriteList;
+        std::vector<Lair> RandomizedLairList;
+        std::vector<Item> RandomizedItemList;
+        std::vector<Sprite> RandomizedSpriteList;
 
         /* Open ROM to be modified */
-        fstream ROMFile(OutFile, ios::in | ios::out | ios::binary | ios::ate);
+        std::fstream ROMFile(OutFile, std::ios::in | std::ios::out | std::ios::binary | std::ios::ate);
 
         /* Call the main algorithm to randomize the progression through the game:
         ==> randomize item locations and revived NPCs */
@@ -906,13 +918,13 @@ namespace Randomizer {
             }
         }
         if (!RandomizationStatus) {
-            cout << " . . . Randomization failed!\n";
+            std::cout << " . . . Randomization failed!\n";
             return false;
         }
-        cout << " . . . Randomization succeeded in " << RandomizationTry + 1
+        std::cout << " . . . Randomization succeeded in " << RandomizationTry + 1
             << (RandomizationTry == 0 ? " try.\n" : " tries.\n");
 
-        cout << "Starting ROM modification.\n";
+        std::cout << "Starting ROM modification.\n";
 
         /* Randomize monster lair contents: enemy types, lair types, number of enemies and spawn rates */
         Randomizer::RandomizeLairContents(RandomizedLairList);
@@ -926,21 +938,36 @@ namespace Randomizer {
         ROMUpdate::ROMUpdateTextAndItems(RandomizedLairList,
                                         RandomizedItemList,
                                         ROMFile,
-                                        seed);
+                                        seedText);
 
         /* Close the ROM file */
         ROMFile.close();
         ROMFile.clear();
 
-        cout << " . . . ROM modification complete.\n";
+        std::cout << " . . . ROM modification complete.\n";
 
-        cout << "Starting Spoiler Log creation.\n";
+        if (!options.race) {
+            std::cout << "Starting Spoiler Log creation.\n";
 
-        /* Generate the Spoiler Log */
-        Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
+            /* Generate the Spoiler Log */
+            Log::CreateSpoilerLog(RandomizedLairList, RandomizedItemList);
 
-        cout << " . . . Spoiler Log created.\n";
+            std::cout << " . . . Spoiler Log created.\n";
+        }
 
         return true;
+    }
+
+    Options::Options(const std::string& options_string) {
+        std::vector<std::string> options_list;
+        boost::algorithm::split(options_list, options_string, boost::is_any_of(","));
+
+        for (const auto &option : options_list) {
+            if (option == "race") {
+                race = true;
+            } else {
+                std::cout << "Unknown option: " << option << "\n";
+            }
+        }
     }
 }
