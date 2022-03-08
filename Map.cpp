@@ -427,10 +427,10 @@ namespace Map {
         RegionList[37].InsertElement(ITEM, CHEST_RED_HOT_BALL);
         RegionList[37].InsertElement(ITEM, CHEST_SOUL_ARMOR);
         RegionList[37].InsertGoal(38); /* Soul Armor */
-        RegionList[37].InsertGoal(73); /* Super Bracelet tile */
 
         /* Region 38 - Dr Leo + Queen Magridd cutscene */
         RegionList[38].InsertElement(ITEM, ITEM_DR_LEO);
+        RegionList[38].InsertGoal(73); /* Super Bracelet tile */
         RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 39 - Dazzling Space */
@@ -954,9 +954,6 @@ namespace Map {
 
         /* Goal 73 - Super Bracelet tile */
         GoalList[73].InsertElement(LAIR, NPC_QUEEN_MAGRIDD);
-        GoalList[73].InsertElement(LAIR, NPC_SOLDIER_WITH_LEO);
-        GoalList[73].InsertElement(LAIR, NPC_SOLDIER_DOK);
-        GoalList[73].InsertElement(LAIR, NPC_DR_LEO);
         GoalList[73].Target = 74;
 
         /* Goal 74 - Greenwood Leaf tile */
