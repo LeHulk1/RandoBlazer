@@ -419,7 +419,6 @@ namespace Map {
         RegionList[36].InsertElement(ITEM, 58);
         RegionList[36].InsertElement(ITEM, 59);
         RegionList[36].InsertGoal(37); /* Dr Leo + Queen Magridd cutscene */
-        RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 37 - Act 7 start, World of Evil */
         RegionList[37].InsertElement(ITEM, ITEM_KING_MAGRIDD);
@@ -432,6 +431,7 @@ namespace Map {
 
         /* Region 38 - Dr Leo + Queen Magridd cutscene */
         RegionList[38].InsertElement(ITEM, ITEM_DR_LEO);
+        RegionList[38].InsertGoal(75); /* Demon Bird */
 
         /* Region 39 - Dazzling Space */
         RegionList[39].InsertElement(ITEM, CHEST_SOUL_BLADE);
