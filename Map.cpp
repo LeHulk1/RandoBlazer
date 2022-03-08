@@ -954,6 +954,9 @@ namespace Map {
 
         /* Goal 73 - Super Bracelet tile */
         GoalList[73].InsertElement(LAIR, NPC_QUEEN_MAGRIDD);
+        GoalList[73].InsertElement(LAIR, NPC_SOLDIER_WITH_LEO);
+        GoalList[73].InsertElement(LAIR, NPC_SOLDIER_DOK);
+        GoalList[73].InsertElement(LAIR, NPC_DR_LEO);
         GoalList[73].Target = 74;
 
         /* Goal 74 - Greenwood Leaf tile */
